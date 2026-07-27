@@ -222,7 +222,7 @@
 
     .wheel-box {
       position: relative;
-      width: min(100%, 268px);
+      width: min(100%, 252px);
       aspect-ratio: 1 / 1;
       margin: 0 auto 16px;
     }
@@ -568,7 +568,7 @@
       }
 
       .wheel-box {
-        width: min(100%, 258px);
+        width: min(100%, 244px);
       }
 
       .actions {
@@ -667,7 +667,7 @@
 
               <div class="field">
                 <label for="newShort">Короткий текст</label>
-                <input id="newShort" type="text" placeholder="Например: Аксессуары -15%">
+                <input id="newShort" type="text" placeholder="Например: PB -15%">
               </div>
 
               <div class="field">
@@ -776,22 +776,65 @@
     tabWheel.addEventListener("click", () => switchTab("wheel"));
     tabAdmin.addEventListener("click", () => switchTab("admin"));
 
-    function fitLabel(label, maxLen = 12) {
-      if (!label) return "Приз";
+    function getSectorPalette() {
+      const isDark = document.body.classList.contains("dark");
+      return isDark
+        ? ["#14b8a6", "#84cc16", "#3b82f6", "#f59e0b", "#8b5cf6", "#ef4444"]
+        : ["#16c2b8", "#7ccf2b", "#49aef2", "#ffb000", "#8b5cf6", "#ff5a5f"];
+    }
 
-      const cleaned = String(label).trim();
-      if (cleaned.length <= maxLen) return cleaned;
+    function fitLabel(label) {
+      if (!label) return ["Приз"];
 
-      const words = cleaned.split(" ");
-      if (words.length >= 2) {
-        const first = words[0];
-        const second = words[1];
-        if ((first.length + second.length + 1) <= maxLen + 3) {
-          return `${first}\n${second}`;
+      const cleaned = String(label)
+        .replace(/\s+/g, " ")
+        .replace(/аксессуары/gi, "акс.")
+        .replace(/скидка/gi, "")
+        .replace(/бонусами/gi, "бонус")
+        .replace(/бесплатная доставка/gi, "доставка")
+        .replace(/доставка бесплатно/gi, "доставка")
+        .trim();
+
+      const words = cleaned.split(" ").filter(Boolean);
+      if (!words.length) return ["Приз"];
+
+      const lines = [];
+      let current = "";
+
+      for (const word of words) {
+        const test = current ? `${current} ${word}` : word;
+        if (test.length <= 10) {
+          current = test;
+        } else {
+          if (current) lines.push(current);
+          current = word;
         }
       }
 
-      return cleaned.slice(0, maxLen - 1) + "…";
+      if (current) lines.push(current);
+
+      return lines.slice(0, 3);
+    }
+
+    function drawTextInSector(ctx, lines, x, y, maxWidth, baseFont = 14) {
+      let fontSize = baseFont;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillStyle = "#ffffff";
+
+      while (fontSize >= 10) {
+        ctx.font = `800 ${fontSize}px Inter, sans-serif`;
+        const widest = Math.max(...lines.map(line => ctx.measureText(line).width));
+        if (widest <= maxWidth) break;
+        fontSize -= 1;
+      }
+
+      const lineHeight = fontSize + 2;
+      const startY = y - ((lines.length - 1) * lineHeight) / 2;
+
+      lines.forEach((line, i) => {
+        ctx.fillText(line, x, startY + i * lineHeight);
+      });
     }
 
     function drawWheel(items, rotationDeg = 0) {
@@ -812,11 +855,8 @@
       const total = items.length;
       const arc = (Math.PI * 2) / total;
       const rotationRad = rotationDeg * Math.PI / 180;
-
       const isDark = document.body.classList.contains("dark");
-      const palette = isDark
-        ? ["#0f766e", "#16a34a", "#0284c7", "#d97706", "#7c3aed", "#059669"]
-        : ["#14b8a6", "#22c55e", "#38bdf8", "#f59e0b", "#8b5cf6", "#10b981"];
+      const palette = getSectorPalette();
 
       ctx.beginPath();
       ctx.arc(center, center, radius + 4, 0, Math.PI * 2);
@@ -826,6 +866,7 @@
       for (let i = 0; i < total; i++) {
         const start = -Math.PI / 2 + rotationRad + i * arc;
         const end = start + arc;
+        const mid = start + arc / 2;
         const color = palette[i % palette.length];
 
         ctx.beginPath();
@@ -835,25 +876,18 @@
         ctx.fillStyle = color;
         ctx.fill();
 
+        const textLines = fitLabel(items[i].short || items[i].title || "Приз");
+
         ctx.save();
         ctx.translate(center, center);
-        ctx.rotate(start + arc / 2);
+        ctx.rotate(mid);
 
-        const text = fitLabel(items[i].short || items[i].title || "Приз");
-        const lines = text.split("\n");
+        const textRadius = radius - 52;
+        const x = textRadius;
+        const y = 0;
+        const sectorWidth = Math.max(54, radius * arc * 0.62);
 
-        ctx.fillStyle = "#ffffff";
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        ctx.font = "700 14px Inter, sans-serif";
-
-        const textRadius = radius - 46;
-        const lineHeight = 16;
-        const startY = -((lines.length - 1) * lineHeight) / 2;
-
-        for (let j = 0; j < lines.length; j++) {
-          ctx.fillText(lines[j], textRadius, startY + j * lineHeight);
-        }
+        drawTextInSector(ctx, textLines, x, y, sectorWidth, 14);
 
         ctx.restore();
       }
@@ -866,7 +900,7 @@
         : "rgba(255,255,255,.88)";
       ctx.stroke();
 
-      const ringGradient = ctx.createRadialGradient(center, center, 36, center, center, 70);
+      const ringGradient = ctx.createRadialGradient(center, center, 34, center, center, 70);
       ringGradient.addColorStop(0, isDark ? "#162033" : "#ffffff");
       ringGradient.addColorStop(1, isDark ? "#0f172a" : "#eef2f7");
 
