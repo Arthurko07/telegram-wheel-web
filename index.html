@@ -17,10 +17,13 @@
       --surface-solid: #1b2332;
       --surface-2: #212b3e;
       --surface-3: #29344a;
+      --surface-4: #2b364d;
 
       --text: #eef3fb;
       --muted: #9ca7bb;
       --faint: #748097;
+      --success-text: #d6f8e3;
+      --warning-text: #ffe4b2;
 
       --line: rgba(255,255,255,0.07);
       --line-strong: rgba(255,255,255,0.12);
@@ -31,6 +34,9 @@
       --accent-glow: rgba(88,214,141,0.16);
 
       --danger: #ff7a92;
+      --danger-soft: rgba(255,122,146,0.11);
+      --info: #6ea8ff;
+      --gold: #e6ab46;
 
       --shadow-xl: 0 28px 70px rgba(0,0,0,0.34);
       --shadow-lg: 0 18px 40px rgba(0,0,0,0.24);
@@ -139,14 +145,21 @@
       line-height: 1.58;
     }
 
+    .hero-proof {
+      margin-top: 10px;
+      color: var(--faint);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
     .tabs {
-      display: flex;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
       gap: 8px;
       margin: 14px 0 14px;
     }
 
     .tab {
-      flex: 1;
       min-height: 46px;
       border-radius: 16px;
       border: 1px solid var(--line);
@@ -166,7 +179,8 @@
       box-shadow: 0 10px 22px rgba(53,191,118,0.14);
     }
 
-    .hidden { display: none !important; }
+    .tab.hidden { display: none !important; }
+
     .panel { display: none; }
     .panel.active { display: block; }
 
@@ -181,6 +195,7 @@
     }
 
     .wheel-card { padding: 14px; }
+    .section { padding: 16px; }
 
     .meta-row {
       display: flex;
@@ -264,6 +279,7 @@
         0 8px 18px rgba(53,191,118,.14),
         inset 0 1px 0 rgba(255,255,255,.30);
       transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
+      animation: breathe 2.6s ease-in-out infinite;
     }
 
     .center-btn:active {
@@ -273,6 +289,22 @@
     .center-btn:disabled {
       opacity: 0.72;
       cursor: not-allowed;
+      animation: none;
+    }
+
+    @keyframes breathe {
+      0%, 100% {
+        box-shadow:
+          0 0 0 5px rgba(88,214,141,0.03),
+          0 8px 18px rgba(53,191,118,.14),
+          inset 0 1px 0 rgba(255,255,255,.30);
+      }
+      50% {
+        box-shadow:
+          0 0 0 8px rgba(88,214,141,0.05),
+          0 12px 22px rgba(53,191,118,.18),
+          inset 0 1px 0 rgba(255,255,255,.34);
+      }
     }
 
     .hint {
@@ -297,6 +329,18 @@
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
     }
 
+    .status.error {
+      color: #ffd3dc;
+      background: rgba(255,122,146,0.06);
+      border-color: rgba(255,122,146,0.12);
+    }
+
+    .status.success {
+      color: #d8f9e5;
+      background: rgba(88,214,141,0.06);
+      border-color: rgba(88,214,141,0.12);
+    }
+
     .result,
     .cooldown,
     .admin-only {
@@ -309,8 +353,6 @@
     .admin-only.show {
       display: block;
     }
-
-    .section { padding: 16px; }
 
     .kicker {
       margin-bottom: 8px;
@@ -336,11 +378,45 @@
       margin-bottom: 14px;
     }
 
+    .result-hero {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .result-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      min-height: 34px;
+      padding: 0 12px;
+      border-radius: 999px;
+      background: rgba(88,214,141,0.10);
+      border: 1px solid rgba(88,214,141,0.14);
+      color: var(--success-text);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .result-badge::before {
+      content: "✓";
+      font-size: 12px;
+      line-height: 1;
+    }
+
     .result-prize {
       color: var(--text);
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 800;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
+      line-height: 1.15;
+    }
+
+    .result-sub {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
     }
 
     .code-box {
@@ -376,11 +452,57 @@
     }
 
     .expires {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 34px;
+      padding: 0 12px;
+      border-radius: 999px;
+      background: rgba(230,171,70,0.10);
+      border: 1px solid rgba(230,171,70,0.12);
+      color: var(--warning-text);
+      font-size: 12px;
+      font-weight: 700;
       text-align: center;
+      margin: 0 auto 12px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      flex: 1;
+      min-height: 48px;
+      border-radius: 15px;
+      border: 1px solid transparent;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 180ms ease;
+      min-width: 140px;
+    }
+
+    .btn-primary {
+      color: #071008;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 10px 22px rgba(53,191,118,0.14);
+    }
+
+    .btn-secondary {
+      color: var(--text);
+      background: rgba(255,255,255,0.03);
+      border-color: var(--line-strong);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+    }
+
+    .btn-ghost {
       color: var(--muted);
-      font-size: 13px;
-      line-height: 1.5;
-      margin-bottom: 12px;
+      background: transparent;
+      border-color: var(--line);
     }
 
     .timer-wrap {
@@ -408,40 +530,193 @@
     }
 
     .last-prize {
-      text-align: center;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.5;
+      display: grid;
+      gap: 8px;
+      margin-top: 10px;
     }
 
-    .actions {
-      display: flex;
+    .mini-card {
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.025);
+      padding: 14px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .mini-card-title {
+      font-size: 15px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .mini-card-desc {
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--muted);
+    }
+
+    .info-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .faq-list {
+      display: grid;
       gap: 10px;
+    }
+
+    details.faq-item {
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.025);
+      padding: 14px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    details.faq-item summary {
+      list-style: none;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text);
+      position: relative;
+      padding-right: 24px;
+    }
+
+    details.faq-item summary::-webkit-details-marker { display: none; }
+
+    details.faq-item summary::after {
+      content: "+";
+      position: absolute;
+      right: 0;
+      top: 0;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    details.faq-item[open] summary::after {
+      content: "–";
+    }
+
+    .faq-content {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .history-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .history-item {
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.025);
+      padding: 14px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .history-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+
+    .history-name {
+      font-size: 16px;
+      line-height: 1.25;
+      font-weight: 800;
+    }
+
+    .history-meta,
+    .history-desc {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .history-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
       margin-top: 12px;
     }
 
-    .btn {
-      flex: 1;
-      min-height: 48px;
-      border-radius: 15px;
-      border: 1px solid transparent;
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 0 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .badge-ok {
+      color: #c7f1d5;
+      background: rgba(88,214,141,0.10);
+      border: 1px solid rgba(88,214,141,0.14);
+    }
+
+    .badge-warn {
+      color: #ffe0b0;
+      background: rgba(230,171,70,0.09);
+      border: 1px solid rgba(230,171,70,0.14);
+    }
+
+    .badge-off {
+      color: #ffbfd0;
+      background: rgba(255,122,146,0.09);
+      border: 1px solid rgba(255,122,146,0.14);
+    }
+
+    .empty-state {
+      display: grid;
+      gap: 10px;
+      place-items: center;
+      text-align: center;
+      padding: 26px 16px;
+      border-radius: 22px;
+      border: 1px dashed rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .empty-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      color: #c1f3d4;
+      background: rgba(88,214,141,0.08);
+      border: 1px solid rgba(88,214,141,0.12);
+      font-size: 22px;
+    }
+
+    .empty-title {
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .empty-text {
+      color: var(--muted);
       font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: 180ms ease;
+      line-height: 1.55;
+      max-width: 34ch;
     }
 
-    .btn-primary {
-      color: #071008;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      box-shadow: 0 10px 22px rgba(53,191,118,0.14);
+    .admin-only {
+      display: none;
     }
 
-    .btn-secondary {
-      color: var(--text);
-      background: rgba(255,255,255,0.03);
-      border-color: var(--line-strong);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+    .admin-only.show {
+      display: block;
     }
 
     .admin-grid {
@@ -527,29 +802,6 @@
       margin-bottom: 12px;
     }
 
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      min-height: 28px;
-      padding: 0 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 800;
-      white-space: nowrap;
-    }
-
-    .badge-on {
-      color: #c7f1d5;
-      background: rgba(88,214,141,0.10);
-      border: 1px solid rgba(88,214,141,0.14);
-    }
-
-    .badge-off {
-      color: #ffbfd0;
-      background: rgba(255,122,146,0.09);
-      border: 1px solid rgba(255,122,146,0.14);
-    }
-
     .prize-actions {
       display: flex;
       gap: 8px;
@@ -568,6 +820,101 @@
       cursor: pointer;
     }
 
+    .overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 16px;
+      background: rgba(5, 8, 13, 0.58);
+      backdrop-filter: blur(8px);
+    }
+
+    .overlay.show {
+      display: flex;
+    }
+
+    .sheet {
+      width: 100%;
+      max-width: 720px;
+      border-radius: 28px;
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.012)),
+        var(--surface-solid);
+      box-shadow: var(--shadow-xl);
+      padding: 18px;
+    }
+
+    .sheet-handle {
+      width: 42px;
+      height: 5px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.12);
+      margin: 0 auto 14px;
+    }
+
+    .sheet-title {
+      font-size: 20px;
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+      font-weight: 800;
+      margin: 0 0 8px;
+    }
+
+    .sheet-sub {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+
+    .proof-list {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .proof-item {
+      border-radius: 16px;
+      padding: 13px 14px;
+      background: rgba(255,255,255,0.025);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .proof-item strong {
+      color: var(--text);
+    }
+
+    .offline-banner {
+      display: none;
+      margin-bottom: 12px;
+      border-radius: 16px;
+      padding: 12px 14px;
+      background: var(--danger-soft);
+      border: 1px solid rgba(255,122,146,0.12);
+      color: #ffd6de;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .offline-banner.show {
+      display: block;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
     @media (max-width: 560px) {
       .app {
         padding:
@@ -581,6 +928,10 @@
         padding: 16px;
       }
 
+      .tabs {
+        grid-template-columns: 1fr;
+      }
+
       .wheel-wrap {
         width: min(100%, 270px);
       }
@@ -592,12 +943,21 @@
       .section-title {
         font-size: 20px;
       }
+
+      .sheet {
+        border-radius: 24px;
+        padding: 16px;
+      }
     }
   </style>
 </head>
 <body>
   <div class="app">
     <div class="shell">
+      <div id="offlineBanner" class="offline-banner">
+        Нет соединения с сетью. Некоторые действия могут быть временно недоступны.
+      </div>
+
       <section class="hero">
         <div class="eyebrow">Daily spin</div>
         <h1>Колесо бонусов iGadget</h1>
@@ -605,10 +965,15 @@
           Один запуск в день. Получайте скидку, бонус или подарок,
           а результат сразу сохраняется на сервере.
         </p>
+        <div class="hero-proof">
+          Результат определяется на сервере и сохраняется до завершения анимации.
+        </div>
       </section>
 
       <div class="tabs">
         <button class="tab active" id="tabWheel">Колесо</button>
+        <button class="tab" id="tabHistory">Мои призы</button>
+        <button class="tab" id="tabFaq">FAQ</button>
         <button class="tab hidden" id="tabAdmin">Админка</button>
       </div>
 
@@ -625,16 +990,17 @@
             <button id="spinBtn" class="center-btn">КРУТИТЬ</button>
           </div>
 
-          <div class="hint">Результат фиксируется на сервере до завершения анимации.</div>
+          <div class="hint">Нажатие запускает запрос к серверу, а затем анимацию результата.</div>
           <div class="status" id="status">Нажмите кнопку, чтобы начать.</div>
 
           <div class="result" id="resultBox">
             <div class="section">
-              <div class="kicker">Ваш результат</div>
-              <h3 class="section-title">Приз получен</h3>
-              <div class="section-desc">
-                <div class="result-prize" id="resultPrize">—</div>
-                <div id="resultDesc">—</div>
+              <div class="result-hero">
+                <div class="result-badge">Выигрыш сохранён</div>
+                <div>
+                  <div class="result-prize" id="resultPrize">—</div>
+                  <div class="result-sub" id="resultDesc">—</div>
+                </div>
               </div>
 
               <div class="code-box">
@@ -642,11 +1008,14 @@
                 <div class="code" id="resultCode">—</div>
               </div>
 
-              <div class="expires" id="resultExpires">—</div>
+              <div style="text-align:center;">
+                <div class="expires" id="resultExpires">—</div>
+              </div>
 
               <div class="actions">
                 <button class="btn btn-primary" id="copyBtn">Скопировать код</button>
-                <button class="btn btn-secondary" id="closeBtn">Закрыть</button>
+                <button class="btn btn-secondary" id="detailsBtn">Детали приза</button>
+                <button class="btn btn-ghost" id="closeBtn">Закрыть</button>
               </div>
             </div>
           </div>
@@ -663,8 +1032,66 @@
                 <div class="timer" id="timer">--:--:--</div>
               </div>
 
-              <div class="last-prize" id="lastPrizeText"></div>
+              <div class="last-prize" id="lastPrizeWrap"></div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" id="panelHistory">
+        <div class="section">
+          <div class="kicker">Ваши результаты</div>
+          <h2 class="section-title">Мои призы</h2>
+          <div class="section-desc">
+            Здесь отображаются ваши последние выигрыши и статусы кодов.
+          </div>
+          <div class="history-list" id="historyList"></div>
+        </div>
+      </div>
+
+      <div class="panel" id="panelFaq">
+        <div class="section">
+          <div class="kicker">Правила</div>
+          <h2 class="section-title">Как это работает</h2>
+          <div class="section-desc">
+            Коротко и понятно: как крутить, как получить приз и что делать с кодом.
+          </div>
+
+          <div class="faq-list">
+            <details class="faq-item" open>
+              <summary>Сколько попыток даётся?</summary>
+              <div class="faq-content">
+                Одна попытка в сутки на пользователя. Новая попытка становится доступна после смены дня.
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>Как определяется результат?</summary>
+              <div class="faq-content">
+                Результат определяется на сервере. Анимация колеса только визуально показывает уже сохранённый исход.
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>Как использовать выигрыш?</summary>
+              <div class="faq-content">
+                После спина вы получаете код. Покажите его сотруднику магазина или используйте по правилам акции.
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>Есть ли срок действия у приза?</summary>
+              <div class="faq-content">
+                Да, часть призов может иметь ограниченный срок действия. Актуальная дата показывается после выигрыша.
+              </div>
+            </details>
+
+            <details class="faq-item">
+              <summary>Почему я не могу крутить повторно?</summary>
+              <div class="faq-content">
+                Если дневная попытка уже использована, интерфейс покажет таймер до следующего открытия.
+              </div>
+            </details>
           </div>
         </div>
       </div>
@@ -737,13 +1164,33 @@
     </div>
   </div>
 
+  <div class="overlay" id="detailsOverlay">
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <h3 class="sheet-title" id="sheetTitle">Детали приза</h3>
+      <div class="sheet-sub" id="sheetSub">Подробная информация о вашем выигрыше.</div>
+
+      <div class="proof-list">
+        <div class="proof-item"><strong>Код:</strong> <span id="sheetCode">—</span></div>
+        <div class="proof-item"><strong>Описание:</strong> <span id="sheetDesc">—</span></div>
+        <div class="proof-item"><strong>Срок действия:</strong> <span id="sheetExpires">—</span></div>
+        <div class="proof-item"><strong>Правило:</strong> Результат уже сохранён на сервере и не меняется после окончания анимации.</div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" id="sheetCopyBtn">Скопировать код</button>
+        <button class="btn btn-secondary" id="sheetCloseBtn">Закрыть</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     const tg = window.Telegram.WebApp;
     tg.ready();
     tg.expand();
 
     const API_BASE = "https://telegram-wheel-bot-production-764c.up.railway.app";
-    const BUILD_VERSION = "polished-dark-v4-no-topbar";
+    const BUILD_VERSION = "v5-product-polish";
 
     const sounds = {
       tick: new Audio("https://cdn.freesound.org/previews/240/240776_4107740-lq.mp3"),
@@ -757,6 +1204,84 @@
 
     let soundUnlocked = false;
     let tickInterval = null;
+    let prizes = [];
+    let currentRotation = 0;
+    let isSpinning = false;
+    let countdownInterval = null;
+    let historyCache = [];
+    let currentView = "wheel";
+    let currentPrizePayload = null;
+    let overlayOpen = false;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const canvas = document.getElementById("wheel");
+    const ctx = canvas.getContext("2d");
+    const spinBtn = document.getElementById("spinBtn");
+    const statusEl = document.getElementById("status");
+
+    const resultBox = document.getElementById("resultBox");
+    const resultPrize = document.getElementById("resultPrize");
+    const resultDesc = document.getElementById("resultDesc");
+    const resultCode = document.getElementById("resultCode");
+    const resultExpires = document.getElementById("resultExpires");
+    const copyBtn = document.getElementById("copyBtn");
+    const closeBtn = document.getElementById("closeBtn");
+    const detailsBtn = document.getElementById("detailsBtn");
+
+    const cooldownBox = document.getElementById("cooldownBox");
+    const cooldownText = document.getElementById("cooldownText");
+    const timerEl = document.getElementById("timer");
+    const lastPrizeWrap = document.getElementById("lastPrizeWrap");
+
+    const tabWheel = document.getElementById("tabWheel");
+    const tabHistory = document.getElementById("tabHistory");
+    const tabFaq = document.getElementById("tabFaq");
+    const tabAdmin = document.getElementById("tabAdmin");
+
+    const panelWheel = document.getElementById("panelWheel");
+    const panelHistory = document.getElementById("panelHistory");
+    const panelFaq = document.getElementById("panelFaq");
+    const panelAdmin = document.getElementById("panelAdmin");
+
+    const historyList = document.getElementById("historyList");
+    const offlineBanner = document.getElementById("offlineBanner");
+
+    const adminBox = document.getElementById("adminBox");
+    const adminStatus = document.getElementById("adminStatus");
+    const adminPrizeList = document.getElementById("adminPrizeList");
+
+    const newTitle = document.getElementById("newTitle");
+    const newShort = document.getElementById("newShort");
+    const newDesc = document.getElementById("newDesc");
+    const newWeight = document.getElementById("newWeight");
+    const newActive = document.getElementById("newActive");
+    const addPrizeBtn = document.getElementById("addPrizeBtn");
+
+    const codeActionInput = document.getElementById("codeActionInput");
+    const checkCodeBtn = document.getElementById("checkCodeBtn");
+    const redeemCodeBtn = document.getElementById("redeemCodeBtn");
+    const codeActionStatus = document.getElementById("codeActionStatus");
+
+    const detailsOverlay = document.getElementById("detailsOverlay");
+    const sheetTitle = document.getElementById("sheetTitle");
+    const sheetSub = document.getElementById("sheetSub");
+    const sheetCode = document.getElementById("sheetCode");
+    const sheetDesc = document.getElementById("sheetDesc");
+    const sheetExpires = document.getElementById("sheetExpires");
+    const sheetCopyBtn = document.getElementById("sheetCopyBtn");
+    const sheetCloseBtn = document.getElementById("sheetCloseBtn");
+
+    function safeHapticSelection() {
+      try { tg.HapticFeedback?.selectionChanged(); } catch (e) {}
+    }
+
+    function safeHapticImpact(style = "light") {
+      try { tg.HapticFeedback?.impactOccurred(style); } catch (e) {}
+    }
+
+    function safeHapticNotification(type = "success") {
+      try { tg.HapticFeedback?.notificationOccurred(type); } catch (e) {}
+    }
 
     async function unlockSounds() {
       if (soundUnlocked) return;
@@ -781,6 +1306,7 @@
     }
 
     function startTickLoop() {
+      if (reduceMotion) return;
       stopTickLoop();
       tickInterval = setInterval(() => playSound("tick"), 280);
     }
@@ -792,54 +1318,28 @@
       }
     }
 
+    function setStatus(text, type = "") {
+      statusEl.textContent = text;
+      statusEl.classList.remove("error", "success");
+      if (type) statusEl.classList.add(type);
+    }
+
+    function updateOfflineState() {
+      const offline = !navigator.onLine;
+      offlineBanner.classList.toggle("show", offline);
+      if (offline) {
+        setStatus("Нет соединения с интернетом. Попробуйте позже.", "error");
+      }
+    }
+
+    window.addEventListener("online", updateOfflineState);
+    window.addEventListener("offline", updateOfflineState);
+
     function updateSafeAreaFallback() {
       const stableHeight = tg.viewportStableHeight || window.innerHeight;
       const diff = Math.max(0, window.innerHeight - stableHeight);
       document.documentElement.style.setProperty("--tg-safe-area-inset-bottom", diff + "px");
     }
-
-    const canvas = document.getElementById("wheel");
-    const ctx = canvas.getContext("2d");
-    const spinBtn = document.getElementById("spinBtn");
-    const statusEl = document.getElementById("status");
-
-    const resultBox = document.getElementById("resultBox");
-    const resultPrize = document.getElementById("resultPrize");
-    const resultDesc = document.getElementById("resultDesc");
-    const resultCode = document.getElementById("resultCode");
-    const resultExpires = document.getElementById("resultExpires");
-    const copyBtn = document.getElementById("copyBtn");
-    const closeBtn = document.getElementById("closeBtn");
-
-    const cooldownBox = document.getElementById("cooldownBox");
-    const cooldownText = document.getElementById("cooldownText");
-    const timerEl = document.getElementById("timer");
-    const lastPrizeText = document.getElementById("lastPrizeText");
-
-    const tabWheel = document.getElementById("tabWheel");
-    const tabAdmin = document.getElementById("tabAdmin");
-    const panelWheel = document.getElementById("panelWheel");
-    const panelAdmin = document.getElementById("panelAdmin");
-    const adminBox = document.getElementById("adminBox");
-    const adminStatus = document.getElementById("adminStatus");
-    const adminPrizeList = document.getElementById("adminPrizeList");
-
-    const newTitle = document.getElementById("newTitle");
-    const newShort = document.getElementById("newShort");
-    const newDesc = document.getElementById("newDesc");
-    const newWeight = document.getElementById("newWeight");
-    const newActive = document.getElementById("newActive");
-    const addPrizeBtn = document.getElementById("addPrizeBtn");
-
-    const codeActionInput = document.getElementById("codeActionInput");
-    const checkCodeBtn = document.getElementById("checkCodeBtn");
-    const redeemCodeBtn = document.getElementById("redeemCodeBtn");
-    const codeActionStatus = document.getElementById("codeActionStatus");
-
-    let prizes = [];
-    let currentRotation = 0;
-    let isSpinning = false;
-    let countdownInterval = null;
 
     function applyTelegramTheme() {
       const theme = tg.themeParams || {};
@@ -849,29 +1349,72 @@
       drawWheel(prizes, currentRotation);
     }
 
-    tg.onEvent("themeChanged", applyTelegramTheme);
-    tg.onEvent("viewportChanged", updateSafeAreaFallback);
+    function updateBackButton() {
+      try {
+        if (overlayOpen) {
+          tg.BackButton.show();
+          return;
+        }
+        if (currentView === "wheel") {
+          tg.BackButton.hide();
+        } else {
+          tg.BackButton.show();
+        }
+      } catch (e) {}
+    }
+
+    function onTelegramBack() {
+      if (overlayOpen) {
+        closeDetailsOverlay();
+        return;
+      }
+      if (currentView !== "wheel") {
+        switchTab("wheel");
+      }
+    }
+
+    try {
+      tg.onEvent("themeChanged", applyTelegramTheme);
+      tg.onEvent("viewportChanged", updateSafeAreaFallback);
+      tg.BackButton.onClick(onTelegramBack);
+    } catch (e) {}
+
     window.addEventListener("resize", updateSafeAreaFallback);
 
     function switchTab(name) {
-      const wheelActive = name === "wheel";
-      tabWheel.classList.toggle("active", wheelActive);
-      tabAdmin.classList.toggle("active", !wheelActive);
-      panelWheel.classList.toggle("active", wheelActive);
-      panelAdmin.classList.toggle("active", !wheelActive);
+      currentView = name;
+      safeHapticSelection();
+
+      tabWheel.classList.toggle("active", name === "wheel");
+      tabHistory.classList.toggle("active", name === "history");
+      tabFaq.classList.toggle("active", name === "faq");
+      tabAdmin.classList.toggle("active", name === "admin");
+
+      panelWheel.classList.toggle("active", name === "wheel");
+      panelHistory.classList.toggle("active", name === "history");
+      panelFaq.classList.toggle("active", name === "faq");
+      panelAdmin.classList.toggle("active", name === "admin");
+
+      updateBackButton();
+
+      if (name === "history") {
+        loadHistory();
+      }
     }
 
     tabWheel.addEventListener("click", () => switchTab("wheel"));
+    tabHistory.addEventListener("click", () => switchTab("history"));
+    tabFaq.addEventListener("click", () => switchTab("faq"));
     tabAdmin.addEventListener("click", () => switchTab("admin"));
 
     function getSectorPalette() {
       return [
-        "#2fbf71",
-        "#f46d83",
-        "#5b9df3",
-        "#e6ab46",
-        "#7a64e0",
-        "#a56fd6"
+        "#31be73",
+        "#ee718a",
+        "#5f9ff1",
+        "#d9a043",
+        "#7c68de",
+        "#a36fd0"
       ];
     }
 
@@ -885,6 +1428,7 @@
         .replace(/бонусами/gi, "бонус")
         .replace(/бесплатная доставка/gi, "доставка")
         .replace(/доставка бесплатно/gi, "доставка")
+        .replace(/на /gi, "")
         .trim();
 
       const words = cleaned.split(" ").filter(Boolean);
@@ -982,8 +1526,8 @@
           center + Math.cos(end) * radius,
           center + Math.sin(end) * radius
         );
-        grad.addColorStop(0, shadeColor(color, -6));
-        grad.addColorStop(1, shadeColor(color, 2));
+        grad.addColorStop(0, shadeColor(color, -8));
+        grad.addColorStop(1, shadeColor(color, 1));
 
         ctx.beginPath();
         ctx.moveTo(center, center);
@@ -1064,6 +1608,101 @@
       drawWheel(prizes, currentRotation);
     }
 
+    async function loadHistory(force = false) {
+      if (historyCache.length && !force) {
+        renderHistory(historyCache);
+        return;
+      }
+
+      historyList.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-icon">…</div>
+          <div class="empty-title">Загружаем историю</div>
+          <div class="empty-text">Подождите немного, получаем ваши последние результаты.</div>
+        </div>
+      `;
+
+      try {
+        const data = await apiPost("/history", {
+          init_data: tg.initData || ""
+        });
+
+        if (!data.ok || !Array.isArray(data.items)) {
+          renderHistory([]);
+          return;
+        }
+
+        historyCache = data.items;
+        renderHistory(historyCache);
+      } catch (e) {
+        renderHistory([]);
+      }
+    }
+
+    function renderHistory(items) {
+      historyList.innerHTML = "";
+
+      if (!items.length) {
+        historyList.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">🎁</div>
+            <div class="empty-title">Пока нет сохранённых выигрышей</div>
+            <div class="empty-text">После первого успешного спина здесь появятся ваши коды и статусы призов.</div>
+          </div>
+        `;
+        return;
+      }
+
+      items.forEach((item) => {
+        const statusClass = item.redeemed ? "badge-off" : "badge-ok";
+        const statusText = item.redeemed ? "Погашен" : "Активен";
+        const expiresText = item.expires_at_text || item.expires_at || "Не указан";
+
+        const card = document.createElement("div");
+        card.className = "history-item";
+        card.innerHTML = `
+          <div class="history-top">
+            <div>
+              <div class="history-name">${item.prize_title || "Приз"}</div>
+              <div class="history-meta">${item.created_at_text || item.created_at || "Дата не указана"}</div>
+            </div>
+            <div class="badge ${statusClass}">${statusText}</div>
+          </div>
+          <div class="history-desc">${item.prize_description || "Описание отсутствует."}</div>
+          <div class="history-actions">
+            <div class="badge badge-warn">До: ${expiresText}</div>
+            <div class="badge badge-ok">Код: ${item.code || "—"}</div>
+          </div>
+          <div class="history-actions">
+            <button class="mini-btn" data-history-copy="${item.code || ""}">Скопировать код</button>
+            <button class="mini-btn" data-history-open='${JSON.stringify({
+              title: item.prize_title || "Приз",
+              description: item.prize_description || "Описание отсутствует.",
+              code: item.code || "—",
+              expires: expiresText
+            }).replace(/'/g, "&apos;")}'>Подробнее</button>
+          </div>
+        `;
+        historyList.appendChild(card);
+      });
+
+      historyList.querySelectorAll("[data-history-copy]").forEach(btn => {
+        btn.addEventListener("click", async () => {
+          const code = btn.getAttribute("data-history-copy");
+          if (!code) return;
+          await copyCodeValue(code);
+        });
+      });
+
+      historyList.querySelectorAll("[data-history-open]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const raw = btn.getAttribute("data-history-open").replace(/&apos;/g, "'");
+          const payload = JSON.parse(raw);
+          openDetailsOverlay(payload);
+        });
+      });
+    }
+
     function findPrizeIndexById(prizeId) {
       return prizes.findIndex(p => Number(p.id) === Number(prizeId));
     }
@@ -1072,6 +1711,16 @@
       return new Promise((resolve) => {
         const index = findPrizeIndexById(prizeId);
         if (index < 0) {
+          resolve();
+          return;
+        }
+
+        if (reduceMotion) {
+          const count = prizes.length;
+          const slice = 360 / count;
+          const targetCenter = index * slice + slice / 2;
+          currentRotation = (360 - targetCenter) % 360;
+          drawWheel(prizes, currentRotation);
           resolve();
           return;
         }
@@ -1111,18 +1760,62 @@
       });
     }
 
+    function openDetailsOverlay(payload) {
+      currentPrizePayload = payload;
+      overlayOpen = true;
+
+      sheetTitle.textContent = payload.title || "Детали приза";
+      sheetSub.textContent = "Подробная информация о вашем выигрыше.";
+      sheetCode.textContent = payload.code || "—";
+      sheetDesc.textContent = payload.description || "Описание отсутствует.";
+      sheetExpires.textContent = payload.expires || "Не указан";
+
+      detailsOverlay.classList.add("show");
+      safeHapticImpact("light");
+      updateBackButton();
+    }
+
+    function closeDetailsOverlay() {
+      overlayOpen = false;
+      detailsOverlay.classList.remove("show");
+      updateBackButton();
+    }
+
+    function renderLastPrizeCard(data) {
+      lastPrizeWrap.innerHTML = "";
+
+      if (!data.last_code && !data.last_prize_title) return;
+
+      const card = document.createElement("div");
+      card.className = "mini-card";
+      card.innerHTML = `
+        <div class="mini-card-title">${data.last_prize_title || "Последний приз"}</div>
+        <div class="mini-card-desc">
+          Код: ${data.last_code || "—"}<br>
+          ${data.last_expires_at_text ? "Действует до: " + data.last_expires_at_text : "Срок действия уточняйте у сотрудника."}
+        </div>
+      `;
+      lastPrizeWrap.appendChild(card);
+    }
+
     function showResult(data) {
       cooldownBox.classList.remove("show");
       resultBox.classList.add("show");
 
-      resultPrize.textContent = data.prize_title || "Ваш приз";
-      resultDesc.textContent = data.prize_description || "";
-      resultCode.textContent = data.code || "—";
-      resultExpires.textContent = data.expires_at_text
-        ? `Действует до: ${data.expires_at_text}`
-        : "Срок действия уточняйте у сотрудника.";
+      currentPrizePayload = {
+        title: data.prize_title || "Ваш приз",
+        description: data.prize_description || "",
+        code: data.code || "—",
+        expires: data.expires_at_text ? `До ${data.expires_at_text}` : "Срок действия уточняйте у сотрудника."
+      };
 
-      statusEl.textContent = "Готово: ваш выигрыш сохранён.";
+      resultPrize.textContent = currentPrizePayload.title;
+      resultDesc.textContent = currentPrizePayload.description;
+      resultCode.textContent = currentPrizePayload.code;
+      resultExpires.textContent = currentPrizePayload.expires;
+
+      setStatus("Готово: ваш выигрыш сохранён.", "success");
+      historyCache = [];
     }
 
     function getNextMidnightMSK() {
@@ -1146,9 +1839,7 @@
       cooldownBox.classList.add("show");
 
       cooldownText.textContent = data.error || "Сегодня вы уже использовали попытку.";
-      lastPrizeText.textContent = data.last_code
-        ? `Ваш прошлый выигрыш: ${data.last_prize_title} · код ${data.last_code}`
-        : "";
+      renderLastPrizeCard(data);
 
       if (countdownInterval) clearInterval(countdownInterval);
 
@@ -1162,16 +1853,16 @@
     }
 
     async function spinWheel() {
-      if (isSpinning) return;
+      if (isSpinning || !navigator.onLine) return;
 
       await unlockSounds();
-      playSound("tick");
+      safeHapticImpact("light");
 
       isSpinning = true;
       spinBtn.disabled = true;
       resultBox.classList.remove("show");
       cooldownBox.classList.remove("show");
-      statusEl.textContent = "Запрашиваем результат у сервера...";
+      setStatus("Запрашиваем результат у сервера...");
 
       try {
         const data = await apiPost("/spin", {
@@ -1181,7 +1872,8 @@
         if (!data.ok && data.cooldown) {
           stopTickLoop();
           playSound("error");
-          statusEl.textContent = "На сегодня попытка уже израсходована.";
+          safeHapticNotification("warning");
+          setStatus("На сегодня попытка уже израсходована.", "error");
           startCooldown(data);
           return;
         }
@@ -1189,8 +1881,8 @@
         if (!data.ok) {
           stopTickLoop();
           playSound("error");
-          statusEl.textContent = data.error || "Произошла ошибка.";
-          tg.HapticFeedback?.notificationOccurred("error");
+          safeHapticNotification("error");
+          setStatus(data.error || "Произошла ошибка.", "error");
           return;
         }
 
@@ -1198,17 +1890,31 @@
         await animateSpinToPrize(data.prize_id);
         stopTickLoop();
         playSound("win");
+        safeHapticNotification("success");
         showResult(data);
-        tg.HapticFeedback?.notificationOccurred("success");
       } catch (e) {
         stopTickLoop();
         playSound("error");
-        statusEl.textContent = "Ошибка соединения с сервером.";
-        tg.HapticFeedback?.notificationOccurred("error");
+        safeHapticNotification("error");
+        setStatus("Ошибка соединения с сервером.", "error");
       } finally {
         stopTickLoop();
         isSpinning = false;
         spinBtn.disabled = false;
+      }
+    }
+
+    async function copyCodeValue(code) {
+      if (!code || code === "—") return;
+
+      try {
+        await navigator.clipboard.writeText(code);
+        setStatus("Код скопирован.", "success");
+        safeHapticNotification("success");
+      } catch (e) {
+        setStatus("Не удалось скопировать код.", "error");
+        playSound("error");
+        safeHapticNotification("error");
       }
     }
 
@@ -1230,7 +1936,7 @@
               <div class="prize-name">${item.title}</div>
               <div class="prize-meta">ID: ${item.id} · Коротко: ${item.short || "—"}</div>
             </div>
-            <div class="badge ${item.active ? "badge-on" : "badge-off"}">
+            <div class="badge ${item.active ? "badge-ok" : "badge-off"}">
               ${item.active ? "Включен" : "Выключен"}
             </div>
           </div>
@@ -1469,6 +2175,7 @@
       if (!data.ok) {
         codeActionStatus.textContent = data.error || "Код не найден.";
         playSound("error");
+        safeHapticNotification("error");
         return;
       }
 
@@ -1493,45 +2200,42 @@
       if (!data.ok) {
         codeActionStatus.textContent = data.error || "Не удалось погасить код.";
         playSound("error");
+        safeHapticNotification("error");
         return;
       }
 
       playSound("win");
+      safeHapticNotification("success");
       codeActionStatus.textContent =
         `Код ${data.code} погашен. Приз: ${data.prize_title}.`;
     });
 
     spinBtn.addEventListener("click", spinWheel);
-
-    copyBtn.addEventListener("click", async () => {
-      const code = resultCode.textContent.trim();
-      if (!code || code === "—") return;
-
-      try {
-        await navigator.clipboard.writeText(code);
-        statusEl.textContent = "Код скопирован.";
-        tg.HapticFeedback?.notificationOccurred("success");
-      } catch (e) {
-        statusEl.textContent = "Не удалось скопировать код.";
-        playSound("error");
-      }
+    copyBtn.addEventListener("click", () => copyCodeValue(resultCode.textContent.trim()));
+    sheetCopyBtn.addEventListener("click", () => copyCodeValue(sheetCode.textContent.trim()));
+    closeBtn.addEventListener("click", () => resultBox.classList.remove("show"));
+    detailsBtn.addEventListener("click", () => {
+      if (currentPrizePayload) openDetailsOverlay(currentPrizePayload);
     });
-
-    closeBtn.addEventListener("click", () => {
-      resultBox.classList.remove("show");
+    sheetCloseBtn.addEventListener("click", closeDetailsOverlay);
+    detailsOverlay.addEventListener("click", (e) => {
+      if (e.target === detailsOverlay) closeDetailsOverlay();
     });
 
     async function initApp() {
       updateSafeAreaFallback();
+      updateOfflineState();
 
       try {
         await loadPrizes();
+        setStatus("Нажмите кнопку, чтобы начать.");
       } catch (e) {
-        statusEl.textContent = "Не удалось загрузить список призов.";
+        setStatus("Не удалось загрузить список призов.", "error");
       }
 
       await checkAdminAccess();
       applyTelegramTheme();
+      updateBackButton();
     }
 
     initApp();
