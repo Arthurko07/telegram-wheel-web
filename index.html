@@ -527,6 +527,7 @@
     let mainButtonBound = false;
     let countdownInterval = null;
     let highlightedPrizeIndex = null;
+    let lastPointerSegmentIndex = null;
 
     const lightPalette = [
       '#7fb3ff', '#f7a35c', '#ffd166', '#8ecae6',
@@ -564,6 +565,47 @@
 
     function getCssVar(name) {
       return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    }
+
+    function normalizeAngle(value) {
+      const twoPi = Math.PI * 2;
+      return ((value % twoPi) + twoPi) % twoPi;
+    }
+
+    function getPointerSegmentIndex() {
+      if (!prizes.length) return null;
+
+      const count = prizes.length;
+      const arc = (Math.PI * 2) / count;
+      const pointerAngle = -Math.PI / 2;
+
+      const wheelAngleAtPointer = normalizeAngle(pointerAngle - rotation);
+      const index = Math.floor(wheelAngleAtPointer / arc);
+
+      return Math.max(0, Math.min(count - 1, index));
+    }
+
+    function triggerTickFeedback() {
+      if (tg && tg.HapticFeedback) {
+        try {
+          tg.HapticFeedback.selectionChanged();
+        } catch (e) {}
+      }
+    }
+
+    function handleTickIfNeeded() {
+      const currentIndex = getPointerSegmentIndex();
+      if (currentIndex === null) return;
+
+      if (lastPointerSegmentIndex === null) {
+        lastPointerSegmentIndex = currentIndex;
+        return;
+      }
+
+      if (currentIndex !== lastPointerSegmentIndex) {
+        triggerTickFeedback();
+        lastPointerSegmentIndex = currentIndex;
+      }
     }
 
     function drawSector(start, end, fillColor, strokeColor, isHighlighted) {
@@ -780,6 +822,8 @@
       const duration = 4300;
       const startTime = performance.now();
 
+      lastPointerSegmentIndex = getPointerSegmentIndex();
+
       function frame(now) {
         const elapsed = now - startTime;
         const t = Math.min(elapsed / duration, 1);
@@ -787,12 +831,14 @@
 
         rotation = startRotation + (endRotation - startRotation) * eased;
         drawWheel();
+        handleTickIfNeeded();
 
         if (t < 1) {
           requestAnimationFrame(frame);
         } else {
           rotation = normalizeRotation(endRotation);
           drawWheel();
+          lastPointerSegmentIndex = getPointerSegmentIndex();
           finalCallback();
         }
       }
@@ -879,6 +925,7 @@
 
       spinning = true;
       highlightedPrizeIndex = null;
+      lastPointerSegmentIndex = null;
       drawWheel();
 
       resultCard.classList.remove('show');
