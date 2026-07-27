@@ -18,7 +18,6 @@
       --blue-soft:#dff0ff;
       --gold:#ffd76a;
       --gold-dark:#f4b126;
-      --success:#16a34a;
       --shadow:0 12px 30px rgba(15,23,40,.08);
       --radius-xl:28px;
       --radius-lg:22px;
@@ -252,6 +251,52 @@
       line-height:1.45;
       padding:0 8px 4px;
     }
+
+    .cooldown-box {
+      display:none;
+      padding:18px;
+      background:linear-gradient(180deg,#eef6ff 0%, #dfeeff 100%);
+      border:1px solid #c7defe;
+      border-radius:var(--radius-xl);
+      box-shadow:var(--shadow);
+    }
+
+    .cooldown-box.show {
+      display:block;
+    }
+
+    .cooldown-title {
+      font-size:13px;
+      font-weight:800;
+      color:#245ea8;
+      margin-bottom:8px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+
+    .cooldown-box h3 {
+      margin:0 0 8px;
+      font-size:24px;
+      line-height:1.1;
+      font-weight:900;
+      color:#173d6b;
+    }
+
+    .cooldown-box p {
+      margin:0;
+      font-size:15px;
+      line-height:1.5;
+      color:#365b86;
+    }
+
+    .last-prize {
+      margin-top:12px;
+      padding:12px 14px;
+      background:rgba(255,255,255,.72);
+      border-radius:16px;
+      font-size:14px;
+      color:#23476f;
+    }
   </style>
 </head>
 <body>
@@ -291,8 +336,15 @@
       </div>
     </section>
 
+    <section id="cooldownCard" class="cooldown-box">
+      <div class="cooldown-title">Лимит попытки</div>
+      <h3>Сегодня вы уже крутили колесо</h3>
+      <p id="cooldownText">Следующая попытка будет доступна позже.</p>
+      <div id="lastPrizeInfo" class="last-prize" style="display:none;"></div>
+    </section>
+
     <div class="footer-note">
-      Один результат — один код. Сохраните его до обращения к сотруднику.
+      Одна попытка доступна один раз в сутки.
     </div>
   </div>
 
@@ -316,6 +368,9 @@
     const resultTitle = document.getElementById('resultTitle');
     const resultText = document.getElementById('resultText');
     const resultCode = document.getElementById('resultCode');
+    const cooldownCard = document.getElementById('cooldownCard');
+    const cooldownText = document.getElementById('cooldownText');
+    const lastPrizeInfo = document.getElementById('lastPrizeInfo');
 
     const labels = [
       'iGadget', 'Bonus', 'Sale', 'Gift',
@@ -426,13 +481,7 @@
         throw new Error('Backend error');
       }
 
-      const data = await response.json();
-
-      if (!data.ok) {
-        throw new Error(data.error || 'Spin failed');
-      }
-
-      return data;
+      return await response.json();
     }
 
     function animateSpin(finalCallback) {
@@ -465,16 +514,61 @@
       requestAnimationFrame(frame);
     }
 
+    function showCooldown(data) {
+      resultCard.classList.remove('show');
+      cooldownCard.classList.add('show');
+      cooldownText.textContent = data.error || 'Сегодня вы уже использовали попытку.';
+      statusEl.textContent = 'Попытка на сегодня уже использована.';
+      spinBtn.disabled = true;
+
+      if (data.last_prize_title || data.last_code) {
+        lastPrizeInfo.style.display = 'block';
+        lastPrizeInfo.innerHTML =
+          `Последний приз: <b>${data.last_prize_title || '—'}</b><br>Код: <b>${data.last_code || '—'}</b>`;
+      } else {
+        lastPrizeInfo.style.display = 'none';
+        lastPrizeInfo.innerHTML = '';
+      }
+
+      if (tg && tg.MainButton) {
+        try {
+          tg.MainButton.setText('Попытка уже использована');
+          tg.MainButton.disable();
+        } catch (e) {}
+      }
+
+      if (tg && tg.HapticFeedback) {
+        try {
+          tg.HapticFeedback.notificationOccurred('warning');
+        } catch (e) {}
+      }
+    }
+
     async function spin() {
       if (spinning) return;
 
       spinning = true;
       resultCard.classList.remove('show');
+      cooldownCard.classList.remove('show');
       statusEl.textContent = 'Определяем ваш бонус...';
       setButtonLoading(true);
 
       try {
         const result = await requestSpinResult();
+
+        if (!result.ok) {
+          spinning = false;
+          setButtonLoading(false);
+
+          if (result.cooldown) {
+            showCooldown(result);
+            return;
+          }
+
+          statusEl.textContent = result.error || 'Ошибка. Попробуйте позже.';
+          alert(result.error || 'Не удалось получить результат.');
+          return;
+        }
 
         statusEl.textContent = 'Колесо крутится...';
 
@@ -482,10 +576,12 @@
           resultTitle.textContent = result.prize_title;
           resultText.textContent = result.prize_description;
           resultCode.textContent = result.code;
+          cooldownCard.classList.remove('show');
           resultCard.classList.add('show');
           statusEl.textContent = 'Готово! Покажите код сотруднику.';
           spinning = false;
           setButtonLoading(false);
+          spinBtn.disabled = true;
 
           if (tg && tg.HapticFeedback) {
             try {
@@ -495,7 +591,8 @@
 
           if (tg && tg.MainButton) {
             try {
-              tg.MainButton.setText('Код получен');
+              tg.MainButton.setText('Попытка использована');
+              tg.MainButton.disable();
             } catch (e) {}
           }
         });
