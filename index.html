@@ -16,16 +16,10 @@
       --blue:#4ea7ff;
       --blue-dark:#2f80ed;
       --blue-soft:#dff0ff;
-      --gold:#ffd76a;
-      --gold-dark:#f4b126;
       --shadow:0 12px 30px rgba(15,23,40,.08);
       --radius-xl:28px;
-      --radius-lg:22px;
-      --radius-md:18px;
     }
-
     * { box-sizing:border-box; }
-
     html, body {
       margin:0;
       padding:0;
@@ -34,11 +28,7 @@
       color:var(--text);
       min-height:100%;
     }
-
-    body {
-      min-height:100vh;
-    }
-
+    body { min-height:100vh; }
     .app {
       max-width:480px;
       margin:0 auto;
@@ -48,18 +38,13 @@
       flex-direction:column;
       gap:16px;
     }
-
     .card {
       background:var(--card);
       border:1px solid var(--line);
       border-radius:var(--radius-xl);
       box-shadow:var(--shadow);
     }
-
-    .hero {
-      padding:20px 18px;
-    }
-
+    .hero { padding:20px 18px; }
     .hero-badge {
       display:inline-flex;
       align-items:center;
@@ -72,7 +57,6 @@
       font-weight:700;
       margin-bottom:12px;
     }
-
     .hero h1 {
       margin:0;
       font-size:30px;
@@ -80,26 +64,22 @@
       font-weight:900;
       letter-spacing:-0.02em;
     }
-
     .hero p {
       margin:10px 0 0;
       color:var(--muted);
       font-size:15px;
       line-height:1.5;
     }
-
     .wheel-card {
       padding:18px 14px 16px;
       text-align:center;
     }
-
     .wheel-wrap {
       position:relative;
       width:min(88vw,360px);
       height:min(88vw,360px);
       margin:4px auto 12px;
     }
-
     .pointer {
       position:absolute;
       left:50%;
@@ -113,14 +93,12 @@
       z-index:5;
       filter:drop-shadow(0 4px 8px rgba(0,0,0,.15));
     }
-
     canvas {
       display:block;
       width:100%;
       height:100%;
       border-radius:50%;
     }
-
     .wheel-center {
       position:absolute;
       left:50%;
@@ -142,7 +120,6 @@
       color:#183b63;
       z-index:4;
     }
-
     .spin-btn {
       width:100%;
       border:none;
@@ -156,23 +133,17 @@
       box-shadow:0 14px 24px rgba(47,128,237,.28);
       transition:transform .15s ease, opacity .15s ease;
     }
-
-    .spin-btn:active {
-      transform:translateY(1px) scale(.995);
-    }
-
+    .spin-btn:active { transform:translateY(1px) scale(.995); }
     .spin-btn:disabled {
       opacity:.65;
       cursor:not-allowed;
       transform:none;
     }
-
     .status {
       margin-top:12px;
       font-size:13px;
       color:var(--muted);
     }
-
     .result {
       display:none;
       padding:18px;
@@ -181,11 +152,7 @@
       border-radius:var(--radius-xl);
       box-shadow:var(--shadow);
     }
-
-    .result.show {
-      display:block;
-    }
-
+    .result.show { display:block; }
     .result-label {
       font-size:13px;
       font-weight:800;
@@ -194,7 +161,6 @@
       text-transform:uppercase;
       letter-spacing:.08em;
     }
-
     .result h2 {
       margin:0 0 8px;
       font-size:28px;
@@ -202,14 +168,12 @@
       font-weight:900;
       color:#2f2410;
     }
-
     .result p {
       margin:0;
       font-size:15px;
       line-height:1.5;
       color:#6c5420;
     }
-
     .code-box {
       margin-top:14px;
       background:#fff;
@@ -218,7 +182,6 @@
       padding:16px 14px;
       text-align:center;
     }
-
     .code-title {
       font-size:12px;
       color:#8b6b22;
@@ -227,7 +190,6 @@
       letter-spacing:.08em;
       margin-bottom:8px;
     }
-
     .code {
       font-size:28px;
       line-height:1;
@@ -236,14 +198,12 @@
       color:#1f2937;
       word-break:break-word;
     }
-
     .employee-note {
       margin-top:12px;
       font-size:14px;
       color:#6b7280;
       text-align:center;
     }
-
     .footer-note {
       text-align:center;
       color:var(--muted);
@@ -251,7 +211,6 @@
       line-height:1.45;
       padding:0 8px 4px;
     }
-
     .cooldown-box {
       display:none;
       padding:18px;
@@ -260,11 +219,7 @@
       border-radius:var(--radius-xl);
       box-shadow:var(--shadow);
     }
-
-    .cooldown-box.show {
-      display:block;
-    }
-
+    .cooldown-box.show { display:block; }
     .cooldown-title {
       font-size:13px;
       font-weight:800;
@@ -273,7 +228,6 @@
       text-transform:uppercase;
       letter-spacing:.08em;
     }
-
     .cooldown-box h3 {
       margin:0 0 8px;
       font-size:24px;
@@ -281,14 +235,12 @@
       font-weight:900;
       color:#173d6b;
     }
-
     .cooldown-box p {
       margin:0;
       font-size:15px;
       line-height:1.5;
       color:#365b86;
     }
-
     .last-prize {
       margin-top:12px;
       padding:12px 14px;
@@ -372,19 +324,13 @@
     const cooldownText = document.getElementById('cooldownText');
     const lastPrizeInfo = document.getElementById('lastPrizeInfo');
 
-    const labels = [
-      'iGadget', 'Bonus', 'Sale', 'Gift',
-      'Promo', 'Prize', 'Spin', 'Lucky'
-    ];
-
-    const colors = [
-      '#ffd166', '#8ecae6', '#90be6d', '#ffafcc',
-      '#cdb4db', '#7fb3ff', '#f4a261', '#95d5b2'
-    ];
+    const labels = ['iGadget', 'Bonus', 'Sale', 'Gift', 'Promo', 'Prize', 'Spin', 'Lucky'];
+    const colors = ['#ffd166', '#8ecae6', '#90be6d', '#ffafcc', '#cdb4db', '#7fb3ff', '#f4a261', '#95d5b2'];
 
     let rotation = 0;
     let spinning = false;
     let mainButtonBound = false;
+    const sessionId = 'sess_' + Math.random().toString(36).slice(2) + Date.now();
 
     function drawWheel() {
       const size = wheel.width;
@@ -466,14 +412,13 @@
       const payload = {
         user_id: user.id || null,
         username: user.username || '',
-        first_name: user.first_name || ''
+        first_name: user.first_name || '',
+        session_id: sessionId
       };
 
       const response = await fetch('https://telegram-wheel-bot-production-764c.up.railway.app/spin', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
 
@@ -517,7 +462,10 @@
     function showCooldown(data) {
       resultCard.classList.remove('show');
       cooldownCard.classList.add('show');
-      cooldownText.textContent = data.error || 'Сегодня вы уже использовали попытку.';
+      cooldownText.textContent =
+        (data.error || 'Сегодня вы уже использовали попытку.') +
+        (data.next_spin_at_text ? ` Следующая попытка: ${data.next_spin_at_text}.` : '');
+
       statusEl.textContent = 'Попытка на сегодня уже использована.';
       spinBtn.disabled = true;
 
@@ -534,12 +482,6 @@
         try {
           tg.MainButton.setText('Попытка уже использована');
           tg.MainButton.disable();
-        } catch (e) {}
-      }
-
-      if (tg && tg.HapticFeedback) {
-        try {
-          tg.HapticFeedback.notificationOccurred('warning');
         } catch (e) {}
       }
     }
