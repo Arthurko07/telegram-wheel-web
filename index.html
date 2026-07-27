@@ -2,10 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>iGadget Wheel</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
@@ -33,9 +30,7 @@
       --shadow: 0 10px 30px rgba(0,0,0,.35);
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -46,18 +41,10 @@
     }
 
     .wrap {
-      max-width: 520px;
+      max-width: 760px;
       margin: 0 auto;
       min-height: 100vh;
       padding: 18px 16px 28px;
-    }
-
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      box-shadow: var(--shadow);
-      padding: 18px;
     }
 
     .hero {
@@ -76,6 +63,46 @@
       color: var(--muted);
       margin: 0;
       line-height: 1.5;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .tab {
+      flex: 1;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      border-radius: 14px;
+      padding: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .tab.active {
+      background: var(--primary);
+      color: white;
+      border-color: transparent;
+    }
+
+    .panel {
+      display: none;
+    }
+
+    .panel.active {
+      display: block;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+      margin-bottom: 16px;
     }
 
     .wheel-box {
@@ -138,18 +165,19 @@
       color: var(--muted);
     }
 
-    .result {
+    .result, .cooldown, .admin-only {
       margin-top: 18px;
       display: none;
     }
 
-    .result.show {
+    .result.show, .cooldown.show, .admin-only.show {
       display: block;
     }
 
-    .result h2 {
+    .result h2, .cooldown h2, .section-title {
       margin: 0 0 10px;
       font-size: 22px;
+      font-weight: 800;
     }
 
     .prize {
@@ -192,20 +220,6 @@
       color: var(--muted);
       text-align: center;
       line-height: 1.5;
-    }
-
-    .cooldown {
-      margin-top: 18px;
-      display: none;
-    }
-
-    .cooldown.show {
-      display: block;
-    }
-
-    .cooldown h2 {
-      margin: 0 0 10px;
-      font-size: 22px;
     }
 
     .timer {
@@ -256,51 +270,215 @@
       border: 1px solid var(--border);
       color: var(--text);
     }
+
+    .btn-danger {
+      background: var(--danger);
+      color: white;
+    }
+
+    .admin-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .field label {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .field input, .field textarea, .field select {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 15px;
+    }
+
+    .field textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .prize-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .prize-item {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px;
+      background: rgba(127,127,127,.04);
+    }
+
+    .prize-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: start;
+      margin-bottom: 8px;
+    }
+
+    .prize-name {
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .badge {
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .badge-on {
+      background: rgba(34, 197, 94, .14);
+      color: #15803d;
+    }
+
+    .badge-off {
+      background: rgba(239, 68, 68, .14);
+      color: #b91c1c;
+    }
+
+    .prize-meta {
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    .prize-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .mini-btn {
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .admin-status {
+      margin-bottom: 12px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="hero">
       <h1 class="title">Колесо бонусов</h1>
-      <p class="subtitle">
-        Крутите колесо и получайте бонусы, скидки и подарки от iGadget.
-      </p>
+      <p class="subtitle">Скидки, подарки и бонусы от iGadget.</p>
     </div>
 
-    <div class="card">
-      <div class="wheel-box">
-        <div class="pointer"></div>
-        <canvas id="wheel" width="320" height="320"></canvas>
-        <button id="spinBtn" class="center-btn">КРУТИТЬ</button>
+    <div class="tabs">
+      <button class="tab active" id="tabWheel">Колесо</button>
+      <button class="tab hidden" id="tabAdmin">Админка</button>
+    </div>
+
+    <div class="panel active" id="panelWheel">
+      <div class="card">
+        <div class="wheel-box">
+          <div class="pointer"></div>
+          <canvas id="wheel" width="320" height="320"></canvas>
+          <button id="spinBtn" class="center-btn">КРУТИТЬ</button>
+        </div>
+
+        <div class="status" id="status">Нажмите кнопку в центре, чтобы испытать удачу.</div>
+
+        <div class="result" id="resultBox">
+          <h2>Ваш приз</h2>
+          <div class="prize" id="resultPrize">—</div>
+          <div class="desc" id="resultDesc">—</div>
+
+          <div class="code-box">
+            <div class="code-label">Покажите этот код сотруднику:</div>
+            <div class="code" id="resultCode">—</div>
+          </div>
+
+          <div class="expires" id="resultExpires">—</div>
+
+          <div class="actions">
+            <button class="btn btn-primary" id="copyBtn">Скопировать код</button>
+            <button class="btn btn-secondary" id="closeBtn">Закрыть</button>
+          </div>
+        </div>
+
+        <div class="cooldown" id="cooldownBox">
+          <h2>Сегодня вы уже крутили колесо</h2>
+          <div class="muted-center" id="cooldownText">Следующая попытка будет доступна позже.</div>
+          <div class="timer" id="timer">--:--:--</div>
+          <div class="small-note" id="lastPrizeText"></div>
+        </div>
       </div>
+    </div>
 
-      <div class="status" id="status">Нажмите кнопку в центре, чтобы испытать удачу.</div>
+    <div class="panel" id="panelAdmin">
+      <div class="card admin-only" id="adminBox">
+        <div class="section-title">Управление призами</div>
+        <div class="admin-status" id="adminStatus">Проверяем доступ...</div>
 
-      <div class="result" id="resultBox">
-        <h2>Ваш приз</h2>
-        <div class="prize" id="resultPrize">—</div>
-        <div class="desc" id="resultDesc">—</div>
+        <div class="admin-grid">
+          <div class="card" style="box-shadow:none;">
+            <div class="section-title" style="font-size:18px;">Добавить приз</div>
 
-        <div class="code-box">
-          <div class="code-label">Покажите этот код сотруднику:</div>
-          <div class="code" id="resultCode">—</div>
+            <div class="field">
+              <label for="newTitle">Название</label>
+              <input id="newTitle" type="text" placeholder="Например: Скидка 15% на кабели">
+            </div>
+
+            <div class="field">
+              <label for="newShort">Коротко для колеса</label>
+              <input id="newShort" type="text" placeholder="Например: Кабель -15%">
+            </div>
+
+            <div class="field">
+              <label for="newDesc">Описание</label>
+              <textarea id="newDesc" placeholder="Подробное описание приза"></textarea>
+            </div>
+
+            <div class="field">
+              <label for="newWeight">Вес</label>
+              <input id="newWeight" type="number" min="1" placeholder="Например: 12">
+            </div>
+
+            <div class="field">
+              <label for="newActive">Статус</label>
+              <select id="newActive">
+                <option value="true">Включен</option>
+                <option value="false">Выключен</option>
+              </select>
+            </div>
+
+            <div class="actions">
+              <button class="btn btn-primary" id="addPrizeBtn">Добавить приз</button>
+            </div>
+          </div>
+
+          <div class="card" style="box-shadow:none;">
+            <div class="section-title" style="font-size:18px;">Список призов</div>
+            <div class="prize-list" id="adminPrizeList"></div>
+          </div>
         </div>
-
-        <div class="expires" id="resultExpires">—</div>
-
-        <div class="actions">
-          <button class="btn btn-primary" id="copyBtn">Скопировать код</button>
-          <button class="btn btn-secondary" id="closeBtn">Закрыть</button>
-        </div>
-      </div>
-
-      <div class="cooldown" id="cooldownBox">
-        <h2>Сегодня вы уже крутили колесо</h2>
-        <div class="muted-center" id="cooldownText">
-          Следующая попытка будет доступна позже.
-        </div>
-        <div class="timer" id="timer">--:--:--</div>
-        <div class="small-note" id="lastPrizeText"></div>
       </div>
     </div>
   </div>
@@ -330,10 +508,26 @@
     const timerEl = document.getElementById("timer");
     const lastPrizeText = document.getElementById("lastPrizeText");
 
+    const tabWheel = document.getElementById("tabWheel");
+    const tabAdmin = document.getElementById("tabAdmin");
+    const panelWheel = document.getElementById("panelWheel");
+    const panelAdmin = document.getElementById("panelAdmin");
+    const adminBox = document.getElementById("adminBox");
+    const adminStatus = document.getElementById("adminStatus");
+    const adminPrizeList = document.getElementById("adminPrizeList");
+
+    const newTitle = document.getElementById("newTitle");
+    const newShort = document.getElementById("newShort");
+    const newDesc = document.getElementById("newDesc");
+    const newWeight = document.getElementById("newWeight");
+    const newActive = document.getElementById("newActive");
+    const addPrizeBtn = document.getElementById("addPrizeBtn");
+
     let prizes = [];
     let currentRotation = 0;
     let isSpinning = false;
     let countdownInterval = null;
+    let isAdmin = false;
 
     function applyTelegramTheme() {
       const scheme = tg.colorScheme || "light";
@@ -345,12 +539,27 @@
       if (tg.themeParams?.header_bg_color) {
         tg.setHeaderColor?.(tg.themeParams.header_bg_color);
       }
+
+      if (prizes.length) {
+        drawWheel(prizes, currentRotation);
+      }
     }
 
     applyTelegramTheme();
     tg.onEvent("themeChanged", applyTelegramTheme);
 
-    function prizeColor(index, total) {
+    function switchTab(name) {
+      const wheelActive = name === "wheel";
+      tabWheel.classList.toggle("active", wheelActive);
+      tabAdmin.classList.toggle("active", !wheelActive);
+      panelWheel.classList.toggle("active", wheelActive);
+      panelAdmin.classList.toggle("active", !wheelActive);
+    }
+
+    tabWheel.addEventListener("click", () => switchTab("wheel"));
+    tabAdmin.addEventListener("click", () => switchTab("admin"));
+
+    function prizeColor(index) {
       const paletteLight = ["#22c55e", "#0ea5e9", "#f59e0b", "#ef4444", "#8b5cf6", "#14b8a6", "#eab308", "#f97316"];
       const paletteDark = ["#16a34a", "#0284c7", "#d97706", "#dc2626", "#7c3aed", "#0f766e", "#ca8a04", "#ea580c"];
       const palette = document.body.classList.contains("dark") ? paletteDark : paletteLight;
@@ -384,7 +593,7 @@
         ctx.moveTo(center, center);
         ctx.arc(center, center, radius, start, end);
         ctx.closePath();
-        ctx.fillStyle = prizeColor(i, total);
+        ctx.fillStyle = prizeColor(i);
         ctx.fill();
 
         ctx.save();
@@ -405,6 +614,15 @@
       ctx.lineWidth = 4;
       ctx.strokeStyle = document.body.classList.contains("dark") ? "#1f2937" : "#e5e7eb";
       ctx.stroke();
+    }
+
+    async function apiPost(path, body) {
+      const res = await fetch(`${API_BASE}${path}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      });
+      return await res.json();
     }
 
     async function loadPrizes() {
@@ -433,10 +651,8 @@
 
         const count = prizes.length;
         const slice = 360 / count;
-
         const targetCenter = index * slice + slice / 2;
-        const pointerAt = 0;
-        const finalRotation = (360 * 6) + (360 - targetCenter + pointerAt);
+        const finalRotation = (360 * 6) + (360 - targetCenter);
 
         const start = performance.now();
         const duration = 4800;
@@ -530,15 +746,9 @@
       statusEl.textContent = "Проверяем попытку и крутим колесо...";
 
       try {
-        const res = await fetch(`${API_BASE}/spin`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            init_data: tg.initData || ""
-          })
+        const data = await apiPost("/spin", {
+          init_data: tg.initData || ""
         });
-
-        const data = await res.json();
 
         if (!data.ok && data.cooldown) {
           statusEl.textContent = "Попытка на сегодня уже использована.";
@@ -561,6 +771,200 @@
       }
     }
 
+    function renderAdminPrizeList(items) {
+      adminPrizeList.innerHTML = "";
+
+      if (!items.length) {
+        adminPrizeList.innerHTML = "<div class='muted-center'>Призов пока нет.</div>";
+        return;
+      }
+
+      items.forEach((item) => {
+        const block = document.createElement("div");
+        block.className = "prize-item";
+
+        block.innerHTML = `
+          <div class="prize-top">
+            <div>
+              <div class="prize-name">${item.title}</div>
+              <div class="prize-meta">ID: ${item.id} · Коротко: ${item.short || "—"}</div>
+            </div>
+            <div class="badge ${item.active ? "badge-on" : "badge-off"}">
+              ${item.active ? "Включен" : "Выключен"}
+            </div>
+          </div>
+
+          <div class="prize-meta">
+            ${item.description}<br>
+            Вес: <strong>${item.weight}</strong>
+          </div>
+
+          <div class="prize-actions">
+            <button class="mini-btn" data-action="weight" data-id="${item.id}">Изменить вес</button>
+            <button class="mini-btn" data-action="toggle" data-id="${item.id}">
+              ${item.active ? "Выключить" : "Включить"}
+            </button>
+            <button class="mini-btn" data-action="delete" data-id="${item.id}">Удалить</button>
+          </div>
+        `;
+
+        adminPrizeList.appendChild(block);
+      });
+
+      adminPrizeList.querySelectorAll("[data-action='weight']").forEach(btn => {
+        btn.addEventListener("click", async () => {
+          const id = Number(btn.dataset.id);
+          const value = prompt("Введите новый вес:");
+          if (!value) return;
+
+          const weight = Number(value);
+          if (!weight || weight <= 0) {
+            alert("Вес должен быть больше 0");
+            return;
+          }
+
+          adminStatus.textContent = "Сохраняем новый вес...";
+
+          const data = await apiPost("/admin/prize/update-weight", {
+            init_data: tg.initData || "",
+            prize_id: id,
+            weight: weight
+          });
+
+          if (!data.ok) {
+            alert(data.error || "Ошибка обновления веса");
+            adminStatus.textContent = data.error || "Ошибка";
+            return;
+          }
+
+          adminStatus.textContent = "Вес обновлён.";
+          renderAdminPrizeList(data.items);
+          await loadPrizes();
+        });
+      });
+
+      adminPrizeList.querySelectorAll("[data-action='toggle']").forEach(btn => {
+        btn.addEventListener("click", async () => {
+          const id = Number(btn.dataset.id);
+          adminStatus.textContent = "Меняем статус приза...";
+
+          const data = await apiPost("/admin/prize/toggle", {
+            init_data: tg.initData || "",
+            prize_id: id
+          });
+
+          if (!data.ok) {
+            alert(data.error || "Ошибка смены статуса");
+            adminStatus.textContent = data.error || "Ошибка";
+            return;
+          }
+
+          adminStatus.textContent = "Статус обновлён.";
+          renderAdminPrizeList(data.items);
+          await loadPrizes();
+        });
+      });
+
+      adminPrizeList.querySelectorAll("[data-action='delete']").forEach(btn => {
+        btn.addEventListener("click", async () => {
+          const id = Number(btn.dataset.id);
+          const ok = confirm("Удалить этот приз?");
+          if (!ok) return;
+
+          adminStatus.textContent = "Удаляем приз...";
+
+          const data = await apiPost("/admin/prize/delete", {
+            init_data: tg.initData || "",
+            prize_id: id
+          });
+
+          if (!data.ok) {
+            alert(data.error || "Ошибка удаления");
+            adminStatus.textContent = data.error || "Ошибка";
+            return;
+          }
+
+          adminStatus.textContent = "Приз удалён.";
+          renderAdminPrizeList(data.items);
+          await loadPrizes();
+        });
+      });
+    }
+
+    async function checkAdminAccess() {
+      try {
+        const data = await apiPost("/admin/me", {
+          init_data: tg.initData || ""
+        });
+
+        if (data.ok) {
+          isAdmin = true;
+          tabAdmin.classList.remove("hidden");
+          adminBox.classList.add("show");
+          adminStatus.textContent = `Вы вошли как админ: ${data.first_name || "Без имени"}`;
+          await loadAdminPrizes();
+        } else {
+          isAdmin = false;
+        }
+      } catch (e) {
+        isAdmin = false;
+      }
+    }
+
+    async function loadAdminPrizes() {
+      const data = await apiPost("/admin/prizes", {
+        init_data: tg.initData || ""
+      });
+
+      if (!data.ok) {
+        adminStatus.textContent = data.error || "Нет доступа к админке.";
+        return;
+      }
+
+      adminStatus.textContent = "Список призов загружен.";
+      renderAdminPrizeList(data.items || []);
+    }
+
+    addPrizeBtn.addEventListener("click", async () => {
+      const title = newTitle.value.trim();
+      const short = newShort.value.trim();
+      const description = newDesc.value.trim();
+      const weight = Number(newWeight.value);
+      const active = newActive.value === "true";
+
+      if (!title || !short || !description || !weight || weight <= 0) {
+        alert("Заполните все поля корректно.");
+        return;
+      }
+
+      adminStatus.textContent = "Добавляем приз...";
+
+      const data = await apiPost("/admin/prize/add", {
+        init_data: tg.initData || "",
+        title,
+        short,
+        description,
+        weight,
+        active
+      });
+
+      if (!data.ok) {
+        alert(data.error || "Ошибка добавления приза");
+        adminStatus.textContent = data.error || "Ошибка";
+        return;
+      }
+
+      newTitle.value = "";
+      newShort.value = "";
+      newDesc.value = "";
+      newWeight.value = "";
+      newActive.value = "true";
+
+      adminStatus.textContent = "Приз успешно добавлен.";
+      renderAdminPrizeList(data.items);
+      await loadPrizes();
+    });
+
     spinBtn.addEventListener("click", spinWheel);
 
     copyBtn.addEventListener("click", async () => {
@@ -580,9 +984,17 @@
       tg.close();
     });
 
-    loadPrizes().catch(() => {
-      statusEl.textContent = "Не удалось загрузить список призов.";
-    });
+    async function initApp() {
+      try {
+        await loadPrizes();
+      } catch (e) {
+        statusEl.textContent = "Не удалось загрузить список призов.";
+      }
+
+      await checkAdminAccess();
+    }
+
+    initApp();
   </script>
 </body>
 </html>
