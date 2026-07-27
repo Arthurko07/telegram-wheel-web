@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>iGadget Wheel</title>
+  <title>iGadget Wheel Diagnostic</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -11,43 +11,24 @@
 
   <style>
     :root {
-      --bg: #0b1220;
-      --bg-2: #10192b;
-      --surface: rgba(17, 25, 40, 0.92);
-      --surface-solid: #141d30;
-      --surface-2: #182338;
-      --surface-3: #1e2b44;
-
-      --text: #eaf1fb;
-      --muted: #95a6bf;
-      --faint: #6f8098;
-
-      --line: rgba(255, 255, 255, 0.08);
-      --line-2: rgba(255, 255, 255, 0.14);
-
-      --accent: #22c55e;
-      --accent-2: #12b981;
-      --accent-3: #38e07d;
-      --accent-glow: rgba(34, 197, 94, 0.28);
-
-      --danger: #ff667d;
-
-      --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.34);
-      --shadow-md: 0 14px 34px rgba(0, 0, 0, 0.24);
-
-      --radius-xl: 32px;
-      --radius-lg: 24px;
-      --radius-md: 18px;
-      --radius-sm: 14px;
-
+      --bg: #0f1420;
+      --bg-2: #171d2c;
+      --surface: #1d2435;
+      --surface-2: #242c40;
+      --text: #e9eef7;
+      --muted: #98a4bc;
+      --line: rgba(255,255,255,0.10);
+      --line-2: rgba(255,255,255,0.16);
+      --accent: #67e289;
+      --accent-2: #41c56b;
+      --danger: #ff6c83;
       --safe-top: env(safe-area-inset-top, 0px);
       --safe-bottom: env(safe-area-inset-bottom, 0px);
       --tg-safe-bottom: var(--safe-area-inset-bottom, 0px);
+      --shadow: 0 18px 44px rgba(0,0,0,0.34);
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     html, body {
       margin: 0;
@@ -55,18 +36,15 @@
       font-family: Inter, system-ui, -apple-system, sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at top center, rgba(34, 197, 94, 0.07), transparent 24%),
-        radial-gradient(circle at 24% 16%, rgba(49, 197, 255, 0.05), transparent 18%),
+        radial-gradient(circle at top, rgba(103,226,137,0.06), transparent 24%),
         linear-gradient(180deg, var(--bg), var(--bg-2));
-    }
-
-    body {
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
     }
 
+    body { min-height: 100vh; }
+
     .app {
-      width: 100%;
       max-width: 760px;
       margin: 0 auto;
       min-height: 100vh;
@@ -76,219 +54,85 @@
         calc(24px + var(--safe-bottom) + var(--tg-safe-bottom));
     }
 
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      min-width: 0;
-    }
-
-    .brand-mark {
-      width: 40px;
-      height: 40px;
-      border-radius: 14px;
-      background:
-        linear-gradient(135deg, rgba(34, 197, 94, 0.22), rgba(49, 197, 255, 0.14));
-      border: 1px solid rgba(34, 197, 94, 0.22);
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.06),
-        0 0 28px rgba(34,197,94,0.10);
-      position: relative;
-      flex: 0 0 auto;
-    }
-
-    .brand-mark::before,
-    .brand-mark::after {
-      content: "";
-      position: absolute;
-      border-radius: 999px;
-      background: linear-gradient(180deg, var(--accent-3), var(--accent));
-    }
-
-    .brand-mark::before {
-      width: 8px;
-      height: 18px;
-      left: 12px;
-      top: 11px;
-    }
-
-    .brand-mark::after {
-      width: 8px;
-      height: 12px;
-      right: 12px;
-      top: 14px;
-      opacity: 0.82;
-    }
-
-    .brand-copy {
-      display: grid;
-      gap: 2px;
-      min-width: 0;
-    }
-
-    .brand-title {
-      font-size: 15px;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      white-space: nowrap;
-    }
-
-    .brand-sub {
-      font-size: 12px;
-      color: var(--muted);
-      white-space: nowrap;
-    }
-
-    .sync-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      min-height: 40px;
-      padding: 0 14px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.04);
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 700;
-      white-space: nowrap;
-    }
-
-    .sync-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: var(--accent);
-      box-shadow: 0 0 12px var(--accent-glow);
-    }
-
     .shell {
-      position: relative;
-      overflow: hidden;
-      border-radius: 34px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)),
-        var(--surface);
-      backdrop-filter: blur(20px);
-      box-shadow: var(--shadow-lg);
+      border-radius: 30px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)), var(--surface);
+      box-shadow: var(--shadow);
       padding: 18px;
-    }
-
-    .shell::before {
-      content: "";
-      position: absolute;
-      inset: -1px;
-      border-radius: inherit;
-      pointer-events: none;
-      background:
-        linear-gradient(
-          135deg,
-          rgba(34,197,94,0.05),
-          transparent 24%,
-          transparent 72%,
-          rgba(49,197,255,0.04)
-        );
     }
 
     .hero {
       text-align: center;
-      padding: 8px 6px 12px;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      min-height: 34px;
-      padding: 0 12px;
-      border-radius: 999px;
-      background: rgba(34,197,94,0.10);
-      border: 1px solid rgba(34,197,94,0.16);
-      color: #a3f5bf;
-      font-size: 12px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 12px;
-    }
-
-    .eyebrow::before {
-      content: "";
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: currentColor;
-      box-shadow: 0 0 14px currentColor;
+      margin-bottom: 16px;
     }
 
     .hero h1 {
       margin: 0 0 8px;
-      font-size: clamp(26px, 4vw, 34px);
-      line-height: 1.02;
-      letter-spacing: -0.045em;
+      font-size: clamp(24px, 4vw, 32px);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
       font-weight: 800;
     }
 
     .hero p {
       margin: 0 auto;
-      max-width: 38ch;
+      max-width: 34ch;
       color: var(--muted);
       font-size: 14px;
-      line-height: 1.6;
+      line-height: 1.55;
+    }
+
+    .diag-banner {
+      margin: 0 auto 12px;
+      width: fit-content;
+      min-height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 14px;
+      border-radius: 999px;
+      background: rgba(255, 108, 131, 0.12);
+      border: 1px solid rgba(255,108,131,0.22);
+      color: #ffb4c0;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
 
     .tabs {
       display: flex;
       gap: 8px;
-      margin: 16px 0 14px;
+      margin: 0 0 14px;
     }
 
     .tab {
       flex: 1;
       min-height: 46px;
-      border-radius: 16px;
       border: 1px solid var(--line);
+      border-radius: 16px;
       background: rgba(255,255,255,0.03);
       color: var(--muted);
       font-size: 14px;
       font-weight: 700;
-      cursor: pointer;
-      transition: 180ms ease;
     }
 
     .tab.active {
-      color: #09120b;
+      color: #0a120d;
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
       border-color: transparent;
-      box-shadow: 0 10px 24px rgba(34,197,94,0.22);
     }
-
-    .hidden { display: none !important; }
-    .panel { display: none; }
-    .panel.active { display: block; }
 
     .wheel-card,
     .section {
-      border-radius: 28px;
+      border-radius: 26px;
       border: 1px solid var(--line);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02)),
-        var(--surface-solid);
-      box-shadow: var(--shadow-md);
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)), #20283b;
+      box-shadow: 0 10px 26px rgba(0,0,0,0.20);
     }
 
-    .wheel-card {
-      padding: 16px;
-    }
+    .wheel-card { padding: 16px; }
 
     .meta-row {
       display: flex;
@@ -297,14 +141,14 @@
     }
 
     .meta-pill {
+      min-height: 36px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 36px;
       padding: 0 14px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.04);
       border: 1px solid var(--line);
+      background: rgba(255,255,255,0.04);
       color: var(--muted);
       font-size: 12px;
       font-weight: 700;
@@ -312,18 +156,9 @@
 
     .wheel-wrap {
       position: relative;
-      width: min(100%, 284px);
+      width: min(100%, 286px);
       aspect-ratio: 1 / 1;
       margin: 0 auto 16px;
-    }
-
-    .wheel-halo {
-      position: absolute;
-      inset: 7%;
-      border-radius: 999px;
-      background: radial-gradient(circle, rgba(34,197,94,0.10), transparent 58%);
-      filter: blur(16px);
-      pointer-events: none;
     }
 
     .pointer {
@@ -336,17 +171,15 @@
       border-left: 14px solid transparent;
       border-right: 14px solid transparent;
       border-top: 24px solid var(--danger);
-      z-index: 7;
-      filter: drop-shadow(0 4px 12px rgba(255,102,125,.34));
+      z-index: 5;
+      filter: drop-shadow(0 4px 10px rgba(255,108,131,.32));
     }
 
     canvas {
+      display: block;
       width: 100%;
       height: 100%;
-      display: block;
-      filter:
-        drop-shadow(0 18px 32px rgba(0,0,0,.26))
-        drop-shadow(0 0 18px rgba(34,197,94,.05));
+      filter: drop-shadow(0 18px 34px rgba(0,0,0,.28));
     }
 
     .center-btn {
@@ -354,79 +187,50 @@
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
-      width: 88px;
-      height: 88px;
-      border: 4px solid rgba(255,255,255,.10);
+      width: 90px;
+      height: 90px;
       border-radius: 999px;
-      color: #09120b;
+      border: 4px solid rgba(255,255,255,.10);
       background:
-        radial-gradient(circle at 30% 25%, rgba(255,255,255,.42), transparent 28%),
-        linear-gradient(180deg, #41e688, #18bc6c 56%, #0f965f);
+        radial-gradient(circle at 30% 25%, rgba(255,255,255,.40), transparent 30%),
+        linear-gradient(180deg, #80f0a2, #46cb71 58%, #2ea95b);
+      color: #071008;
       font-size: 12px;
       letter-spacing: 0.12em;
       font-weight: 800;
+      box-shadow: 0 10px 28px rgba(65,197,107,.26);
+      z-index: 6;
       cursor: pointer;
-      z-index: 8;
-      box-shadow:
-        0 0 0 8px rgba(34,197,94,0.06),
-        0 12px 28px rgba(16,185,129,.24),
-        inset 0 1px 0 rgba(255,255,255,.46);
-      transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
     }
 
-    .center-btn:active {
-      transform: translate(-50%, -50%) scale(0.98);
-    }
-
-    .center-btn:disabled {
-      opacity: 0.7;
-      cursor: not-allowed;
-      box-shadow:
-        0 0 0 6px rgba(34,197,94,0.04),
-        0 8px 18px rgba(0,0,0,.18);
-    }
-
-    .hint {
+    .hint, .status {
       text-align: center;
       color: var(--muted);
-      font-size: 13px;
-      line-height: 1.55;
-      margin-bottom: 10px;
-      min-height: 20px;
-    }
-
-    .status {
-      min-height: 48px;
-      border-radius: 16px;
-      padding: 12px 14px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--line);
-      color: var(--muted);
-      text-align: center;
       font-size: 14px;
       line-height: 1.5;
     }
 
-    .result,
-    .cooldown,
-    .admin-only {
-      display: none;
-      margin-top: 14px;
+    .hint { margin-bottom: 10px; }
+
+    .status {
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 14px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
     }
 
-    .result.show,
-    .cooldown.show,
-    .admin-only.show {
-      display: block;
-    }
+    .result, .cooldown, .admin-only, .panel { display: none; }
+    .panel.active, .result.show, .cooldown.show, .admin-only.show { display: block; }
 
-    .section {
-      padding: 16px;
-    }
+    .section { padding: 16px; margin-top: 14px; }
 
     .kicker {
       margin-bottom: 8px;
-      color: #a3f5bf;
+      color: #aef3bf;
       font-size: 12px;
       font-weight: 800;
       text-transform: uppercase;
@@ -435,103 +239,69 @@
 
     .section-title {
       margin: 0 0 8px;
-      font-size: 21px;
+      font-size: 20px;
       line-height: 1.08;
-      letter-spacing: -0.045em;
       font-weight: 800;
+      letter-spacing: -0.04em;
     }
 
-    .section-desc {
+    .section-desc, .last-prize, .expires {
       color: var(--muted);
       font-size: 14px;
-      line-height: 1.6;
-      margin-bottom: 14px;
+      line-height: 1.55;
     }
 
     .result-prize {
-      color: var(--text);
+      margin-bottom: 6px;
       font-size: 18px;
       font-weight: 800;
-      margin-bottom: 6px;
+      color: var(--text);
     }
 
     .code-box {
-      position: relative;
-      overflow: hidden;
-      margin-bottom: 12px;
-      border-radius: 22px;
+      margin: 12px 0;
       padding: 16px 14px;
       text-align: center;
-      background:
-        linear-gradient(180deg, rgba(34,197,94,0.14), rgba(18,185,129,0.08)),
-        rgba(255,255,255,0.02);
-      border: 1px solid rgba(34,197,94,0.18);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
-    }
-
-    .code-box::after {
-      content: "";
-      position: absolute;
-      inset: auto -20% -50% -20%;
-      height: 90px;
-      background: radial-gradient(circle, rgba(49,197,255,0.10), transparent 58%);
-      pointer-events: none;
+      border-radius: 22px;
+      border: 1px solid rgba(103,226,137,0.18);
+      background: linear-gradient(180deg, rgba(103,226,137,0.14), rgba(103,226,137,0.07));
     }
 
     .code-label {
+      margin-bottom: 8px;
+      color: var(--muted);
       font-size: 12px;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: var(--muted);
-      margin-bottom: 8px;
     }
 
     .code {
       font-size: 28px;
-      line-height: 1;
       font-weight: 800;
       letter-spacing: 0.08em;
-      color: #eefcf3;
+      line-height: 1;
+      color: #f1fff4;
       word-break: break-word;
     }
 
-    .expires {
-      text-align: center;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.5;
-      margin-bottom: 12px;
-    }
-
     .timer-wrap {
+      min-height: 78px;
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 78px;
-      margin-bottom: 10px;
+      margin: 12px 0 10px;
       border-radius: 18px;
       border: 1px solid var(--line);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)),
-        var(--surface-2);
+      background: rgba(255,255,255,0.03);
     }
 
     .timer {
       font-size: 30px;
-      line-height: 1;
-      letter-spacing: -0.05em;
       font-weight: 800;
-      color: #a3f5bf;
+      letter-spacing: -0.05em;
+      color: #aef3bf;
       font-variant-numeric: tabular-nums;
-      text-shadow: 0 0 16px rgba(34,197,94,0.14);
-    }
-
-    .last-prize {
-      text-align: center;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.5;
     }
 
     .actions {
@@ -548,13 +318,11 @@
       font-size: 14px;
       font-weight: 700;
       cursor: pointer;
-      transition: 180ms ease;
     }
 
     .btn-primary {
-      color: #09120b;
+      color: #071008;
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      box-shadow: 0 12px 24px rgba(34,197,94,0.16);
     }
 
     .btn-secondary {
@@ -563,10 +331,7 @@
       border-color: var(--line-2);
     }
 
-    .admin-grid {
-      display: grid;
-      gap: 14px;
-    }
+    .admin-grid { display: grid; gap: 14px; }
 
     .field {
       display: grid;
@@ -584,32 +349,18 @@
     .field textarea,
     .field select {
       width: 100%;
+      padding: 12px 14px;
+      border-radius: 14px;
       border: 1px solid var(--line-2);
       background: rgba(255,255,255,0.04);
       color: var(--text);
-      border-radius: 14px;
-      padding: 12px 14px;
       font-size: 14px;
       outline: none;
-      transition: 180ms ease;
     }
 
     .field textarea {
       min-height: 96px;
       resize: vertical;
-    }
-
-    .field input:focus,
-    .field textarea:focus,
-    .field select:focus {
-      border-color: rgba(34,197,94,.34);
-      box-shadow: 0 0 0 4px rgba(34,197,94,.10);
-    }
-
-    .admin-status {
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.5;
     }
 
     .prize-list {
@@ -618,10 +369,10 @@
     }
 
     .prize-item {
+      padding: 14px;
       border-radius: 18px;
       border: 1px solid var(--line);
       background: rgba(255,255,255,0.03);
-      padding: 14px;
     }
 
     .prize-top {
@@ -634,21 +385,21 @@
 
     .prize-name {
       font-size: 16px;
-      line-height: 1.25;
       font-weight: 800;
+      line-height: 1.25;
     }
 
-    .prize-meta {
+    .prize-meta,
+    .admin-status {
       color: var(--muted);
       font-size: 13px;
       line-height: 1.55;
-      margin-bottom: 12px;
     }
 
     .badge {
+      min-height: 28px;
       display: inline-flex;
       align-items: center;
-      min-height: 28px;
       padding: 0 10px;
       border-radius: 999px;
       font-size: 12px;
@@ -657,15 +408,15 @@
     }
 
     .badge-on {
-      color: #a3f5bf;
-      background: rgba(34,197,94,0.12);
-      border: 1px solid rgba(34,197,94,0.18);
+      color: #b9f7c8;
+      background: rgba(103,226,137,0.12);
+      border: 1px solid rgba(103,226,137,0.18);
     }
 
     .badge-off {
-      color: #ff9cab;
-      background: rgba(255,102,125,0.10);
-      border: 1px solid rgba(255,102,125,0.18);
+      color: #ffb5c2;
+      background: rgba(255,108,131,0.12);
+      border: 1px solid rgba(255,108,131,0.18);
     }
 
     .prize-actions {
@@ -676,15 +427,17 @@
 
     .mini-btn {
       min-height: 40px;
+      padding: 8px 12px;
       border-radius: 12px;
       border: 1px solid var(--line);
       background: rgba(255,255,255,0.04);
       color: var(--text);
-      padding: 8px 12px;
       font-size: 13px;
       font-weight: 700;
       cursor: pointer;
     }
+
+    .hidden { display: none !important; }
 
     @media (max-width: 560px) {
       .app {
@@ -695,53 +448,28 @@
       }
 
       .shell {
-        border-radius: 28px;
         padding: 16px;
-      }
-
-      .topbar {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .wheel-wrap {
-        width: min(100%, 262px);
+        border-radius: 26px;
       }
 
       .actions {
         flex-direction: column;
       }
 
-      .section-title {
-        font-size: 20px;
+      .wheel-wrap {
+        width: min(100%, 264px);
       }
     }
   </style>
 </head>
 <body>
   <div class="app">
-    <div class="topbar">
-      <div class="brand">
-        <div class="brand-mark"></div>
-        <div class="brand-copy">
-          <div class="brand-title">iGadget Bonus</div>
-          <div class="brand-sub">Tech Dark v5</div>
-        </div>
-      </div>
-
-      <div class="sync-pill">
-        <span class="sync-dot"></span>
-        Синхронизация с Telegram
-      </div>
-    </div>
-
     <div class="shell">
       <section class="hero">
-        <div class="eyebrow">Spin & Win</div>
-        <h1>Бонусы и скидки<br />в стиле iGadget</h1>
+        <div class="diag-banner">DIAGNOSTIC BUILD ULTRA-777</div>
+        <h1>Проверка реального фронтенда</h1>
         <p>
-          Крутите колесо один раз в день и получайте бонус, подарок или скидку.
-          Результат определяется на сервере и сразу сохраняется.
+          Если это именно тот файл, колесо ниже будет не зелёным, а с очень резкими тестовыми цветами.
         </p>
       </section>
 
@@ -753,18 +481,17 @@
       <div class="panel active" id="panelWheel">
         <div class="wheel-card">
           <div class="meta-row">
-            <div class="meta-pill">1 попытка в сутки</div>
+            <div class="meta-pill">Диагностика палитры</div>
           </div>
 
           <div class="wheel-wrap">
-            <div class="wheel-halo"></div>
             <div class="pointer"></div>
             <canvas id="wheel" width="360" height="360"></canvas>
             <button id="spinBtn" class="center-btn">КРУТИТЬ</button>
           </div>
 
-          <div class="hint">Во время вращения результат уже закреплён на сервере.</div>
-          <div class="status" id="status">Сборка: wheel-v5</div>
+          <div class="hint">Если здесь всё ещё два зелёных сектора — открыт не этот код.</div>
+          <div class="status" id="status">TEST BUILD ULTRA-777</div>
 
           <div class="result" id="resultBox">
             <div class="section">
@@ -813,7 +540,7 @@
           <div class="admin-status" id="adminStatus">Проверяем доступ...</div>
 
           <div class="admin-grid">
-            <div class="section" style="padding:0; border:none; background:transparent; box-shadow:none;">
+            <div class="section" style="padding:0;border:none;background:transparent;box-shadow:none;">
               <div class="field">
                 <label for="newTitle">Название</label>
                 <input id="newTitle" type="text" placeholder="Например: Скидка 15% на аксессуары" />
@@ -847,7 +574,7 @@
               </div>
             </div>
 
-            <div class="section" style="padding:0; border:none; background:transparent; box-shadow:none;">
+            <div class="section" style="padding:0;border:none;background:transparent;box-shadow:none;">
               <div class="section-title">Проверка и погашение кодов</div>
 
               <div class="field">
@@ -865,7 +592,7 @@
               </div>
             </div>
 
-            <div class="section" style="padding:0; border:none; background:transparent; box-shadow:none;">
+            <div class="section" style="padding:0;border:none;background:transparent;box-shadow:none;">
               <div class="section-title">Список призов</div>
               <div class="prize-list" id="adminPrizeList"></div>
             </div>
@@ -881,7 +608,7 @@
     tg.expand();
 
     const API_BASE = "https://telegram-wheel-bot-production-764c.up.railway.app";
-    const BUILD_VERSION = "wheel-v5";
+    const BUILD_VERSION = "ultra-777";
 
     const sounds = {
       tick: new Audio("https://cdn.freesound.org/previews/240/240776_4107740-lq.mp3"),
@@ -899,7 +626,6 @@
     async function unlockSounds() {
       if (soundUnlocked) return;
       soundUnlocked = true;
-
       try {
         sounds.tick.muted = true;
         await sounds.tick.play();
@@ -1005,12 +731,12 @@
 
     function getSectorPalette() {
       return [
-        "#22c55e",
-        "#ff6480",
-        "#31c5ff",
-        "#f7ad1f",
-        "#5570ff",
-        "#9b5cff"
+        "#ff0000",
+        "#0000ff",
+        "#ffff00",
+        "#ff00ff",
+        "#00ffff",
+        "#000000"
       ];
     }
 
@@ -1050,7 +776,7 @@
       let fontSize = baseFont;
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-      ctx.fillStyle = "#f7fbff";
+      ctx.fillStyle = "#ffffff";
 
       while (fontSize >= 10) {
         ctx.font = `800 ${fontSize}px Inter, sans-serif`;
@@ -1076,18 +802,18 @@
 
       ctx.beginPath();
       ctx.arc(center, center, radius + 10, 0, Math.PI * 2);
-      ctx.fillStyle = "#08101d";
+      ctx.fillStyle = "#080b12";
       ctx.fill();
 
       ctx.beginPath();
       ctx.arc(center, center, radius + 4, 0, Math.PI * 2);
-      ctx.fillStyle = "#0d1829";
+      ctx.fillStyle = "#121725";
       ctx.fill();
 
       if (!items.length) {
         ctx.beginPath();
         ctx.arc(center, center, radius, 0, Math.PI * 2);
-        ctx.fillStyle = "#1b2a40";
+        ctx.fillStyle = "#2a3144";
         ctx.fill();
         return;
       }
@@ -1103,28 +829,19 @@
         const mid = start + arc / 2;
         const color = palette[i % palette.length];
 
-        const grad = ctx.createLinearGradient(
-          center + Math.cos(start) * 30,
-          center + Math.sin(start) * 30,
-          center + Math.cos(end) * radius,
-          center + Math.sin(end) * radius
-        );
-        grad.addColorStop(0, shadeColor(color, -4));
-        grad.addColorStop(1, shadeColor(color, 2));
-
         ctx.beginPath();
         ctx.moveTo(center, center);
         ctx.arc(center, center, radius, start, end);
         ctx.closePath();
-        ctx.fillStyle = grad;
+        ctx.fillStyle = color;
         ctx.fill();
 
         ctx.beginPath();
         ctx.moveTo(center, center);
         ctx.arc(center, center, radius, start, end);
         ctx.closePath();
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = "rgba(8,12,20,0.32)";
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = "rgba(255,255,255,0.18)";
         ctx.stroke();
 
         ctx.save();
@@ -1142,49 +859,24 @@
       ctx.beginPath();
       ctx.arc(center, center, radius, 0, Math.PI * 2);
       ctx.lineWidth = 5;
-      ctx.strokeStyle = "rgba(255,255,255,0.12)";
+      ctx.strokeStyle = "rgba(255,255,255,0.24)";
       ctx.stroke();
 
-      const glow = ctx.createRadialGradient(center, center, 18, center, center, 88);
-      glow.addColorStop(0, "rgba(58,230,136,0.14)");
-      glow.addColorStop(1, "rgba(58,230,136,0)");
-      ctx.beginPath();
-      ctx.arc(center, center, 82, 0, Math.PI * 2);
-      ctx.fillStyle = glow;
-      ctx.fill();
-
-      const ring = ctx.createRadialGradient(center, center, 34, center, center, 72);
-      ring.addColorStop(0, "#16263d");
-      ring.addColorStop(1, "#0c1524");
       ctx.beginPath();
       ctx.arc(center, center, 64, 0, Math.PI * 2);
-      ctx.fillStyle = ring;
+      ctx.fillStyle = "#162033";
       ctx.fill();
 
       ctx.beginPath();
       ctx.arc(center, center, 50, 0, Math.PI * 2);
-      ctx.fillStyle = "#102035";
+      ctx.fillStyle = "#1f2d47";
       ctx.fill();
 
       ctx.beginPath();
       ctx.arc(center, center, 50, 0, Math.PI * 2);
       ctx.lineWidth = 2;
-      ctx.strokeStyle = "rgba(255,255,255,0.08)";
+      ctx.strokeStyle = "rgba(255,255,255,0.10)";
       ctx.stroke();
-
-      ctx.fillStyle = "rgba(255,255,255,0.12)";
-      ctx.beginPath();
-      ctx.arc(center - 12, center - 16, 16, 0, Math.PI * 2);
-      ctx.fill();
-    }
-
-    function shadeColor(hex, percent) {
-      const num = parseInt(hex.replace("#", ""), 16);
-      const amt = Math.round(2.55 * percent);
-      const r = Math.min(255, Math.max(0, (num >> 16) + amt));
-      const g = Math.min(255, Math.max(0, ((num >> 8) & 0x00ff) + amt));
-      const b = Math.min(255, Math.max(0, (num & 0x0000ff) + amt));
-      return "#" + (0x1000000 + r * 0x10000 + g * 0x100 + b).toString(16).slice(1);
     }
 
     async function apiPost(path, body) {
@@ -1226,7 +918,7 @@
         const finalRotation = (360 * 6) + (360 - targetCenter);
 
         const start = performance.now();
-        const duration = 4300;
+        const duration = 4200;
         const from = currentRotation;
         const to = currentRotation + finalRotation;
 
@@ -1266,7 +958,7 @@
         ? `Действует до: ${data.expires_at_text}`
         : "Срок действия уточняйте у сотрудника.";
 
-      statusEl.textContent = "Готово: ваш выигрыш сохранён.";
+      statusEl.textContent = "Готово: выигрыш сохранён.";
     }
 
     function getNextMidnightMSK() {
