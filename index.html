@@ -7,7 +7,7 @@
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet" />
 
   <style>
     :root {
@@ -25,28 +25,21 @@
       --line: rgba(255,255,255,0.08);
       --line-2: rgba(255,255,255,0.14);
 
-      --accent: #4ade80;
-      --accent-2: #22c55e;
-      --accent-glow: rgba(74, 222, 128, 0.24);
+      --accent: #59e18d;
+      --accent-2: #28c76f;
+      --accent-glow: rgba(89,225,141,0.22);
 
       --danger: #ff6f88;
 
       --shadow-lg: 0 24px 60px rgba(0,0,0,0.32);
       --shadow-md: 0 14px 30px rgba(0,0,0,0.22);
 
-      --radius-xl: 32px;
-      --radius-lg: 24px;
-      --radius-md: 18px;
-      --radius-sm: 14px;
-
       --safe-top: env(safe-area-inset-top, 0px);
       --safe-bottom: env(safe-area-inset-bottom, 0px);
-      --tg-safe-bottom: var(--safe-area-inset-bottom, 0px);
+      --tg-safe-bottom: var(--tg-safe-area-inset-bottom, 0px);
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     html, body {
       margin: 0;
@@ -54,16 +47,14 @@
       font-family: Inter, system-ui, -apple-system, sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at top center, rgba(74,222,128,0.06), transparent 24%),
-        radial-gradient(circle at 20% 18%, rgba(56,189,248,0.04), transparent 18%),
+        radial-gradient(circle at top center, rgba(89,225,141,0.06), transparent 24%),
+        radial-gradient(circle at 18% 18%, rgba(56,189,248,0.04), transparent 18%),
         linear-gradient(180deg, var(--bg), var(--bg-2));
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
     }
 
-    body {
-      min-height: 100vh;
-    }
+    body { min-height: 100vh; }
 
     .app {
       width: 100%;
@@ -95,14 +86,11 @@
       width: 40px;
       height: 40px;
       border-radius: 14px;
-      flex: 0 0 auto;
       position: relative;
-      background:
-        linear-gradient(135deg, rgba(74,222,128,0.24), rgba(56,189,248,0.12));
-      border: 1px solid rgba(74,222,128,0.20);
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.05),
-        0 0 24px rgba(74,222,128,0.08);
+      flex: 0 0 auto;
+      background: linear-gradient(135deg, rgba(89,225,141,0.22), rgba(56,189,248,0.10));
+      border: 1px solid rgba(89,225,141,0.18);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 0 24px rgba(89,225,141,0.07);
     }
 
     .brand-mark::before,
@@ -110,7 +98,7 @@
       content: "";
       position: absolute;
       border-radius: 999px;
-      background: linear-gradient(180deg, #86efac, #22c55e);
+      background: linear-gradient(180deg, #95f0b5, #28c76f);
     }
 
     .brand-mark::before {
@@ -190,13 +178,7 @@
       border-radius: inherit;
       pointer-events: none;
       background:
-        linear-gradient(
-          135deg,
-          rgba(74,222,128,0.04),
-          transparent 28%,
-          transparent 72%,
-          rgba(56,189,248,0.03)
-        );
+        linear-gradient(135deg, rgba(89,225,141,0.04), transparent 28%, transparent 72%, rgba(56,189,248,0.03));
     }
 
     .hero {
@@ -211,9 +193,9 @@
       min-height: 34px;
       padding: 0 12px;
       border-radius: 999px;
-      background: rgba(74,222,128,0.10);
-      border: 1px solid rgba(74,222,128,0.16);
-      color: #b7f7ca;
+      background: rgba(89,225,141,0.10);
+      border: 1px solid rgba(89,225,141,0.16);
+      color: #bdf7ce;
       font-size: 12px;
       font-weight: 800;
       text-transform: uppercase;
@@ -266,10 +248,10 @@
     }
 
     .tab.active {
-      color: #0b140d;
+      color: #09130c;
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
       border-color: transparent;
-      box-shadow: 0 10px 24px rgba(34,197,94,0.18);
+      box-shadow: 0 10px 24px rgba(40,199,111,0.18);
     }
 
     .hidden { display: none !important; }
@@ -286,9 +268,7 @@
       box-shadow: var(--shadow-md);
     }
 
-    .wheel-card {
-      padding: 16px;
-    }
+    .wheel-card { padding: 16px; }
 
     .meta-row {
       display: flex;
@@ -321,7 +301,7 @@
       position: absolute;
       inset: 8%;
       border-radius: 999px;
-      background: radial-gradient(circle, rgba(74,222,128,0.10), transparent 58%);
+      background: radial-gradient(circle, rgba(89,225,141,0.09), transparent 58%);
       filter: blur(16px);
       pointer-events: none;
     }
@@ -346,7 +326,7 @@
       display: block;
       filter:
         drop-shadow(0 18px 34px rgba(0,0,0,.26))
-        drop-shadow(0 0 18px rgba(74,222,128,.04));
+        drop-shadow(0 0 18px rgba(89,225,141,.04));
     }
 
     .center-btn {
@@ -354,23 +334,23 @@
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
-      width: 90px;
-      height: 90px;
+      width: 76px;
+      height: 76px;
       border-radius: 999px;
-      border: 4px solid rgba(255,255,255,.10);
+      border: 3px solid rgba(255,255,255,.10);
       color: #071008;
       background:
-        radial-gradient(circle at 30% 25%, rgba(255,255,255,.42), transparent 28%),
-        linear-gradient(180deg, #86efac, #4ade80 56%, #22c55e);
-      font-size: 12px;
+        radial-gradient(circle at 30% 25%, rgba(255,255,255,.38), transparent 28%),
+        linear-gradient(180deg, #93f0b5, #59e18d 56%, #28c76f);
+      font-size: 11px;
       letter-spacing: 0.12em;
       font-weight: 800;
       cursor: pointer;
       z-index: 8;
       box-shadow:
-        0 0 0 8px rgba(74,222,128,0.05),
-        0 12px 28px rgba(34,197,94,.22),
-        inset 0 1px 0 rgba(255,255,255,.42);
+        0 0 0 7px rgba(89,225,141,0.04),
+        0 10px 24px rgba(40,199,111,.20),
+        inset 0 1px 0 rgba(255,255,255,.38);
       transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
     }
 
@@ -404,26 +384,20 @@
       line-height: 1.5;
     }
 
-    .result,
-    .cooldown,
-    .admin-only {
+    .result, .cooldown, .admin-only {
       display: none;
       margin-top: 14px;
     }
 
-    .result.show,
-    .cooldown.show,
-    .admin-only.show {
+    .result.show, .cooldown.show, .admin-only.show {
       display: block;
     }
 
-    .section {
-      padding: 16px;
-    }
+    .section { padding: 16px; }
 
     .kicker {
       margin-bottom: 8px;
-      color: #b7f7ca;
+      color: #bdf7ce;
       font-size: 12px;
       font-weight: 800;
       text-transform: uppercase;
@@ -460,9 +434,9 @@
       padding: 16px 14px;
       text-align: center;
       background:
-        linear-gradient(180deg, rgba(74,222,128,0.14), rgba(34,197,94,0.08)),
+        linear-gradient(180deg, rgba(89,225,141,0.14), rgba(40,199,111,0.08)),
         rgba(255,255,255,0.02);
-      border: 1px solid rgba(74,222,128,0.16);
+      border: 1px solid rgba(89,225,141,0.16);
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
     }
 
@@ -510,9 +484,9 @@
       line-height: 1;
       letter-spacing: -0.05em;
       font-weight: 800;
-      color: #b7f7ca;
+      color: #bdf7ce;
       font-variant-numeric: tabular-nums;
-      text-shadow: 0 0 16px rgba(74,222,128,0.12);
+      text-shadow: 0 0 16px rgba(89,225,141,0.10);
     }
 
     .last-prize {
@@ -542,7 +516,7 @@
     .btn-primary {
       color: #071008;
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      box-shadow: 0 12px 24px rgba(34,197,94,0.16);
+      box-shadow: 0 12px 24px rgba(40,199,111,0.16);
     }
 
     .btn-secondary {
@@ -590,8 +564,8 @@
     .field input:focus,
     .field textarea:focus,
     .field select:focus {
-      border-color: rgba(74,222,128,.32);
-      box-shadow: 0 0 0 4px rgba(74,222,128,.10);
+      border-color: rgba(89,225,141,.32);
+      box-shadow: 0 0 0 4px rgba(89,225,141,.10);
     }
 
     .admin-status {
@@ -645,9 +619,9 @@
     }
 
     .badge-on {
-      color: #c4f8d2;
-      background: rgba(74,222,128,0.12);
-      border: 1px solid rgba(74,222,128,0.18);
+      color: #c8f8d5;
+      background: rgba(89,225,141,0.12);
+      border: 1px solid rgba(89,225,141,0.18);
     }
 
     .badge-off {
@@ -713,7 +687,7 @@
         <div class="brand-mark"></div>
         <div class="brand-copy">
           <div class="brand-title">iGadget Bonus</div>
-          <div class="brand-sub">Final Dark Clean</div>
+          <div class="brand-sub">Final Dark v2</div>
         </div>
       </div>
 
@@ -869,7 +843,7 @@
     tg.expand();
 
     const API_BASE = "https://telegram-wheel-bot-production-764c.up.railway.app";
-    const BUILD_VERSION = "final-clean-v1";
+    const BUILD_VERSION = "final-dark-v2";
 
     const sounds = {
       tick: new Audio("https://cdn.freesound.org/previews/240/240776_4107740-lq.mp3"),
@@ -887,7 +861,6 @@
     async function unlockSounds() {
       if (soundUnlocked) return;
       soundUnlocked = true;
-
       try {
         sounds.tick.muted = true;
         await sounds.tick.play();
@@ -1038,7 +1011,6 @@
       let fontSize = baseFont;
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-      ctx.fillStyle = "#ffffff";
 
       while (fontSize >= 10) {
         ctx.font = `800 ${fontSize}px Inter, sans-serif`;
@@ -1051,6 +1023,10 @@
       const startY = y - ((lines.length - 1) * lineHeight) / 2;
 
       lines.forEach((line, i) => {
+        ctx.strokeStyle = "rgba(0,0,0,0.22)";
+        ctx.lineWidth = 4;
+        ctx.strokeText(line, x, startY + i * lineHeight);
+        ctx.fillStyle = "#ffffff";
         ctx.fillText(line, x, startY + i * lineHeight);
       });
     }
@@ -1078,7 +1054,7 @@
 
       ctx.beginPath();
       ctx.arc(center, center, radius + 4, 0, Math.PI * 2);
-      ctx.fillStyle = "#131b29";
+      ctx.fillStyle = "#121a28";
       ctx.fill();
 
       if (!items.length) {
@@ -1101,13 +1077,13 @@
         const color = palette[i % palette.length];
 
         const grad = ctx.createLinearGradient(
-          center + Math.cos(start) * 36,
-          center + Math.sin(start) * 36,
+          center + Math.cos(start) * 34,
+          center + Math.sin(start) * 34,
           center + Math.cos(end) * radius,
           center + Math.sin(end) * radius
         );
-        grad.addColorStop(0, shadeColor(color, -4));
-        grad.addColorStop(1, shadeColor(color, 2));
+        grad.addColorStop(0, shadeColor(color, -5));
+        grad.addColorStop(1, shadeColor(color, 3));
 
         ctx.beginPath();
         ctx.moveTo(center, center);
@@ -1121,7 +1097,7 @@
         ctx.arc(center, center, radius, start, end);
         ctx.closePath();
         ctx.lineWidth = 2;
-        ctx.strokeStyle = "rgba(8,12,20,0.34)";
+        ctx.strokeStyle = "rgba(7,10,16,0.38)";
         ctx.stroke();
 
         ctx.save();
@@ -1129,8 +1105,8 @@
         ctx.rotate(mid);
 
         const textLines = fitLabel(items[i].short || items[i].title || "Приз");
-        const textRadius = radius - 60;
-        const sectorWidth = Math.max(54, radius * arc * 0.60);
+        const textRadius = radius - 62;
+        const sectorWidth = Math.max(56, radius * arc * 0.62);
 
         drawTextInSector(ctx, textLines, textRadius, 0, sectorWidth, 13);
         ctx.restore();
@@ -1142,28 +1118,36 @@
       ctx.strokeStyle = "rgba(255,255,255,0.14)";
       ctx.stroke();
 
-      const ring = ctx.createRadialGradient(center, center, 34, center, center, 72);
-      ring.addColorStop(0, "#19253a");
-      ring.addColorStop(1, "#101726");
+      const outerShine = ctx.createRadialGradient(center, center, 120, center, center, radius);
+      outerShine.addColorStop(0, "rgba(255,255,255,0)");
+      outerShine.addColorStop(1, "rgba(255,255,255,0.08)");
       ctx.beginPath();
-      ctx.arc(center, center, 64, 0, Math.PI * 2);
+      ctx.arc(center, center, radius, 0, Math.PI * 2);
+      ctx.fillStyle = outerShine;
+      ctx.fill();
+
+      const ring = ctx.createRadialGradient(center, center, 28, center, center, 66);
+      ring.addColorStop(0, "#1a283f");
+      ring.addColorStop(1, "#101827");
+      ctx.beginPath();
+      ctx.arc(center, center, 58, 0, Math.PI * 2);
       ctx.fillStyle = ring;
       ctx.fill();
 
       ctx.beginPath();
-      ctx.arc(center, center, 50, 0, Math.PI * 2);
-      ctx.fillStyle = "#152238";
+      ctx.arc(center, center, 46, 0, Math.PI * 2);
+      ctx.fillStyle = "#16253b";
       ctx.fill();
 
       ctx.beginPath();
-      ctx.arc(center, center, 50, 0, Math.PI * 2);
+      ctx.arc(center, center, 46, 0, Math.PI * 2);
       ctx.lineWidth = 2;
       ctx.strokeStyle = "rgba(255,255,255,0.08)";
       ctx.stroke();
 
-      ctx.fillStyle = "rgba(255,255,255,0.12)";
+      ctx.fillStyle = "rgba(255,255,255,0.10)";
       ctx.beginPath();
-      ctx.arc(center - 12, center - 16, 16, 0, Math.PI * 2);
+      ctx.arc(center - 11, center - 14, 13, 0, Math.PI * 2);
       ctx.fill();
     }
 
