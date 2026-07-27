@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>iGadget Bonus</title>
+  <title>iGadget Wheel</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -446,6 +446,7 @@
     .field {
       display: grid;
       gap: 6px;
+      margin-bottom: 10px;
     }
 
     .field label {
@@ -694,6 +695,24 @@
             </div>
 
             <div class="section" style="padding:0; border:none; background:transparent;">
+              <div class="section-title">Проверка и погашение кодов</div>
+
+              <div class="field">
+                <label for="codeActionInput">Код</label>
+                <input id="codeActionInput" type="text" placeholder="Например: IG-AB12CD">
+              </div>
+
+              <div class="actions">
+                <button class="btn btn-secondary" id="checkCodeBtn">Проверить код</button>
+                <button class="btn btn-primary" id="redeemCodeBtn">Погасить код</button>
+              </div>
+
+              <div class="status" id="codeActionStatus" style="margin-top:12px;">
+                Введите код для проверки.
+              </div>
+            </div>
+
+            <div class="section" style="padding:0; border:none; background:transparent;">
               <div class="section-title">Список призов</div>
               <div class="prize-list" id="adminPrizeList"></div>
             </div>
@@ -742,6 +761,11 @@
     const newWeight = document.getElementById("newWeight");
     const newActive = document.getElementById("newActive");
     const addPrizeBtn = document.getElementById("addPrizeBtn");
+
+    const codeActionInput = document.getElementById("codeActionInput");
+    const checkCodeBtn = document.getElementById("checkCodeBtn");
+    const redeemCodeBtn = document.getElementById("redeemCodeBtn");
+    const codeActionStatus = document.getElementById("codeActionStatus");
 
     let prizes = [];
     let currentRotation = 0;
@@ -1108,6 +1132,7 @@
           </div>
 
           <div class="prize-actions">
+            <button class="mini-btn" data-action="edit" data-id="${item.id}">Редактировать</button>
             <button class="mini-btn" data-action="weight" data-id="${item.id}">Изменить вес</button>
             <button class="mini-btn" data-action="toggle" data-id="${item.id}">
               ${item.active ? "Выключить" : "Включить"}
@@ -1117,6 +1142,56 @@
         `;
 
         adminPrizeList.appendChild(block);
+      });
+
+      adminPrizeList.querySelectorAll("[data-action='edit']").forEach(btn => {
+        btn.addEventListener("click", async () => {
+          const id = Number(btn.dataset.id);
+          const item = items.find(x => Number(x.id) === id);
+          if (!item) return;
+
+          const title = prompt("Название", item.title);
+          if (title === null) return;
+
+          const short = prompt("Короткий текст", item.short || "");
+          if (short === null) return;
+
+          const description = prompt("Описание", item.description || "");
+          if (description === null) return;
+
+          const weightRaw = prompt("Вес", String(item.weight));
+          if (weightRaw === null) return;
+
+          const weight = Number(weightRaw);
+          if (!weight || weight <= 0) {
+            alert("Вес должен быть больше 0");
+            return;
+          }
+
+          const active = confirm("Оставить приз включенным? OK = включен, Cancel = выключен.");
+
+          adminStatus.textContent = "Сохраняем изменения приза...";
+
+          const data = await apiPost("/admin/prize/update", {
+            init_data: tg.initData || "",
+            prize_id: id,
+            title,
+            short,
+            description,
+            weight,
+            active
+          });
+
+          if (!data.ok) {
+            alert(data.error || "Ошибка редактирования");
+            adminStatus.textContent = data.error || "Ошибка";
+            return;
+          }
+
+          adminStatus.textContent = "Приз обновлён.";
+          renderAdminPrizeList(data.items);
+          await loadPrizes();
+        });
       });
 
       adminPrizeList.querySelectorAll("[data-action='weight']").forEach(btn => {
@@ -1266,6 +1341,52 @@
       adminStatus.textContent = "Приз успешно добавлен.";
       renderAdminPrizeList(data.items);
       await loadPrizes();
+    });
+
+    checkCodeBtn.addEventListener("click", async () => {
+      const code = codeActionInput.value.trim();
+      if (!code) {
+        codeActionStatus.textContent = "Введите код.";
+        return;
+      }
+
+      codeActionStatus.textContent = "Проверяем код...";
+
+      const data = await apiPost("/admin/code/check", {
+        init_data: tg.initData || "",
+        code
+      });
+
+      if (!data.ok) {
+        codeActionStatus.textContent = data.error || "Код не найден.";
+        return;
+      }
+
+      codeActionStatus.textContent =
+        `Код ${data.code} найден. Приз: ${data.prize_title}. Статус: ${data.redeemed ? "уже погашен" : "ещё не погашен"}.`;
+    });
+
+    redeemCodeBtn.addEventListener("click", async () => {
+      const code = codeActionInput.value.trim();
+      if (!code) {
+        codeActionStatus.textContent = "Введите код.";
+        return;
+      }
+
+      codeActionStatus.textContent = "Погашаем код...";
+
+      const data = await apiPost("/admin/code/redeem", {
+        init_data: tg.initData || "",
+        code
+      });
+
+      if (!data.ok) {
+        codeActionStatus.textContent = data.error || "Не удалось погасить код.";
+        return;
+      }
+
+      codeActionStatus.textContent =
+        `Код ${data.code} погашен. Приз: ${data.prize_title}.`;
     });
 
     spinBtn.addEventListener("click", spinWheel);
