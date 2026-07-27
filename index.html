@@ -8,48 +8,46 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
   <style>
     :root {
-      --bg: #08111d;
-      --bg-2: #0d1728;
-      --surface: rgba(14, 24, 39, 0.90);
-      --surface-solid: #111b2c;
-      --surface-2: #152235;
-      --surface-3: #1a2a42;
-      --text: #eef5ff;
-      --muted: #93a5bf;
-      --faint: #667791;
-      --line: rgba(255,255,255,0.08);
-      --line-2: rgba(255,255,255,0.14);
+      --bg: #0b1220;
+      --bg-2: #10192b;
+      --surface: rgba(17, 25, 40, 0.92);
+      --surface-solid: #141d30;
+      --surface-2: #182338;
+      --surface-3: #1e2b44;
+
+      --text: #edf3fc;
+      --muted: #95a6bf;
+      --faint: #6f8098;
+
+      --line: rgba(255, 255, 255, 0.08);
+      --line-2: rgba(255, 255, 255, 0.14);
 
       --accent: #22c55e;
-      --accent-2: #10b981;
-      --accent-3: #29de7b;
-      --accent-soft: rgba(34,197,94,0.14);
-      --accent-glow: rgba(34,197,94,0.32);
+      --accent-2: #12b981;
+      --accent-3: #38e07d;
+      --accent-glow: rgba(34, 197, 94, 0.28);
 
-      --cyan: #28c7d8;
-      --blue: #4f7cff;
-      --amber: #f4a61d;
-      --coral: #ff6b81;
-      --lime: #68d76b;
+      --danger: #ff667d;
 
-      --danger: #ff667b;
-
-      --shadow-lg: 0 24px 64px rgba(0,0,0,0.34);
-      --shadow-md: 0 14px 34px rgba(0,0,0,0.24);
+      --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.34);
+      --shadow-md: 0 14px 34px rgba(0, 0, 0, 0.24);
 
       --radius-xl: 32px;
       --radius-lg: 24px;
       --radius-md: 18px;
       --radius-sm: 14px;
 
-      --safe-bottom: env(safe-area-inset-bottom, 0px);
       --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
       --tg-safe-bottom: var(--safe-area-inset-bottom, 0px);
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     html, body {
       margin: 0;
@@ -57,8 +55,8 @@
       font-family: Inter, system-ui, -apple-system, sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at top center, rgba(34,197,94,0.10), transparent 24%),
-        radial-gradient(circle at 20% 15%, rgba(40,199,216,0.08), transparent 18%),
+        radial-gradient(circle at top center, rgba(34, 197, 94, 0.08), transparent 24%),
+        radial-gradient(circle at 24% 16%, rgba(39, 194, 255, 0.06), transparent 18%),
         linear-gradient(180deg, var(--bg), var(--bg-2));
     }
 
@@ -98,11 +96,11 @@
       height: 40px;
       border-radius: 14px;
       background:
-        linear-gradient(135deg, rgba(34,197,94,0.20), rgba(40,199,216,0.16));
-      border: 1px solid rgba(34,197,94,0.24);
+        linear-gradient(135deg, rgba(34, 197, 94, 0.22), rgba(39, 194, 255, 0.14));
+      border: 1px solid rgba(34, 197, 94, 0.22);
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.05),
-        0 0 30px rgba(34,197,94,0.12);
+        inset 0 1px 0 rgba(255,255,255,0.06),
+        0 0 28px rgba(34,197,94,0.10);
       position: relative;
       flex: 0 0 auto;
     }
@@ -192,7 +190,13 @@
       border-radius: inherit;
       pointer-events: none;
       background:
-        linear-gradient(135deg, rgba(34,197,94,0.08), transparent 26%, transparent 70%, rgba(40,199,216,0.06));
+        linear-gradient(
+          135deg,
+          rgba(34,197,94,0.06),
+          transparent 24%,
+          transparent 72%,
+          rgba(39,194,255,0.05)
+        );
     }
 
     .hero {
@@ -209,7 +213,7 @@
       border-radius: 999px;
       background: rgba(34,197,94,0.10);
       border: 1px solid rgba(34,197,94,0.16);
-      color: #a0f4bd;
+      color: #a3f5bf;
       font-size: 12px;
       font-weight: 800;
       text-transform: uppercase;
@@ -262,7 +266,7 @@
     }
 
     .tab.active {
-      color: #07120a;
+      color: #09120b;
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
       border-color: transparent;
       box-shadow: 0 10px 24px rgba(34,197,94,0.22);
@@ -282,7 +286,9 @@
       box-shadow: var(--shadow-md);
     }
 
-    .wheel-card { padding: 16px; }
+    .wheel-card {
+      padding: 16px;
+    }
 
     .meta-row {
       display: flex;
@@ -306,14 +312,14 @@
 
     .wheel-wrap {
       position: relative;
-      width: min(100%, 280px);
+      width: min(100%, 284px);
       aspect-ratio: 1 / 1;
       margin: 0 auto 16px;
     }
 
     .wheel-halo {
       position: absolute;
-      inset: 8%;
+      inset: 7%;
       border-radius: 999px;
       background: radial-gradient(circle, rgba(34,197,94,0.12), transparent 58%);
       filter: blur(16px);
@@ -322,16 +328,16 @@
 
     .pointer {
       position: absolute;
-      top: 2px;
+      top: 4px;
       left: 50%;
       transform: translateX(-50%);
       width: 0;
       height: 0;
       border-left: 14px solid transparent;
       border-right: 14px solid transparent;
-      border-top: 24px solid #ff6b81;
+      border-top: 24px solid var(--danger);
       z-index: 7;
-      filter: drop-shadow(0 4px 12px rgba(255,107,129,.34));
+      filter: drop-shadow(0 4px 12px rgba(255,102,125,.34));
     }
 
     canvas {
@@ -340,7 +346,7 @@
       display: block;
       filter:
         drop-shadow(0 18px 32px rgba(0,0,0,.26))
-        drop-shadow(0 0 22px rgba(34,197,94,.08));
+        drop-shadow(0 0 22px rgba(34,197,94,.06));
     }
 
     .center-btn {
@@ -352,10 +358,10 @@
       height: 88px;
       border: 4px solid rgba(255,255,255,.10);
       border-radius: 999px;
-      color: #06110a;
+      color: #09120b;
       background:
-        radial-gradient(circle at 30% 25%, rgba(255,255,255,.44), transparent 28%),
-        linear-gradient(180deg, #40e688, #18bb6b 56%, #0f955f);
+        radial-gradient(circle at 30% 25%, rgba(255,255,255,.42), transparent 28%),
+        linear-gradient(180deg, #41e688, #18bc6c 56%, #0f965f);
       font-size: 12px;
       letter-spacing: 0.12em;
       font-weight: 800;
@@ -363,7 +369,7 @@
       z-index: 8;
       box-shadow:
         0 0 0 8px rgba(34,197,94,0.06),
-        0 12px 28px rgba(16,185,129,.26),
+        0 12px 28px rgba(16,185,129,.24),
         inset 0 1px 0 rgba(255,255,255,.46);
       transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
     }
@@ -373,7 +379,7 @@
     }
 
     .center-btn:disabled {
-      opacity: .7;
+      opacity: 0.7;
       cursor: not-allowed;
       box-shadow:
         0 0 0 6px rgba(34,197,94,0.04),
@@ -414,11 +420,13 @@
       display: block;
     }
 
-    .section { padding: 16px; }
+    .section {
+      padding: 16px;
+    }
 
     .kicker {
       margin-bottom: 8px;
-      color: #9ff2bb;
+      color: #a3f5bf;
       font-size: 12px;
       font-weight: 800;
       text-transform: uppercase;
@@ -455,7 +463,7 @@
       padding: 16px 14px;
       text-align: center;
       background:
-        linear-gradient(180deg, rgba(34,197,94,0.14), rgba(16,185,129,0.08)),
+        linear-gradient(180deg, rgba(34,197,94,0.14), rgba(18,185,129,0.08)),
         rgba(255,255,255,0.02);
       border: 1px solid rgba(34,197,94,0.18);
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
@@ -466,7 +474,7 @@
       position: absolute;
       inset: auto -20% -50% -20%;
       height: 90px;
-      background: radial-gradient(circle, rgba(40,199,216,0.14), transparent 58%);
+      background: radial-gradient(circle, rgba(39,194,255,0.12), transparent 58%);
       pointer-events: none;
     }
 
@@ -484,7 +492,7 @@
       line-height: 1;
       font-weight: 800;
       letter-spacing: 0.08em;
-      color: #ebfff2;
+      color: #edfdf2;
       word-break: break-word;
     }
 
@@ -514,7 +522,7 @@
       line-height: 1;
       letter-spacing: -0.05em;
       font-weight: 800;
-      color: #9ff2bb;
+      color: #a3f5bf;
       font-variant-numeric: tabular-nums;
       text-shadow: 0 0 16px rgba(34,197,94,0.14);
     }
@@ -544,7 +552,7 @@
     }
 
     .btn-primary {
-      color: #06120b;
+      color: #09120b;
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
       box-shadow: 0 12px 24px rgba(34,197,94,0.16);
     }
@@ -649,15 +657,15 @@
     }
 
     .badge-on {
-      color: #a0f4bd;
+      color: #a3f5bf;
       background: rgba(34,197,94,0.12);
       border: 1px solid rgba(34,197,94,0.18);
     }
 
     .badge-off {
-      color: #ff9bab;
-      background: rgba(255,102,123,0.10);
-      border: 1px solid rgba(255,102,123,0.18);
+      color: #ff9cab;
+      background: rgba(255,102,125,0.10);
+      border: 1px solid rgba(255,102,125,0.18);
     }
 
     .prize-actions {
@@ -697,7 +705,7 @@
       }
 
       .wheel-wrap {
-        width: min(100%, 260px);
+        width: min(100%, 262px);
       }
 
       .actions {
@@ -717,7 +725,7 @@
         <div class="brand-mark"></div>
         <div class="brand-copy">
           <div class="brand-title">iGadget Bonus</div>
-          <div class="brand-sub">Tech Dark 2.0</div>
+          <div class="brand-sub">Tech Dark Final</div>
         </div>
       </div>
 
@@ -873,6 +881,7 @@
     tg.expand();
 
     const API_BASE = "https://telegram-wheel-bot-production-764c.up.railway.app";
+    const BUILD_VERSION = "wheel-v4";
 
     const sounds = {
       tick: new Audio("https://cdn.freesound.org/previews/240/240776_4107740-lq.mp3"),
@@ -880,7 +889,7 @@
       error: new Audio("https://cdn.freesound.org/previews/331/331912_3248244-lq.mp3")
     };
 
-    sounds.tick.volume = 0.16;
+    sounds.tick.volume = 0.14;
     sounds.win.volume = 0.42;
     sounds.error.volume = 0.34;
 
@@ -995,7 +1004,14 @@
     tabAdmin.addEventListener("click", () => switchTab("admin"));
 
     function getSectorPalette() {
-      return ["#22c55e", "#ff6b81", "#28c7d8", "#f4a61d", "#4f7cff", "#68d76b"];
+      return [
+        "#21c45d",
+        "#ff5f7a",
+        "#27c2ff",
+        "#f7a81b",
+        "#4d6bff",
+        "#7bdc4d"
+      ];
     }
 
     function fitLabel(label) {
@@ -1087,9 +1103,14 @@
         const mid = start + arc / 2;
         const color = palette[i % palette.length];
 
-        const grad = ctx.createRadialGradient(center, center, 58, center, center, radius);
-        grad.addColorStop(0, shadeColor(color, -22));
-        grad.addColorStop(1, color);
+        const grad = ctx.createLinearGradient(
+          center + Math.cos(start) * 30,
+          center + Math.sin(start) * 30,
+          center + Math.cos(end) * radius,
+          center + Math.sin(end) * radius
+        );
+        grad.addColorStop(0, shadeColor(color, -8));
+        grad.addColorStop(1, shadeColor(color, 6));
 
         ctx.beginPath();
         ctx.moveTo(center, center);
@@ -1103,7 +1124,7 @@
         ctx.arc(center, center, radius, start, end);
         ctx.closePath();
         ctx.lineWidth = 1;
-        ctx.strokeStyle = "rgba(255,255,255,0.06)";
+        ctx.strokeStyle = "rgba(255,255,255,0.08)";
         ctx.stroke();
 
         ctx.save();
@@ -1111,7 +1132,7 @@
         ctx.rotate(mid);
 
         const textLines = fitLabel(items[i].short || items[i].title || "Приз");
-        const textRadius = radius - 58;
+        const textRadius = radius - 60;
         const sectorWidth = Math.max(54, radius * arc * 0.60);
 
         drawTextInSector(ctx, textLines, textRadius, 0, sectorWidth, 13);
@@ -1121,20 +1142,20 @@
       ctx.beginPath();
       ctx.arc(center, center, radius, 0, Math.PI * 2);
       ctx.lineWidth = 5;
-      ctx.strokeStyle = "rgba(255,255,255,0.10)";
+      ctx.strokeStyle = "rgba(255,255,255,0.12)";
       ctx.stroke();
 
       const glow = ctx.createRadialGradient(center, center, 18, center, center, 88);
-      glow.addColorStop(0, "rgba(58,230,136,0.22)");
+      glow.addColorStop(0, "rgba(58,230,136,0.18)");
       glow.addColorStop(1, "rgba(58,230,136,0)");
       ctx.beginPath();
       ctx.arc(center, center, 82, 0, Math.PI * 2);
       ctx.fillStyle = glow;
       ctx.fill();
 
-      const ring = ctx.createRadialGradient(center, center, 34, center, center, 70);
-      ring.addColorStop(0, "#14253a");
-      ring.addColorStop(1, "#0b1525");
+      const ring = ctx.createRadialGradient(center, center, 34, center, center, 72);
+      ring.addColorStop(0, "#16263d");
+      ring.addColorStop(1, "#0c1524");
       ctx.beginPath();
       ctx.arc(center, center, 64, 0, Math.PI * 2);
       ctx.fillStyle = ring;
@@ -1150,6 +1171,11 @@
       ctx.lineWidth = 2;
       ctx.strokeStyle = "rgba(255,255,255,0.08)";
       ctx.stroke();
+
+      ctx.fillStyle = "rgba(255,255,255,0.16)";
+      ctx.beginPath();
+      ctx.arc(center - 12, center - 16, 18, 0, Math.PI * 2);
+      ctx.fill();
     }
 
     function shadeColor(hex, percent) {
@@ -1162,7 +1188,7 @@
     }
 
     async function apiPost(path, body) {
-      const res = await fetch(`${API_BASE}${path}`, {
+      const res = await fetch(`${API_BASE}${path}?v=${BUILD_VERSION}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body)
@@ -1171,7 +1197,7 @@
     }
 
     async function loadPrizes() {
-      const res = await fetch(`${API_BASE}/prizes`);
+      const res = await fetch(`${API_BASE}/prizes?v=${BUILD_VERSION}`);
       const data = await res.json();
 
       if (!data.ok || !data.items?.length) {
@@ -1641,6 +1667,7 @@
 
     async function initApp() {
       updateSafeAreaFallback();
+      statusEl.textContent = `Сборка: ${BUILD_VERSION}`;
 
       try {
         await loadPrizes();
