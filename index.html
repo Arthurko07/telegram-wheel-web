@@ -729,6 +729,57 @@
 
     const API_BASE = "https://telegram-wheel-bot-production-764c.up.railway.app";
 
+    const sounds = {
+      tick: new Audio("https://cdn.freesound.org/previews/240/240776_4107740-lq.mp3"),
+      win: new Audio("https://cdn.freesound.org/previews/320/320655_5260872-lq.mp3"),
+      error: new Audio("https://cdn.freesound.org/previews/331/331912_3248244-lq.mp3")
+    };
+
+    sounds.tick.volume = 0.18;
+    sounds.win.volume = 0.45;
+    sounds.error.volume = 0.35;
+
+    let soundUnlocked = false;
+    let tickInterval = null;
+
+    async function unlockSounds() {
+      if (soundUnlocked) return;
+      soundUnlocked = true;
+
+      try {
+        sounds.tick.muted = true;
+        await sounds.tick.play();
+        sounds.tick.pause();
+        sounds.tick.currentTime = 0;
+        sounds.tick.muted = false;
+      } catch (e) {}
+    }
+
+    function playSound(name) {
+      const s = sounds[name];
+      if (!s) return;
+
+      try {
+        s.pause();
+        s.currentTime = 0;
+        s.play().catch(() => {});
+      } catch (e) {}
+    }
+
+    function startTickLoop() {
+      stopTickLoop();
+      tickInterval = setInterval(() => {
+        playSound("tick");
+      }, 280);
+    }
+
+    function stopTickLoop() {
+      if (tickInterval) {
+        clearInterval(tickInterval);
+        tickInterval = null;
+      }
+    }
+
     const canvas = document.getElementById("wheel");
     const ctx = canvas.getContext("2d");
     const spinBtn = document.getElementById("spinBtn");
@@ -1068,6 +1119,9 @@
     async function spinWheel() {
       if (isSpinning) return;
 
+      await unlockSounds();
+      playSound("tick");
+
       isSpinning = true;
       spinBtn.disabled = true;
       resultBox.classList.remove("show");
@@ -1080,24 +1134,34 @@
         });
 
         if (!data.ok && data.cooldown) {
+          stopTickLoop();
+          playSound("error");
           statusEl.textContent = "На сегодня попытка уже израсходована.";
           startCooldown(data);
           return;
         }
 
         if (!data.ok) {
+          stopTickLoop();
+          playSound("error");
           statusEl.textContent = data.error || "Произошла ошибка.";
           tg.HapticFeedback?.notificationOccurred("error");
           return;
         }
 
+        startTickLoop();
         await animateSpinToPrize(data.prize_id);
+        stopTickLoop();
+        playSound("win");
         showResult(data);
         tg.HapticFeedback?.notificationOccurred("success");
       } catch (e) {
+        stopTickLoop();
+        playSound("error");
         statusEl.textContent = "Ошибка соединения с сервером.";
         tg.HapticFeedback?.notificationOccurred("error");
       } finally {
+        stopTickLoop();
         isSpinning = false;
         spinBtn.disabled = false;
       }
@@ -1382,9 +1446,11 @@
 
       if (!data.ok) {
         codeActionStatus.textContent = data.error || "Не удалось погасить код.";
+        playSound("error");
         return;
       }
 
+      playSound("win");
       codeActionStatus.textContent =
         `Код ${data.code} погашен. Приз: ${data.prize_title}.`;
     });
@@ -1401,6 +1467,7 @@
         tg.HapticFeedback?.notificationOccurred("success");
       } catch (e) {
         statusEl.textContent = "Не удалось скопировать код.";
+        playSound("error");
       }
     });
 
