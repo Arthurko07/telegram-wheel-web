@@ -58,6 +58,10 @@
       --wheel-stroke:rgba(255,255,255,.95);
       --wheel-outline:rgba(255,255,255,.55);
       --wheel-text:#243447;
+
+      --highlight-stroke:#ffffff;
+      --highlight-glow:rgba(255,215,90,.9);
+      --highlight-overlay:rgba(255,255,255,.18);
     }
 
     @media (prefers-color-scheme: dark) {
@@ -110,6 +114,10 @@
         --wheel-stroke:rgba(255,255,255,.12);
         --wheel-outline:rgba(255,255,255,.10);
         --wheel-text:#f8fafc;
+
+        --highlight-stroke:#fff7d1;
+        --highlight-glow:rgba(255,221,87,.9);
+        --highlight-overlay:rgba(255,255,255,.10);
       }
     }
 
@@ -518,6 +526,7 @@
     let spinning = false;
     let mainButtonBound = false;
     let countdownInterval = null;
+    let highlightedPrizeIndex = null;
 
     const lightPalette = [
       '#7fb3ff', '#f7a35c', '#ffd166', '#8ecae6',
@@ -557,6 +566,45 @@
       return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
     }
 
+    function drawSector(start, end, fillColor, strokeColor, isHighlighted) {
+      const size = wheel.width;
+      const radius = size / 2;
+
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.arc(0, 0, radius - 18, start, end);
+      ctx.closePath();
+
+      if (isHighlighted) {
+        ctx.save();
+        ctx.shadowColor = getCssVar('--highlight-glow');
+        ctx.shadowBlur = 28;
+        ctx.fillStyle = fillColor;
+        ctx.fill();
+        ctx.restore();
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.arc(0, 0, radius - 18, start, end);
+        ctx.closePath();
+        ctx.fillStyle = getCssVar('--highlight-overlay');
+        ctx.fill();
+        ctx.restore();
+
+        ctx.lineWidth = 12;
+        ctx.strokeStyle = getCssVar('--highlight-stroke');
+        ctx.stroke();
+      } else {
+        ctx.fillStyle = fillColor;
+        ctx.fill();
+
+        ctx.lineWidth = 8;
+        ctx.strokeStyle = strokeColor;
+        ctx.stroke();
+      }
+    }
+
     function drawWheel() {
       const size = wheel.width;
       const radius = size / 2;
@@ -575,17 +623,15 @@
       for (let i = 0; i < count; i++) {
         const start = i * arc;
         const end = start + arc;
+        const isHighlighted = highlightedPrizeIndex === i;
 
-        ctx.beginPath();
-        ctx.moveTo(0, 0);
-        ctx.arc(0, 0, radius - 18, start, end);
-        ctx.closePath();
-        ctx.fillStyle = palette[i % palette.length];
-        ctx.fill();
-
-        ctx.lineWidth = 8;
-        ctx.strokeStyle = wheelStroke;
-        ctx.stroke();
+        drawSector(
+          start,
+          end,
+          palette[i % palette.length],
+          wheelStroke,
+          isHighlighted
+        );
 
         ctx.save();
         ctx.rotate(start + arc / 2);
@@ -599,7 +645,16 @@
         const label = labels[i] || 'Приз';
         const wheelLabel = label.length > 12 ? label.slice(0, 12) + '…' : label;
 
-        ctx.fillText(wheelLabel, radius - 82, 0);
+        if (isHighlighted) {
+          ctx.save();
+          ctx.shadowColor = getCssVar('--highlight-glow');
+          ctx.shadowBlur = 8;
+          ctx.fillText(wheelLabel, radius - 82, 0);
+          ctx.restore();
+        } else {
+          ctx.fillText(wheelLabel, radius - 82, 0);
+        }
+
         ctx.restore();
       }
 
@@ -823,10 +878,19 @@
       if (spinning || prizes.length === 0) return;
 
       spinning = true;
+      highlightedPrizeIndex = null;
+      drawWheel();
+
       resultCard.classList.remove('show');
       cooldownCard.classList.remove('show');
       statusEl.textContent = 'Определяем ваш бонус...';
       setButtonLoading(true);
+
+      if (tg && tg.HapticFeedback) {
+        try {
+          tg.HapticFeedback.impactOccurred('light');
+        } catch (e) {}
+      }
 
       try {
         const result = await requestSpinResult();
@@ -857,6 +921,9 @@
         statusEl.textContent = 'Колесо крутится...';
 
         animateSpinToPrize(prizeIndex, () => {
+          highlightedPrizeIndex = prizeIndex;
+          drawWheel();
+
           resultTitle.textContent = result.prize_title;
           resultText.textContent = result.prize_description;
           resultCode.textContent = result.code;
@@ -871,6 +938,7 @@
 
           if (tg && tg.HapticFeedback) {
             try {
+              tg.HapticFeedback.impactOccurred('medium');
               tg.HapticFeedback.notificationOccurred('success');
             } catch (e) {}
           }
