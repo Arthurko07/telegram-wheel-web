@@ -240,6 +240,38 @@
       text-align:center;
     }
 
+    .timer-box {
+      margin-top:14px;
+      padding:14px;
+      border-radius:20px;
+      background:rgba(255,255,255,.72);
+      border:1px solid rgba(213,180,95,.5);
+      text-align:center;
+    }
+
+    .timer-label {
+      font-size:12px;
+      color:#8b6b22;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      margin-bottom:6px;
+    }
+
+    .timer-value {
+      font-size:22px;
+      font-weight:900;
+      color:#1f2937;
+      line-height:1.2;
+    }
+
+    .timer-sub {
+      margin-top:6px;
+      font-size:13px;
+      color:#6c5420;
+      line-height:1.4;
+    }
+
     .footer-note {
       text-align:center;
       color:var(--muted);
@@ -300,7 +332,7 @@
     <section class="card hero">
       <div class="hero-badge">iGadget Bonus Wheel</div>
       <h1>Крутите колесо и забирайте бонус</h1>
-      <p>После выигрыша назовите код сотруднику магазина, чтобы получить свой приз.</p>
+      <p>После выигрыша назовите код сотруднику магазина. Все бонусы и скидки действуют 3 дня.</p>
     </section>
 
     <section class="card wheel-card">
@@ -330,6 +362,12 @@
       <div class="employee-note">
         Покажите или назовите этот код сотруднику.
       </div>
+
+      <div id="timerBox" class="timer-box" style="display:none;">
+        <div class="timer-label">Осталось времени</div>
+        <div id="timerValue" class="timer-value">—</div>
+        <div id="timerSub" class="timer-sub">Код действует до —</div>
+      </div>
     </section>
 
     <section id="cooldownCard" class="cooldown-box">
@@ -340,7 +378,7 @@
     </section>
 
     <div class="footer-note">
-      Одна попытка доступна один раз в сутки.
+      Одна попытка доступна один раз в сутки. Выигранный бонус действует 3 дня.
     </div>
   </div>
 
@@ -367,13 +405,17 @@
     const cooldownCard = document.getElementById('cooldownCard');
     const cooldownText = document.getElementById('cooldownText');
     const lastPrizeInfo = document.getElementById('lastPrizeInfo');
+    const timerBox = document.getElementById('timerBox');
+    const timerValue = document.getElementById('timerValue');
+    const timerSub = document.getElementById('timerSub');
 
-    const labels = ['iGadget', 'Bonus', 'Sale', 'Gift', 'Promo', 'Prize', 'Spin', 'Lucky'];
+    const labels = ['Скидка', 'Бонус', 'Подарок', 'Sale', 'iGadget', 'Promo', 'Lucky', 'Prize'];
     const colors = ['#ffd166', '#8ecae6', '#90be6d', '#ffafcc', '#cdb4db', '#7fb3ff', '#f4a261', '#95d5b2'];
 
     let rotation = 0;
     let spinning = false;
     let mainButtonBound = false;
+    let countdownInterval = null;
 
     function drawWheel() {
       const size = wheel.width;
@@ -495,6 +537,50 @@
       requestAnimationFrame(frame);
     }
 
+    function formatRemaining(ms) {
+      if (ms <= 0) return '0 д 0 ч 0 мин 0 сек';
+
+      const days = Math.floor(ms / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((ms % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((ms % (1000 * 60)) / 1000);
+
+      return `${days} д ${hours} ч ${minutes} мин ${seconds} сек`;
+    }
+
+    function startCountdown(expiresAt, expiresAtText) {
+      if (countdownInterval) {
+        clearInterval(countdownInterval);
+      }
+
+      if (!expiresAt) {
+        timerBox.style.display = 'none';
+        return;
+      }
+
+      timerBox.style.display = 'block';
+      timerSub.textContent = `Код действует до ${expiresAtText || 'указанного времени'}`;
+
+      const targetTs = new Date(expiresAt).getTime();
+
+      function updateTimer() {
+        const nowTs = Date.now();
+        const diff = targetTs - nowTs;
+
+        if (diff <= 0) {
+          timerValue.textContent = '0 д 0 ч 0 мин 0 сек';
+          timerSub.textContent = 'Срок действия кода истёк';
+          clearInterval(countdownInterval);
+          return;
+        }
+
+        timerValue.textContent = formatRemaining(diff);
+      }
+
+      updateTimer();
+      countdownInterval = setInterval(updateTimer, 1000);
+    }
+
     function showCooldown(data) {
       resultCard.classList.remove('show');
       cooldownCard.classList.add('show');
@@ -506,9 +592,12 @@
       spinBtn.disabled = true;
 
       if (data.last_prize_title || data.last_code) {
+        let extra = `Последний приз: <b>${data.last_prize_title || '—'}</b><br>Код: <b>${data.last_code || '—'}</b>`;
+        if (data.expires_at_text) {
+          extra += `<br>Действителен до: <b>${data.expires_at_text}</b>`;
+        }
         lastPrizeInfo.style.display = 'block';
-        lastPrizeInfo.innerHTML =
-          `Последний приз: <b>${data.last_prize_title || '—'}</b><br>Код: <b>${data.last_code || '—'}</b>`;
+        lastPrizeInfo.innerHTML = extra;
       } else {
         lastPrizeInfo.style.display = 'none';
         lastPrizeInfo.innerHTML = '';
@@ -560,6 +649,8 @@
           spinning = false;
           setButtonLoading(false);
           spinBtn.disabled = true;
+
+          startCountdown(result.expires_at, result.expires_at_text);
 
           if (tg && tg.HapticFeedback) {
             try {
