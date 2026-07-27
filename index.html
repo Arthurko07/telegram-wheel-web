@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>iGadget Wheel Diagnostic</title>
+  <title>iGadget Wheel</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -11,24 +11,42 @@
 
   <style>
     :root {
-      --bg: #0f1420;
-      --bg-2: #171d2c;
-      --surface: #1d2435;
-      --surface-2: #242c40;
-      --text: #e9eef7;
-      --muted: #98a4bc;
-      --line: rgba(255,255,255,0.10);
-      --line-2: rgba(255,255,255,0.16);
-      --accent: #67e289;
-      --accent-2: #41c56b;
-      --danger: #ff6c83;
+      --bg: #0d1420;
+      --bg-2: #151d2d;
+      --surface: rgba(24, 31, 46, 0.94);
+      --surface-solid: #1c2435;
+      --surface-2: #232d41;
+      --surface-3: #2b3650;
+
+      --text: #e9eef8;
+      --muted: #98a5bc;
+      --faint: #73819a;
+
+      --line: rgba(255,255,255,0.08);
+      --line-2: rgba(255,255,255,0.14);
+
+      --accent: #4ade80;
+      --accent-2: #22c55e;
+      --accent-glow: rgba(74, 222, 128, 0.24);
+
+      --danger: #ff6f88;
+
+      --shadow-lg: 0 24px 60px rgba(0,0,0,0.32);
+      --shadow-md: 0 14px 30px rgba(0,0,0,0.22);
+
+      --radius-xl: 32px;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --radius-sm: 14px;
+
       --safe-top: env(safe-area-inset-top, 0px);
       --safe-bottom: env(safe-area-inset-bottom, 0px);
       --tg-safe-bottom: var(--safe-area-inset-bottom, 0px);
-      --shadow: 0 18px 44px rgba(0,0,0,0.34);
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     html, body {
       margin: 0;
@@ -36,15 +54,19 @@
       font-family: Inter, system-ui, -apple-system, sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at top, rgba(103,226,137,0.06), transparent 24%),
+        radial-gradient(circle at top center, rgba(74,222,128,0.06), transparent 24%),
+        radial-gradient(circle at 20% 18%, rgba(56,189,248,0.04), transparent 18%),
         linear-gradient(180deg, var(--bg), var(--bg-2));
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
     }
 
-    body { min-height: 100vh; }
+    body {
+      min-height: 100vh;
+    }
 
     .app {
+      width: 100%;
       max-width: 760px;
       margin: 0 auto;
       min-height: 100vh;
@@ -54,85 +76,219 @@
         calc(24px + var(--safe-bottom) + var(--tg-safe-bottom));
     }
 
-    .shell {
-      border-radius: 30px;
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      flex: 0 0 auto;
+      position: relative;
+      background:
+        linear-gradient(135deg, rgba(74,222,128,0.24), rgba(56,189,248,0.12));
+      border: 1px solid rgba(74,222,128,0.20);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.05),
+        0 0 24px rgba(74,222,128,0.08);
+    }
+
+    .brand-mark::before,
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #86efac, #22c55e);
+    }
+
+    .brand-mark::before {
+      width: 8px;
+      height: 18px;
+      left: 12px;
+      top: 11px;
+    }
+
+    .brand-mark::after {
+      width: 8px;
+      height: 12px;
+      right: 12px;
+      top: 14px;
+      opacity: 0.82;
+    }
+
+    .brand-copy {
+      display: grid;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .brand-title {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      white-space: nowrap;
+    }
+
+    .brand-sub {
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .sync-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 40px;
+      padding: 0 14px;
+      border-radius: 999px;
       border: 1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)), var(--surface);
-      box-shadow: var(--shadow);
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .sync-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 12px var(--accent-glow);
+    }
+
+    .shell {
+      position: relative;
+      overflow: hidden;
+      border-radius: 34px;
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)),
+        var(--surface);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow-lg);
       padding: 18px;
+    }
+
+    .shell::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      pointer-events: none;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(74,222,128,0.04),
+          transparent 28%,
+          transparent 72%,
+          rgba(56,189,248,0.03)
+        );
     }
 
     .hero {
       text-align: center;
-      margin-bottom: 16px;
+      padding: 8px 6px 12px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 34px;
+      padding: 0 12px;
+      border-radius: 999px;
+      background: rgba(74,222,128,0.10);
+      border: 1px solid rgba(74,222,128,0.16);
+      color: #b7f7ca;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: currentColor;
+      box-shadow: 0 0 14px currentColor;
     }
 
     .hero h1 {
       margin: 0 0 8px;
-      font-size: clamp(24px, 4vw, 32px);
-      line-height: 1.05;
-      letter-spacing: -0.04em;
+      font-size: clamp(26px, 4vw, 34px);
+      line-height: 1.02;
+      letter-spacing: -0.045em;
       font-weight: 800;
     }
 
     .hero p {
       margin: 0 auto;
-      max-width: 34ch;
+      max-width: 38ch;
       color: var(--muted);
       font-size: 14px;
-      line-height: 1.55;
-    }
-
-    .diag-banner {
-      margin: 0 auto 12px;
-      width: fit-content;
-      min-height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 14px;
-      border-radius: 999px;
-      background: rgba(255, 108, 131, 0.12);
-      border: 1px solid rgba(255,108,131,0.22);
-      color: #ffb4c0;
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      line-height: 1.6;
     }
 
     .tabs {
       display: flex;
       gap: 8px;
-      margin: 0 0 14px;
+      margin: 16px 0 14px;
     }
 
     .tab {
       flex: 1;
       min-height: 46px;
-      border: 1px solid var(--line);
       border-radius: 16px;
+      border: 1px solid var(--line);
       background: rgba(255,255,255,0.03);
       color: var(--muted);
       font-size: 14px;
       font-weight: 700;
+      cursor: pointer;
+      transition: 180ms ease;
     }
 
     .tab.active {
-      color: #0a120d;
+      color: #0b140d;
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
       border-color: transparent;
+      box-shadow: 0 10px 24px rgba(34,197,94,0.18);
     }
+
+    .hidden { display: none !important; }
+    .panel { display: none; }
+    .panel.active { display: block; }
 
     .wheel-card,
     .section {
-      border-radius: 26px;
+      border-radius: 28px;
       border: 1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)), #20283b;
-      box-shadow: 0 10px 26px rgba(0,0,0,0.20);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02)),
+        var(--surface-solid);
+      box-shadow: var(--shadow-md);
     }
 
-    .wheel-card { padding: 16px; }
+    .wheel-card {
+      padding: 16px;
+    }
 
     .meta-row {
       display: flex;
@@ -141,14 +297,14 @@
     }
 
     .meta-pill {
-      min-height: 36px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      min-height: 36px;
       padding: 0 14px;
       border-radius: 999px;
-      border: 1px solid var(--line);
       background: rgba(255,255,255,0.04);
+      border: 1px solid var(--line);
       color: var(--muted);
       font-size: 12px;
       font-weight: 700;
@@ -161,6 +317,15 @@
       margin: 0 auto 16px;
     }
 
+    .wheel-halo {
+      position: absolute;
+      inset: 8%;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(74,222,128,0.10), transparent 58%);
+      filter: blur(16px);
+      pointer-events: none;
+    }
+
     .pointer {
       position: absolute;
       top: 4px;
@@ -171,15 +336,17 @@
       border-left: 14px solid transparent;
       border-right: 14px solid transparent;
       border-top: 24px solid var(--danger);
-      z-index: 5;
-      filter: drop-shadow(0 4px 10px rgba(255,108,131,.32));
+      z-index: 7;
+      filter: drop-shadow(0 4px 12px rgba(255,111,136,.30));
     }
 
     canvas {
-      display: block;
       width: 100%;
       height: 100%;
-      filter: drop-shadow(0 18px 34px rgba(0,0,0,.28));
+      display: block;
+      filter:
+        drop-shadow(0 18px 34px rgba(0,0,0,.26))
+        drop-shadow(0 0 18px rgba(74,222,128,.04));
     }
 
     .center-btn {
@@ -191,46 +358,72 @@
       height: 90px;
       border-radius: 999px;
       border: 4px solid rgba(255,255,255,.10);
-      background:
-        radial-gradient(circle at 30% 25%, rgba(255,255,255,.40), transparent 30%),
-        linear-gradient(180deg, #80f0a2, #46cb71 58%, #2ea95b);
       color: #071008;
+      background:
+        radial-gradient(circle at 30% 25%, rgba(255,255,255,.42), transparent 28%),
+        linear-gradient(180deg, #86efac, #4ade80 56%, #22c55e);
       font-size: 12px;
       letter-spacing: 0.12em;
       font-weight: 800;
-      box-shadow: 0 10px 28px rgba(65,197,107,.26);
-      z-index: 6;
       cursor: pointer;
+      z-index: 8;
+      box-shadow:
+        0 0 0 8px rgba(74,222,128,0.05),
+        0 12px 28px rgba(34,197,94,.22),
+        inset 0 1px 0 rgba(255,255,255,.42);
+      transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
     }
 
-    .hint, .status {
+    .center-btn:active {
+      transform: translate(-50%, -50%) scale(0.98);
+    }
+
+    .center-btn:disabled {
+      opacity: 0.72;
+      cursor: not-allowed;
+    }
+
+    .hint {
       text-align: center;
       color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+      margin-bottom: 10px;
+      min-height: 20px;
+    }
+
+    .status {
+      min-height: 48px;
+      border-radius: 16px;
+      padding: 12px 14px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      text-align: center;
       font-size: 14px;
       line-height: 1.5;
     }
 
-    .hint { margin-bottom: 10px; }
-
-    .status {
-      min-height: 52px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 12px 14px;
-      border-radius: 16px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.03);
+    .result,
+    .cooldown,
+    .admin-only {
+      display: none;
+      margin-top: 14px;
     }
 
-    .result, .cooldown, .admin-only, .panel { display: none; }
-    .panel.active, .result.show, .cooldown.show, .admin-only.show { display: block; }
+    .result.show,
+    .cooldown.show,
+    .admin-only.show {
+      display: block;
+    }
 
-    .section { padding: 16px; margin-top: 14px; }
+    .section {
+      padding: 16px;
+    }
 
     .kicker {
       margin-bottom: 8px;
-      color: #aef3bf;
+      color: #b7f7ca;
       font-size: 12px;
       font-weight: 800;
       text-transform: uppercase;
@@ -239,69 +432,94 @@
 
     .section-title {
       margin: 0 0 8px;
-      font-size: 20px;
+      font-size: 21px;
       line-height: 1.08;
+      letter-spacing: -0.045em;
       font-weight: 800;
-      letter-spacing: -0.04em;
     }
 
-    .section-desc, .last-prize, .expires {
+    .section-desc {
       color: var(--muted);
       font-size: 14px;
-      line-height: 1.55;
+      line-height: 1.6;
+      margin-bottom: 14px;
     }
 
     .result-prize {
-      margin-bottom: 6px;
+      color: var(--text);
       font-size: 18px;
       font-weight: 800;
-      color: var(--text);
+      margin-bottom: 6px;
     }
 
     .code-box {
-      margin: 12px 0;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 12px;
+      border-radius: 22px;
       padding: 16px 14px;
       text-align: center;
-      border-radius: 22px;
-      border: 1px solid rgba(103,226,137,0.18);
-      background: linear-gradient(180deg, rgba(103,226,137,0.14), rgba(103,226,137,0.07));
+      background:
+        linear-gradient(180deg, rgba(74,222,128,0.14), rgba(34,197,94,0.08)),
+        rgba(255,255,255,0.02);
+      border: 1px solid rgba(74,222,128,0.16);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
     }
 
     .code-label {
-      margin-bottom: 8px;
-      color: var(--muted);
       font-size: 12px;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 8px;
     }
 
     .code {
       font-size: 28px;
+      line-height: 1;
       font-weight: 800;
       letter-spacing: 0.08em;
-      line-height: 1;
-      color: #f1fff4;
+      color: #effcf3;
       word-break: break-word;
     }
 
+    .expires {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
     .timer-wrap {
-      min-height: 78px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 12px 0 10px;
+      min-height: 78px;
+      margin-bottom: 10px;
       border-radius: 18px;
       border: 1px solid var(--line);
-      background: rgba(255,255,255,0.03);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)),
+        var(--surface-2);
     }
 
     .timer {
       font-size: 30px;
-      font-weight: 800;
+      line-height: 1;
       letter-spacing: -0.05em;
-      color: #aef3bf;
+      font-weight: 800;
+      color: #b7f7ca;
       font-variant-numeric: tabular-nums;
+      text-shadow: 0 0 16px rgba(74,222,128,0.12);
+    }
+
+    .last-prize {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
     }
 
     .actions {
@@ -318,11 +536,13 @@
       font-size: 14px;
       font-weight: 700;
       cursor: pointer;
+      transition: 180ms ease;
     }
 
     .btn-primary {
       color: #071008;
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 12px 24px rgba(34,197,94,0.16);
     }
 
     .btn-secondary {
@@ -331,7 +551,10 @@
       border-color: var(--line-2);
     }
 
-    .admin-grid { display: grid; gap: 14px; }
+    .admin-grid {
+      display: grid;
+      gap: 14px;
+    }
 
     .field {
       display: grid;
@@ -349,18 +572,32 @@
     .field textarea,
     .field select {
       width: 100%;
-      padding: 12px 14px;
-      border-radius: 14px;
       border: 1px solid var(--line-2);
       background: rgba(255,255,255,0.04);
       color: var(--text);
+      border-radius: 14px;
+      padding: 12px 14px;
       font-size: 14px;
       outline: none;
+      transition: 180ms ease;
     }
 
     .field textarea {
       min-height: 96px;
       resize: vertical;
+    }
+
+    .field input:focus,
+    .field textarea:focus,
+    .field select:focus {
+      border-color: rgba(74,222,128,.32);
+      box-shadow: 0 0 0 4px rgba(74,222,128,.10);
+    }
+
+    .admin-status {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
     }
 
     .prize-list {
@@ -369,10 +606,10 @@
     }
 
     .prize-item {
-      padding: 14px;
       border-radius: 18px;
       border: 1px solid var(--line);
       background: rgba(255,255,255,0.03);
+      padding: 14px;
     }
 
     .prize-top {
@@ -385,21 +622,21 @@
 
     .prize-name {
       font-size: 16px;
-      font-weight: 800;
       line-height: 1.25;
+      font-weight: 800;
     }
 
-    .prize-meta,
-    .admin-status {
+    .prize-meta {
       color: var(--muted);
       font-size: 13px;
       line-height: 1.55;
+      margin-bottom: 12px;
     }
 
     .badge {
-      min-height: 28px;
       display: inline-flex;
       align-items: center;
+      min-height: 28px;
       padding: 0 10px;
       border-radius: 999px;
       font-size: 12px;
@@ -408,15 +645,15 @@
     }
 
     .badge-on {
-      color: #b9f7c8;
-      background: rgba(103,226,137,0.12);
-      border: 1px solid rgba(103,226,137,0.18);
+      color: #c4f8d2;
+      background: rgba(74,222,128,0.12);
+      border: 1px solid rgba(74,222,128,0.18);
     }
 
     .badge-off {
-      color: #ffb5c2;
-      background: rgba(255,108,131,0.12);
-      border: 1px solid rgba(255,108,131,0.18);
+      color: #ffb7c4;
+      background: rgba(255,111,136,0.10);
+      border: 1px solid rgba(255,111,136,0.16);
     }
 
     .prize-actions {
@@ -427,17 +664,15 @@
 
     .mini-btn {
       min-height: 40px;
-      padding: 8px 12px;
       border-radius: 12px;
       border: 1px solid var(--line);
       background: rgba(255,255,255,0.04);
       color: var(--text);
+      padding: 8px 12px;
       font-size: 13px;
       font-weight: 700;
       cursor: pointer;
     }
-
-    .hidden { display: none !important; }
 
     @media (max-width: 560px) {
       .app {
@@ -448,28 +683,53 @@
       }
 
       .shell {
+        border-radius: 28px;
         padding: 16px;
-        border-radius: 26px;
       }
 
-      .actions {
+      .topbar {
+        align-items: flex-start;
         flex-direction: column;
       }
 
       .wheel-wrap {
         width: min(100%, 264px);
       }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .section-title {
+        font-size: 20px;
+      }
     }
   </style>
 </head>
 <body>
   <div class="app">
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-mark"></div>
+        <div class="brand-copy">
+          <div class="brand-title">iGadget Bonus</div>
+          <div class="brand-sub">Final Dark Clean</div>
+        </div>
+      </div>
+
+      <div class="sync-pill">
+        <span class="sync-dot"></span>
+        Синхронизация с Telegram
+      </div>
+    </div>
+
     <div class="shell">
       <section class="hero">
-        <div class="diag-banner">DIAGNOSTIC BUILD ULTRA-777</div>
-        <h1>Проверка реального фронтенда</h1>
+        <div class="eyebrow">Spin & Win</div>
+        <h1>Бонусы и скидки<br />для клиентов iGadget</h1>
         <p>
-          Если это именно тот файл, колесо ниже будет не зелёным, а с очень резкими тестовыми цветами.
+          Крутите колесо один раз в день и получайте подарок, бонус или скидку.
+          Результат определяется на сервере и сразу сохраняется.
         </p>
       </section>
 
@@ -481,17 +741,18 @@
       <div class="panel active" id="panelWheel">
         <div class="wheel-card">
           <div class="meta-row">
-            <div class="meta-pill">Диагностика палитры</div>
+            <div class="meta-pill">1 попытка в сутки</div>
           </div>
 
           <div class="wheel-wrap">
+            <div class="wheel-halo"></div>
             <div class="pointer"></div>
             <canvas id="wheel" width="360" height="360"></canvas>
             <button id="spinBtn" class="center-btn">КРУТИТЬ</button>
           </div>
 
-          <div class="hint">Если здесь всё ещё два зелёных сектора — открыт не этот код.</div>
-          <div class="status" id="status">TEST BUILD ULTRA-777</div>
+          <div class="hint">Во время вращения результат уже закреплён на сервере.</div>
+          <div class="status" id="status">Нажмите кнопку, чтобы начать.</div>
 
           <div class="result" id="resultBox">
             <div class="section">
@@ -540,7 +801,7 @@
           <div class="admin-status" id="adminStatus">Проверяем доступ...</div>
 
           <div class="admin-grid">
-            <div class="section" style="padding:0;border:none;background:transparent;box-shadow:none;">
+            <div class="section" style="padding:0; border:none; background:transparent; box-shadow:none;">
               <div class="field">
                 <label for="newTitle">Название</label>
                 <input id="newTitle" type="text" placeholder="Например: Скидка 15% на аксессуары" />
@@ -574,7 +835,7 @@
               </div>
             </div>
 
-            <div class="section" style="padding:0;border:none;background:transparent;box-shadow:none;">
+            <div class="section" style="padding:0; border:none; background:transparent; box-shadow:none;">
               <div class="section-title">Проверка и погашение кодов</div>
 
               <div class="field">
@@ -592,7 +853,7 @@
               </div>
             </div>
 
-            <div class="section" style="padding:0;border:none;background:transparent;box-shadow:none;">
+            <div class="section" style="padding:0; border:none; background:transparent; box-shadow:none;">
               <div class="section-title">Список призов</div>
               <div class="prize-list" id="adminPrizeList"></div>
             </div>
@@ -608,7 +869,7 @@
     tg.expand();
 
     const API_BASE = "https://telegram-wheel-bot-production-764c.up.railway.app";
-    const BUILD_VERSION = "ultra-777";
+    const BUILD_VERSION = "final-clean-v1";
 
     const sounds = {
       tick: new Audio("https://cdn.freesound.org/previews/240/240776_4107740-lq.mp3"),
@@ -626,6 +887,7 @@
     async function unlockSounds() {
       if (soundUnlocked) return;
       soundUnlocked = true;
+
       try {
         sounds.tick.muted = true;
         await sounds.tick.play();
@@ -731,12 +993,12 @@
 
     function getSectorPalette() {
       return [
-        "#ff0000",
-        "#0000ff",
-        "#ffff00",
-        "#ff00ff",
-        "#00ffff",
-        "#000000"
+        "#22c55e",
+        "#ff6b81",
+        "#38bdf8",
+        "#f59e0b",
+        "#4f46e5",
+        "#a855f7"
       ];
     }
 
@@ -793,6 +1055,15 @@
       });
     }
 
+    function shadeColor(hex, percent) {
+      const num = parseInt(hex.replace("#", ""), 16);
+      const amt = Math.round(2.55 * percent);
+      const r = Math.min(255, Math.max(0, (num >> 16) + amt));
+      const g = Math.min(255, Math.max(0, ((num >> 8) & 0x00ff) + amt));
+      const b = Math.min(255, Math.max(0, (num & 0x0000ff) + amt));
+      return "#" + (0x1000000 + r * 0x10000 + g * 0x100 + b).toString(16).slice(1);
+    }
+
     function drawWheel(items, rotationDeg = 0) {
       const size = canvas.width;
       const center = size / 2;
@@ -802,18 +1073,18 @@
 
       ctx.beginPath();
       ctx.arc(center, center, radius + 10, 0, Math.PI * 2);
-      ctx.fillStyle = "#080b12";
+      ctx.fillStyle = "#090d15";
       ctx.fill();
 
       ctx.beginPath();
       ctx.arc(center, center, radius + 4, 0, Math.PI * 2);
-      ctx.fillStyle = "#121725";
+      ctx.fillStyle = "#131b29";
       ctx.fill();
 
       if (!items.length) {
         ctx.beginPath();
         ctx.arc(center, center, radius, 0, Math.PI * 2);
-        ctx.fillStyle = "#2a3144";
+        ctx.fillStyle = "#293347";
         ctx.fill();
         return;
       }
@@ -829,19 +1100,28 @@
         const mid = start + arc / 2;
         const color = palette[i % palette.length];
 
+        const grad = ctx.createLinearGradient(
+          center + Math.cos(start) * 36,
+          center + Math.sin(start) * 36,
+          center + Math.cos(end) * radius,
+          center + Math.sin(end) * radius
+        );
+        grad.addColorStop(0, shadeColor(color, -4));
+        grad.addColorStop(1, shadeColor(color, 2));
+
         ctx.beginPath();
         ctx.moveTo(center, center);
         ctx.arc(center, center, radius, start, end);
         ctx.closePath();
-        ctx.fillStyle = color;
+        ctx.fillStyle = grad;
         ctx.fill();
 
         ctx.beginPath();
         ctx.moveTo(center, center);
         ctx.arc(center, center, radius, start, end);
         ctx.closePath();
-        ctx.lineWidth = 3;
-        ctx.strokeStyle = "rgba(255,255,255,0.18)";
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "rgba(8,12,20,0.34)";
         ctx.stroke();
 
         ctx.save();
@@ -859,24 +1139,32 @@
       ctx.beginPath();
       ctx.arc(center, center, radius, 0, Math.PI * 2);
       ctx.lineWidth = 5;
-      ctx.strokeStyle = "rgba(255,255,255,0.24)";
+      ctx.strokeStyle = "rgba(255,255,255,0.14)";
       ctx.stroke();
 
+      const ring = ctx.createRadialGradient(center, center, 34, center, center, 72);
+      ring.addColorStop(0, "#19253a");
+      ring.addColorStop(1, "#101726");
       ctx.beginPath();
       ctx.arc(center, center, 64, 0, Math.PI * 2);
-      ctx.fillStyle = "#162033";
+      ctx.fillStyle = ring;
       ctx.fill();
 
       ctx.beginPath();
       ctx.arc(center, center, 50, 0, Math.PI * 2);
-      ctx.fillStyle = "#1f2d47";
+      ctx.fillStyle = "#152238";
       ctx.fill();
 
       ctx.beginPath();
       ctx.arc(center, center, 50, 0, Math.PI * 2);
       ctx.lineWidth = 2;
-      ctx.strokeStyle = "rgba(255,255,255,0.10)";
+      ctx.strokeStyle = "rgba(255,255,255,0.08)";
       ctx.stroke();
+
+      ctx.fillStyle = "rgba(255,255,255,0.12)";
+      ctx.beginPath();
+      ctx.arc(center - 12, center - 16, 16, 0, Math.PI * 2);
+      ctx.fill();
     }
 
     async function apiPost(path, body) {
@@ -918,7 +1206,7 @@
         const finalRotation = (360 * 6) + (360 - targetCenter);
 
         const start = performance.now();
-        const duration = 4200;
+        const duration = 4300;
         const from = currentRotation;
         const to = currentRotation + finalRotation;
 
@@ -958,7 +1246,7 @@
         ? `Действует до: ${data.expires_at_text}`
         : "Срок действия уточняйте у сотрудника.";
 
-      statusEl.textContent = "Готово: выигрыш сохранён.";
+      statusEl.textContent = "Готово: ваш выигрыш сохранён.";
     }
 
     function getNextMidnightMSK() {
