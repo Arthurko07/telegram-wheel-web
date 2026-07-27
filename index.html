@@ -83,6 +83,7 @@
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
       box-shadow: var(--shadow-soft);
       position: relative;
+      flex: 0 0 auto;
     }
 
     .brand-mark::after {
@@ -221,30 +222,30 @@
 
     .wheel-box {
       position: relative;
-      width: min(100%, 292px);
+      width: min(100%, 268px);
       aspect-ratio: 1 / 1;
-      margin: 0 auto 14px;
+      margin: 0 auto 16px;
     }
 
     .pointer {
       position: absolute;
       left: 50%;
-      top: -2px;
+      top: 2px;
       transform: translateX(-50%);
       width: 0;
       height: 0;
-      border-left: 15px solid transparent;
-      border-right: 15px solid transparent;
-      border-top: 26px solid var(--danger);
-      z-index: 6;
-      filter: drop-shadow(0 6px 14px rgba(239,68,68,.28));
+      border-left: 13px solid transparent;
+      border-right: 13px solid transparent;
+      border-top: 22px solid #ff4d4f;
+      z-index: 8;
+      filter: drop-shadow(0 4px 10px rgba(255, 77, 79, 0.22));
     }
 
     canvas {
       width: 100%;
       height: 100%;
       display: block;
-      filter: drop-shadow(0 14px 26px rgba(15,23,42,.08));
+      filter: drop-shadow(0 12px 24px rgba(15, 23, 42, 0.08));
     }
 
     .center-btn {
@@ -252,24 +253,24 @@
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
-      width: 88px;
-      height: 88px;
+      width: 82px;
+      height: 82px;
       border-radius: 999px;
-      border: 6px solid rgba(255,255,255,.94);
-      background: linear-gradient(180deg, var(--accent), var(--accent-2));
+      border: 5px solid rgba(255,255,255,.96);
+      background: linear-gradient(180deg, #16a34a, #0f8a64);
       color: #fff;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 800;
-      letter-spacing: .04em;
+      letter-spacing: .06em;
       box-shadow:
-        0 14px 26px rgba(22,163,74,.20),
-        inset 0 1px 0 rgba(255,255,255,.18);
+        0 10px 18px rgba(22,163,74,.18),
+        inset 0 1px 0 rgba(255,255,255,.20);
       cursor: pointer;
-      z-index: 7;
+      z-index: 9;
     }
 
     .center-btn:disabled {
-      opacity: .65;
+      opacity: .68;
       cursor: not-allowed;
       box-shadow: none;
     }
@@ -333,6 +334,14 @@
       font-size: 14px;
       line-height: 1.55;
       margin-bottom: 14px;
+    }
+
+    .result-prize {
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 6px;
+      font-size: 18px;
+      line-height: 1.3;
     }
 
     .code-box {
@@ -559,7 +568,7 @@
       }
 
       .wheel-box {
-        width: min(100%, 280px);
+        width: min(100%, 258px);
       }
 
       .actions {
@@ -610,7 +619,7 @@
               <div class="kicker">Ваш результат</div>
               <h3 class="section-title">Приз получен</h3>
               <div class="section-desc">
-                <div id="resultPrize" style="font-weight:800; color:var(--text); margin-bottom:6px;">—</div>
+                <div class="result-prize" id="resultPrize">—</div>
                 <div id="resultDesc">—</div>
               </div>
 
@@ -738,7 +747,6 @@
     let currentRotation = 0;
     let isSpinning = false;
     let countdownInterval = null;
-    let isAdmin = false;
 
     function applyTelegramTheme() {
       const scheme = tg.colorScheme || "light";
@@ -768,22 +776,28 @@
     tabWheel.addEventListener("click", () => switchTab("wheel"));
     tabAdmin.addEventListener("click", () => switchTab("admin"));
 
-    function prizePalette(index) {
-      const light = ["#14b8a6", "#22c55e", "#38bdf8", "#f59e0b", "#8b5cf6", "#10b981"];
-      const dark = ["#0f766e", "#16a34a", "#0284c7", "#d97706", "#7c3aed", "#059669"];
-      const palette = document.body.classList.contains("dark") ? dark : light;
-      return palette[index % palette.length];
-    }
-
-    function fitLabel(label, maxLen = 14) {
+    function fitLabel(label, maxLen = 12) {
       if (!label) return "Приз";
-      return label.length > maxLen ? label.slice(0, maxLen - 1) + "…" : label;
+
+      const cleaned = String(label).trim();
+      if (cleaned.length <= maxLen) return cleaned;
+
+      const words = cleaned.split(" ");
+      if (words.length >= 2) {
+        const first = words[0];
+        const second = words[1];
+        if ((first.length + second.length + 1) <= maxLen + 3) {
+          return `${first}\n${second}`;
+        }
+      }
+
+      return cleaned.slice(0, maxLen - 1) + "…";
     }
 
     function drawWheel(items, rotationDeg = 0) {
       const size = canvas.width;
       const center = size / 2;
-      const radius = center - 14;
+      const radius = center - 16;
 
       ctx.clearRect(0, 0, size, size);
 
@@ -799,49 +813,79 @@
       const arc = (Math.PI * 2) / total;
       const rotationRad = rotationDeg * Math.PI / 180;
 
+      const isDark = document.body.classList.contains("dark");
+      const palette = isDark
+        ? ["#0f766e", "#16a34a", "#0284c7", "#d97706", "#7c3aed", "#059669"]
+        : ["#14b8a6", "#22c55e", "#38bdf8", "#f59e0b", "#8b5cf6", "#10b981"];
+
       ctx.beginPath();
-      ctx.arc(center, center, radius + 3, 0, Math.PI * 2);
-      ctx.fillStyle = document.body.classList.contains("dark") ? "#101826" : "#ffffff";
+      ctx.arc(center, center, radius + 4, 0, Math.PI * 2);
+      ctx.fillStyle = isDark ? "#0f172a" : "#ffffff";
       ctx.fill();
 
       for (let i = 0; i < total; i++) {
         const start = -Math.PI / 2 + rotationRad + i * arc;
         const end = start + arc;
+        const color = palette[i % palette.length];
 
         ctx.beginPath();
         ctx.moveTo(center, center);
         ctx.arc(center, center, radius, start, end);
         ctx.closePath();
-        ctx.fillStyle = prizePalette(i);
+        ctx.fillStyle = color;
         ctx.fill();
 
         ctx.save();
         ctx.translate(center, center);
         ctx.rotate(start + arc / 2);
+
+        const text = fitLabel(items[i].short || items[i].title || "Приз");
+        const lines = text.split("\n");
+
         ctx.fillStyle = "#ffffff";
-        ctx.textAlign = "right";
+        ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        ctx.font = "700 15px Inter, sans-serif";
-        ctx.fillText(fitLabel(items[i].short || items[i].title || "Приз"), radius - 26, 0);
+        ctx.font = "700 14px Inter, sans-serif";
+
+        const textRadius = radius - 46;
+        const lineHeight = 16;
+        const startY = -((lines.length - 1) * lineHeight) / 2;
+
+        for (let j = 0; j < lines.length; j++) {
+          ctx.fillText(lines[j], textRadius, startY + j * lineHeight);
+        }
+
         ctx.restore();
       }
 
       ctx.beginPath();
       ctx.arc(center, center, radius, 0, Math.PI * 2);
-      ctx.lineWidth = 7;
-      ctx.strokeStyle = document.body.classList.contains("dark")
+      ctx.lineWidth = 6;
+      ctx.strokeStyle = isDark
         ? "rgba(255,255,255,.08)"
-        : "rgba(255,255,255,.85)";
+        : "rgba(255,255,255,.88)";
       ctx.stroke();
 
+      const ringGradient = ctx.createRadialGradient(center, center, 36, center, center, 70);
+      ringGradient.addColorStop(0, isDark ? "#162033" : "#ffffff");
+      ringGradient.addColorStop(1, isDark ? "#0f172a" : "#eef2f7");
+
       ctx.beginPath();
-      ctx.arc(center, center, 52, 0, Math.PI * 2);
-      ctx.fillStyle = document.body.classList.contains("dark") ? "#0f172a" : "#ffffff";
+      ctx.arc(center, center, 62, 0, Math.PI * 2);
+      ctx.fillStyle = ringGradient;
       ctx.fill();
-      ctx.lineWidth = 3;
-      ctx.strokeStyle = document.body.classList.contains("dark")
+
+      ctx.beginPath();
+      ctx.arc(center, center, 48, 0, Math.PI * 2);
+      ctx.fillStyle = isDark ? "#122235" : "#f8fafc";
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(center, center, 48, 0, Math.PI * 2);
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = isDark
         ? "rgba(255,255,255,.08)"
-        : "rgba(15,23,42,.05)";
+        : "rgba(15,23,42,.06)";
       ctx.stroke();
     }
 
@@ -985,6 +1029,7 @@
 
         if (!data.ok) {
           statusEl.textContent = data.error || "Произошла ошибка.";
+          tg.HapticFeedback?.notificationOccurred("error");
           return;
         }
 
@@ -1127,17 +1172,12 @@
         });
 
         if (data.ok) {
-          isAdmin = true;
           tabAdmin.classList.remove("hidden");
           adminBox.classList.add("show");
           adminStatus.textContent = `Вы вошли как админ: ${data.first_name || "Без имени"}`;
           await loadAdminPrizes();
-        } else {
-          isAdmin = false;
         }
-      } catch (e) {
-        isAdmin = false;
-      }
+      } catch (e) {}
     }
 
     async function loadAdminPrizes() {
@@ -1210,7 +1250,7 @@
     });
 
     closeBtn.addEventListener("click", () => {
-      tg.close();
+      resultBox.classList.remove("show");
     });
 
     async function initApp() {
