@@ -5,64 +5,173 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>iGadget Wheel</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #f4f6f8;
-      --card: #ffffff;
+      --bg: #f3f5f7;
+      --surface: rgba(255,255,255,.88);
+      --surface-strong: #ffffff;
+      --surface-soft: #eef2f5;
       --text: #111827;
-      --muted: #6b7280;
-      --primary: #16a34a;
-      --primary-2: #15803d;
-      --danger: #dc2626;
-      --border: rgba(0,0,0,.08);
-      --shadow: 0 10px 30px rgba(0,0,0,.08);
+      --muted: #667085;
+      --line: rgba(15, 23, 42, .08);
+      --line-strong: rgba(15, 23, 42, .12);
+      --accent: #16a34a;
+      --accent-2: #0f8a64;
+      --accent-soft: rgba(22,163,74,.10);
+      --danger: #ef4444;
+      --shadow: 0 18px 60px rgba(15, 23, 42, .08);
+      --shadow-soft: 0 8px 24px rgba(15, 23, 42, .06);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
     }
 
     body.dark {
       --bg: #0f172a;
-      --card: #111827;
+      --surface: rgba(17, 24, 39, .88);
+      --surface-strong: #111827;
+      --surface-soft: #192233;
       --text: #f3f4f6;
-      --muted: #9ca3af;
-      --primary: #22c55e;
-      --primary-2: #16a34a;
-      --danger: #ef4444;
-      --border: rgba(255,255,255,.10);
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --muted: #94a3b8;
+      --line: rgba(255,255,255,.08);
+      --line-strong: rgba(255,255,255,.14);
+      --accent: #22c55e;
+      --accent-2: #10b981;
+      --accent-soft: rgba(34,197,94,.14);
+      --danger: #f87171;
+      --shadow: 0 22px 60px rgba(0,0,0,.30);
+      --shadow-soft: 0 10px 24px rgba(0,0,0,.22);
     }
 
     * { box-sizing: border-box; }
 
-    body {
+    html, body {
       margin: 0;
-      font-family: Inter, Arial, sans-serif;
-      background: var(--bg);
+      min-height: 100%;
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(22,163,74,.08), transparent 32%),
+        linear-gradient(180deg, var(--bg), var(--bg));
       color: var(--text);
-      transition: background .25s ease, color .25s ease;
+    }
+
+    body {
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
     }
 
     .wrap {
       max-width: 760px;
       margin: 0 auto;
       min-height: 100vh;
-      padding: 18px 16px 28px;
+      padding: 18px 14px 28px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      inset: 9px;
+      border-radius: 10px;
+      border: 2px solid rgba(255,255,255,.55);
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .brand-title {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+    }
+
+    .brand-subtitle {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .theme-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 0 0 6px var(--accent-soft);
     }
 
     .hero {
-      text-align: center;
-      margin-bottom: 16px;
+      background: var(--surface);
+      backdrop-filter: blur(18px);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius-xl);
+      padding: 18px;
+      margin-bottom: 14px;
     }
 
-    .title {
-      font-size: 28px;
-      font-weight: 800;
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: currentColor;
+    }
+
+    .hero h1 {
       margin: 0 0 8px;
+      font-size: 30px;
+      line-height: 1.05;
+      letter-spacing: -.04em;
+      font-weight: 800;
     }
 
-    .subtitle {
-      font-size: 15px;
-      color: var(--muted);
+    .hero p {
       margin: 0;
-      line-height: 1.5;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 15px;
+      max-width: 42ch;
     }
 
     .tabs {
@@ -73,207 +182,295 @@
 
     .tab {
       flex: 1;
-      border: 1px solid var(--border);
-      background: var(--card);
-      color: var(--text);
-      border-radius: 14px;
-      padding: 12px;
+      min-height: 46px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 14px;
       font-weight: 700;
-      cursor: pointer;
+      backdrop-filter: blur(12px);
     }
 
     .tab.active {
-      background: var(--primary);
-      color: white;
+      color: #fff;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
       border-color: transparent;
+      box-shadow: var(--shadow-soft);
     }
 
-    .panel {
-      display: none;
-    }
-
-    .panel.active {
-      display: block;
-    }
+    .panel { display: none; }
+    .panel.active { display: block; }
 
     .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
+      background: var(--surface);
+      backdrop-filter: blur(18px);
+      border: 1px solid var(--line);
       box-shadow: var(--shadow);
+      border-radius: var(--radius-xl);
       padding: 18px;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
+    }
+
+    .wheel-shell {
+      position: relative;
+      border-radius: 26px;
+      padding: 12px 12px 18px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,.04)),
+        var(--surface-strong);
+      border: 1px solid var(--line);
+    }
+
+    body.dark .wheel-shell {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)),
+        var(--surface-strong);
+    }
+
+    .wheel-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .wheel-head-title {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      margin: 0 0 4px;
+    }
+
+    .wheel-head-subtitle {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+      margin: 0;
+    }
+
+    .spin-limit {
+      white-space: nowrap;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: var(--surface-soft);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
     }
 
     .wheel-box {
       position: relative;
-      margin: 18px auto 12px;
-      width: 320px;
-      max-width: 100%;
+      width: min(100%, 348px);
       aspect-ratio: 1 / 1;
+      margin: 10px auto 0;
     }
 
     .pointer {
       position: absolute;
-      top: -6px;
       left: 50%;
+      top: -4px;
       transform: translateX(-50%);
       width: 0;
       height: 0;
-      border-left: 18px solid transparent;
-      border-right: 18px solid transparent;
-      border-top: 34px solid var(--danger);
-      z-index: 5;
-      filter: drop-shadow(0 4px 8px rgba(0,0,0,.18));
+      border-left: 16px solid transparent;
+      border-right: 16px solid transparent;
+      border-top: 28px solid var(--danger);
+      z-index: 6;
+      filter: drop-shadow(0 8px 16px rgba(239,68,68,.28));
     }
 
     canvas {
       width: 100%;
       height: 100%;
       display: block;
+      filter: drop-shadow(0 18px 30px rgba(15,23,42,.08));
+    }
+
+    body.dark canvas {
+      filter: drop-shadow(0 18px 30px rgba(0,0,0,.28));
     }
 
     .center-btn {
       position: absolute;
-      inset: 50%;
+      left: 50%;
+      top: 50%;
       transform: translate(-50%, -50%);
-      width: 94px;
-      height: 94px;
-      border-radius: 50%;
-      border: none;
-      background: linear-gradient(180deg, var(--primary), var(--primary-2));
-      color: white;
+      width: 104px;
+      height: 104px;
+      border-radius: 999px;
+      border: 6px solid rgba(255,255,255,.9);
+      background: linear-gradient(180deg, var(--accent), var(--accent-2));
+      color: #fff;
+      font-size: 15px;
       font-weight: 800;
-      font-size: 16px;
-      cursor: pointer;
-      z-index: 6;
-      box-shadow: 0 10px 20px rgba(34, 197, 94, .28);
+      letter-spacing: .02em;
+      box-shadow:
+        0 16px 30px rgba(22,163,74,.24),
+        inset 0 1px 0 rgba(255,255,255,.22);
+      z-index: 7;
     }
 
     .center-btn:disabled {
-      opacity: .6;
-      cursor: not-allowed;
+      opacity: .65;
       box-shadow: none;
     }
 
     .status {
-      margin-top: 14px;
-      text-align: center;
-      font-size: 15px;
-      line-height: 1.5;
-      min-height: 48px;
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: var(--surface-soft);
+      border: 1px solid var(--line);
       color: var(--muted);
+      text-align: center;
+      font-size: 14px;
+      line-height: 1.5;
+      min-height: 52px;
     }
 
     .result, .cooldown, .admin-only {
-      margin-top: 18px;
       display: none;
+      margin-top: 14px;
     }
 
     .result.show, .cooldown.show, .admin-only.show {
       display: block;
     }
 
-    .result h2, .cooldown h2, .section-title {
-      margin: 0 0 10px;
-      font-size: 22px;
+    .result-card, .cooldown-card {
+      background: var(--surface-strong);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 18px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .section-kicker {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .result-title, .cooldown-title {
+      margin: 0 0 8px;
+      font-size: 28px;
+      line-height: 1.04;
+      letter-spacing: -.04em;
       font-weight: 800;
     }
 
-    .prize {
-      font-size: 20px;
-      font-weight: 800;
+    .result-prize {
+      font-size: 18px;
+      line-height: 1.35;
+      font-weight: 700;
       margin-bottom: 8px;
     }
 
-    .desc {
+    .result-desc, .cooldown-desc {
       color: var(--muted);
-      line-height: 1.5;
+      font-size: 15px;
+      line-height: 1.55;
       margin-bottom: 16px;
     }
 
     .code-box {
-      background: rgba(34, 197, 94, .08);
-      border: 1px dashed rgba(34, 197, 94, .45);
-      color: var(--text);
-      border-radius: 16px;
-      padding: 14px;
+      background: linear-gradient(180deg, var(--accent-soft), rgba(255,255,255,.2));
+      border: 1px solid rgba(22,163,74,.18);
+      border-radius: 20px;
+      padding: 16px;
       text-align: center;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
     .code-label {
-      font-size: 13px;
+      font-size: 12px;
       color: var(--muted);
-      margin-bottom: 6px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-weight: 700;
     }
 
     .code {
-      font-size: 26px;
-      font-weight: 900;
-      letter-spacing: 1px;
+      font-size: 30px;
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: .06em;
       word-break: break-word;
     }
 
     .expires {
-      font-size: 14px;
       color: var(--muted);
-      text-align: center;
+      font-size: 14px;
       line-height: 1.5;
+      text-align: center;
+      margin-bottom: 14px;
+    }
+
+    .timer-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 78px;
+      border-radius: 20px;
+      background: var(--surface-soft);
+      border: 1px solid var(--line);
+      margin-bottom: 12px;
+      padding: 12px;
     }
 
     .timer {
-      margin-top: 12px;
-      font-size: 28px;
-      font-weight: 900;
-      text-align: center;
-      color: var(--primary);
+      font-size: 34px;
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: -.04em;
+      color: var(--accent);
+      font-variant-numeric: tabular-nums;
     }
 
-    .muted-center {
+    .last-prize {
       color: var(--muted);
-      text-align: center;
+      font-size: 14px;
       line-height: 1.5;
-    }
-
-    .small-note {
-      margin-top: 14px;
-      font-size: 13px;
-      color: var(--muted);
       text-align: center;
-      line-height: 1.45;
     }
 
     .actions {
       display: flex;
       gap: 10px;
-      margin-top: 16px;
+      margin-top: 12px;
     }
 
     .btn {
       flex: 1;
-      border: none;
-      border-radius: 14px;
-      padding: 14px 16px;
-      font-size: 15px;
+      min-height: 48px;
+      border-radius: 16px;
+      font-size: 14px;
       font-weight: 700;
-      cursor: pointer;
+      border: 1px solid transparent;
     }
 
     .btn-primary {
-      background: var(--primary);
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
       color: white;
+      box-shadow: var(--shadow-soft);
     }
 
     .btn-secondary {
       background: transparent;
-      border: 1px solid var(--border);
       color: var(--text);
+      border-color: var(--line-strong);
     }
 
     .btn-danger {
       background: var(--danger);
-      color: white;
+      color: #fff;
     }
 
     .admin-grid {
@@ -287,23 +484,47 @@
     }
 
     .field label {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 700;
+      color: var(--muted);
     }
 
-    .field input, .field textarea, .field select {
+    .field input,
+    .field textarea,
+    .field select {
       width: 100%;
-      border: 1px solid var(--border);
-      background: var(--card);
+      border: 1px solid var(--line-strong);
+      background: var(--surface-strong);
       color: var(--text);
-      border-radius: 12px;
-      padding: 12px 14px;
+      border-radius: 16px;
+      padding: 13px 14px;
       font-size: 15px;
+      outline: none;
+    }
+
+    .field input:focus,
+    .field textarea:focus,
+    .field select:focus {
+      border-color: rgba(22,163,74,.45);
+      box-shadow: 0 0 0 4px rgba(22,163,74,.10);
     }
 
     .field textarea {
-      min-height: 90px;
+      min-height: 92px;
       resize: vertical;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      margin: 0 0 12px;
+    }
+
+    .admin-status {
+      margin-bottom: 12px;
+      color: var(--muted);
+      font-size: 14px;
     }
 
     .prize-list {
@@ -312,10 +533,10 @@
     }
 
     .prize-item {
-      border: 1px solid var(--border);
-      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: var(--surface-strong);
+      border-radius: 20px;
       padding: 14px;
-      background: rgba(127,127,127,.04);
     }
 
     .prize-top {
@@ -327,12 +548,20 @@
     }
 
     .prize-name {
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 800;
+      line-height: 1.25;
+    }
+
+    .prize-meta {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+      margin-bottom: 12px;
     }
 
     .badge {
-      padding: 6px 10px;
+      padding: 7px 10px;
       border-radius: 999px;
       font-size: 12px;
       font-weight: 800;
@@ -340,19 +569,13 @@
     }
 
     .badge-on {
-      background: rgba(34, 197, 94, .14);
-      color: #15803d;
+      background: rgba(22,163,74,.12);
+      color: var(--accent);
     }
 
     .badge-off {
-      background: rgba(239, 68, 68, .14);
-      color: #b91c1c;
-    }
-
-    .prize-meta {
-      color: var(--muted);
-      line-height: 1.5;
-      margin-bottom: 12px;
+      background: rgba(239,68,68,.12);
+      color: var(--danger);
     }
 
     .prize-actions {
@@ -362,33 +585,79 @@
     }
 
     .mini-btn {
-      border: 1px solid var(--border);
-      background: var(--card);
+      border: 1px solid var(--line);
+      background: var(--surface-soft);
       color: var(--text);
-      border-radius: 12px;
+      border-radius: 14px;
       padding: 10px 12px;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 700;
-      cursor: pointer;
-    }
-
-    .admin-status {
-      margin-bottom: 12px;
-      color: var(--muted);
-      font-size: 14px;
     }
 
     .hidden {
       display: none !important;
     }
+
+    @media (max-width: 520px) {
+      .wrap {
+        padding: 14px 12px 22px;
+      }
+
+      .hero h1 {
+        font-size: 26px;
+      }
+
+      .result-title, .cooldown-title {
+        font-size: 24px;
+      }
+
+      .wheel-head {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .spin-limit {
+        width: fit-content;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .center-btn {
+        width: 96px;
+        height: 96px;
+        font-size: 14px;
+      }
+
+      .code {
+        font-size: 26px;
+      }
+
+      .timer {
+        font-size: 30px;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <div class="hero">
-      <h1 class="title">Колесо бонусов</h1>
-      <p class="subtitle">Скидки, подарки и бонусы от iGadget.</p>
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-mark"></div>
+        <div class="brand-text">
+          <div class="brand-title">iGadget Bonus</div>
+          <div class="brand-subtitle">Telegram Mini App</div>
+        </div>
+      </div>
+      <div class="theme-dot"></div>
     </div>
+
+    <section class="hero">
+      <div class="eyebrow">Промо-колесо</div>
+      <h1>Крутите колесо и забирайте бонусы</h1>
+      <p>Скидки, подарки и приятные предложения от iGadget в одном аккуратном Mini App.</p>
+    </section>
 
     <div class="tabs">
       <button class="tab active" id="tabWheel">Колесо</button>
@@ -397,37 +666,57 @@
 
     <div class="panel active" id="panelWheel">
       <div class="card">
-        <div class="wheel-box">
-          <div class="pointer"></div>
-          <canvas id="wheel" width="320" height="320"></canvas>
-          <button id="spinBtn" class="center-btn">КРУТИТЬ</button>
-        </div>
-
-        <div class="status" id="status">Нажмите кнопку в центре, чтобы испытать удачу.</div>
-
-        <div class="result" id="resultBox">
-          <h2>Ваш приз</h2>
-          <div class="prize" id="resultPrize">—</div>
-          <div class="desc" id="resultDesc">—</div>
-
-          <div class="code-box">
-            <div class="code-label">Покажите этот код сотруднику:</div>
-            <div class="code" id="resultCode">—</div>
+        <div class="wheel-shell">
+          <div class="wheel-head">
+            <div>
+              <h2 class="wheel-head-title">Испытайте удачу</h2>
+              <p class="wheel-head-subtitle">Одна попытка в день. Приз и код сохраняются на сервере.</p>
+            </div>
+            <div class="spin-limit">1 попытка / день</div>
           </div>
 
-          <div class="expires" id="resultExpires">—</div>
-
-          <div class="actions">
-            <button class="btn btn-primary" id="copyBtn">Скопировать код</button>
-            <button class="btn btn-secondary" id="closeBtn">Закрыть</button>
+          <div class="wheel-box">
+            <div class="pointer"></div>
+            <canvas id="wheel" width="360" height="360"></canvas>
+            <button id="spinBtn" class="center-btn">КРУТИТЬ</button>
           </div>
-        </div>
 
-        <div class="cooldown" id="cooldownBox">
-          <h2>Сегодня вы уже крутили колесо</h2>
-          <div class="muted-center" id="cooldownText">Следующая попытка будет доступна позже.</div>
-          <div class="timer" id="timer">--:--:--</div>
-          <div class="small-note" id="lastPrizeText"></div>
+          <div class="status" id="status">Нажмите кнопку в центре, чтобы запустить колесо.</div>
+
+          <div class="result" id="resultBox">
+            <div class="result-card">
+              <div class="section-kicker">Ваш результат</div>
+              <h3 class="result-title">Приз получен</h3>
+              <div class="result-prize" id="resultPrize">—</div>
+              <div class="result-desc" id="resultDesc">—</div>
+
+              <div class="code-box">
+                <div class="code-label">Покажите код сотруднику</div>
+                <div class="code" id="resultCode">—</div>
+              </div>
+
+              <div class="expires" id="resultExpires">—</div>
+
+              <div class="actions">
+                <button class="btn btn-primary" id="copyBtn">Скопировать код</button>
+                <button class="btn btn-secondary" id="closeBtn">Закрыть</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="cooldown" id="cooldownBox">
+            <div class="cooldown-card">
+              <div class="section-kicker">Попытка использована</div>
+              <h3 class="cooldown-title">Сегодня вы уже крутили колесо</h3>
+              <div class="cooldown-desc" id="cooldownText">Следующая попытка будет доступна позже.</div>
+
+              <div class="timer-wrap">
+                <div class="timer" id="timer">--:--:--</div>
+              </div>
+
+              <div class="last-prize" id="lastPrizeText"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -438,17 +727,17 @@
         <div class="admin-status" id="adminStatus">Проверяем доступ...</div>
 
         <div class="admin-grid">
-          <div class="card" style="box-shadow:none;">
-            <div class="section-title" style="font-size:18px;">Добавить приз</div>
+          <div class="card" style="box-shadow:none; margin:0; background:var(--surface-strong);">
+            <div class="section-title">Добавить приз</div>
 
             <div class="field">
               <label for="newTitle">Название</label>
-              <input id="newTitle" type="text" placeholder="Например: Скидка 15% на кабели">
+              <input id="newTitle" type="text" placeholder="Например: Скидка 15% на аксессуары">
             </div>
 
             <div class="field">
-              <label for="newShort">Коротко для колеса</label>
-              <input id="newShort" type="text" placeholder="Например: Кабель -15%">
+              <label for="newShort">Короткий текст</label>
+              <input id="newShort" type="text" placeholder="Например: Аксессуары -15%">
             </div>
 
             <div class="field">
@@ -458,7 +747,7 @@
 
             <div class="field">
               <label for="newWeight">Вес</label>
-              <input id="newWeight" type="number" min="1" placeholder="Например: 12">
+              <input id="newWeight" type="number" min="1" placeholder="Например: 10">
             </div>
 
             <div class="field">
@@ -474,8 +763,8 @@
             </div>
           </div>
 
-          <div class="card" style="box-shadow:none;">
-            <div class="section-title" style="font-size:18px;">Список призов</div>
+          <div class="card" style="box-shadow:none; margin:0; background:var(--surface-strong);">
+            <div class="section-title">Список призов</div>
             <div class="prize-list" id="adminPrizeList"></div>
           </div>
         </div>
@@ -559,24 +848,29 @@
     tabWheel.addEventListener("click", () => switchTab("wheel"));
     tabAdmin.addEventListener("click", () => switchTab("admin"));
 
-    function prizeColor(index) {
-      const paletteLight = ["#22c55e", "#0ea5e9", "#f59e0b", "#ef4444", "#8b5cf6", "#14b8a6", "#eab308", "#f97316"];
-      const paletteDark = ["#16a34a", "#0284c7", "#d97706", "#dc2626", "#7c3aed", "#0f766e", "#ca8a04", "#ea580c"];
-      const palette = document.body.classList.contains("dark") ? paletteDark : paletteLight;
+    function prizePalette(index) {
+      const light = ["#14b8a6", "#22c55e", "#38bdf8", "#f59e0b", "#8b5cf6", "#10b981"];
+      const dark = ["#0f766e", "#16a34a", "#0284c7", "#d97706", "#7c3aed", "#059669"];
+      const palette = document.body.classList.contains("dark") ? dark : light;
       return palette[index % palette.length];
+    }
+
+    function fitLabel(label, maxLen = 14) {
+      if (!label) return "Приз";
+      return label.length > maxLen ? label.slice(0, maxLen - 1) + "…" : label;
     }
 
     function drawWheel(items, rotationDeg = 0) {
       const size = canvas.width;
       const center = size / 2;
-      const radius = center - 8;
+      const radius = center - 14;
 
       ctx.clearRect(0, 0, size, size);
 
       if (!items.length) {
         ctx.beginPath();
         ctx.arc(center, center, radius, 0, Math.PI * 2);
-        ctx.fillStyle = "#d1d5db";
+        ctx.fillStyle = "#d7dde3";
         ctx.fill();
         return;
       }
@@ -584,6 +878,13 @@
       const total = items.length;
       const arc = (Math.PI * 2) / total;
       const rotationRad = rotationDeg * Math.PI / 180;
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(center, center, radius + 4, 0, Math.PI * 2);
+      ctx.fillStyle = document.body.classList.contains("dark") ? "#101826" : "#ffffff";
+      ctx.fill();
+      ctx.restore();
 
       for (let i = 0; i < total; i++) {
         const start = -Math.PI / 2 + rotationRad + i * arc;
@@ -593,26 +894,35 @@
         ctx.moveTo(center, center);
         ctx.arc(center, center, radius, start, end);
         ctx.closePath();
-        ctx.fillStyle = prizeColor(i);
+        ctx.fillStyle = prizePalette(i);
         ctx.fill();
 
         ctx.save();
         ctx.translate(center, center);
         ctx.rotate(start + arc / 2);
-        ctx.textAlign = "right";
+
         ctx.fillStyle = "#ffffff";
-        ctx.font = "bold 15px Inter, Arial, sans-serif";
-        const label = items[i].short || items[i].title || "Приз";
-        ctx.fillText(label, radius - 22, 6);
+        ctx.textAlign = "right";
+        ctx.textBaseline = "middle";
+        ctx.font = "700 16px Inter, sans-serif";
+
+        const label = fitLabel(items[i].short || items[i].title || "Приз");
+        ctx.fillText(label, radius - 28, 0);
         ctx.restore();
       }
 
       ctx.beginPath();
-      ctx.arc(center, center, 44, 0, Math.PI * 2);
-      ctx.fillStyle = document.body.classList.contains("dark") ? "#0b1220" : "#ffffff";
+      ctx.arc(center, center, radius, 0, Math.PI * 2);
+      ctx.lineWidth = 8;
+      ctx.strokeStyle = document.body.classList.contains("dark") ? "rgba(255,255,255,.08)" : "rgba(255,255,255,.8)";
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(center, center, 58, 0, Math.PI * 2);
+      ctx.fillStyle = document.body.classList.contains("dark") ? "#0f172a" : "#ffffff";
       ctx.fill();
-      ctx.lineWidth = 4;
-      ctx.strokeStyle = document.body.classList.contains("dark") ? "#1f2937" : "#e5e7eb";
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = document.body.classList.contains("dark") ? "rgba(255,255,255,.08)" : "rgba(15,23,42,.06)";
       ctx.stroke();
     }
 
@@ -655,7 +965,7 @@
         const finalRotation = (360 * 6) + (360 - targetCenter);
 
         const start = performance.now();
-        const duration = 4800;
+        const duration = 4600;
         const from = currentRotation;
         const to = currentRotation + finalRotation;
 
@@ -695,7 +1005,7 @@
         ? `Действует до: ${data.expires_at_text}`
         : "Срок действия уточняйте у сотрудника.";
 
-      statusEl.textContent = "Поздравляем! Ваш приз уже сохранён.";
+      statusEl.textContent = "Готово: ваш приз закреплён за вами.";
     }
 
     function getNextMidnightMSK() {
@@ -743,7 +1053,7 @@
       spinBtn.disabled = true;
       resultBox.classList.remove("show");
       cooldownBox.classList.remove("show");
-      statusEl.textContent = "Проверяем попытку и крутим колесо...";
+      statusEl.textContent = "Проверяем попытку и запускаем вращение...";
 
       try {
         const data = await apiPost("/spin", {
@@ -751,7 +1061,7 @@
         });
 
         if (!data.ok && data.cooldown) {
-          statusEl.textContent = "Попытка на сегодня уже использована.";
+          statusEl.textContent = "На сегодня попытка уже израсходована.";
           startCooldown(data);
           return;
         }
@@ -763,6 +1073,7 @@
 
         await animateSpinToPrize(data.prize_id);
         showResult(data);
+        tg.HapticFeedback?.notificationOccurred("success");
       } catch (e) {
         statusEl.textContent = "Ошибка соединения с сервером.";
       } finally {
@@ -775,7 +1086,7 @@
       adminPrizeList.innerHTML = "";
 
       if (!items.length) {
-        adminPrizeList.innerHTML = "<div class='muted-center'>Призов пока нет.</div>";
+        adminPrizeList.innerHTML = "<div class='status'>Призов пока нет.</div>";
         return;
       }
 
