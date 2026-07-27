@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>iGadget Wheel</title>
+  <title>iGadget Wheel v6</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -31,11 +31,9 @@
       --accent: #58d68d;
       --accent-2: #35bf76;
       --accent-soft: rgba(88,214,141,0.12);
-      --accent-glow: rgba(88,214,141,0.16);
 
       --danger: #ff7a92;
       --danger-soft: rgba(255,122,146,0.11);
-      --info: #6ea8ff;
       --gold: #e6ab46;
 
       --shadow-xl: 0 28px 70px rgba(0,0,0,0.34);
@@ -139,9 +137,9 @@
 
     .hero p {
       margin: 0 auto;
-      max-width: 34ch;
+      max-width: 30ch;
       color: var(--muted);
-      font-size: 13px;
+      font-size: 12px;
       line-height: 1.58;
     }
 
@@ -158,7 +156,11 @@
       box-shadow: var(--shadow-lg);
     }
 
-    .wheel-card { padding: 12px; }
+    .wheel-card {
+      padding: 12px;
+      margin-bottom: 2px;
+    }
+
     .section { padding: 16px; }
 
     .meta-row {
@@ -519,34 +521,69 @@
       color: var(--muted);
     }
 
-    .tabs {
+    .bottom-nav {
+      position: sticky;
+      bottom: 0;
+      z-index: 20;
       display: grid;
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(auto-fit, minmax(72px, 1fr));
       gap: 8px;
-      margin: 14px 0 0;
+      margin-top: 14px;
+      padding: 10px;
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02)),
+        rgba(19, 25, 36, 0.96);
+      backdrop-filter: blur(14px);
+      box-shadow:
+        0 10px 28px rgba(0,0,0,0.20),
+        inset 0 1px 0 rgba(255,255,255,0.03);
     }
 
-    .tab {
-      min-height: 42px;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.03);
+    .bottom-nav__item {
+      min-height: 54px;
+      border-radius: 16px;
+      border: 1px solid transparent;
+      background: transparent;
       color: var(--muted);
-      font-size: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      font-size: 12px;
       font-weight: 700;
       cursor: pointer;
       transition: 180ms ease;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
     }
 
-    .tab.active {
+    .bottom-nav__item:active {
+      transform: scale(0.98);
+    }
+
+    .bottom-nav__item.active {
       color: #09130c;
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
       border-color: transparent;
-      box-shadow: 0 10px 22px rgba(53,191,118,0.14);
+      box-shadow: 0 10px 22px rgba(53,191,118,0.16);
     }
 
-    .tab.hidden { display: none !important; }
+    .bottom-nav__icon {
+      font-size: 18px;
+      line-height: 1;
+      opacity: 0.92;
+    }
+
+    .bottom-nav__label {
+      font-size: 11px;
+      line-height: 1;
+      letter-spacing: 0.01em;
+    }
+
+    .bottom-nav__item.hidden {
+      display: none !important;
+    }
 
     .faq-list {
       display: grid;
@@ -699,13 +736,8 @@
       max-width: 34ch;
     }
 
-    .admin-only {
-      display: none;
-    }
-
-    .admin-only.show {
-      display: block;
-    }
+    .admin-only { display: none; }
+    .admin-only.show { display: block; }
 
     .admin-grid {
       display: grid;
@@ -932,6 +964,15 @@
         border-radius: 24px;
         padding: 16px;
       }
+
+      .bottom-nav {
+        padding: 8px;
+        gap: 6px;
+      }
+
+      .bottom-nav__item {
+        min-height: 50px;
+      }
     }
   </style>
 </head>
@@ -945,9 +986,7 @@
       <section class="hero">
         <div class="eyebrow">Daily spin</div>
         <h1>Колесо бонусов iGadget</h1>
-        <p>
-          Один запуск в день. Получайте скидку, бонус или подарок.
-        </p>
+        <p>Один запуск в день. Получайте скидку, бонус или подарок.</p>
       </section>
 
       <div class="panel active" id="panelWheel">
@@ -1009,13 +1048,6 @@
             </div>
           </div>
         </div>
-      </div>
-
-      <div class="tabs">
-        <button class="tab active" id="tabWheel">Колесо</button>
-        <button class="tab" id="tabHistory">Мои призы</button>
-        <button class="tab" id="tabFaq">FAQ</button>
-        <button class="tab hidden" id="tabAdmin">Админка</button>
       </div>
 
       <div class="panel" id="panelHistory">
@@ -1141,13 +1173,35 @@
           </div>
         </div>
       </div>
+
+      <nav class="bottom-nav" aria-label="Основная навигация">
+        <button class="bottom-nav__item active" id="tabWheel">
+          <span class="bottom-nav__icon">◎</span>
+          <span class="bottom-nav__label">Колесо</span>
+        </button>
+
+        <button class="bottom-nav__item" id="tabHistory">
+          <span class="bottom-nav__icon">◈</span>
+          <span class="bottom-nav__label">Призы</span>
+        </button>
+
+        <button class="bottom-nav__item" id="tabFaq">
+          <span class="bottom-nav__icon">?</span>
+          <span class="bottom-nav__label">FAQ</span>
+        </button>
+
+        <button class="bottom-nav__item hidden" id="tabAdmin">
+          <span class="bottom-nav__icon">⌘</span>
+          <span class="bottom-nav__label">Админ</span>
+        </button>
+      </nav>
     </div>
   </div>
 
   <div class="overlay" id="detailsOverlay">
     <div class="sheet">
       <div class="sheet-handle"></div>
-      <h3 class="sheet-title" id="sheetTitle">Детали prиза</h3>
+      <h3 class="sheet-title" id="sheetTitle">Детали приза</h3>
       <div class="sheet-sub" id="sheetSub">Подробная информация о вашем выигрыше.</div>
 
       <div class="proof-list">
@@ -1170,7 +1224,7 @@
     tg.expand();
 
     const API_BASE = "https://telegram-wheel-bot-production-764c.up.railway.app";
-    const BUILD_VERSION = "v5-clean-tabs-below";
+    const BUILD_VERSION = "v6-bottom-nav";
 
     const sounds = {
       tick: new Audio("https://cdn.freesound.org/previews/240/240776_4107740-lq.mp3"),
@@ -1388,14 +1442,7 @@
     tabAdmin.addEventListener("click", () => switchTab("admin"));
 
     function getSectorPalette() {
-      return [
-        "#31be73",
-        "#ee718a",
-        "#5f9ff1",
-        "#d9a043",
-        "#7c68de",
-        "#a36fd0"
-      ];
+      return ["#31be73", "#ee718a", "#5f9ff1", "#d9a043", "#7c68de", "#a36fd0"];
     }
 
     function fitLabel(label) {
@@ -1638,6 +1685,13 @@
         const statusText = item.redeemed ? "Погашен" : "Активен";
         const expiresText = item.expires_at_text || item.expires_at || "Не указан";
 
+        const payload = encodeURIComponent(JSON.stringify({
+          title: item.prize_title || "Приз",
+          description: item.prize_description || "Описание отсутствует.",
+          code: item.code || "—",
+          expires: expiresText
+        }));
+
         const card = document.createElement("div");
         card.className = "history-item";
         card.innerHTML = `
@@ -1655,12 +1709,7 @@
           </div>
           <div class="history-actions">
             <button class="mini-btn" data-history-copy="${item.code || ""}">Скопировать код</button>
-            <button class="mini-btn" data-history-open='${JSON.stringify({
-              title: item.prize_title || "Приз",
-              description: item.prize_description || "Описание отсутствует.",
-              code: item.code || "—",
-              expires: expiresText
-            }).replace(/'/g, "&apos;")}'>Подробнее</button>
+            <button class="mini-btn" data-history-open="${payload}">Подробнее</button>
           </div>
         `;
         historyList.appendChild(card);
@@ -1676,8 +1725,7 @@
 
       historyList.querySelectorAll("[data-history-open]").forEach(btn => {
         btn.addEventListener("click", () => {
-          const raw = btn.getAttribute("data-history-open").replace(/&apos;/g, "'");
-          const payload = JSON.parse(raw);
+          const payload = JSON.parse(decodeURIComponent(btn.getAttribute("data-history-open")));
           openDetailsOverlay(payload);
         });
       });
@@ -2186,8 +2234,7 @@
 
       playSound("win");
       safeHapticNotification("success");
-      codeActionStatus.textContent =
-        `Код ${data.code} погашен. Приз: ${data.prize_title}.`;
+      codeActionStatus.textContent = `Код ${data.code} погашен. Приз: ${data.prize_title}.`;
     });
 
     spinBtn.addEventListener("click", spinWheel);
