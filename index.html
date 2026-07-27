@@ -3,27 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>iGadget Wheel</title>
+  <title>iGadget Bonus</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #f3f5f7;
-      --surface: rgba(255,255,255,.88);
-      --surface-strong: #ffffff;
-      --surface-soft: #eef2f5;
-      --text: #111827;
+      --bg: #f4f6f8;
+      --surface: #ffffff;
+      --surface-2: #f8fafc;
+      --text: #0f172a;
       --muted: #667085;
-      --line: rgba(15, 23, 42, .08);
-      --line-strong: rgba(15, 23, 42, .12);
+      --line: rgba(15, 23, 42, 0.08);
+      --line-2: rgba(15, 23, 42, 0.12);
       --accent: #16a34a;
       --accent-2: #0f8a64;
       --accent-soft: rgba(22,163,74,.10);
       --danger: #ef4444;
-      --shadow: 0 18px 60px rgba(15, 23, 42, .08);
-      --shadow-soft: 0 8px 24px rgba(15, 23, 42, .06);
+      --shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
+      --shadow-soft: 0 8px 24px rgba(15, 23, 42, 0.06);
       --radius-xl: 28px;
       --radius-lg: 22px;
       --radius-md: 16px;
@@ -31,20 +30,19 @@
     }
 
     body.dark {
-      --bg: #0f172a;
-      --surface: rgba(17, 24, 39, .88);
-      --surface-strong: #111827;
-      --surface-soft: #192233;
+      --bg: #0b1220;
+      --surface: #111827;
+      --surface-2: #182131;
       --text: #f3f4f6;
       --muted: #94a3b8;
       --line: rgba(255,255,255,.08);
-      --line-strong: rgba(255,255,255,.14);
+      --line-2: rgba(255,255,255,.14);
       --accent: #22c55e;
       --accent-2: #10b981;
       --accent-soft: rgba(34,197,94,.14);
       --danger: #f87171;
-      --shadow: 0 22px 60px rgba(0,0,0,.30);
-      --shadow-soft: 0 10px 24px rgba(0,0,0,.22);
+      --shadow: 0 20px 56px rgba(0,0,0,.28);
+      --shadow-soft: 0 10px 24px rgba(0,0,0,.20);
     }
 
     * { box-sizing: border-box; }
@@ -54,8 +52,8 @@
       min-height: 100%;
       font-family: Inter, system-ui, -apple-system, sans-serif;
       background:
-        radial-gradient(circle at top, rgba(22,163,74,.08), transparent 32%),
-        linear-gradient(180deg, var(--bg), var(--bg));
+        radial-gradient(circle at top, rgba(22,163,74,.06), transparent 28%),
+        var(--bg);
       color: var(--text);
     }
 
@@ -65,79 +63,73 @@
     }
 
     .wrap {
-      max-width: 760px;
+      max-width: 700px;
       margin: 0 auto;
       min-height: 100vh;
-      padding: 18px 14px 28px;
-    }
-
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 14px;
+      padding: 16px 14px 26px;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
+      margin-bottom: 14px;
     }
 
     .brand-mark {
-      width: 42px;
-      height: 42px;
-      border-radius: 14px;
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
       box-shadow: var(--shadow-soft);
       position: relative;
-      overflow: hidden;
     }
 
     .brand-mark::after {
       content: "";
       position: absolute;
-      inset: 9px;
-      border-radius: 10px;
+      inset: 8px;
+      border-radius: 8px;
       border: 2px solid rgba(255,255,255,.55);
     }
 
-    .brand-text {
-      display: flex;
-      flex-direction: column;
+    .brand-copy {
+      display: grid;
       gap: 2px;
     }
 
     .brand-title {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 800;
+      line-height: 1;
       letter-spacing: -.02em;
     }
 
     .brand-subtitle {
       font-size: 12px;
       color: var(--muted);
+      line-height: 1;
     }
 
-    .theme-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      box-shadow: 0 0 0 6px var(--accent-soft);
+    .shell {
+      background: rgba(255,255,255,.84);
+      backdrop-filter: blur(18px);
+      border: 1px solid var(--line);
+      border-radius: 32px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+
+    body.dark .shell {
+      background: rgba(17,24,39,.90);
     }
 
     .hero {
-      background: var(--surface);
-      backdrop-filter: blur(18px);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-      border-radius: var(--radius-xl);
-      padding: 18px;
-      margin-bottom: 14px;
+      text-align: center;
+      padding: 2px 6px 10px;
     }
 
-    .eyebrow {
+    .hero-badge {
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -146,11 +138,13 @@
       background: var(--accent-soft);
       color: var(--accent);
       font-size: 12px;
-      font-weight: 700;
-      margin-bottom: 14px;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
     }
 
-    .eyebrow::before {
+    .hero-badge::before {
       content: "";
       width: 8px;
       height: 8px;
@@ -160,36 +154,35 @@
 
     .hero h1 {
       margin: 0 0 8px;
-      font-size: 30px;
-      line-height: 1.05;
+      font-size: 24px;
+      line-height: 1.06;
       letter-spacing: -.04em;
       font-weight: 800;
     }
 
     .hero p {
-      margin: 0;
+      margin: 0 auto;
+      max-width: 34ch;
       color: var(--muted);
+      font-size: 14px;
       line-height: 1.55;
-      font-size: 15px;
-      max-width: 42ch;
     }
 
     .tabs {
       display: flex;
       gap: 8px;
-      margin-bottom: 14px;
+      margin: 16px 0 14px;
     }
 
     .tab {
       flex: 1;
-      min-height: 46px;
-      border-radius: 16px;
+      min-height: 44px;
+      border-radius: 14px;
       border: 1px solid var(--line);
-      background: var(--surface);
+      background: var(--surface-2);
       color: var(--muted);
       font-size: 14px;
       font-weight: 700;
-      backdrop-filter: blur(12px);
       cursor: pointer;
     }
 
@@ -203,59 +196,23 @@
     .panel { display: none; }
     .panel.active { display: block; }
 
-    .card {
+    .wheel-card {
       background: var(--surface);
-      backdrop-filter: blur(18px);
       border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-      border-radius: var(--radius-xl);
-      padding: 18px;
-      margin-bottom: 14px;
-    }
-
-    .wheel-shell {
-      position: relative;
       border-radius: 26px;
-      padding: 12px 12px 18px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,.04)),
-        var(--surface-strong);
-      border: 1px solid var(--line);
+      padding: 16px;
     }
 
-    body.dark .wheel-shell {
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)),
-        var(--surface-strong);
-    }
-
-    .wheel-head {
+    .top-meta {
       display: flex;
-      justify-content: space-between;
-      align-items: start;
-      gap: 12px;
+      justify-content: center;
       margin-bottom: 14px;
     }
 
-    .wheel-head-title {
-      font-size: 18px;
-      font-weight: 800;
-      letter-spacing: -.02em;
-      margin: 0 0 4px;
-    }
-
-    .wheel-head-subtitle {
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.45;
-      margin: 0;
-    }
-
-    .spin-limit {
-      white-space: nowrap;
-      padding: 8px 10px;
+    .meta-pill {
+      padding: 8px 12px;
       border-radius: 999px;
-      background: var(--surface-soft);
+      background: var(--surface-2);
       border: 1px solid var(--line);
       color: var(--muted);
       font-size: 12px;
@@ -264,34 +221,30 @@
 
     .wheel-box {
       position: relative;
-      width: min(100%, 348px);
+      width: min(100%, 292px);
       aspect-ratio: 1 / 1;
-      margin: 10px auto 0;
+      margin: 0 auto 14px;
     }
 
     .pointer {
       position: absolute;
       left: 50%;
-      top: -4px;
+      top: -2px;
       transform: translateX(-50%);
       width: 0;
       height: 0;
-      border-left: 16px solid transparent;
-      border-right: 16px solid transparent;
-      border-top: 28px solid var(--danger);
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-top: 26px solid var(--danger);
       z-index: 6;
-      filter: drop-shadow(0 8px 16px rgba(239,68,68,.28));
+      filter: drop-shadow(0 6px 14px rgba(239,68,68,.28));
     }
 
     canvas {
       width: 100%;
       height: 100%;
       display: block;
-      filter: drop-shadow(0 18px 30px rgba(15,23,42,.08));
-    }
-
-    body.dark canvas {
-      filter: drop-shadow(0 18px 30px rgba(0,0,0,.28));
+      filter: drop-shadow(0 14px 26px rgba(15,23,42,.08));
     }
 
     .center-btn {
@@ -299,39 +252,47 @@
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
-      width: 104px;
-      height: 104px;
+      width: 88px;
+      height: 88px;
       border-radius: 999px;
-      border: 6px solid rgba(255,255,255,.9);
+      border: 6px solid rgba(255,255,255,.94);
       background: linear-gradient(180deg, var(--accent), var(--accent-2));
       color: #fff;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 800;
-      letter-spacing: .02em;
+      letter-spacing: .04em;
       box-shadow:
-        0 16px 30px rgba(22,163,74,.24),
-        inset 0 1px 0 rgba(255,255,255,.22);
-      z-index: 7;
+        0 14px 26px rgba(22,163,74,.20),
+        inset 0 1px 0 rgba(255,255,255,.18);
       cursor: pointer;
+      z-index: 7;
     }
 
     .center-btn:disabled {
       opacity: .65;
-      box-shadow: none;
       cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .under-wheel {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+      min-height: 20px;
+      margin-bottom: 10px;
     }
 
     .status {
-      margin-top: 18px;
-      padding: 14px 16px;
-      border-radius: 18px;
-      background: var(--surface-soft);
+      border-radius: 16px;
+      background: var(--surface-2);
       border: 1px solid var(--line);
-      color: var(--muted);
+      padding: 12px 14px;
       text-align: center;
+      color: var(--muted);
       font-size: 14px;
       line-height: 1.5;
-      min-height: 52px;
+      min-height: 48px;
     }
 
     .result, .cooldown, .admin-only {
@@ -343,64 +304,97 @@
       display: block;
     }
 
-    .cooldown-card {
-      background: var(--surface-strong);
+    .section {
+      background: var(--surface);
       border: 1px solid var(--line);
       border-radius: 24px;
-      padding: 18px;
-      box-shadow: var(--shadow-soft);
+      padding: 16px;
     }
 
-    .section-kicker {
+    .kicker {
       font-size: 12px;
       font-weight: 800;
       letter-spacing: .08em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
-    .cooldown-title {
+    .section-title {
       margin: 0 0 8px;
-      font-size: 28px;
-      line-height: 1.04;
+      font-size: 20px;
+      line-height: 1.08;
       letter-spacing: -.04em;
       font-weight: 800;
     }
 
-    .cooldown-desc {
+    .section-desc {
       color: var(--muted);
-      font-size: 15px;
+      font-size: 14px;
       line-height: 1.55;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
+    }
+
+    .code-box {
+      border-radius: 20px;
+      padding: 16px 14px;
+      text-align: center;
+      background: linear-gradient(180deg, rgba(22,163,74,.12), rgba(16,185,129,.06));
+      border: 1px solid rgba(22,163,74,.16);
+      margin-bottom: 10px;
+    }
+
+    .code-label {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-weight: 800;
+    }
+
+    .code {
+      font-size: 28px;
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: .08em;
+      word-break: break-word;
+    }
+
+    .expires {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+      margin-bottom: 12px;
     }
 
     .timer-wrap {
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 78px;
-      border-radius: 20px;
-      background: var(--surface-soft);
+      min-height: 72px;
+      border-radius: 18px;
+      background: var(--surface-2);
       border: 1px solid var(--line);
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       padding: 12px;
     }
 
     .timer {
-      font-size: 34px;
-      line-height: 1;
+      font-size: 30px;
       font-weight: 800;
+      line-height: 1;
       letter-spacing: -.04em;
       color: var(--accent);
       font-variant-numeric: tabular-nums;
     }
 
     .last-prize {
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.5;
       text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
     }
 
     .actions {
@@ -411,29 +405,28 @@
 
     .btn {
       flex: 1;
-      min-height: 48px;
-      border-radius: 16px;
+      min-height: 46px;
+      border-radius: 14px;
+      border: 1px solid transparent;
       font-size: 14px;
       font-weight: 700;
-      border: 1px solid transparent;
       cursor: pointer;
     }
 
     .btn-primary {
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      color: white;
+      color: #fff;
       box-shadow: var(--shadow-soft);
     }
 
     .btn-secondary {
       background: transparent;
       color: var(--text);
-      border-color: var(--line-strong);
+      border-color: var(--line-2);
     }
 
-    .btn-danger {
-      background: var(--danger);
-      color: #fff;
+    .hidden {
+      display: none !important;
     }
 
     .admin-grid {
@@ -456,20 +449,13 @@
     .field textarea,
     .field select {
       width: 100%;
-      border: 1px solid var(--line-strong);
-      background: var(--surface-strong);
+      border: 1px solid var(--line-2);
+      background: var(--surface-2);
       color: var(--text);
-      border-radius: 16px;
-      padding: 13px 14px;
-      font-size: 15px;
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-size: 14px;
       outline: none;
-    }
-
-    .field input:focus,
-    .field textarea:focus,
-    .field select:focus {
-      border-color: rgba(22,163,74,.45);
-      box-shadow: 0 0 0 4px rgba(22,163,74,.10);
     }
 
     .field textarea {
@@ -477,11 +463,11 @@
       resize: vertical;
     }
 
-    .section-title {
-      font-size: 18px;
-      font-weight: 800;
-      letter-spacing: -.02em;
-      margin: 0 0 12px;
+    .field input:focus,
+    .field textarea:focus,
+    .field select:focus {
+      border-color: rgba(22,163,74,.45);
+      box-shadow: 0 0 0 4px rgba(22,163,74,.10);
     }
 
     .admin-status {
@@ -497,8 +483,8 @@
 
     .prize-item {
       border: 1px solid var(--line);
-      background: var(--surface-strong);
-      border-radius: 20px;
+      background: var(--surface);
+      border-radius: 18px;
       padding: 14px;
     }
 
@@ -511,14 +497,14 @@
     }
 
     .prize-name {
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 800;
       line-height: 1.25;
     }
 
     .prize-meta {
       color: var(--muted);
-      font-size: 14px;
+      font-size: 13px;
       line-height: 1.5;
       margin-bottom: 12px;
     }
@@ -549,367 +535,104 @@
 
     .mini-btn {
       border: 1px solid var(--line);
-      background: var(--surface-soft);
+      background: var(--surface-2);
       color: var(--text);
-      border-radius: 14px;
+      border-radius: 12px;
       padding: 10px 12px;
       font-size: 13px;
       font-weight: 700;
       cursor: pointer;
     }
 
-    .hidden {
-      display: none !important;
-    }
-
-    .result {
-      display: none;
-      margin-top: 0;
-    }
-
-    .result.show {
-      display: block;
-    }
-
-    .win-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 50;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      padding: 20px 14px 22px;
-      background:
-        radial-gradient(circle at top, rgba(22,163,74,.16), transparent 34%),
-        rgba(15, 23, 42, .46);
-      backdrop-filter: blur(10px);
-      animation: fadeOverlay .32s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .win-card {
-      position: relative;
-      width: min(100%, 520px);
-      overflow: hidden;
-      border-radius: 30px;
-      padding: 22px 18px 18px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.92));
-      border: 1px solid rgba(255,255,255,.7);
-      box-shadow:
-        0 28px 80px rgba(15,23,42,.24),
-        0 10px 24px rgba(15,23,42,.10);
-      animation: winCardIn .5s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    body.dark .win-card {
-      background:
-        linear-gradient(180deg, rgba(17,24,39,.96), rgba(17,24,39,.92));
-      border-color: rgba(255,255,255,.08);
-      box-shadow:
-        0 28px 80px rgba(0,0,0,.46),
-        0 10px 24px rgba(0,0,0,.24);
-    }
-
-    .win-glow {
-      position: absolute;
-      left: 50%;
-      top: -120px;
-      transform: translateX(-50%);
-      width: 280px;
-      height: 280px;
-      border-radius: 999px;
-      background: radial-gradient(circle, rgba(34,197,94,.26), rgba(34,197,94,0) 68%);
-      pointer-events: none;
-    }
-
-    .win-topline {
-      position: relative;
-      z-index: 2;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(22,163,74,.10);
-      color: var(--accent);
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      margin-bottom: 14px;
-    }
-
-    .win-topline::before {
-      content: "";
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: currentColor;
-      box-shadow: 0 0 0 6px rgba(22,163,74,.10);
-    }
-
-    .win-title {
-      position: relative;
-      z-index: 2;
-      margin: 0 0 10px;
-      font-size: 30px;
-      line-height: 1.02;
-      letter-spacing: -.05em;
-      font-weight: 800;
-    }
-
-    .win-prize {
-      position: relative;
-      z-index: 2;
-      font-size: 20px;
-      line-height: 1.35;
-      font-weight: 800;
-      margin-bottom: 8px;
-    }
-
-    .win-desc {
-      position: relative;
-      z-index: 2;
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.55;
-      margin-bottom: 18px;
-    }
-
-    .win-code-wrap {
-      position: relative;
-      z-index: 2;
-      border-radius: 24px;
-      padding: 18px 16px;
-      text-align: center;
-      background:
-        linear-gradient(180deg, rgba(22,163,74,.14), rgba(16,185,129,.08));
-      border: 1px solid rgba(22,163,74,.18);
-      margin-bottom: 12px;
-    }
-
-    .win-code-label {
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: .08em;
-      font-weight: 800;
-    }
-
-    .win-code {
-      font-size: 34px;
-      line-height: 1;
-      font-weight: 800;
-      letter-spacing: .08em;
-      word-break: break-word;
-    }
-
-    .win-expire {
-      position: relative;
-      z-index: 2;
-      text-align: center;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.5;
-      margin-bottom: 12px;
-    }
-
-    .confetti-layer {
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
-      pointer-events: none;
-    }
-
-    .confetti {
-      position: absolute;
-      top: -20px;
-      width: 10px;
-      height: 18px;
-      border-radius: 3px;
-      opacity: .95;
-      animation: confettiFall linear forwards;
-    }
-
-    .confetti.square { border-radius: 2px; }
-    .confetti.round { border-radius: 999px; width: 12px; height: 12px; }
-    .confetti.slim { width: 6px; height: 18px; border-radius: 999px; }
-
-    @keyframes fadeOverlay {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes winCardIn {
-      from {
-        opacity: 0;
-        transform: translateY(28px) scale(.96);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-
-    @keyframes confettiFall {
-      0% {
-        transform: translate3d(0, -20px, 0) rotate(0deg);
-        opacity: 0;
-      }
-      10% {
-        opacity: 1;
-      }
-      100% {
-        transform: translate3d(var(--drift, 0px), 110vh, 0) rotate(var(--rot, 540deg));
-        opacity: 1;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .win-overlay,
-      .win-card,
-      .confetti {
-        animation: none !important;
-      }
-    }
-
     @media (max-width: 520px) {
       .wrap {
-        padding: 14px 12px 22px;
+        padding: 14px 12px 24px;
+      }
+
+      .shell {
+        padding: 16px;
+        border-radius: 28px;
       }
 
       .hero h1 {
-        font-size: 26px;
+        font-size: 22px;
       }
 
-      .cooldown-title {
-        font-size: 24px;
-      }
-
-      .wheel-head {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .spin-limit {
-        width: fit-content;
+      .wheel-box {
+        width: min(100%, 280px);
       }
 
       .actions {
         flex-direction: column;
-      }
-
-      .center-btn {
-        width: 96px;
-        height: 96px;
-        font-size: 14px;
-      }
-
-      .timer {
-        font-size: 30px;
-      }
-
-      .win-overlay {
-        align-items: flex-end;
-        padding: 14px 10px 18px;
-      }
-
-      .win-card {
-        border-radius: 28px;
-        padding: 18px 16px 16px;
-      }
-
-      .win-title {
-        font-size: 26px;
-      }
-
-      .win-prize {
-        font-size: 18px;
-      }
-
-      .win-code {
-        font-size: 28px;
       }
     }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <div class="topbar">
-      <div class="brand">
-        <div class="brand-mark"></div>
-        <div class="brand-text">
-          <div class="brand-title">iGadget Bonus</div>
-          <div class="brand-subtitle">Telegram Mini App</div>
-        </div>
+    <div class="brand">
+      <div class="brand-mark"></div>
+      <div class="brand-copy">
+        <div class="brand-title">iGadget Bonus</div>
+        <div class="brand-subtitle">Mini App</div>
       </div>
-      <div class="theme-dot"></div>
     </div>
 
-    <section class="hero">
-      <div class="eyebrow">Промо-колесо</div>
-      <h1>Крутите колесо и забирайте бонусы</h1>
-      <p>Скидки, подарки и приятные предложения от iGadget в одном аккуратном Mini App.</p>
-    </section>
+    <div class="shell">
+      <section class="hero">
+        <div class="hero-badge">Промо-колесо</div>
+        <h1>Получите скидку или бонус</h1>
+        <p>Одна попытка в день. Результат определяется на сервере и сохраняется автоматически.</p>
+      </section>
 
-    <div class="tabs">
-      <button class="tab active" id="tabWheel">Колесо</button>
-      <button class="tab hidden" id="tabAdmin">Админка</button>
-    </div>
+      <div class="tabs">
+        <button class="tab active" id="tabWheel">Колесо</button>
+        <button class="tab hidden" id="tabAdmin">Админка</button>
+      </div>
 
-    <div class="panel active" id="panelWheel">
-      <div class="card">
-        <div class="wheel-shell">
-          <div class="wheel-head">
-            <div>
-              <h2 class="wheel-head-title">Испытайте удачу</h2>
-              <p class="wheel-head-subtitle">Одна попытка в день. Приз и код сохраняются на сервере.</p>
-            </div>
-            <div class="spin-limit">1 попытка / день</div>
+      <div class="panel active" id="panelWheel">
+        <div class="wheel-card">
+          <div class="top-meta">
+            <div class="meta-pill">1 попытка / день</div>
           </div>
 
           <div class="wheel-box">
             <div class="pointer"></div>
-            <canvas id="wheel" width="360" height="360"></canvas>
+            <canvas id="wheel" width="340" height="340"></canvas>
             <button id="spinBtn" class="center-btn">КРУТИТЬ</button>
           </div>
 
-          <div class="status" id="status">Нажмите кнопку в центре, чтобы запустить колесо.</div>
+          <div class="under-wheel">Ваш выигрыш покажется сразу после остановки колеса.</div>
+          <div class="status" id="status">Нажмите кнопку, чтобы запустить колесо.</div>
 
           <div class="result" id="resultBox">
-            <div class="win-overlay" id="winOverlay">
-              <div class="confetti-layer" id="confettiLayer"></div>
+            <div class="section">
+              <div class="kicker">Ваш результат</div>
+              <h3 class="section-title">Приз получен</h3>
+              <div class="section-desc">
+                <div id="resultPrize" style="font-weight:800; color:var(--text); margin-bottom:6px;">—</div>
+                <div id="resultDesc">—</div>
+              </div>
 
-              <div class="win-card">
-                <div class="win-glow"></div>
+              <div class="code-box">
+                <div class="code-label">Покажите код сотруднику</div>
+                <div class="code" id="resultCode">—</div>
+              </div>
 
-                <div class="win-topline">Поздравляем</div>
-                <h3 class="win-title">Вы выиграли приз</h3>
+              <div class="expires" id="resultExpires">—</div>
 
-                <div class="win-prize" id="resultPrize">—</div>
-                <div class="win-desc" id="resultDesc">—</div>
-
-                <div class="win-code-wrap">
-                  <div class="win-code-label">Покажите код сотруднику</div>
-                  <div class="win-code" id="resultCode">—</div>
-                </div>
-
-                <div class="win-expire" id="resultExpires">—</div>
-
-                <div class="actions">
-                  <button class="btn btn-primary" id="copyBtn">Скопировать код</button>
-                  <button class="btn btn-secondary" id="closeWinBtn">Продолжить</button>
-                </div>
+              <div class="actions">
+                <button class="btn btn-primary" id="copyBtn">Скопировать код</button>
+                <button class="btn btn-secondary" id="closeBtn">Закрыть</button>
               </div>
             </div>
           </div>
 
           <div class="cooldown" id="cooldownBox">
-            <div class="cooldown-card">
-              <div class="section-kicker">Попытка использована</div>
-              <h3 class="cooldown-title">Сегодня вы уже крутили колесо</h3>
-              <div class="cooldown-desc" id="cooldownText">Следующая попытка будет доступна позже.</div>
+            <div class="section">
+              <div class="kicker">Попытка использована</div>
+              <h3 class="section-title">Сегодня вы уже крутили колесо</h3>
+              <div class="section-desc" id="cooldownText">Следующая попытка будет доступна позже.</div>
 
               <div class="timer-wrap">
                 <div class="timer" id="timer">--:--:--</div>
@@ -920,53 +643,51 @@
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="panel" id="panelAdmin">
-      <div class="card admin-only" id="adminBox">
-        <div class="section-title">Управление призами</div>
-        <div class="admin-status" id="adminStatus">Проверяем доступ...</div>
+      <div class="panel" id="panelAdmin">
+        <div class="section admin-only" id="adminBox">
+          <div class="section-title">Управление призами</div>
+          <div class="admin-status" id="adminStatus">Проверяем доступ...</div>
 
-        <div class="admin-grid">
-          <div class="card" style="box-shadow:none; margin:0; background:var(--surface-strong);">
-            <div class="section-title">Добавить приз</div>
+          <div class="admin-grid">
+            <div class="section" style="padding:0; border:none; background:transparent;">
+              <div class="field">
+                <label for="newTitle">Название</label>
+                <input id="newTitle" type="text" placeholder="Например: Скидка 15% на аксессуары">
+              </div>
 
-            <div class="field">
-              <label for="newTitle">Название</label>
-              <input id="newTitle" type="text" placeholder="Например: Скидка 15% на аксессуары">
+              <div class="field">
+                <label for="newShort">Короткий текст</label>
+                <input id="newShort" type="text" placeholder="Например: Аксессуары -15%">
+              </div>
+
+              <div class="field">
+                <label for="newDesc">Описание</label>
+                <textarea id="newDesc" placeholder="Подробное описание приза"></textarea>
+              </div>
+
+              <div class="field">
+                <label for="newWeight">Вес</label>
+                <input id="newWeight" type="number" min="1" placeholder="Например: 10">
+              </div>
+
+              <div class="field">
+                <label for="newActive">Статус</label>
+                <select id="newActive">
+                  <option value="true">Включен</option>
+                  <option value="false">Выключен</option>
+                </select>
+              </div>
+
+              <div class="actions">
+                <button class="btn btn-primary" id="addPrizeBtn">Добавить приз</button>
+              </div>
             </div>
 
-            <div class="field">
-              <label for="newShort">Короткий текст</label>
-              <input id="newShort" type="text" placeholder="Например: Аксессуары -15%">
+            <div class="section" style="padding:0; border:none; background:transparent;">
+              <div class="section-title">Список призов</div>
+              <div class="prize-list" id="adminPrizeList"></div>
             </div>
-
-            <div class="field">
-              <label for="newDesc">Описание</label>
-              <textarea id="newDesc" placeholder="Подробное описание приза"></textarea>
-            </div>
-
-            <div class="field">
-              <label for="newWeight">Вес</label>
-              <input id="newWeight" type="number" min="1" placeholder="Например: 10">
-            </div>
-
-            <div class="field">
-              <label for="newActive">Статус</label>
-              <select id="newActive">
-                <option value="true">Включен</option>
-                <option value="false">Выключен</option>
-              </select>
-            </div>
-
-            <div class="actions">
-              <button class="btn btn-primary" id="addPrizeBtn">Добавить приз</button>
-            </div>
-          </div>
-
-          <div class="card" style="box-shadow:none; margin:0; background:var(--surface-strong);">
-            <div class="section-title">Список призов</div>
-            <div class="prize-list" id="adminPrizeList"></div>
           </div>
         </div>
       </div>
@@ -991,9 +712,7 @@
     const resultCode = document.getElementById("resultCode");
     const resultExpires = document.getElementById("resultExpires");
     const copyBtn = document.getElementById("copyBtn");
-    const closeWinBtn = document.getElementById("closeWinBtn");
-    const winOverlay = document.getElementById("winOverlay");
-    const confettiLayer = document.getElementById("confettiLayer");
+    const closeBtn = document.getElementById("closeBtn");
 
     const cooldownBox = document.getElementById("cooldownBox");
     const cooldownText = document.getElementById("cooldownText");
@@ -1032,9 +751,7 @@
         tg.setHeaderColor?.(tg.themeParams.header_bg_color);
       }
 
-      if (prizes.length) {
-        drawWheel(prizes, currentRotation);
-      }
+      if (prizes.length) drawWheel(prizes, currentRotation);
     }
 
     applyTelegramTheme();
@@ -1082,12 +799,10 @@
       const arc = (Math.PI * 2) / total;
       const rotationRad = rotationDeg * Math.PI / 180;
 
-      ctx.save();
       ctx.beginPath();
-      ctx.arc(center, center, radius + 4, 0, Math.PI * 2);
+      ctx.arc(center, center, radius + 3, 0, Math.PI * 2);
       ctx.fillStyle = document.body.classList.contains("dark") ? "#101826" : "#ffffff";
       ctx.fill();
-      ctx.restore();
 
       for (let i = 0; i < total; i++) {
         const start = -Math.PI / 2 + rotationRad + i * arc;
@@ -1103,29 +818,30 @@
         ctx.save();
         ctx.translate(center, center);
         ctx.rotate(start + arc / 2);
-
         ctx.fillStyle = "#ffffff";
         ctx.textAlign = "right";
         ctx.textBaseline = "middle";
-        ctx.font = "700 16px Inter, sans-serif";
-
-        const label = fitLabel(items[i].short || items[i].title || "Приз");
-        ctx.fillText(label, radius - 28, 0);
+        ctx.font = "700 15px Inter, sans-serif";
+        ctx.fillText(fitLabel(items[i].short || items[i].title || "Приз"), radius - 26, 0);
         ctx.restore();
       }
 
       ctx.beginPath();
       ctx.arc(center, center, radius, 0, Math.PI * 2);
-      ctx.lineWidth = 8;
-      ctx.strokeStyle = document.body.classList.contains("dark") ? "rgba(255,255,255,.08)" : "rgba(255,255,255,.8)";
+      ctx.lineWidth = 7;
+      ctx.strokeStyle = document.body.classList.contains("dark")
+        ? "rgba(255,255,255,.08)"
+        : "rgba(255,255,255,.85)";
       ctx.stroke();
 
       ctx.beginPath();
-      ctx.arc(center, center, 58, 0, Math.PI * 2);
+      ctx.arc(center, center, 52, 0, Math.PI * 2);
       ctx.fillStyle = document.body.classList.contains("dark") ? "#0f172a" : "#ffffff";
       ctx.fill();
       ctx.lineWidth = 3;
-      ctx.strokeStyle = document.body.classList.contains("dark") ? "rgba(255,255,255,.08)" : "rgba(15,23,42,.06)";
+      ctx.strokeStyle = document.body.classList.contains("dark")
+        ? "rgba(255,255,255,.08)"
+        : "rgba(15,23,42,.05)";
       ctx.stroke();
     }
 
@@ -1168,7 +884,7 @@
         const finalRotation = (360 * 6) + (360 - targetCenter);
 
         const start = performance.now();
-        const duration = 4600;
+        const duration = 4200;
         const from = currentRotation;
         const to = currentRotation + finalRotation;
 
@@ -1197,30 +913,6 @@
       });
     }
 
-    function launchConfetti() {
-      confettiLayer.innerHTML = "";
-
-      const colors = ["#22c55e", "#10b981", "#38bdf8", "#f59e0b", "#8b5cf6", "#ffffff"];
-      const types = ["square", "round", "slim"];
-
-      for (let i = 0; i < 42; i++) {
-        const piece = document.createElement("div");
-        piece.className = `confetti ${types[i % types.length]}`;
-        piece.style.left = `${Math.random() * 100}%`;
-        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-        piece.style.animationDuration = `${3.2 + Math.random() * 1.8}s`;
-        piece.style.animationDelay = `${Math.random() * 0.25}s`;
-        piece.style.setProperty("--drift", `${-90 + Math.random() * 180}px`);
-        piece.style.setProperty("--rot", `${220 + Math.random() * 860}deg`);
-        confettiLayer.appendChild(piece);
-      }
-    }
-
-    function hideWinOverlay() {
-      resultBox.classList.remove("show");
-      confettiLayer.innerHTML = "";
-    }
-
     function showResult(data) {
       cooldownBox.classList.remove("show");
       resultBox.classList.add("show");
@@ -1233,7 +925,6 @@
         : "Срок действия уточняйте у сотрудника.";
 
       statusEl.textContent = "Готово: ваш выигрыш сохранён.";
-      launchConfetti();
     }
 
     function getNextMidnightMSK() {
@@ -1253,7 +944,7 @@
     }
 
     function startCooldown(data) {
-      hideWinOverlay();
+      resultBox.classList.remove("show");
       cooldownBox.classList.add("show");
 
       cooldownText.textContent = data.error || "Сегодня вы уже использовали попытку.";
@@ -1261,9 +952,7 @@
         ? `Ваш прошлый выигрыш: ${data.last_prize_title} · код ${data.last_code}`
         : "";
 
-      if (countdownInterval) {
-        clearInterval(countdownInterval);
-      }
+      if (countdownInterval) clearInterval(countdownInterval);
 
       function tick() {
         const left = getNextMidnightMSK();
@@ -1279,9 +968,9 @@
 
       isSpinning = true;
       spinBtn.disabled = true;
-      hideWinOverlay();
+      resultBox.classList.remove("show");
       cooldownBox.classList.remove("show");
-      statusEl.textContent = "Проверяем попытку и запускаем вращение...";
+      statusEl.textContent = "Запрашиваем результат у сервера...";
 
       try {
         const data = await apiPost("/spin", {
@@ -1296,7 +985,6 @@
 
         if (!data.ok) {
           statusEl.textContent = data.error || "Произошла ошибка.";
-          tg.HapticFeedback?.notificationOccurred("error");
           return;
         }
 
@@ -1518,12 +1206,11 @@
         tg.HapticFeedback?.notificationOccurred("success");
       } catch (e) {
         statusEl.textContent = "Не удалось скопировать код.";
-        tg.HapticFeedback?.notificationOccurred("warning");
       }
     });
 
-    closeWinBtn.addEventListener("click", () => {
-      hideWinOverlay();
+    closeBtn.addEventListener("click", () => {
+      tg.close();
     });
 
     async function initApp() {
