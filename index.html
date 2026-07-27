@@ -190,6 +190,7 @@
       font-size: 14px;
       font-weight: 700;
       backdrop-filter: blur(12px);
+      cursor: pointer;
     }
 
     .tab.active {
@@ -311,11 +312,13 @@
         0 16px 30px rgba(22,163,74,.24),
         inset 0 1px 0 rgba(255,255,255,.22);
       z-index: 7;
+      cursor: pointer;
     }
 
     .center-btn:disabled {
       opacity: .65;
       box-shadow: none;
+      cursor: not-allowed;
     }
 
     .status {
@@ -340,7 +343,7 @@
       display: block;
     }
 
-    .result-card, .cooldown-card {
+    .cooldown-card {
       background: var(--surface-strong);
       border: 1px solid var(--line);
       border-radius: 24px;
@@ -357,7 +360,7 @@
       margin-bottom: 10px;
     }
 
-    .result-title, .cooldown-title {
+    .cooldown-title {
       margin: 0 0 8px;
       font-size: 28px;
       line-height: 1.04;
@@ -365,52 +368,11 @@
       font-weight: 800;
     }
 
-    .result-prize {
-      font-size: 18px;
-      line-height: 1.35;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .result-desc, .cooldown-desc {
+    .cooldown-desc {
       color: var(--muted);
       font-size: 15px;
       line-height: 1.55;
       margin-bottom: 16px;
-    }
-
-    .code-box {
-      background: linear-gradient(180deg, var(--accent-soft), rgba(255,255,255,.2));
-      border: 1px solid rgba(22,163,74,.18);
-      border-radius: 20px;
-      padding: 16px;
-      text-align: center;
-      margin-bottom: 12px;
-    }
-
-    .code-label {
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: .08em;
-      font-weight: 700;
-    }
-
-    .code {
-      font-size: 30px;
-      line-height: 1;
-      font-weight: 800;
-      letter-spacing: .06em;
-      word-break: break-word;
-    }
-
-    .expires {
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.5;
-      text-align: center;
-      margin-bottom: 14px;
     }
 
     .timer-wrap {
@@ -454,6 +416,7 @@
       font-size: 14px;
       font-weight: 700;
       border: 1px solid transparent;
+      cursor: pointer;
     }
 
     .btn-primary {
@@ -592,10 +555,223 @@
       padding: 10px 12px;
       font-size: 13px;
       font-weight: 700;
+      cursor: pointer;
     }
 
     .hidden {
       display: none !important;
+    }
+
+    .result {
+      display: none;
+      margin-top: 0;
+    }
+
+    .result.show {
+      display: block;
+    }
+
+    .win-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 20px 14px 22px;
+      background:
+        radial-gradient(circle at top, rgba(22,163,74,.16), transparent 34%),
+        rgba(15, 23, 42, .46);
+      backdrop-filter: blur(10px);
+      animation: fadeOverlay .32s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .win-card {
+      position: relative;
+      width: min(100%, 520px);
+      overflow: hidden;
+      border-radius: 30px;
+      padding: 22px 18px 18px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.92));
+      border: 1px solid rgba(255,255,255,.7);
+      box-shadow:
+        0 28px 80px rgba(15,23,42,.24),
+        0 10px 24px rgba(15,23,42,.10);
+      animation: winCardIn .5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    body.dark .win-card {
+      background:
+        linear-gradient(180deg, rgba(17,24,39,.96), rgba(17,24,39,.92));
+      border-color: rgba(255,255,255,.08);
+      box-shadow:
+        0 28px 80px rgba(0,0,0,.46),
+        0 10px 24px rgba(0,0,0,.24);
+    }
+
+    .win-glow {
+      position: absolute;
+      left: 50%;
+      top: -120px;
+      transform: translateX(-50%);
+      width: 280px;
+      height: 280px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(34,197,94,.26), rgba(34,197,94,0) 68%);
+      pointer-events: none;
+    }
+
+    .win-topline {
+      position: relative;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(22,163,74,.10);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .win-topline::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: currentColor;
+      box-shadow: 0 0 0 6px rgba(22,163,74,.10);
+    }
+
+    .win-title {
+      position: relative;
+      z-index: 2;
+      margin: 0 0 10px;
+      font-size: 30px;
+      line-height: 1.02;
+      letter-spacing: -.05em;
+      font-weight: 800;
+    }
+
+    .win-prize {
+      position: relative;
+      z-index: 2;
+      font-size: 20px;
+      line-height: 1.35;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .win-desc {
+      position: relative;
+      z-index: 2;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.55;
+      margin-bottom: 18px;
+    }
+
+    .win-code-wrap {
+      position: relative;
+      z-index: 2;
+      border-radius: 24px;
+      padding: 18px 16px;
+      text-align: center;
+      background:
+        linear-gradient(180deg, rgba(22,163,74,.14), rgba(16,185,129,.08));
+      border: 1px solid rgba(22,163,74,.18);
+      margin-bottom: 12px;
+    }
+
+    .win-code-label {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-weight: 800;
+    }
+
+    .win-code {
+      font-size: 34px;
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: .08em;
+      word-break: break-word;
+    }
+
+    .win-expire {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    .confetti-layer {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .confetti {
+      position: absolute;
+      top: -20px;
+      width: 10px;
+      height: 18px;
+      border-radius: 3px;
+      opacity: .95;
+      animation: confettiFall linear forwards;
+    }
+
+    .confetti.square { border-radius: 2px; }
+    .confetti.round { border-radius: 999px; width: 12px; height: 12px; }
+    .confetti.slim { width: 6px; height: 18px; border-radius: 999px; }
+
+    @keyframes fadeOverlay {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes winCardIn {
+      from {
+        opacity: 0;
+        transform: translateY(28px) scale(.96);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes confettiFall {
+      0% {
+        transform: translate3d(0, -20px, 0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      100% {
+        transform: translate3d(var(--drift, 0px), 110vh, 0) rotate(var(--rot, 540deg));
+        opacity: 1;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .win-overlay,
+      .win-card,
+      .confetti {
+        animation: none !important;
+      }
     }
 
     @media (max-width: 520px) {
@@ -607,7 +783,7 @@
         font-size: 26px;
       }
 
-      .result-title, .cooldown-title {
+      .cooldown-title {
         font-size: 24px;
       }
 
@@ -630,12 +806,30 @@
         font-size: 14px;
       }
 
-      .code {
+      .timer {
+        font-size: 30px;
+      }
+
+      .win-overlay {
+        align-items: flex-end;
+        padding: 14px 10px 18px;
+      }
+
+      .win-card {
+        border-radius: 28px;
+        padding: 18px 16px 16px;
+      }
+
+      .win-title {
         font-size: 26px;
       }
 
-      .timer {
-        font-size: 30px;
+      .win-prize {
+        font-size: 18px;
+      }
+
+      .win-code {
+        font-size: 28px;
       }
     }
   </style>
@@ -684,22 +878,29 @@
           <div class="status" id="status">Нажмите кнопку в центре, чтобы запустить колесо.</div>
 
           <div class="result" id="resultBox">
-            <div class="result-card">
-              <div class="section-kicker">Ваш результат</div>
-              <h3 class="result-title">Приз получен</h3>
-              <div class="result-prize" id="resultPrize">—</div>
-              <div class="result-desc" id="resultDesc">—</div>
+            <div class="win-overlay" id="winOverlay">
+              <div class="confetti-layer" id="confettiLayer"></div>
 
-              <div class="code-box">
-                <div class="code-label">Покажите код сотруднику</div>
-                <div class="code" id="resultCode">—</div>
-              </div>
+              <div class="win-card">
+                <div class="win-glow"></div>
 
-              <div class="expires" id="resultExpires">—</div>
+                <div class="win-topline">Поздравляем</div>
+                <h3 class="win-title">Вы выиграли приз</h3>
 
-              <div class="actions">
-                <button class="btn btn-primary" id="copyBtn">Скопировать код</button>
-                <button class="btn btn-secondary" id="closeBtn">Закрыть</button>
+                <div class="win-prize" id="resultPrize">—</div>
+                <div class="win-desc" id="resultDesc">—</div>
+
+                <div class="win-code-wrap">
+                  <div class="win-code-label">Покажите код сотруднику</div>
+                  <div class="win-code" id="resultCode">—</div>
+                </div>
+
+                <div class="win-expire" id="resultExpires">—</div>
+
+                <div class="actions">
+                  <button class="btn btn-primary" id="copyBtn">Скопировать код</button>
+                  <button class="btn btn-secondary" id="closeWinBtn">Продолжить</button>
+                </div>
               </div>
             </div>
           </div>
@@ -790,7 +991,9 @@
     const resultCode = document.getElementById("resultCode");
     const resultExpires = document.getElementById("resultExpires");
     const copyBtn = document.getElementById("copyBtn");
-    const closeBtn = document.getElementById("closeBtn");
+    const closeWinBtn = document.getElementById("closeWinBtn");
+    const winOverlay = document.getElementById("winOverlay");
+    const confettiLayer = document.getElementById("confettiLayer");
 
     const cooldownBox = document.getElementById("cooldownBox");
     const cooldownText = document.getElementById("cooldownText");
@@ -994,6 +1197,30 @@
       });
     }
 
+    function launchConfetti() {
+      confettiLayer.innerHTML = "";
+
+      const colors = ["#22c55e", "#10b981", "#38bdf8", "#f59e0b", "#8b5cf6", "#ffffff"];
+      const types = ["square", "round", "slim"];
+
+      for (let i = 0; i < 42; i++) {
+        const piece = document.createElement("div");
+        piece.className = `confetti ${types[i % types.length]}`;
+        piece.style.left = `${Math.random() * 100}%`;
+        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.animationDuration = `${3.2 + Math.random() * 1.8}s`;
+        piece.style.animationDelay = `${Math.random() * 0.25}s`;
+        piece.style.setProperty("--drift", `${-90 + Math.random() * 180}px`);
+        piece.style.setProperty("--rot", `${220 + Math.random() * 860}deg`);
+        confettiLayer.appendChild(piece);
+      }
+    }
+
+    function hideWinOverlay() {
+      resultBox.classList.remove("show");
+      confettiLayer.innerHTML = "";
+    }
+
     function showResult(data) {
       cooldownBox.classList.remove("show");
       resultBox.classList.add("show");
@@ -1005,7 +1232,8 @@
         ? `Действует до: ${data.expires_at_text}`
         : "Срок действия уточняйте у сотрудника.";
 
-      statusEl.textContent = "Готово: ваш приз закреплён за вами.";
+      statusEl.textContent = "Готово: ваш выигрыш сохранён.";
+      launchConfetti();
     }
 
     function getNextMidnightMSK() {
@@ -1025,7 +1253,7 @@
     }
 
     function startCooldown(data) {
-      resultBox.classList.remove("show");
+      hideWinOverlay();
       cooldownBox.classList.add("show");
 
       cooldownText.textContent = data.error || "Сегодня вы уже использовали попытку.";
@@ -1051,7 +1279,7 @@
 
       isSpinning = true;
       spinBtn.disabled = true;
-      resultBox.classList.remove("show");
+      hideWinOverlay();
       cooldownBox.classList.remove("show");
       statusEl.textContent = "Проверяем попытку и запускаем вращение...";
 
@@ -1068,6 +1296,7 @@
 
         if (!data.ok) {
           statusEl.textContent = data.error || "Произошла ошибка.";
+          tg.HapticFeedback?.notificationOccurred("error");
           return;
         }
 
@@ -1076,6 +1305,7 @@
         tg.HapticFeedback?.notificationOccurred("success");
       } catch (e) {
         statusEl.textContent = "Ошибка соединения с сервером.";
+        tg.HapticFeedback?.notificationOccurred("error");
       } finally {
         isSpinning = false;
         spinBtn.disabled = false;
@@ -1288,11 +1518,12 @@
         tg.HapticFeedback?.notificationOccurred("success");
       } catch (e) {
         statusEl.textContent = "Не удалось скопировать код.";
+        tg.HapticFeedback?.notificationOccurred("warning");
       }
     });
 
-    closeBtn.addEventListener("click", () => {
-      tg.close();
+    closeWinBtn.addEventListener("click", () => {
+      hideWinOverlay();
     });
 
     async function initApp() {
