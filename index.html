@@ -2,69 +2,63 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>iGadget Wheel</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet"
-  />
-
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #09111f;
+      --bg: #08111d;
       --bg-2: #0d1728;
-      --surface: rgba(14, 24, 39, 0.88);
-      --surface-solid: #101a2b;
-      --surface-2: #132033;
-      --surface-3: #17263d;
-      --text: #eef4ff;
-      --muted: #95a6bf;
-      --faint: #6c7b92;
-      --line: rgba(255, 255, 255, 0.08);
-      --line-2: rgba(255, 255, 255, 0.14);
+      --surface: rgba(14, 24, 39, 0.90);
+      --surface-solid: #111b2c;
+      --surface-2: #152235;
+      --surface-3: #1a2a42;
+      --text: #eef5ff;
+      --muted: #93a5bf;
+      --faint: #667791;
+      --line: rgba(255,255,255,0.08);
+      --line-2: rgba(255,255,255,0.14);
 
       --accent: #22c55e;
       --accent-2: #10b981;
-      --accent-3: #15d38a;
-      --accent-soft: rgba(34, 197, 94, 0.14);
-      --accent-glow: rgba(34, 197, 94, 0.34);
+      --accent-3: #29de7b;
+      --accent-soft: rgba(34,197,94,0.14);
+      --accent-glow: rgba(34,197,94,0.32);
 
-      --cyan: #25c7d9;
-      --blue: #3b82f6;
-      --amber: #f59e0b;
-      --coral: #ff657f;
-      --danger: #ff5c75;
+      --cyan: #28c7d8;
+      --blue: #4f7cff;
+      --amber: #f4a61d;
+      --coral: #ff6b81;
+      --lime: #68d76b;
 
-      --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.34);
-      --shadow-md: 0 14px 34px rgba(0, 0, 0, 0.24);
-      --radius-xl: 30px;
+      --danger: #ff667b;
+
+      --shadow-lg: 0 24px 64px rgba(0,0,0,0.34);
+      --shadow-md: 0 14px 34px rgba(0,0,0,0.24);
+
+      --radius-xl: 32px;
       --radius-lg: 24px;
       --radius-md: 18px;
       --radius-sm: 14px;
 
       --safe-bottom: env(safe-area-inset-bottom, 0px);
       --safe-top: env(safe-area-inset-top, 0px);
+      --tg-safe-bottom: var(--safe-area-inset-bottom, 0px);
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
-    html,
-    body {
+    html, body {
       margin: 0;
       min-height: 100%;
       font-family: Inter, system-ui, -apple-system, sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at top center, rgba(21, 211, 138, 0.12), transparent 24%),
-        radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.10), transparent 22%),
+        radial-gradient(circle at top center, rgba(34,197,94,0.10), transparent 24%),
+        radial-gradient(circle at 20% 15%, rgba(40,199,216,0.08), transparent 18%),
         linear-gradient(180deg, var(--bg), var(--bg-2));
     }
 
@@ -81,7 +75,7 @@
       padding:
         calc(14px + var(--safe-top))
         14px
-        calc(24px + var(--safe-bottom));
+        calc(24px + var(--safe-bottom) + var(--tg-safe-bottom));
     }
 
     .topbar {
@@ -104,8 +98,8 @@
       height: 40px;
       border-radius: 14px;
       background:
-        linear-gradient(135deg, rgba(34, 197, 94, 0.20), rgba(37, 199, 217, 0.16));
-      border: 1px solid rgba(34, 197, 94, 0.24);
+        linear-gradient(135deg, rgba(34,197,94,0.20), rgba(40,199,216,0.16));
+      border: 1px solid rgba(34,197,94,0.24);
       box-shadow:
         inset 0 1px 0 rgba(255,255,255,0.05),
         0 0 30px rgba(34,197,94,0.12);
@@ -198,12 +192,10 @@
       border-radius: inherit;
       pointer-events: none;
       background:
-        linear-gradient(135deg, rgba(34,197,94,0.10), transparent 24%, transparent 65%, rgba(37,199,217,0.08));
-      opacity: 0.9;
+        linear-gradient(135deg, rgba(34,197,94,0.08), transparent 26%, transparent 70%, rgba(40,199,216,0.06));
     }
 
     .hero {
-      position: relative;
       text-align: center;
       padding: 8px 6px 12px;
     }
@@ -215,9 +207,9 @@
       min-height: 34px;
       padding: 0 12px;
       border-radius: 999px;
-      background: rgba(34, 197, 94, 0.10);
-      border: 1px solid rgba(34, 197, 94, 0.16);
-      color: #9bf3b5;
+      background: rgba(34,197,94,0.10);
+      border: 1px solid rgba(34,197,94,0.16);
+      color: #a0f4bd;
       font-size: 12px;
       font-weight: 800;
       text-transform: uppercase;
@@ -259,7 +251,7 @@
     .tab {
       flex: 1;
       min-height: 46px;
-      border-radius: 15px;
+      border-radius: 16px;
       border: 1px solid var(--line);
       background: rgba(255,255,255,0.03);
       color: var(--muted);
@@ -270,27 +262,19 @@
     }
 
     .tab.active {
-      color: #05120b;
+      color: #07120a;
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
       border-color: transparent;
-      box-shadow: 0 10px 24px rgba(34,197,94,0.24);
+      box-shadow: 0 10px 24px rgba(34,197,94,0.22);
     }
 
-    .hidden {
-      display: none !important;
-    }
-
-    .panel {
-      display: none;
-    }
-
-    .panel.active {
-      display: block;
-    }
+    .hidden { display: none !important; }
+    .panel { display: none; }
+    .panel.active { display: block; }
 
     .wheel-card,
     .section {
-      border-radius: 26px;
+      border-radius: 28px;
       border: 1px solid var(--line);
       background:
         linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02)),
@@ -298,9 +282,7 @@
       box-shadow: var(--shadow-md);
     }
 
-    .wheel-card {
-      padding: 16px;
-    }
+    .wheel-card { padding: 16px; }
 
     .meta-row {
       display: flex;
@@ -312,8 +294,8 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 34px;
-      padding: 0 12px;
+      min-height: 36px;
+      padding: 0 14px;
       border-radius: 999px;
       background: rgba(255,255,255,0.04);
       border: 1px solid var(--line);
@@ -324,7 +306,7 @@
 
     .wheel-wrap {
       position: relative;
-      width: min(100%, 278px);
+      width: min(100%, 280px);
       aspect-ratio: 1 / 1;
       margin: 0 auto 16px;
     }
@@ -333,9 +315,8 @@
       position: absolute;
       inset: 8%;
       border-radius: 999px;
-      background:
-        radial-gradient(circle, rgba(34,197,94,0.16), transparent 58%);
-      filter: blur(14px);
+      background: radial-gradient(circle, rgba(34,197,94,0.12), transparent 58%);
+      filter: blur(16px);
       pointer-events: none;
     }
 
@@ -348,9 +329,9 @@
       height: 0;
       border-left: 14px solid transparent;
       border-right: 14px solid transparent;
-      border-top: 24px solid #ff5b74;
+      border-top: 24px solid #ff6b81;
       z-index: 7;
-      filter: drop-shadow(0 4px 12px rgba(255,91,116,.35));
+      filter: drop-shadow(0 4px 12px rgba(255,107,129,.34));
     }
 
     canvas {
@@ -359,7 +340,7 @@
       display: block;
       filter:
         drop-shadow(0 18px 32px rgba(0,0,0,.26))
-        drop-shadow(0 0 22px rgba(34,197,94,.10));
+        drop-shadow(0 0 22px rgba(34,197,94,.08));
     }
 
     .center-btn {
@@ -367,23 +348,23 @@
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
-      width: 92px;
-      height: 92px;
-      border: 4px solid rgba(255,255,255,.12);
+      width: 88px;
+      height: 88px;
+      border: 4px solid rgba(255,255,255,.10);
       border-radius: 999px;
-      color: #04110b;
+      color: #06110a;
       background:
-        radial-gradient(circle at 30% 25%, rgba(255,255,255,.48), transparent 28%),
-        linear-gradient(180deg, #3be37e, #17b769 56%, #10945e);
-      font-size: 13px;
-      letter-spacing: 0.08em;
+        radial-gradient(circle at 30% 25%, rgba(255,255,255,.44), transparent 28%),
+        linear-gradient(180deg, #40e688, #18bb6b 56%, #0f955f);
+      font-size: 12px;
+      letter-spacing: 0.12em;
       font-weight: 800;
       cursor: pointer;
       z-index: 8;
       box-shadow:
-        0 0 0 8px rgba(34,197,94,0.07),
-        0 12px 28px rgba(16,185,129,.28),
-        inset 0 1px 0 rgba(255,255,255,0.48);
+        0 0 0 8px rgba(34,197,94,0.06),
+        0 12px 28px rgba(16,185,129,.26),
+        inset 0 1px 0 rgba(255,255,255,.46);
       transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
     }
 
@@ -392,7 +373,7 @@
     }
 
     .center-btn:disabled {
-      opacity: 0.7;
+      opacity: .7;
       cursor: not-allowed;
       box-shadow:
         0 0 0 6px rgba(34,197,94,0.04),
@@ -433,13 +414,11 @@
       display: block;
     }
 
-    .section {
-      padding: 16px;
-    }
+    .section { padding: 16px; }
 
     .kicker {
       margin-bottom: 8px;
-      color: #99f6b4;
+      color: #9ff2bb;
       font-size: 12px;
       font-weight: 800;
       text-transform: uppercase;
@@ -476,9 +455,9 @@
       padding: 16px 14px;
       text-align: center;
       background:
-        linear-gradient(180deg, rgba(34,197,94,0.16), rgba(16,185,129,0.08)),
+        linear-gradient(180deg, rgba(34,197,94,0.14), rgba(16,185,129,0.08)),
         rgba(255,255,255,0.02);
-      border: 1px solid rgba(34,197,94,0.20);
+      border: 1px solid rgba(34,197,94,0.18);
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
     }
 
@@ -487,7 +466,7 @@
       position: absolute;
       inset: auto -20% -50% -20%;
       height: 90px;
-      background: radial-gradient(circle, rgba(37,199,217,0.14), transparent 58%);
+      background: radial-gradient(circle, rgba(40,199,216,0.14), transparent 58%);
       pointer-events: none;
     }
 
@@ -535,9 +514,9 @@
       line-height: 1;
       letter-spacing: -0.05em;
       font-weight: 800;
-      color: #9bf3b5;
+      color: #9ff2bb;
       font-variant-numeric: tabular-nums;
-      text-shadow: 0 0 16px rgba(34,197,94,0.16);
+      text-shadow: 0 0 16px rgba(34,197,94,0.14);
     }
 
     .last-prize {
@@ -565,9 +544,9 @@
     }
 
     .btn-primary {
-      color: #05120b;
+      color: #06120b;
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      box-shadow: 0 12px 24px rgba(34,197,94,0.18);
+      box-shadow: 0 12px 24px rgba(34,197,94,0.16);
     }
 
     .btn-secondary {
@@ -619,8 +598,7 @@
       box-shadow: 0 0 0 4px rgba(34,197,94,.10);
     }
 
-    .admin-status,
-    .code-status {
+    .admin-status {
       color: var(--muted);
       font-size: 14px;
       line-height: 1.5;
@@ -671,15 +649,15 @@
     }
 
     .badge-on {
-      color: #9bf3b5;
+      color: #a0f4bd;
       background: rgba(34,197,94,0.12);
       border: 1px solid rgba(34,197,94,0.18);
     }
 
     .badge-off {
-      color: #ff98a8;
-      background: rgba(255,92,117,0.10);
-      border: 1px solid rgba(255,92,117,0.18);
+      color: #ff9bab;
+      background: rgba(255,102,123,0.10);
+      border: 1px solid rgba(255,102,123,0.18);
     }
 
     .prize-actions {
@@ -705,7 +683,7 @@
         padding:
           calc(12px + var(--safe-top))
           12px
-          calc(22px + var(--safe-bottom));
+          calc(22px + var(--safe-bottom) + var(--tg-safe-bottom));
       }
 
       .shell {
@@ -719,7 +697,7 @@
       }
 
       .wheel-wrap {
-        width: min(100%, 258px);
+        width: min(100%, 260px);
       }
 
       .actions {
@@ -739,7 +717,7 @@
         <div class="brand-mark"></div>
         <div class="brand-copy">
           <div class="brand-title">iGadget Bonus</div>
-          <div class="brand-sub">Tech Dark Mini App</div>
+          <div class="brand-sub">Tech Dark 2.0</div>
         </div>
       </div>
 
@@ -934,9 +912,7 @@
 
     function startTickLoop() {
       stopTickLoop();
-      tickInterval = setInterval(() => {
-        playSound("tick");
-      }, 260);
+      tickInterval = setInterval(() => playSound("tick"), 260);
     }
 
     function stopTickLoop() {
@@ -944,6 +920,12 @@
         clearInterval(tickInterval);
         tickInterval = null;
       }
+    }
+
+    function updateSafeAreaFallback() {
+      const stableHeight = tg.viewportStableHeight || window.innerHeight;
+      const diff = Math.max(0, window.innerHeight - stableHeight);
+      document.documentElement.style.setProperty("--safe-area-inset-bottom", diff + "px");
     }
 
     const canvas = document.getElementById("wheel");
@@ -993,10 +975,13 @@
       const theme = tg.themeParams || {};
       if (theme.bg_color) tg.setBackgroundColor?.(theme.bg_color);
       if (theme.header_bg_color) tg.setHeaderColor?.(theme.header_bg_color);
+      updateSafeAreaFallback();
       drawWheel(prizes, currentRotation);
     }
 
     tg.onEvent("themeChanged", applyTelegramTheme);
+    tg.onEvent("viewportChanged", updateSafeAreaFallback);
+    window.addEventListener("resize", updateSafeAreaFallback);
 
     function switchTab(name) {
       const wheelActive = name === "wheel";
@@ -1010,7 +995,7 @@
     tabAdmin.addEventListener("click", () => switchTab("admin"));
 
     function getSectorPalette() {
-      return ["#19d47b", "#14c3a2", "#22c7d9", "#4f7cff", "#f4a61d", "#ff647d"];
+      return ["#22c55e", "#ff6b81", "#28c7d8", "#f4a61d", "#4f7cff", "#68d76b"];
     }
 
     function fitLabel(label) {
@@ -1045,11 +1030,11 @@
       return lines.slice(0, 3);
     }
 
-    function drawTextInSector(ctx, lines, x, y, maxWidth, baseFont = 14) {
+    function drawTextInSector(ctx, lines, x, y, maxWidth, baseFont = 13) {
       let fontSize = baseFont;
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-      ctx.fillStyle = "#f8fbff";
+      ctx.fillStyle = "#f7fbff";
 
       while (fontSize >= 10) {
         ctx.font = `800 ${fontSize}px Inter, sans-serif`;
@@ -1074,13 +1059,13 @@
       ctx.clearRect(0, 0, size, size);
 
       ctx.beginPath();
-      ctx.arc(center, center, radius + 8, 0, Math.PI * 2);
-      ctx.fillStyle = "#0a1423";
+      ctx.arc(center, center, radius + 10, 0, Math.PI * 2);
+      ctx.fillStyle = "#08101d";
       ctx.fill();
 
       ctx.beginPath();
-      ctx.arc(center, center, radius + 2, 0, Math.PI * 2);
-      ctx.fillStyle = "rgba(255,255,255,0.04)";
+      ctx.arc(center, center, radius + 4, 0, Math.PI * 2);
+      ctx.fillStyle = "#0d1829";
       ctx.fill();
 
       if (!items.length) {
@@ -1102,8 +1087,8 @@
         const mid = start + arc / 2;
         const color = palette[i % palette.length];
 
-        const grad = ctx.createRadialGradient(center, center, 52, center, center, radius);
-        grad.addColorStop(0, shadeColor(color, -18));
+        const grad = ctx.createRadialGradient(center, center, 58, center, center, radius);
+        grad.addColorStop(0, shadeColor(color, -22));
         grad.addColorStop(1, color);
 
         ctx.beginPath();
@@ -1113,47 +1098,55 @@
         ctx.fillStyle = grad;
         ctx.fill();
 
+        ctx.beginPath();
+        ctx.moveTo(center, center);
+        ctx.arc(center, center, radius, start, end);
+        ctx.closePath();
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = "rgba(255,255,255,0.06)";
+        ctx.stroke();
+
         ctx.save();
         ctx.translate(center, center);
         ctx.rotate(mid);
 
         const textLines = fitLabel(items[i].short || items[i].title || "Приз");
-        const textRadius = radius - 56;
-        const sectorWidth = Math.max(56, radius * arc * 0.64);
+        const textRadius = radius - 58;
+        const sectorWidth = Math.max(54, radius * arc * 0.60);
 
-        drawTextInSector(ctx, textLines, textRadius, 0, sectorWidth, 14);
+        drawTextInSector(ctx, textLines, textRadius, 0, sectorWidth, 13);
         ctx.restore();
       }
 
       ctx.beginPath();
       ctx.arc(center, center, radius, 0, Math.PI * 2);
-      ctx.lineWidth = 6;
-      ctx.strokeStyle = "rgba(255,255,255,0.09)";
+      ctx.lineWidth = 5;
+      ctx.strokeStyle = "rgba(255,255,255,0.10)";
       ctx.stroke();
 
-      const coreGlow = ctx.createRadialGradient(center, center, 18, center, center, 88);
-      coreGlow.addColorStop(0, "rgba(59,227,126,0.24)");
-      coreGlow.addColorStop(1, "rgba(59,227,126,0)");
+      const glow = ctx.createRadialGradient(center, center, 18, center, center, 88);
+      glow.addColorStop(0, "rgba(58,230,136,0.22)");
+      glow.addColorStop(1, "rgba(58,230,136,0)");
       ctx.beginPath();
       ctx.arc(center, center, 82, 0, Math.PI * 2);
-      ctx.fillStyle = coreGlow;
+      ctx.fillStyle = glow;
       ctx.fill();
 
-      const ringGradient = ctx.createRadialGradient(center, center, 34, center, center, 70);
-      ringGradient.addColorStop(0, "#132338");
-      ringGradient.addColorStop(1, "#0b1525");
+      const ring = ctx.createRadialGradient(center, center, 34, center, center, 70);
+      ring.addColorStop(0, "#14253a");
+      ring.addColorStop(1, "#0b1525");
       ctx.beginPath();
-      ctx.arc(center, center, 66, 0, Math.PI * 2);
-      ctx.fillStyle = ringGradient;
+      ctx.arc(center, center, 64, 0, Math.PI * 2);
+      ctx.fillStyle = ring;
       ctx.fill();
 
       ctx.beginPath();
-      ctx.arc(center, center, 52, 0, Math.PI * 2);
+      ctx.arc(center, center, 50, 0, Math.PI * 2);
       ctx.fillStyle = "#102035";
       ctx.fill();
 
       ctx.beginPath();
-      ctx.arc(center, center, 52, 0, Math.PI * 2);
+      ctx.arc(center, center, 50, 0, Math.PI * 2);
       ctx.lineWidth = 2;
       ctx.strokeStyle = "rgba(255,255,255,0.08)";
       ctx.stroke();
@@ -1163,8 +1156,8 @@
       const num = parseInt(hex.replace("#", ""), 16);
       const amt = Math.round(2.55 * percent);
       const r = Math.min(255, Math.max(0, (num >> 16) + amt));
-      const g = Math.min(255, Math.max(0, (num >> 8 & 0x00FF) + amt));
-      const b = Math.min(255, Math.max(0, (num & 0x0000FF) + amt));
+      const g = Math.min(255, Math.max(0, ((num >> 8) & 0x00ff) + amt));
+      const b = Math.min(255, Math.max(0, (num & 0x0000ff) + amt));
       return "#" + (0x1000000 + r * 0x10000 + g * 0x100 + b).toString(16).slice(1);
     }
 
@@ -1647,6 +1640,8 @@
     });
 
     async function initApp() {
+      updateSafeAreaFallback();
+
       try {
         await loadPrizes();
       } catch (e) {
