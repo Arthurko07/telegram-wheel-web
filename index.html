@@ -2,59 +2,70 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  />
   <title>iGadget Wheel</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
   <style>
     :root {
-      --bg: #f4f6f8;
-      --surface: #ffffff;
-      --surface-2: #f8fafc;
-      --text: #0f172a;
-      --muted: #667085;
-      --line: rgba(15, 23, 42, 0.08);
-      --line-2: rgba(15, 23, 42, 0.12);
-      --accent: #16a34a;
-      --accent-2: #0f8a64;
-      --accent-soft: rgba(22,163,74,.10);
-      --danger: #ef4444;
-      --shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
-      --shadow-soft: 0 8px 24px rgba(15, 23, 42, 0.06);
-      --radius-xl: 28px;
-      --radius-lg: 22px;
-      --radius-md: 16px;
-      --radius-sm: 12px;
-    }
+      --bg: #09111f;
+      --bg-2: #0d1728;
+      --surface: rgba(14, 24, 39, 0.88);
+      --surface-solid: #101a2b;
+      --surface-2: #132033;
+      --surface-3: #17263d;
+      --text: #eef4ff;
+      --muted: #95a6bf;
+      --faint: #6c7b92;
+      --line: rgba(255, 255, 255, 0.08);
+      --line-2: rgba(255, 255, 255, 0.14);
 
-    body.dark {
-      --bg: #0b1220;
-      --surface: #111827;
-      --surface-2: #182131;
-      --text: #f3f4f6;
-      --muted: #94a3b8;
-      --line: rgba(255,255,255,.08);
-      --line-2: rgba(255,255,255,.14);
       --accent: #22c55e;
       --accent-2: #10b981;
-      --accent-soft: rgba(34,197,94,.14);
-      --danger: #f87171;
-      --shadow: 0 20px 56px rgba(0,0,0,.28);
-      --shadow-soft: 0 10px 24px rgba(0,0,0,.20);
+      --accent-3: #15d38a;
+      --accent-soft: rgba(34, 197, 94, 0.14);
+      --accent-glow: rgba(34, 197, 94, 0.34);
+
+      --cyan: #25c7d9;
+      --blue: #3b82f6;
+      --amber: #f59e0b;
+      --coral: #ff657f;
+      --danger: #ff5c75;
+
+      --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.34);
+      --shadow-md: 0 14px 34px rgba(0, 0, 0, 0.24);
+      --radius-xl: 30px;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --radius-sm: 14px;
+
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --safe-top: env(safe-area-inset-top, 0px);
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
-    html, body {
+    html,
+    body {
       margin: 0;
       min-height: 100%;
       font-family: Inter, system-ui, -apple-system, sans-serif;
-      background:
-        radial-gradient(circle at top, rgba(22,163,74,.06), transparent 28%),
-        var(--bg);
       color: var(--text);
+      background:
+        radial-gradient(circle at top center, rgba(21, 211, 138, 0.12), transparent 24%),
+        radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.10), transparent 22%),
+        linear-gradient(180deg, var(--bg), var(--bg-2));
     }
 
     body {
@@ -62,111 +73,181 @@
       text-rendering: optimizeLegibility;
     }
 
-    .wrap {
-      max-width: 700px;
+    .app {
+      width: 100%;
+      max-width: 760px;
       margin: 0 auto;
       min-height: 100vh;
-      padding: 16px 14px 26px;
+      padding:
+        calc(14px + var(--safe-top))
+        14px
+        calc(24px + var(--safe-bottom));
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
     }
 
     .brand {
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-bottom: 14px;
+      min-width: 0;
     }
 
     .brand-mark {
-      width: 36px;
-      height: 36px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      box-shadow: var(--shadow-soft);
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      background:
+        linear-gradient(135deg, rgba(34, 197, 94, 0.20), rgba(37, 199, 217, 0.16));
+      border: 1px solid rgba(34, 197, 94, 0.24);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.05),
+        0 0 30px rgba(34,197,94,0.12);
       position: relative;
       flex: 0 0 auto;
     }
 
+    .brand-mark::before,
     .brand-mark::after {
       content: "";
       position: absolute;
-      inset: 8px;
-      border-radius: 8px;
-      border: 2px solid rgba(255,255,255,.55);
+      border-radius: 999px;
+      background: linear-gradient(180deg, var(--accent-3), var(--accent));
+    }
+
+    .brand-mark::before {
+      width: 8px;
+      height: 18px;
+      left: 12px;
+      top: 11px;
+    }
+
+    .brand-mark::after {
+      width: 8px;
+      height: 12px;
+      right: 12px;
+      top: 14px;
+      opacity: 0.82;
     }
 
     .brand-copy {
       display: grid;
       gap: 2px;
+      min-width: 0;
     }
 
     .brand-title {
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 800;
-      line-height: 1;
-      letter-spacing: -.02em;
+      letter-spacing: -0.03em;
+      white-space: nowrap;
     }
 
-    .brand-subtitle {
+    .brand-sub {
       font-size: 12px;
       color: var(--muted);
-      line-height: 1;
+      white-space: nowrap;
     }
 
-    .shell {
-      background: rgba(255,255,255,.84);
-      backdrop-filter: blur(18px);
-      border: 1px solid var(--line);
-      border-radius: 32px;
-      box-shadow: var(--shadow);
-      padding: 18px;
-    }
-
-    body.dark .shell {
-      background: rgba(17,24,39,.90);
-    }
-
-    .hero {
-      text-align: center;
-      padding: 2px 6px 10px;
-    }
-
-    .hero-badge {
+    .sync-pill {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 8px 12px;
+      min-height: 40px;
+      padding: 0 14px;
       border-radius: 999px;
-      background: var(--accent-soft);
-      color: var(--accent);
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .sync-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 12px var(--accent-glow);
+    }
+
+    .shell {
+      position: relative;
+      overflow: hidden;
+      border-radius: 34px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)),
+        var(--surface);
+      backdrop-filter: blur(20px);
+      box-shadow: var(--shadow-lg);
+      padding: 18px;
+    }
+
+    .shell::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      pointer-events: none;
+      background:
+        linear-gradient(135deg, rgba(34,197,94,0.10), transparent 24%, transparent 65%, rgba(37,199,217,0.08));
+      opacity: 0.9;
+    }
+
+    .hero {
+      position: relative;
+      text-align: center;
+      padding: 8px 6px 12px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 34px;
+      padding: 0 12px;
+      border-radius: 999px;
+      background: rgba(34, 197, 94, 0.10);
+      border: 1px solid rgba(34, 197, 94, 0.16);
+      color: #9bf3b5;
       font-size: 12px;
       font-weight: 800;
-      letter-spacing: .06em;
       text-transform: uppercase;
+      letter-spacing: 0.08em;
       margin-bottom: 12px;
     }
 
-    .hero-badge::before {
+    .eyebrow::before {
       content: "";
       width: 8px;
       height: 8px;
       border-radius: 999px;
       background: currentColor;
+      box-shadow: 0 0 14px currentColor;
     }
 
     .hero h1 {
       margin: 0 0 8px;
-      font-size: 24px;
-      line-height: 1.06;
-      letter-spacing: -.04em;
+      font-size: clamp(26px, 4vw, 34px);
+      line-height: 1.02;
+      letter-spacing: -0.045em;
       font-weight: 800;
     }
 
     .hero p {
       margin: 0 auto;
-      max-width: 34ch;
+      max-width: 38ch;
       color: var(--muted);
       font-size: 14px;
-      line-height: 1.55;
+      line-height: 1.6;
     }
 
     .tabs {
@@ -177,75 +258,108 @@
 
     .tab {
       flex: 1;
-      min-height: 44px;
-      border-radius: 14px;
+      min-height: 46px;
+      border-radius: 15px;
       border: 1px solid var(--line);
-      background: var(--surface-2);
+      background: rgba(255,255,255,0.03);
       color: var(--muted);
       font-size: 14px;
       font-weight: 700;
       cursor: pointer;
+      transition: 180ms ease;
     }
 
     .tab.active {
-      color: #fff;
+      color: #05120b;
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
       border-color: transparent;
-      box-shadow: var(--shadow-soft);
+      box-shadow: 0 10px 24px rgba(34,197,94,0.24);
     }
 
-    .panel { display: none; }
-    .panel.active { display: block; }
+    .hidden {
+      display: none !important;
+    }
+
+    .panel {
+      display: none;
+    }
+
+    .panel.active {
+      display: block;
+    }
+
+    .wheel-card,
+    .section {
+      border-radius: 26px;
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02)),
+        var(--surface-solid);
+      box-shadow: var(--shadow-md);
+    }
 
     .wheel-card {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: 26px;
       padding: 16px;
     }
 
-    .top-meta {
+    .meta-row {
       display: flex;
       justify-content: center;
       margin-bottom: 14px;
     }
 
     .meta-pill {
-      padding: 8px 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 34px;
+      padding: 0 12px;
       border-radius: 999px;
-      background: var(--surface-2);
+      background: rgba(255,255,255,0.04);
       border: 1px solid var(--line);
       color: var(--muted);
       font-size: 12px;
       font-weight: 700;
     }
 
-    .wheel-box {
+    .wheel-wrap {
       position: relative;
-      width: min(100%, 252px);
+      width: min(100%, 278px);
       aspect-ratio: 1 / 1;
       margin: 0 auto 16px;
     }
 
+    .wheel-halo {
+      position: absolute;
+      inset: 8%;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle, rgba(34,197,94,0.16), transparent 58%);
+      filter: blur(14px);
+      pointer-events: none;
+    }
+
     .pointer {
       position: absolute;
-      left: 50%;
       top: 2px;
+      left: 50%;
       transform: translateX(-50%);
       width: 0;
       height: 0;
-      border-left: 13px solid transparent;
-      border-right: 13px solid transparent;
-      border-top: 22px solid #ff4d4f;
-      z-index: 8;
-      filter: drop-shadow(0 4px 10px rgba(255, 77, 79, 0.22));
+      border-left: 14px solid transparent;
+      border-right: 14px solid transparent;
+      border-top: 24px solid #ff5b74;
+      z-index: 7;
+      filter: drop-shadow(0 4px 12px rgba(255,91,116,.35));
     }
 
     canvas {
       width: 100%;
       height: 100%;
       display: block;
-      filter: drop-shadow(0 12px 24px rgba(15, 23, 42, 0.08));
+      filter:
+        drop-shadow(0 18px 32px rgba(0,0,0,.26))
+        drop-shadow(0 0 22px rgba(34,197,94,.10));
     }
 
     .center-btn {
@@ -253,120 +367,145 @@
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
-      width: 82px;
-      height: 82px;
+      width: 92px;
+      height: 92px;
+      border: 4px solid rgba(255,255,255,.12);
       border-radius: 999px;
-      border: 5px solid rgba(255,255,255,.96);
-      background: linear-gradient(180deg, #16a34a, #0f8a64);
-      color: #fff;
+      color: #04110b;
+      background:
+        radial-gradient(circle at 30% 25%, rgba(255,255,255,.48), transparent 28%),
+        linear-gradient(180deg, #3be37e, #17b769 56%, #10945e);
       font-size: 13px;
+      letter-spacing: 0.08em;
       font-weight: 800;
-      letter-spacing: .06em;
-      box-shadow:
-        0 10px 18px rgba(22,163,74,.18),
-        inset 0 1px 0 rgba(255,255,255,.20);
       cursor: pointer;
-      z-index: 9;
+      z-index: 8;
+      box-shadow:
+        0 0 0 8px rgba(34,197,94,0.07),
+        0 12px 28px rgba(16,185,129,.28),
+        inset 0 1px 0 rgba(255,255,255,0.48);
+      transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
+    }
+
+    .center-btn:active {
+      transform: translate(-50%, -50%) scale(0.98);
     }
 
     .center-btn:disabled {
-      opacity: .68;
+      opacity: 0.7;
       cursor: not-allowed;
-      box-shadow: none;
+      box-shadow:
+        0 0 0 6px rgba(34,197,94,0.04),
+        0 8px 18px rgba(0,0,0,.18);
     }
 
-    .under-wheel {
+    .hint {
       text-align: center;
       color: var(--muted);
       font-size: 13px;
-      line-height: 1.5;
-      min-height: 20px;
+      line-height: 1.55;
       margin-bottom: 10px;
+      min-height: 20px;
     }
 
     .status {
+      min-height: 48px;
       border-radius: 16px;
-      background: var(--surface-2);
-      border: 1px solid var(--line);
       padding: 12px 14px;
-      text-align: center;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--line);
       color: var(--muted);
+      text-align: center;
       font-size: 14px;
       line-height: 1.5;
-      min-height: 48px;
     }
 
-    .result, .cooldown, .admin-only {
+    .result,
+    .cooldown,
+    .admin-only {
       display: none;
       margin-top: 14px;
     }
 
-    .result.show, .cooldown.show, .admin-only.show {
+    .result.show,
+    .cooldown.show,
+    .admin-only.show {
       display: block;
     }
 
     .section {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: 24px;
       padding: 16px;
     }
 
     .kicker {
+      margin-bottom: 8px;
+      color: #99f6b4;
       font-size: 12px;
       font-weight: 800;
-      letter-spacing: .08em;
       text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 8px;
+      letter-spacing: 0.08em;
     }
 
     .section-title {
       margin: 0 0 8px;
-      font-size: 20px;
+      font-size: 21px;
       line-height: 1.08;
-      letter-spacing: -.04em;
+      letter-spacing: -0.045em;
       font-weight: 800;
     }
 
     .section-desc {
       color: var(--muted);
       font-size: 14px;
-      line-height: 1.55;
+      line-height: 1.6;
       margin-bottom: 14px;
     }
 
     .result-prize {
-      font-weight: 800;
       color: var(--text);
-      margin-bottom: 6px;
       font-size: 18px;
-      line-height: 1.3;
+      font-weight: 800;
+      margin-bottom: 6px;
     }
 
     .code-box {
-      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 12px;
+      border-radius: 22px;
       padding: 16px 14px;
       text-align: center;
-      background: linear-gradient(180deg, rgba(22,163,74,.12), rgba(16,185,129,.06));
-      border: 1px solid rgba(22,163,74,.16);
-      margin-bottom: 10px;
+      background:
+        linear-gradient(180deg, rgba(34,197,94,0.16), rgba(16,185,129,0.08)),
+        rgba(255,255,255,0.02);
+      border: 1px solid rgba(34,197,94,0.20);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+
+    .code-box::after {
+      content: "";
+      position: absolute;
+      inset: auto -20% -50% -20%;
+      height: 90px;
+      background: radial-gradient(circle, rgba(37,199,217,0.14), transparent 58%);
+      pointer-events: none;
     }
 
     .code-label {
       font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
       color: var(--muted);
       margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: .08em;
-      font-weight: 800;
     }
 
     .code {
       font-size: 28px;
       line-height: 1;
       font-weight: 800;
-      letter-spacing: .08em;
+      letter-spacing: 0.08em;
+      color: #ebfff2;
       word-break: break-word;
     }
 
@@ -382,21 +521,23 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 72px;
-      border-radius: 18px;
-      background: var(--surface-2);
-      border: 1px solid var(--line);
+      min-height: 78px;
       margin-bottom: 10px;
-      padding: 12px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)),
+        var(--surface-2);
     }
 
     .timer {
       font-size: 30px;
-      font-weight: 800;
       line-height: 1;
-      letter-spacing: -.04em;
-      color: var(--accent);
+      letter-spacing: -0.05em;
+      font-weight: 800;
+      color: #9bf3b5;
       font-variant-numeric: tabular-nums;
+      text-shadow: 0 0 16px rgba(34,197,94,0.16);
     }
 
     .last-prize {
@@ -414,28 +555,25 @@
 
     .btn {
       flex: 1;
-      min-height: 46px;
-      border-radius: 14px;
+      min-height: 48px;
+      border-radius: 15px;
       border: 1px solid transparent;
       font-size: 14px;
       font-weight: 700;
       cursor: pointer;
+      transition: 180ms ease;
     }
 
     .btn-primary {
+      color: #05120b;
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      color: #fff;
-      box-shadow: var(--shadow-soft);
+      box-shadow: 0 12px 24px rgba(34,197,94,0.18);
     }
 
     .btn-secondary {
-      background: transparent;
       color: var(--text);
+      background: rgba(255,255,255,0.03);
       border-color: var(--line-2);
-    }
-
-    .hidden {
-      display: none !important;
     }
 
     .admin-grid {
@@ -450,9 +588,9 @@
     }
 
     .field label {
+      color: var(--muted);
       font-size: 13px;
       font-weight: 700;
-      color: var(--muted);
     }
 
     .field input,
@@ -460,30 +598,32 @@
     .field select {
       width: 100%;
       border: 1px solid var(--line-2);
-      background: var(--surface-2);
+      background: rgba(255,255,255,0.04);
       color: var(--text);
       border-radius: 14px;
       padding: 12px 14px;
       font-size: 14px;
       outline: none;
+      transition: 180ms ease;
     }
 
     .field textarea {
-      min-height: 92px;
+      min-height: 96px;
       resize: vertical;
     }
 
     .field input:focus,
     .field textarea:focus,
     .field select:focus {
-      border-color: rgba(22,163,74,.45);
-      box-shadow: 0 0 0 4px rgba(22,163,74,.10);
+      border-color: rgba(34,197,94,.34);
+      box-shadow: 0 0 0 4px rgba(34,197,94,.10);
     }
 
-    .admin-status {
-      margin-bottom: 12px;
+    .admin-status,
+    .code-status {
       color: var(--muted);
       font-size: 14px;
+      line-height: 1.5;
     }
 
     .prize-list {
@@ -492,9 +632,9 @@
     }
 
     .prize-item {
-      border: 1px solid var(--line);
-      background: var(--surface);
       border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
       padding: 14px;
     }
 
@@ -502,25 +642,28 @@
       display: flex;
       justify-content: space-between;
       gap: 10px;
-      align-items: start;
+      align-items: flex-start;
       margin-bottom: 8px;
     }
 
     .prize-name {
       font-size: 16px;
-      font-weight: 800;
       line-height: 1.25;
+      font-weight: 800;
     }
 
     .prize-meta {
       color: var(--muted);
       font-size: 13px;
-      line-height: 1.5;
+      line-height: 1.55;
       margin-bottom: 12px;
     }
 
     .badge {
-      padding: 7px 10px;
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 0 10px;
       border-radius: 999px;
       font-size: 12px;
       font-weight: 800;
@@ -528,13 +671,15 @@
     }
 
     .badge-on {
-      background: rgba(22,163,74,.12);
-      color: var(--accent);
+      color: #9bf3b5;
+      background: rgba(34,197,94,0.12);
+      border: 1px solid rgba(34,197,94,0.18);
     }
 
     .badge-off {
-      background: rgba(239,68,68,.12);
-      color: var(--danger);
+      color: #ff98a8;
+      background: rgba(255,92,117,0.10);
+      border: 1px solid rgba(255,92,117,0.18);
     }
 
     .prize-actions {
@@ -544,55 +689,74 @@
     }
 
     .mini-btn {
-      border: 1px solid var(--line);
-      background: var(--surface-2);
-      color: var(--text);
+      min-height: 40px;
       border-radius: 12px;
-      padding: 10px 12px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      padding: 8px 12px;
       font-size: 13px;
       font-weight: 700;
       cursor: pointer;
     }
 
-    @media (max-width: 520px) {
-      .wrap {
-        padding: 14px 12px 24px;
+    @media (max-width: 560px) {
+      .app {
+        padding:
+          calc(12px + var(--safe-top))
+          12px
+          calc(22px + var(--safe-bottom));
       }
 
       .shell {
-        padding: 16px;
         border-radius: 28px;
+        padding: 16px;
       }
 
-      .hero h1 {
-        font-size: 22px;
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
       }
 
-      .wheel-box {
-        width: min(100%, 244px);
+      .wheel-wrap {
+        width: min(100%, 258px);
       }
 
       .actions {
         flex-direction: column;
       }
+
+      .section-title {
+        font-size: 20px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="brand">
-      <div class="brand-mark"></div>
-      <div class="brand-copy">
-        <div class="brand-title">iGadget Bonus</div>
-        <div class="brand-subtitle">Mini App</div>
+  <div class="app">
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-mark"></div>
+        <div class="brand-copy">
+          <div class="brand-title">iGadget Bonus</div>
+          <div class="brand-sub">Tech Dark Mini App</div>
+        </div>
+      </div>
+
+      <div class="sync-pill">
+        <span class="sync-dot"></span>
+        Синхронизация с Telegram
       </div>
     </div>
 
     <div class="shell">
       <section class="hero">
-        <div class="hero-badge">Промо-колесо</div>
-        <h1>Получите скидку или бонус</h1>
-        <p>Одна попытка в день. Результат определяется на сервере и сохраняется автоматически.</p>
+        <div class="eyebrow">Spin & Win</div>
+        <h1>Бонусы и скидки<br />в стиле iGadget</h1>
+        <p>
+          Крутите колесо один раз в день и получайте бонус, подарок или скидку.
+          Результат определяется на сервере и сразу сохраняется.
+        </p>
       </section>
 
       <div class="tabs">
@@ -602,17 +766,18 @@
 
       <div class="panel active" id="panelWheel">
         <div class="wheel-card">
-          <div class="top-meta">
-            <div class="meta-pill">1 попытка / день</div>
+          <div class="meta-row">
+            <div class="meta-pill">1 попытка в сутки</div>
           </div>
 
-          <div class="wheel-box">
+          <div class="wheel-wrap">
+            <div class="wheel-halo"></div>
             <div class="pointer"></div>
-            <canvas id="wheel" width="340" height="340"></canvas>
+            <canvas id="wheel" width="360" height="360"></canvas>
             <button id="spinBtn" class="center-btn">КРУТИТЬ</button>
           </div>
 
-          <div class="under-wheel">Ваш выигрыш покажется сразу после остановки колеса.</div>
+          <div class="hint">Во время вращения результат уже закреплён на сервере.</div>
           <div class="status" id="status">Нажмите кнопку, чтобы запустить колесо.</div>
 
           <div class="result" id="resultBox">
@@ -642,7 +807,9 @@
             <div class="section">
               <div class="kicker">Попытка использована</div>
               <h3 class="section-title">Сегодня вы уже крутили колесо</h3>
-              <div class="section-desc" id="cooldownText">Следующая попытка будет доступна позже.</div>
+              <div class="section-desc" id="cooldownText">
+                Следующая попытка откроется после обновления дня.
+              </div>
 
               <div class="timer-wrap">
                 <div class="timer" id="timer">--:--:--</div>
@@ -660,15 +827,15 @@
           <div class="admin-status" id="adminStatus">Проверяем доступ...</div>
 
           <div class="admin-grid">
-            <div class="section" style="padding:0; border:none; background:transparent;">
+            <div class="section" style="padding:0; border:none; background:transparent; box-shadow:none;">
               <div class="field">
                 <label for="newTitle">Название</label>
-                <input id="newTitle" type="text" placeholder="Например: Скидка 15% на аксессуары">
+                <input id="newTitle" type="text" placeholder="Например: Скидка 15% на аксессуары" />
               </div>
 
               <div class="field">
                 <label for="newShort">Короткий текст</label>
-                <input id="newShort" type="text" placeholder="Например: PB -15%">
+                <input id="newShort" type="text" placeholder="Например: PB -15%" />
               </div>
 
               <div class="field">
@@ -678,7 +845,7 @@
 
               <div class="field">
                 <label for="newWeight">Вес</label>
-                <input id="newWeight" type="number" min="1" placeholder="Например: 10">
+                <input id="newWeight" type="number" min="1" placeholder="Например: 10" />
               </div>
 
               <div class="field">
@@ -694,12 +861,12 @@
               </div>
             </div>
 
-            <div class="section" style="padding:0; border:none; background:transparent;">
+            <div class="section" style="padding:0; border:none; background:transparent; box-shadow:none;">
               <div class="section-title">Проверка и погашение кодов</div>
 
               <div class="field">
                 <label for="codeActionInput">Код</label>
-                <input id="codeActionInput" type="text" placeholder="Например: IG-AB12CD">
+                <input id="codeActionInput" type="text" placeholder="Например: IG-AB12CD" />
               </div>
 
               <div class="actions">
@@ -712,7 +879,7 @@
               </div>
             </div>
 
-            <div class="section" style="padding:0; border:none; background:transparent;">
+            <div class="section" style="padding:0; border:none; background:transparent; box-shadow:none;">
               <div class="section-title">Список призов</div>
               <div class="prize-list" id="adminPrizeList"></div>
             </div>
@@ -735,9 +902,9 @@
       error: new Audio("https://cdn.freesound.org/previews/331/331912_3248244-lq.mp3")
     };
 
-    sounds.tick.volume = 0.18;
-    sounds.win.volume = 0.45;
-    sounds.error.volume = 0.35;
+    sounds.tick.volume = 0.16;
+    sounds.win.volume = 0.42;
+    sounds.error.volume = 0.34;
 
     let soundUnlocked = false;
     let tickInterval = null;
@@ -758,7 +925,6 @@
     function playSound(name) {
       const s = sounds[name];
       if (!s) return;
-
       try {
         s.pause();
         s.currentTime = 0;
@@ -770,7 +936,7 @@
       stopTickLoop();
       tickInterval = setInterval(() => {
         playSound("tick");
-      }, 280);
+      }, 260);
     }
 
     function stopTickLoop() {
@@ -824,20 +990,12 @@
     let countdownInterval = null;
 
     function applyTelegramTheme() {
-      const scheme = tg.colorScheme || "light";
-      document.body.classList.toggle("dark", scheme === "dark");
-
-      if (tg.themeParams?.bg_color) {
-        tg.setBackgroundColor?.(tg.themeParams.bg_color);
-      }
-      if (tg.themeParams?.header_bg_color) {
-        tg.setHeaderColor?.(tg.themeParams.header_bg_color);
-      }
-
-      if (prizes.length) drawWheel(prizes, currentRotation);
+      const theme = tg.themeParams || {};
+      if (theme.bg_color) tg.setBackgroundColor?.(theme.bg_color);
+      if (theme.header_bg_color) tg.setHeaderColor?.(theme.header_bg_color);
+      drawWheel(prizes, currentRotation);
     }
 
-    applyTelegramTheme();
     tg.onEvent("themeChanged", applyTelegramTheme);
 
     function switchTab(name) {
@@ -852,10 +1010,7 @@
     tabAdmin.addEventListener("click", () => switchTab("admin"));
 
     function getSectorPalette() {
-      const isDark = document.body.classList.contains("dark");
-      return isDark
-        ? ["#14b8a6", "#84cc16", "#3b82f6", "#f59e0b", "#8b5cf6", "#ef4444"]
-        : ["#16c2b8", "#7ccf2b", "#49aef2", "#ffb000", "#8b5cf6", "#ff5a5f"];
+      return ["#19d47b", "#14c3a2", "#22c7d9", "#4f7cff", "#f4a61d", "#ff647d"];
     }
 
     function fitLabel(label) {
@@ -887,7 +1042,6 @@
       }
 
       if (current) lines.push(current);
-
       return lines.slice(0, 3);
     }
 
@@ -895,7 +1049,7 @@
       let fontSize = baseFont;
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-      ctx.fillStyle = "#ffffff";
+      ctx.fillStyle = "#f8fbff";
 
       while (fontSize >= 10) {
         ctx.font = `800 ${fontSize}px Inter, sans-serif`;
@@ -915,14 +1069,24 @@
     function drawWheel(items, rotationDeg = 0) {
       const size = canvas.width;
       const center = size / 2;
-      const radius = center - 16;
+      const radius = center - 18;
 
       ctx.clearRect(0, 0, size, size);
+
+      ctx.beginPath();
+      ctx.arc(center, center, radius + 8, 0, Math.PI * 2);
+      ctx.fillStyle = "#0a1423";
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(center, center, radius + 2, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(255,255,255,0.04)";
+      ctx.fill();
 
       if (!items.length) {
         ctx.beginPath();
         ctx.arc(center, center, radius, 0, Math.PI * 2);
-        ctx.fillStyle = "#d7dde3";
+        ctx.fillStyle = "#1b2a40";
         ctx.fill();
         return;
       }
@@ -930,13 +1094,7 @@
       const total = items.length;
       const arc = (Math.PI * 2) / total;
       const rotationRad = rotationDeg * Math.PI / 180;
-      const isDark = document.body.classList.contains("dark");
       const palette = getSectorPalette();
-
-      ctx.beginPath();
-      ctx.arc(center, center, radius + 4, 0, Math.PI * 2);
-      ctx.fillStyle = isDark ? "#0f172a" : "#ffffff";
-      ctx.fill();
 
       for (let i = 0; i < total; i++) {
         const start = -Math.PI / 2 + rotationRad + i * arc;
@@ -944,58 +1102,70 @@
         const mid = start + arc / 2;
         const color = palette[i % palette.length];
 
+        const grad = ctx.createRadialGradient(center, center, 52, center, center, radius);
+        grad.addColorStop(0, shadeColor(color, -18));
+        grad.addColorStop(1, color);
+
         ctx.beginPath();
         ctx.moveTo(center, center);
         ctx.arc(center, center, radius, start, end);
         ctx.closePath();
-        ctx.fillStyle = color;
+        ctx.fillStyle = grad;
         ctx.fill();
-
-        const textLines = fitLabel(items[i].short || items[i].title || "Приз");
 
         ctx.save();
         ctx.translate(center, center);
         ctx.rotate(mid);
 
-        const textRadius = radius - 52;
-        const x = textRadius;
-        const y = 0;
-        const sectorWidth = Math.max(54, radius * arc * 0.62);
+        const textLines = fitLabel(items[i].short || items[i].title || "Приз");
+        const textRadius = radius - 56;
+        const sectorWidth = Math.max(56, radius * arc * 0.64);
 
-        drawTextInSector(ctx, textLines, x, y, sectorWidth, 14);
-
+        drawTextInSector(ctx, textLines, textRadius, 0, sectorWidth, 14);
         ctx.restore();
       }
 
       ctx.beginPath();
       ctx.arc(center, center, radius, 0, Math.PI * 2);
       ctx.lineWidth = 6;
-      ctx.strokeStyle = isDark
-        ? "rgba(255,255,255,.08)"
-        : "rgba(255,255,255,.88)";
+      ctx.strokeStyle = "rgba(255,255,255,0.09)";
       ctx.stroke();
 
-      const ringGradient = ctx.createRadialGradient(center, center, 34, center, center, 70);
-      ringGradient.addColorStop(0, isDark ? "#162033" : "#ffffff");
-      ringGradient.addColorStop(1, isDark ? "#0f172a" : "#eef2f7");
-
+      const coreGlow = ctx.createRadialGradient(center, center, 18, center, center, 88);
+      coreGlow.addColorStop(0, "rgba(59,227,126,0.24)");
+      coreGlow.addColorStop(1, "rgba(59,227,126,0)");
       ctx.beginPath();
-      ctx.arc(center, center, 62, 0, Math.PI * 2);
+      ctx.arc(center, center, 82, 0, Math.PI * 2);
+      ctx.fillStyle = coreGlow;
+      ctx.fill();
+
+      const ringGradient = ctx.createRadialGradient(center, center, 34, center, center, 70);
+      ringGradient.addColorStop(0, "#132338");
+      ringGradient.addColorStop(1, "#0b1525");
+      ctx.beginPath();
+      ctx.arc(center, center, 66, 0, Math.PI * 2);
       ctx.fillStyle = ringGradient;
       ctx.fill();
 
       ctx.beginPath();
-      ctx.arc(center, center, 48, 0, Math.PI * 2);
-      ctx.fillStyle = isDark ? "#122235" : "#f8fafc";
+      ctx.arc(center, center, 52, 0, Math.PI * 2);
+      ctx.fillStyle = "#102035";
       ctx.fill();
 
       ctx.beginPath();
-      ctx.arc(center, center, 48, 0, Math.PI * 2);
+      ctx.arc(center, center, 52, 0, Math.PI * 2);
       ctx.lineWidth = 2;
-      ctx.strokeStyle = isDark
-        ? "rgba(255,255,255,.08)"
-        : "rgba(15,23,42,.06)";
+      ctx.strokeStyle = "rgba(255,255,255,0.08)";
       ctx.stroke();
+    }
+
+    function shadeColor(hex, percent) {
+      const num = parseInt(hex.replace("#", ""), 16);
+      const amt = Math.round(2.55 * percent);
+      const r = Math.min(255, Math.max(0, (num >> 16) + amt));
+      const g = Math.min(255, Math.max(0, (num >> 8 & 0x00FF) + amt));
+      const b = Math.min(255, Math.max(0, (num & 0x0000FF) + amt));
+      return "#" + (0x1000000 + r * 0x10000 + g * 0x100 + b).toString(16).slice(1);
     }
 
     async function apiPost(path, body) {
@@ -1037,7 +1207,7 @@
         const finalRotation = (360 * 6) + (360 - targetCenter);
 
         const start = performance.now();
-        const duration = 4200;
+        const duration = 4300;
         const from = currentRotation;
         const to = currentRotation + finalRotation;
 
@@ -1275,7 +1445,7 @@
           const data = await apiPost("/admin/prize/update-weight", {
             init_data: tg.initData || "",
             prize_id: id,
-            weight: weight
+            weight
           });
 
           if (!data.ok) {
@@ -1423,6 +1593,7 @@
 
       if (!data.ok) {
         codeActionStatus.textContent = data.error || "Код не найден.";
+        playSound("error");
         return;
       }
 
@@ -1483,6 +1654,7 @@
       }
 
       await checkAdminAccess();
+      applyTelegramTheme();
     }
 
     initApp();
