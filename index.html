@@ -620,7 +620,7 @@
           if (loading) {
             tg.MainButton.showProgress();
             tg.MainButton.disable();
-          } else if (prizes.length > 0) {
+          } else if (prizes.length > 0 && !spinning) {
             tg.MainButton.hideProgress();
             tg.MainButton.enable();
           } else {
@@ -688,13 +688,40 @@
       return await response.json();
     }
 
-    function animateSpin(finalCallback) {
-      const extraTurns = 6 + Math.floor(Math.random() * 2);
-      const randomDeg = Math.floor(Math.random() * 360);
-      const finalDeg = extraTurns * 360 + randomDeg;
+    function getPrizeIndexById(prizeId) {
+      return prizes.findIndex(item => String(item.id) === String(prizeId));
+    }
 
+    function normalizeRotation(value) {
+      const twoPi = Math.PI * 2;
+      return ((value % twoPi) + twoPi) % twoPi;
+    }
+
+    function getTargetRotationForPrize(prizeIndex) {
+      const count = prizes.length;
+      const arc = (Math.PI * 2) / count;
+      const pointerAngle = -Math.PI / 2;
+
+      const sectorStart = prizeIndex * arc;
+      const sectorCenter = sectorStart + arc / 2;
+
+      const baseRotation = pointerAngle - sectorCenter;
+      const extraTurns = (6 + Math.floor(Math.random() * 2)) * Math.PI * 2;
+
+      const current = normalizeRotation(rotation);
+      let target = normalizeRotation(baseRotation);
+
+      while (target <= current) {
+        target += Math.PI * 2;
+      }
+
+      target += extraTurns;
+      return target;
+    }
+
+    function animateSpinToPrize(prizeIndex, finalCallback) {
       const startRotation = rotation;
-      const endRotation = rotation + finalDeg * Math.PI / 180;
+      const endRotation = getTargetRotationForPrize(prizeIndex);
       const duration = 4300;
       const startTime = performance.now();
 
@@ -709,7 +736,7 @@
         if (t < 1) {
           requestAnimationFrame(frame);
         } else {
-          rotation = endRotation % (Math.PI * 2);
+          rotation = normalizeRotation(endRotation);
           drawWheel();
           finalCallback();
         }
@@ -818,9 +845,18 @@
           return;
         }
 
+        const prizeIndex = getPrizeIndexById(result.prize_id);
+        if (prizeIndex < 0) {
+          spinning = false;
+          setButtonLoading(false);
+          statusEl.textContent = 'Не удалось сопоставить приз с колесом.';
+          alert('Приз получен, но сектор не найден. Проверьте prizes.json и /prizes.');
+          return;
+        }
+
         statusEl.textContent = 'Колесо крутится...';
 
-        animateSpin(() => {
+        animateSpinToPrize(prizeIndex, () => {
           resultTitle.textContent = result.prize_title;
           resultText.textContent = result.prize_description;
           resultCode.textContent = result.code;
