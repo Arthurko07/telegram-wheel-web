@@ -419,8 +419,8 @@
     let countdownInterval = null;
 
     const fallbackColors = [
-      '#ffd166', '#8ecae6', '#90be6d', '#ffafcc',
-      '#cdb4db', '#7fb3ff', '#f4a261', '#95d5b2',
+      '#7fb3ff', '#f7a35c', '#ffd166', '#8ecae6',
+      '#90be6d', '#ffafcc', '#cdb4db', '#95d5b2',
       '#a8dadc', '#bde0fe', '#ffc8dd', '#caffbf'
     ];
 
@@ -457,14 +457,16 @@
         ctx.save();
         ctx.rotate(start + arc / 2);
         ctx.textAlign = 'right';
+        ctx.textBaseline = 'middle';
         ctx.fillStyle = '#243447';
 
-        const fontSize = count >= 10 ? 24 : count >= 8 ? 28 : 34;
-        ctx.font = `bold ${fontSize}px Arial`;
+        const fontSize = count >= 10 ? 20 : count >= 8 ? 24 : 28;
+        ctx.font = `900 ${fontSize}px Arial`;
 
         const label = labels[i] || 'Приз';
-        const shortLabel = label.length > 14 ? label.slice(0, 14) + '…' : label;
-        ctx.fillText(shortLabel, radius - 68, 12);
+        const wheelLabel = label.length > 12 ? label.slice(0, 12) + '…' : label;
+
+        ctx.fillText(wheelLabel, radius - 82, 0);
         ctx.restore();
       }
 
@@ -521,7 +523,7 @@
       }
 
       prizes = data.items;
-      labels = prizes.map(item => item.title || 'Приз');
+      labels = prizes.map(item => item.short || item.title || 'Приз');
       sectorColors = prizes.map((_, index) => getColor(index));
       drawWheel();
 
