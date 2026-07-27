@@ -100,7 +100,7 @@
 
     .hero {
       text-align: center;
-      padding: 4px 8px 10px;
+      padding: 2px 8px 4px;
     }
 
     .eyebrow {
@@ -145,42 +145,6 @@
       line-height: 1.58;
     }
 
-    .hero-proof {
-      margin-top: 10px;
-      color: var(--faint);
-      font-size: 12px;
-      line-height: 1.5;
-    }
-
-    .tabs {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 8px;
-      margin: 14px 0 14px;
-    }
-
-    .tab {
-      min-height: 46px;
-      border-radius: 16px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.03);
-      color: var(--muted);
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: 180ms ease;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
-    }
-
-    .tab.active {
-      color: #09130c;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      border-color: transparent;
-      box-shadow: 0 10px 22px rgba(53,191,118,0.14);
-    }
-
-    .tab.hidden { display: none !important; }
-
     .panel { display: none; }
     .panel.active { display: block; }
 
@@ -194,13 +158,13 @@
       box-shadow: var(--shadow-lg);
     }
 
-    .wheel-card { padding: 14px; }
+    .wheel-card { padding: 12px; }
     .section { padding: 16px; }
 
     .meta-row {
       display: flex;
       justify-content: center;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
     }
 
     .meta-pill {
@@ -221,7 +185,7 @@
       position: relative;
       width: min(100%, 286px);
       aspect-ratio: 1 / 1;
-      margin: 0 auto 14px;
+      margin: 0 auto 10px;
     }
 
     .wheel-halo {
@@ -555,10 +519,34 @@
       color: var(--muted);
     }
 
-    .info-grid {
+    .tabs {
       display: grid;
-      gap: 12px;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      margin: 14px 0 0;
     }
+
+    .tab {
+      min-height: 42px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 180ms ease;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+    }
+
+    .tab.active {
+      color: #09130c;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      border-color: transparent;
+      box-shadow: 0 10px 22px rgba(53,191,118,0.14);
+    }
+
+    .tab.hidden { display: none !important; }
 
     .faq-list {
       display: grid;
@@ -928,10 +916,6 @@
         padding: 16px;
       }
 
-      .tabs {
-        grid-template-columns: 1fr;
-      }
-
       .wheel-wrap {
         width: min(100%, 270px);
       }
@@ -962,20 +946,9 @@
         <div class="eyebrow">Daily spin</div>
         <h1>Колесо бонусов iGadget</h1>
         <p>
-          Один запуск в день. Получайте скидку, бонус или подарок,
-          а результат сразу сохраняется на сервере.
+          Один запуск в день. Получайте скидку, бонус или подарок.
         </p>
-        <div class="hero-proof">
-          Результат определяется на сервере и сохраняется до завершения анимации.
-        </div>
       </section>
-
-      <div class="tabs">
-        <button class="tab active" id="tabWheel">Колесо</button>
-        <button class="tab" id="tabHistory">Мои призы</button>
-        <button class="tab" id="tabFaq">FAQ</button>
-        <button class="tab hidden" id="tabAdmin">Админка</button>
-      </div>
 
       <div class="panel active" id="panelWheel">
         <div class="wheel-card">
@@ -990,8 +963,8 @@
             <button id="spinBtn" class="center-btn">КРУТИТЬ</button>
           </div>
 
-          <div class="hint">Нажатие запускает запрос к серверу, а затем анимацию результата.</div>
-          <div class="status" id="status">Нажмите кнопку, чтобы начать.</div>
+          <div class="hint">Нажмите кнопку, чтобы начать.</div>
+          <div class="status" id="status">Готово к запуску.</div>
 
           <div class="result" id="resultBox">
             <div class="section">
@@ -1038,6 +1011,13 @@
         </div>
       </div>
 
+      <div class="tabs">
+        <button class="tab active" id="tabWheel">Колесо</button>
+        <button class="tab" id="tabHistory">Мои призы</button>
+        <button class="tab" id="tabFaq">FAQ</button>
+        <button class="tab hidden" id="tabAdmin">Админка</button>
+      </div>
+
       <div class="panel" id="panelHistory">
         <div class="section">
           <div class="kicker">Ваши результаты</div>
@@ -1068,7 +1048,7 @@
             <details class="faq-item">
               <summary>Как определяется результат?</summary>
               <div class="faq-content">
-                Результат определяется на сервере. Анимация колеса только визуально показывает уже сохранённый исход.
+                Результат определяется системой до конца анимации, а после этого вы сразу получаете код.
               </div>
             </details>
 
@@ -1167,14 +1147,14 @@
   <div class="overlay" id="detailsOverlay">
     <div class="sheet">
       <div class="sheet-handle"></div>
-      <h3 class="sheet-title" id="sheetTitle">Детали приза</h3>
+      <h3 class="sheet-title" id="sheetTitle">Детали prиза</h3>
       <div class="sheet-sub" id="sheetSub">Подробная информация о вашем выигрыше.</div>
 
       <div class="proof-list">
         <div class="proof-item"><strong>Код:</strong> <span id="sheetCode">—</span></div>
         <div class="proof-item"><strong>Описание:</strong> <span id="sheetDesc">—</span></div>
         <div class="proof-item"><strong>Срок действия:</strong> <span id="sheetExpires">—</span></div>
-        <div class="proof-item"><strong>Правило:</strong> Результат уже сохранён на сервере и не меняется после окончания анимации.</div>
+        <div class="proof-item"><strong>Важно:</strong> Покажите код сотруднику магазина до истечения срока действия.</div>
       </div>
 
       <div class="actions">
@@ -1190,7 +1170,7 @@
     tg.expand();
 
     const API_BASE = "https://telegram-wheel-bot-production-764c.up.railway.app";
-    const BUILD_VERSION = "v5-product-polish";
+    const BUILD_VERSION = "v5-clean-tabs-below";
 
     const sounds = {
       tick: new Audio("https://cdn.freesound.org/previews/240/240776_4107740-lq.mp3"),
@@ -1862,7 +1842,7 @@
       spinBtn.disabled = true;
       resultBox.classList.remove("show");
       cooldownBox.classList.remove("show");
-      setStatus("Запрашиваем результат у сервера...");
+      setStatus("Запрашиваем результат...");
 
       try {
         const data = await apiPost("/spin", {
@@ -2228,7 +2208,7 @@
 
       try {
         await loadPrizes();
-        setStatus("Нажмите кнопку, чтобы начать.");
+        setStatus("Готово к запуску.");
       } catch (e) {
         setStatus("Не удалось загрузить список призов.", "error");
       }
