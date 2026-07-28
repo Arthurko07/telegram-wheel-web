@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>iGadget Wheel v6.3</title>
+  <title>iGadget Wheel v6.3.1</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -83,6 +83,157 @@
         radial-gradient(circle at top center, rgba(88,214,141,0.12), transparent 22%),
         radial-gradient(circle at 16% 16%, rgba(93,173,226,0.10), transparent 18%),
         linear-gradient(180deg, var(--bg), var(--bg-2));
+    }
+
+    html[data-theme="day"] .shell {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.94), rgba(255,255,255,0.90)),
+        var(--surface);
+      border-color: rgba(19,34,58,0.08);
+    }
+
+    html[data-theme="day"] .shell::before {
+      background:
+        linear-gradient(145deg, rgba(88,214,141,0.04), transparent 32%, transparent 70%, rgba(93,173,226,0.03));
+    }
+
+    html[data-theme="day"] .wheel-card,
+    html[data-theme="day"] .section,
+    html[data-theme="day"] .history-item,
+    html[data-theme="day"] .mini-card,
+    html[data-theme="day"] details.faq-item,
+    html[data-theme="day"] .prize-item,
+    html[data-theme="day"] .sheet {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.92), rgba(250,252,255,0.92)),
+        var(--surface-solid);
+      border-color: rgba(19,34,58,0.08);
+      box-shadow: 0 14px 34px rgba(36, 62, 95, 0.08);
+    }
+
+    html[data-theme="day"] .status {
+      background: rgba(243,247,252,0.96);
+      border-color: rgba(19,34,58,0.08);
+      color: #5d6980;
+    }
+
+    html[data-theme="day"] .status.error {
+      background: rgba(255, 241, 244, 0.98);
+      border-color: rgba(226, 91, 123, 0.16);
+      color: #c14d69;
+    }
+
+    html[data-theme="day"] .status.success {
+      background: rgba(235, 250, 241, 0.98);
+      border-color: rgba(57, 167, 103, 0.16);
+      color: #1f8a53;
+    }
+
+    html[data-theme="day"] .timer-wrap {
+      background:
+        linear-gradient(180deg, rgba(236,242,249,1), rgba(232,239,247,1)),
+        var(--surface-2);
+      border-color: rgba(19,34,58,0.08);
+    }
+
+    html[data-theme="day"] .timer {
+      color: #63c98b;
+      text-shadow: none;
+    }
+
+    html[data-theme="day"] .kicker {
+      color: #7ed2a0;
+    }
+
+    html[data-theme="day"] .result-badge {
+      background: rgba(88,214,141,0.16);
+      border-color: rgba(57, 167, 103, 0.16);
+      color: #238553;
+    }
+
+    html[data-theme="day"] .expires,
+    html[data-theme="day"] .badge-warn,
+    html[data-theme="day"] .badge-soon {
+      background: rgba(255, 244, 225, 0.98);
+      border-color: rgba(214, 162, 53, 0.18);
+      color: #b27a00;
+    }
+
+    html[data-theme="day"] .badge-ok {
+      background: rgba(232, 248, 237, 0.98);
+      border-color: rgba(57, 167, 103, 0.16);
+      color: #27915a;
+    }
+
+    html[data-theme="day"] .badge-off {
+      background: rgba(255, 240, 245, 0.98);
+      border-color: rgba(214, 113, 148, 0.16);
+      color: #c96b8c;
+    }
+
+    html[data-theme="day"] .history-filter {
+      background: rgba(255,255,255,0.82);
+      border-color: rgba(19,34,58,0.08);
+      color: #66748d;
+    }
+
+    html[data-theme="day"] .history-filter.active {
+      color: #102216;
+      background: linear-gradient(135deg, #8ce6aa, #67cf8b);
+      box-shadow: 0 12px 24px rgba(88,214,141,0.18);
+    }
+
+    html[data-theme="day"] .btn-secondary,
+    html[data-theme="day"] .btn-ghost,
+    html[data-theme="day"] .mini-btn {
+      background: rgba(255,255,255,0.84);
+      border-color: rgba(19,34,58,0.08);
+      color: #1b2438;
+    }
+
+    html[data-theme="day"] .code-box,
+    html[data-theme="day"] .result-stage {
+      background:
+        linear-gradient(180deg, rgba(246,250,245,0.98), rgba(240,248,243,0.98)),
+        rgba(255,255,255,0.92);
+      border-color: rgba(57, 167, 103, 0.12);
+    }
+
+    html[data-theme="day"] .result-stage__code {
+      background: linear-gradient(180deg, rgba(225,246,233,0.95), rgba(216,241,225,0.95));
+      border-color: rgba(57, 167, 103, 0.14);
+    }
+
+    html[data-theme="day"] .result-stage__status {
+      background: rgba(88,214,141,0.16);
+      border-color: rgba(57, 167, 103, 0.16);
+      color: #238553;
+    }
+
+    html[data-theme="day"] .bottom-nav {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.94), rgba(245,248,253,0.96)),
+        rgba(255,255,255,0.94);
+      border-color: rgba(19,34,58,0.08);
+      box-shadow:
+        0 16px 36px rgba(36, 62, 95, 0.12),
+        inset 0 1px 0 rgba(255,255,255,0.7);
+    }
+
+    html[data-theme="day"] .bottom-nav__item {
+      color: #687792;
+    }
+
+    html[data-theme="day"] .bottom-nav__item.active {
+      color: #102216;
+      background: linear-gradient(135deg, #8ce6aa, #67cf8b);
+      box-shadow: 0 12px 24px rgba(88,214,141,0.18);
+    }
+
+    html[data-theme="day"] .theme-toggle {
+      background: rgba(255,255,255,0.88);
+      border-color: rgba(19,34,58,0.08);
+      color: #1b2438;
     }
 
     .theme-toggle {
@@ -1488,7 +1639,7 @@
     tg.expand();
 
     const API_BASE = "https://telegram-wheel-bot-production-764c.up.railway.app";
-    const BUILD_VERSION = "v6-3-day-night-premium";
+    const BUILD_VERSION = "v6-3-1-light-theme-fix";
 
     const sounds = {
       tick: new Audio("https://cdn.freesound.org/previews/240/240776_4107740-lq.mp3"),
