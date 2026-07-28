@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>iGadget Wheel v6.3.1</title>
+  <title>iGadget Wheel v6.3.3</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -45,19 +45,19 @@
 
 
     :root {
-      --day-bg: #eef4ff;
-      --day-bg-2: #dfeaf7;
-      --day-surface: rgba(255, 255, 255, 0.9);
+      --day-bg: #f4f6fb;
+      --day-bg-2: #e9eef6;
+      --day-surface: rgba(255, 255, 255, 0.88);
       --day-surface-solid: #ffffff;
-      --day-surface-2: #edf3fb;
-      --day-surface-3: #dde7f3;
-      --day-text: #152033;
-      --day-muted: #627089;
-      --day-line: rgba(19,34,58,0.08);
-      --day-line-strong: rgba(19,34,58,0.14);
-      --day-shadow-xl: 0 24px 60px rgba(36, 62, 95, 0.12);
-      --day-shadow-lg: 0 16px 34px rgba(36, 62, 95, 0.10);
-      --day-shadow-sm: 0 8px 18px rgba(36, 62, 95, 0.08);
+      --day-surface-2: #f2f5fa;
+      --day-surface-3: #e7edf5;
+      --day-text: #111827;
+      --day-muted: #667085;
+      --day-line: rgba(17,24,39,0.08);
+      --day-line-strong: rgba(17,24,39,0.12);
+      --day-shadow-xl: 0 30px 70px rgba(15, 23, 42, 0.10);
+      --day-shadow-lg: 0 18px 44px rgba(15, 23, 42, 0.08);
+      --day-shadow-sm: 0 10px 24px rgba(15, 23, 42, 0.06);
     }
 
     html[data-theme="day"] {
@@ -80,21 +80,23 @@
 
     html[data-theme="day"] body {
       background:
-        radial-gradient(circle at top center, rgba(88,214,141,0.12), transparent 22%),
-        radial-gradient(circle at 16% 16%, rgba(93,173,226,0.10), transparent 18%),
-        linear-gradient(180deg, var(--bg), var(--bg-2));
+        radial-gradient(circle at top center, rgba(88,214,141,0.08), transparent 22%),
+        radial-gradient(circle at 18% 14%, rgba(93,173,226,0.06), transparent 18%),
+        linear-gradient(180deg, #f7f9fc, #edf2f8 56%, #e8eef6);
     }
 
     html[data-theme="day"] .shell {
       background:
-        linear-gradient(180deg, rgba(255,255,255,0.94), rgba(255,255,255,0.90)),
+        linear-gradient(180deg, rgba(255,255,255,0.86), rgba(255,255,255,0.80)),
         var(--surface);
-      border-color: rgba(19,34,58,0.08);
+      border-color: rgba(17,24,39,0.06);
+      backdrop-filter: blur(24px);
+      box-shadow: 0 24px 60px rgba(15, 23, 42, 0.10);
     }
 
     html[data-theme="day"] .shell::before {
       background:
-        linear-gradient(145deg, rgba(88,214,141,0.04), transparent 32%, transparent 70%, rgba(93,173,226,0.03));
+        linear-gradient(145deg, rgba(255,255,255,0.36), transparent 32%, transparent 70%, rgba(168, 185, 210, 0.08));
     }
 
     html[data-theme="day"] .wheel-card,
@@ -105,28 +107,28 @@
     html[data-theme="day"] .prize-item,
     html[data-theme="day"] .sheet {
       background:
-        linear-gradient(180deg, rgba(255,255,255,0.92), rgba(250,252,255,0.92)),
+        linear-gradient(180deg, rgba(255,255,255,0.88), rgba(250,252,255,0.84)),
         var(--surface-solid);
-      border-color: rgba(19,34,58,0.08);
-      box-shadow: 0 14px 34px rgba(36, 62, 95, 0.08);
+      border-color: rgba(17,24,39,0.06);
+      box-shadow: 0 14px 36px rgba(15, 23, 42, 0.06);
     }
 
     html[data-theme="day"] .status {
       background: rgba(243,247,252,0.96);
       border-color: rgba(19,34,58,0.08);
-      color: #5d6980;
+      color: #5f6b7c;
     }
 
     html[data-theme="day"] .status.error {
       background: rgba(255, 241, 244, 0.98);
       border-color: rgba(226, 91, 123, 0.16);
-      color: #c14d69;
+      color: #c05674;
     }
 
     html[data-theme="day"] .status.success {
       background: rgba(235, 250, 241, 0.98);
       border-color: rgba(57, 167, 103, 0.16);
-      color: #1f8a53;
+      color: #1d8a57;
     }
 
     html[data-theme="day"] .timer-wrap {
@@ -137,18 +139,18 @@
     }
 
     html[data-theme="day"] .timer {
-      color: #63c98b;
+      color: #7ccf9a;
       text-shadow: none;
     }
 
     html[data-theme="day"] .kicker {
-      color: #7ed2a0;
+      color: #91cfa8;
     }
 
     html[data-theme="day"] .result-badge {
       background: rgba(88,214,141,0.16);
       border-color: rgba(57, 167, 103, 0.16);
-      color: #238553;
+      color: #247a54;
     }
 
     html[data-theme="day"] .expires,
@@ -156,30 +158,30 @@
     html[data-theme="day"] .badge-soon {
       background: rgba(255, 244, 225, 0.98);
       border-color: rgba(214, 162, 53, 0.18);
-      color: #b27a00;
+      color: #a97810;
     }
 
     html[data-theme="day"] .badge-ok {
       background: rgba(232, 248, 237, 0.98);
       border-color: rgba(57, 167, 103, 0.16);
-      color: #27915a;
+      color: #2a7f59;
     }
 
     html[data-theme="day"] .badge-off {
       background: rgba(255, 240, 245, 0.98);
       border-color: rgba(214, 113, 148, 0.16);
-      color: #c96b8c;
+      color: #bd708d;
     }
 
     html[data-theme="day"] .history-filter {
       background: rgba(255,255,255,0.82);
       border-color: rgba(19,34,58,0.08);
-      color: #66748d;
+      color: #667085;
     }
 
     html[data-theme="day"] .history-filter.active {
-      color: #102216;
-      background: linear-gradient(135deg, #8ce6aa, #67cf8b);
+      color: #132018;
+      background: linear-gradient(135deg, #9ae6b4, #74d79a);
       box-shadow: 0 12px 24px rgba(88,214,141,0.18);
     }
 
@@ -188,7 +190,7 @@
     html[data-theme="day"] .mini-btn {
       background: rgba(255,255,255,0.84);
       border-color: rgba(19,34,58,0.08);
-      color: #1b2438;
+      color: #111827;
     }
 
     html[data-theme="day"] .code-box,
@@ -207,7 +209,7 @@
     html[data-theme="day"] .result-stage__status {
       background: rgba(88,214,141,0.16);
       border-color: rgba(57, 167, 103, 0.16);
-      color: #238553;
+      color: #247a54;
     }
 
     html[data-theme="day"] .bottom-nav {
@@ -221,19 +223,19 @@
     }
 
     html[data-theme="day"] .bottom-nav__item {
-      color: #687792;
+      color: #6b7280;
     }
 
     html[data-theme="day"] .bottom-nav__item.active {
-      color: #102216;
-      background: linear-gradient(135deg, #8ce6aa, #67cf8b);
+      color: #132018;
+      background: linear-gradient(135deg, #9ae6b4, #74d79a);
       box-shadow: 0 12px 24px rgba(88,214,141,0.18);
     }
 
     html[data-theme="day"] .theme-toggle {
       background: rgba(255,255,255,0.88);
       border-color: rgba(19,34,58,0.08);
-      color: #1b2438;
+      color: #111827;
     }
 
     .theme-toggle {
@@ -1358,7 +1360,6 @@
       <section class="hero">
         <h1>Колесо бонусов iGadget</h1>
         <p>Один запуск в день. Получайте скидку, бонус или подарок.</p>
-        <div class="hero-note"><span class="hero-note__dot"></span><span>Тема меняется по времени суток</span></div>
       </section>
 
       <div class="panel active" id="panelWheel">
@@ -1639,7 +1640,7 @@
     tg.expand();
 
     const API_BASE = "https://telegram-wheel-bot-production-764c.up.railway.app";
-    const BUILD_VERSION = "v6-3-1-light-theme-fix";
+    const BUILD_VERSION = "v6-3-3-remove-theme-note";
 
     const sounds = {
       tick: new Audio("https://cdn.freesound.org/previews/240/240776_4107740-lq.mp3"),
