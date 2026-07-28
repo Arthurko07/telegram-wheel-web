@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>iGadget Wheel v7</title>
+  <title>iGadget Wheel v6.2</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -58,10 +58,6 @@
     }
 
     body { min-height: 100vh; }
-
-    button, input, textarea, select {
-      font: inherit;
-    }
 
     .app {
       width: 100%;
@@ -282,11 +278,6 @@
       line-height: 1.5;
       margin-bottom: 10px;
       min-height: 20px;
-      transition: opacity 160ms ease;
-    }
-
-    .hint.dimmed {
-      opacity: 0.45;
     }
 
     .status {
@@ -312,12 +303,6 @@
       color: #d8f9e5;
       background: rgba(88,214,141,0.06);
       border-color: rgba(88,214,141,0.12);
-    }
-
-    .status.warning {
-      color: #ffe3b6;
-      background: rgba(230,171,70,0.08);
-      border-color: rgba(230,171,70,0.14);
     }
 
     .result,
@@ -463,12 +448,6 @@
       cursor: pointer;
       transition: 180ms ease;
       min-width: 140px;
-    }
-
-    .btn:disabled,
-    .mini-btn:disabled {
-      opacity: 0.65;
-      cursor: not-allowed;
     }
 
     .btn-primary {
@@ -1034,7 +1013,7 @@
             <button id="spinBtn" class="center-btn">КРУТИТЬ</button>
           </div>
 
-          <div class="hint" id="spinHint">Нажмите кнопку, чтобы начать.</div>
+          <div class="hint">Нажмите кнопку, чтобы начать.</div>
           <div class="status" id="status">Готово к запуску.</div>
 
           <div class="result" id="resultBox">
@@ -1278,8 +1257,20 @@
     tg.expand();
 
     const API_BASE = "https://telegram-wheel-bot-production-764c.up.railway.app";
-    const BUILD_VERSION = "v7-clean";
+    const BUILD_VERSION = "v6-2-final-clean-copy";
 
+    const sounds = {
+      tick: new Audio("https://cdn.freesound.org/previews/240/240776_4107740-lq.mp3"),
+      win: new Audio("https://cdn.freesound.org/previews/320/320655_5260872-lq.mp3"),
+      error: new Audio("https://cdn.freesound.org/previews/331/331912_3248244-lq.mp3")
+    };
+
+    sounds.tick.volume = 0.12;
+    sounds.win.volume = 0.36;
+    sounds.error.volume = 0.28;
+
+    let soundUnlocked = false;
+    let tickInterval = null;
     let prizes = [];
     let currentRotation = 0;
     let isSpinning = false;
@@ -1293,7 +1284,6 @@
     const canvas = document.getElementById("wheel");
     const ctx = canvas.getContext("2d");
     const spinBtn = document.getElementById("spinBtn");
-    const spinHint = document.getElementById("spinHint");
     const statusEl = document.getElementById("status");
 
     const resultBox = document.getElementById("resultBox");
@@ -1360,17 +1350,45 @@
       try { tg.HapticFeedback?.notificationOccurred(type); } catch (e) {}
     }
 
-    function setStatus(text, type = "") {
-      statusEl.textContent = text;
-      statusEl.classList.remove("error", "success", "warning");
-      if (type) statusEl.classList.add(type);
+    async function unlockSounds() {
+      if (soundUnlocked) return;
+      soundUnlocked = true;
+      try {
+        sounds.tick.muted = true;
+        await sounds.tick.play();
+        sounds.tick.pause();
+        sounds.tick.currentTime = 0;
+        sounds.tick.muted = false;
+      } catch (e) {}
     }
 
-    function setSpinLoading(loading) {
-      spinBtn.disabled = loading;
-      spinBtn.textContent = loading ? "КРУТИМ..." : "КРУТИТЬ";
-      spinHint.textContent = loading ? "Пожалуйста, подождите, выбираем результат." : "Нажмите кнопку, чтобы начать.";
-      spinHint.classList.toggle("dimmed", loading);
+    function playSound(name) {
+      const s = sounds[name];
+      if (!s) return;
+      try {
+        s.pause();
+        s.currentTime = 0;
+        s.play().catch(() => {});
+      } catch (e) {}
+    }
+
+    function startTickLoop() {
+      if (reduceMotion) return;
+      stopTickLoop();
+      tickInterval = setInterval(() => playSound("tick"), 280);
+    }
+
+    function stopTickLoop() {
+      if (tickInterval) {
+        clearInterval(tickInterval);
+        tickInterval = null;
+      }
+    }
+
+    function setStatus(text, type = "") {
+      statusEl.textContent = text;
+      statusEl.classList.remove("error", "success");
+      if (type) statusEl.classList.add(type);
     }
 
     function updateOfflineState() {
@@ -1734,7 +1752,7 @@
         btn.addEventListener("click", async () => {
           const code = btn.getAttribute("data-history-copy");
           if (!code) return;
-          await copyCodeValue(code, btn);
+          await copyCodeValue(code);
         });
       });
 
@@ -1898,13 +1916,14 @@
     async function spinWheel() {
       if (isSpinning || !navigator.onLine) return;
 
-      safeHapticImpact("medium");
+      await unlockSounds();
+      safeHapticImpact("light");
 
       isSpinning = true;
-      setSpinLoading(true);
+      spinBtn.disabled = true;
       resultBox.classList.remove("show");
       cooldownBox.classList.remove("show");
-      setStatus("Запрашиваем результат...", "");
+      setStatus("Запрашиваем результат...");
 
       try {
         const data = await apiPost("/spin", {
@@ -1912,51 +1931,50 @@
         });
 
         if (!data.ok && data.cooldown) {
+          stopTickLoop();
+          playSound("error");
           safeHapticNotification("warning");
-          setStatus("На сегодня попытка уже израсходована.", "warning");
+          setStatus("На сегодня попытка уже израсходована.", "error");
           startCooldown(data);
           return;
         }
 
         if (!data.ok) {
+          stopTickLoop();
+          playSound("error");
           safeHapticNotification("error");
           setStatus(data.error || "Произошла ошибка.", "error");
           return;
         }
 
-        setStatus("Определяем ваш приз...", "");
+        startTickLoop();
         await animateSpinToPrize(data.prize_id);
+        stopTickLoop();
+        playSound("win");
         safeHapticNotification("success");
         showResult(data);
       } catch (e) {
+        stopTickLoop();
+        playSound("error");
         safeHapticNotification("error");
         setStatus("Ошибка соединения с сервером.", "error");
       } finally {
+        stopTickLoop();
         isSpinning = false;
-        setSpinLoading(false);
+        spinBtn.disabled = false;
       }
     }
 
-    async function copyCodeValue(code, btn = null) {
+    async function copyCodeValue(code) {
       if (!code || code === "—") return;
-
-      const oldText = btn ? btn.textContent : "";
 
       try {
         await navigator.clipboard.writeText(code);
         setStatus("Код скопирован.", "success");
         safeHapticNotification("success");
-
-        if (btn) {
-          btn.textContent = "Скопировано";
-          btn.disabled = true;
-          setTimeout(() => {
-            btn.textContent = oldText;
-            btn.disabled = false;
-          }, 1400);
-        }
       } catch (e) {
         setStatus("Не удалось скопировать код.", "error");
+        playSound("error");
         safeHapticNotification("error");
       }
     }
@@ -1990,6 +2008,7 @@
           </div>
 
           <div class="prize-actions">
+            <button class="mini-btn" data-action="edit" data-id="${item.id}">Редактировать</button>
             <button class="mini-btn" data-action="weight" data-id="${item.id}">Изменить вес</button>
             <button class="mini-btn" data-action="toggle" data-id="${item.id}">
               ${item.active ? "Выключить" : "Включить"}
@@ -2001,15 +2020,65 @@
         adminPrizeList.appendChild(block);
       });
 
+      adminPrizeList.querySelectorAll("[data-action='edit']").forEach(btn => {
+        btn.addEventListener("click", async () => {
+          const id = Number(btn.dataset.id);
+          const item = items.find(x => Number(x.id) === id);
+          if (!item) return;
+
+          const title = prompt("Название", item.title);
+          if (title === null) return;
+
+          const short = prompt("Короткий текст", item.short || "");
+          if (short === null) return;
+
+          const description = prompt("Описание", item.description || "");
+          if (description === null) return;
+
+          const weightRaw = prompt("Вес", String(item.weight));
+          if (weightRaw === null) return;
+
+          const weight = Number(weightRaw);
+          if (!weight || weight <= 0) {
+            alert("Вес должен быть больше 0");
+            return;
+          }
+
+          const active = confirm("Оставить приз включенным? OK = включен, Cancel = выключен.");
+
+          adminStatus.textContent = "Сохраняем изменения приза...";
+
+          const data = await apiPost("/admin/prize/update", {
+            init_data: tg.initData || "",
+            prize_id: id,
+            title,
+            short,
+            description,
+            weight,
+            active
+          });
+
+          if (!data.ok) {
+            alert(data.error || "Ошибка редактирования");
+            adminStatus.textContent = data.error || "Ошибка";
+            return;
+          }
+
+          adminStatus.textContent = "Приз обновлён.";
+          renderAdminPrizeList(data.items);
+          await loadPrizes();
+        });
+      });
+
       adminPrizeList.querySelectorAll("[data-action='weight']").forEach(btn => {
         btn.addEventListener("click", async () => {
           const id = Number(btn.dataset.id);
-          const value = window.prompt("Введите новый вес:");
+          const value = prompt("Введите новый вес:");
           if (!value) return;
 
           const weight = Number(value);
           if (!weight || weight <= 0) {
-            adminStatus.textContent = "Вес должен быть больше 0.";
+            alert("Вес должен быть больше 0");
             return;
           }
 
@@ -2022,7 +2091,8 @@
           });
 
           if (!data.ok) {
-            adminStatus.textContent = data.error || "Ошибка обновления веса.";
+            alert(data.error || "Ошибка обновления веса");
+            adminStatus.textContent = data.error || "Ошибка";
             return;
           }
 
@@ -2043,7 +2113,8 @@
           });
 
           if (!data.ok) {
-            adminStatus.textContent = data.error || "Ошибка смены статуса.";
+            alert(data.error || "Ошибка смены статуса");
+            adminStatus.textContent = data.error || "Ошибка";
             return;
           }
 
@@ -2056,7 +2127,7 @@
       adminPrizeList.querySelectorAll("[data-action='delete']").forEach(btn => {
         btn.addEventListener("click", async () => {
           const id = Number(btn.dataset.id);
-          const ok = window.confirm("Удалить этот приз?");
+          const ok = confirm("Удалить этот приз?");
           if (!ok) return;
 
           adminStatus.textContent = "Удаляем приз...";
@@ -2067,7 +2138,8 @@
           });
 
           if (!data.ok) {
-            adminStatus.textContent = data.error || "Ошибка удаления.";
+            alert(data.error || "Ошибка удаления");
+            adminStatus.textContent = data.error || "Ошибка";
             return;
           }
 
@@ -2115,7 +2187,7 @@
       const active = newActive.value === "true";
 
       if (!title || !short || !description || !weight || weight <= 0) {
-        adminStatus.textContent = "Заполните все поля корректно.";
+        alert("Заполните все поля корректно.");
         return;
       }
 
@@ -2131,7 +2203,8 @@
       });
 
       if (!data.ok) {
-        adminStatus.textContent = data.error || "Ошибка добавления приза.";
+        alert(data.error || "Ошибка добавления приза");
+        adminStatus.textContent = data.error || "Ошибка";
         return;
       }
 
@@ -2162,6 +2235,7 @@
 
       if (!data.ok) {
         codeActionStatus.textContent = data.error || "Код не найден.";
+        playSound("error");
         safeHapticNotification("error");
         return;
       }
@@ -2186,17 +2260,19 @@
 
       if (!data.ok) {
         codeActionStatus.textContent = data.error || "Не удалось погасить код.";
+        playSound("error");
         safeHapticNotification("error");
         return;
       }
 
+      playSound("win");
       safeHapticNotification("success");
       codeActionStatus.textContent = `Код ${data.code} погашен. Приз: ${data.prize_title}.`;
     });
 
     spinBtn.addEventListener("click", spinWheel);
-    copyBtn.addEventListener("click", () => copyCodeValue(resultCode.textContent.trim(), copyBtn));
-    sheetCopyBtn.addEventListener("click", () => copyCodeValue(sheetCode.textContent.trim(), sheetCopyBtn));
+    copyBtn.addEventListener("click", () => copyCodeValue(resultCode.textContent.trim()));
+    sheetCopyBtn.addEventListener("click", () => copyCodeValue(sheetCode.textContent.trim()));
     closeBtn.addEventListener("click", () => resultBox.classList.remove("show"));
     detailsBtn.addEventListener("click", () => {
       if (currentPrizePayload) openDetailsOverlay(currentPrizePayload);
