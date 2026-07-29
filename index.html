@@ -1,11 +1,9 @@
-
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>iGadget Wheel v6.4.4</title>
+  <title>iGadget Wheel v7.0</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -13,425 +11,35 @@
 
   <style>
     :root {
-      --bg: #0d131d;
-      --bg-2: #151c29;
-      --surface: rgba(22, 28, 40, 0.94);
-      --surface-solid: #1b2332;
-      --surface-2: #212b3e;
-      --surface-3: #29344a;
+      --bg: #0c1218;
+      --bg-2: #121a22;
+      --surface: rgba(18, 24, 32, 0.94);
+      --surface-solid: #182129;
+      --surface-2: #1d2832;
+      --surface-3: #22313b;
 
-      --text: #eef3fb;
-      --muted: #9ca7bb;
-      --success-text: #d6f8e3;
-      --warning-text: #ffe4b2;
+      --text: #eef5f1;
+      --muted: #98a7a0;
+      --success-text: #d4f5e2;
+      --warning-text: #ffe3b5;
 
       --line: rgba(255,255,255,0.07);
       --line-strong: rgba(255,255,255,0.12);
 
-      --accent: #58d68d;
-      --accent-2: #35bf76;
-      --accent-soft: rgba(88,214,141,0.12);
+      --accent: #63d79a;
+      --accent-2: #3fa56f;
+      --accent-soft: rgba(99,215,154,0.11);
 
-      --danger: #ff7a92;
-      --danger-soft: rgba(255,122,146,0.11);
+      --danger: #ff7f9b;
+      --danger-soft: rgba(255,127,155,0.10);
 
-      --shadow-xl: 0 28px 70px rgba(0,0,0,0.34);
+      --shadow-xl: 0 28px 70px rgba(0,0,0,0.36);
       --shadow-lg: 0 18px 40px rgba(0,0,0,0.24);
       --shadow-sm: 0 8px 20px rgba(0,0,0,0.14);
 
       --safe-top: env(safe-area-inset-top, 0px);
       --safe-bottom: env(safe-area-inset-bottom, 0px);
       --tg-safe-bottom: var(--tg-safe-area-inset-bottom, 0px);
-    }
-
-
-    :root {
-      --day-bg: #f3efe7;
-      --day-bg-2: #ece4d6;
-      --day-surface: rgba(255, 251, 245, 0.92);
-      --day-surface-solid: #fffaf2;
-      --day-surface-2: #f7f0e5;
-      --day-surface-3: #efe5d7;
-      --day-text: #2a261f;
-      --day-muted: #857a6d;
-      --day-line: rgba(86, 71, 49, 0.10);
-      --day-line-strong: rgba(86, 71, 49, 0.16);
-      --day-shadow-xl: 0 28px 64px rgba(128, 104, 71, 0.18);
-      --day-shadow-lg: 0 18px 40px rgba(128, 104, 71, 0.14);
-      --day-shadow-sm: 0 10px 24px rgba(128, 104, 71, 0.10);
-    }
-
-    html[data-theme="day"] {
-      --bg: var(--day-bg);
-      --bg-2: var(--day-bg-2);
-      --surface: var(--day-surface);
-      --surface-solid: var(--day-surface-solid);
-      --surface-2: var(--day-surface-2);
-      --surface-3: var(--day-surface-3);
-      --text: var(--day-text);
-      --muted: var(--day-muted);
-      --line: var(--day-line);
-      --line-strong: var(--day-line-strong);
-      --shadow-xl: var(--day-shadow-xl);
-      --shadow-lg: var(--day-shadow-lg);
-      --shadow-sm: var(--day-shadow-sm);
-      --success-text: #0e7a43;
-      --warning-text: #8a5b00;
-    }
-
-    html[data-theme="day"] body {
-      background:
-        radial-gradient(circle at top center, rgba(107, 168, 114, 0.10), transparent 22%),
-        radial-gradient(circle at 18% 14%, rgba(208, 177, 114, 0.10), transparent 18%),
-        linear-gradient(180deg, #f7f1e8, #f1e9dd 55%, #ece2d5);
-    }
-
-    html[data-theme="day"] .shell {
-      border-radius: 34px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.86), rgba(255,255,255,0.80)),
-        var(--surface);
-      border-color: rgba(17,24,39,0.06);
-      backdrop-filter: blur(24px);
-      box-shadow: 0 26px 60px rgba(129, 104, 72, 0.16);
-    }
-
-    html[data-theme="day"] .shell::before {
-      background:
-        linear-gradient(145deg, rgba(255,255,255,0.36), transparent 32%, transparent 70%, rgba(168, 185, 210, 0.08));
-    }
-
-    html[data-theme="day"] .wheel-card,
-    html[data-theme="day"] .section,
-    html[data-theme="day"] .history-item,
-    html[data-theme="day"] .mini-card,
-    html[data-theme="day"] details.faq-item,
-    html[data-theme="day"] .prize-item,
-    html[data-theme="day"] .sheet {
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.88), rgba(250,252,255,0.84)),
-        var(--surface-solid);
-      border-color: rgba(17,24,39,0.06);
-      box-shadow: 0 16px 34px rgba(129, 104, 72, 0.10);
-    }
-
-    html[data-theme="day"] .status {
-      background: rgba(243,247,252,0.96);
-      border-color: rgba(19,34,58,0.08);
-      color: #5f6b7c;
-    }
-
-    html[data-theme="day"] .status.error {
-      background: rgba(255, 241, 244, 0.98);
-      border-color: rgba(226, 91, 123, 0.16);
-      color: #c05674;
-    }
-
-    html[data-theme="day"] .status.success {
-      background: rgba(235, 250, 241, 0.98);
-      border-color: rgba(57, 167, 103, 0.16);
-      color: #1d8a57;
-    }
-
-    html[data-theme="day"] .timer-wrap {
-      border-radius: 24px;
-      background:
-        linear-gradient(180deg, rgba(236,242,249,1), rgba(232,239,247,1)),
-        var(--surface-2);
-      border-color: rgba(19,34,58,0.08);
-    }
-
-    html[data-theme="day"] .timer {
-      color: #7ccf9a;
-      text-shadow: none;
-    }
-
-    html[data-theme="day"] .kicker {
-      color: #91cfa8;
-    }
-
-    html[data-theme="day"] .result-badge {
-      background: rgba(88,214,141,0.16);
-      border-color: rgba(57, 167, 103, 0.16);
-      color: #247a54;
-    }
-
-    html[data-theme="day"] .expires,
-    html[data-theme="day"] .badge-warn,
-    html[data-theme="day"] .badge-soon {
-      background: rgba(255, 244, 225, 0.98);
-      border-color: rgba(214, 162, 53, 0.18);
-      color: #a97810;
-    }
-
-    html[data-theme="day"] .badge-ok {
-      background: rgba(232, 248, 237, 0.98);
-      border-color: rgba(57, 167, 103, 0.16);
-      color: #2a7f59;
-    }
-
-    html[data-theme="day"] .badge-off {
-      background: rgba(255, 240, 245, 0.98);
-      border-color: rgba(214, 113, 148, 0.16);
-      color: #bd708d;
-    }
-
-    html[data-theme="day"] .history-filter {
-      background: rgba(255,255,255,0.82);
-      border-color: rgba(19,34,58,0.08);
-      color: #667085;
-    }
-
-    html[data-theme="day"] .history-filter.active {
-      color: #1f3a25;
-      background: linear-gradient(135deg, #9fe0af, #7bc990);
-      box-shadow: 0 12px 24px rgba(88,214,141,0.18);
-    }
-
-    html[data-theme="day"] .btn-secondary,
-    html[data-theme="day"] .btn-ghost,
-    html[data-theme="day"] .mini-btn {
-      background: rgba(255,255,255,0.84);
-      border-color: rgba(19,34,58,0.08);
-      color: #111827;
-    }
-
-    html[data-theme="day"] .code-box,
-    html[data-theme="day"] .result-stage {
-      background:
-        linear-gradient(180deg, rgba(246,250,245,0.98), rgba(240,248,243,0.98)),
-        rgba(255,255,255,0.92);
-      border-color: rgba(57, 167, 103, 0.12);
-    }
-
-    html[data-theme="day"] .result-stage__code {
-      background: linear-gradient(180deg, rgba(225,246,233,0.95), rgba(216,241,225,0.95));
-      border-color: rgba(57, 167, 103, 0.14);
-    }
-
-    html[data-theme="day"] .result-stage__status {
-      background: rgba(88,214,141,0.16);
-      border-color: rgba(57, 167, 103, 0.16);
-      color: #247a54;
-    }
-
-    html[data-theme="day"] .bottom-nav {
-      border-radius: 26px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.94), rgba(245,248,253,0.96)),
-        rgba(255,255,255,0.94);
-      border-color: rgba(19,34,58,0.08);
-      box-shadow:
-        0 18px 34px rgba(129, 104, 72, 0.14),
-        inset 0 1px 0 rgba(255,255,255,0.7);
-    }
-
-    html[data-theme="day"] .bottom-nav__item {
-      color: #6b7280;
-    }
-
-    html[data-theme="day"] .bottom-nav__item.active {
-      border: 1px solid rgba(64, 145, 92, 0.18);
-      color: #1f3a25;
-      background: linear-gradient(135deg, #9fe0af, #7bc990);
-      box-shadow: 0 12px 24px rgba(88,214,141,0.18);
-    }
-
-    html[data-theme="day"] .theme-toggle {
-      box-shadow: 0 10px 24px rgba(129, 104, 72, 0.10);
-      background: rgba(255,255,255,0.88);
-      border-color: rgba(19,34,58,0.08);
-      color: #111827;
-    }
-
-    .theme-toggle {
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      width: 40px;
-      height: 40px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.04);
-      color: var(--text);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 15;
-      box-shadow: var(--shadow-sm);
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .theme-toggle svg {
-      width: 18px;
-      height: 18px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    .hero-note {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 8px;
-      min-height: 30px;
-      padding: 0 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.035);
-      border: 1px solid var(--line);
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 700;
-    }
-
-    .hero-note__dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: var(--accent);
-      box-shadow: 0 0 10px rgba(88,214,141,0.28);
-    }
-
-    .result-stage {
-      margin-top: 12px;
-      border-radius: 22px;
-      border: 1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,0.028), rgba(255,255,255,0.012)), var(--surface-2);
-      overflow: hidden;
-    }
-
-    .result-stage__head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 14px 14px 10px;
-    }
-
-    .result-stage__eyebrow {
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--success-text);
-    }
-
-    .result-stage__status {
-      min-height: 28px;
-      padding: 0 10px;
-      border-radius: 999px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      font-weight: 800;
-      background: rgba(88,214,141,0.10);
-      border: 1px solid rgba(88,214,141,0.12);
-      color: var(--success-text);
-    }
-
-    .result-stage__body {
-      padding: 0 14px 14px;
-      display: grid;
-      gap: 12px;
-    }
-
-    .result-stage__code {
-      display: grid;
-      place-items: center;
-      min-height: 120px;
-      border-radius: 20px;
-      border: 1px solid rgba(88,214,141,0.12);
-      background: linear-gradient(180deg, rgba(88,214,141,0.12), rgba(53,191,118,0.06));
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
-    }
-
-    .result-stage__code-label {
-      font-size: 11px;
-      color: var(--muted);
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-
-    .result-stage__code-value {
-      font-size: clamp(28px, 6vw, 42px);
-      line-height: 1;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      color: var(--text);
-    }
-
-    .result-stage__meta {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .result-stage__meta-card {
-      border-radius: 16px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.025);
-      padding: 12px;
-    }
-
-    .result-stage__meta-label {
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-    }
-
-    .result-stage__meta-value {
-      color: var(--text);
-      font-size: 14px;
-      line-height: 1.45;
-      font-weight: 700;
-    }
-
-    .history-tabs {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-bottom: 14px;
-    }
-
-    .history-filter {
-      min-height: 40px;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.03);
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 800;
-    }
-
-    .history-filter.active {
-      color: #09130c;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      border-color: transparent;
-    }
-
-    .badge-soon {
-      color: #ffe0b0;
-      background: rgba(230,171,70,0.09);
-      border: 1px solid rgba(230,171,70,0.14);
-    }
-
-    @media (max-width: 560px) {
-      .result-stage__meta {
-        grid-template-columns: 1fr;
-      }
-      .theme-toggle {
-        top: 12px;
-        right: 12px;
-      }
     }
 
     * { box-sizing: border-box; }
@@ -442,8 +50,7 @@
       font-family: Inter, system-ui, -apple-system, sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at top center, rgba(88,214,141,0.04), transparent 20%),
-        radial-gradient(circle at 16% 16%, rgba(93,173,226,0.03), transparent 16%),
+        radial-gradient(circle at top center, rgba(99,215,154,0.04), transparent 22%),
         linear-gradient(180deg, var(--bg), var(--bg-2));
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
@@ -468,7 +75,7 @@
       border-radius: 34px;
       border: 1px solid var(--line);
       background:
-        linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.01)),
+        linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.008)),
         var(--surface);
       backdrop-filter: blur(18px);
       box-shadow: var(--shadow-xl);
@@ -482,16 +89,42 @@
       border-radius: inherit;
       pointer-events: none;
       background:
-        linear-gradient(145deg, rgba(88,214,141,0.02), transparent 32%, transparent 70%, rgba(93,173,226,0.016));
+        linear-gradient(145deg, rgba(99,215,154,0.02), transparent 38%, transparent 72%, rgba(99,215,154,0.015));
     }
 
     .hero {
       text-align: center;
-      padding: 2px 8px 8px;
+      padding: 2px 8px 4px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 32px;
+      padding: 0 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      border: 1px solid rgba(99,215,154,0.13);
+      color: #c8f1da;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 10px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: currentColor;
+      box-shadow: 0 0 10px currentColor;
     }
 
     .hero h1 {
-      margin: 0 0 4px;
+      margin: 0 0 6px;
       font-size: clamp(22px, 4vw, 30px);
       line-height: 1.04;
       letter-spacing: -0.05em;
@@ -514,7 +147,7 @@
       border-radius: 28px;
       border: 1px solid var(--line);
       background:
-        linear-gradient(180deg, rgba(255,255,255,0.024), rgba(255,255,255,0.012)),
+        linear-gradient(180deg, rgba(255,255,255,0.022), rgba(255,255,255,0.01)),
         var(--surface-solid);
       box-shadow: var(--shadow-lg);
     }
@@ -522,6 +155,10 @@
     .wheel-card {
       padding: 12px;
       margin-bottom: 2px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.022), rgba(255,255,255,0.01)),
+        radial-gradient(circle at top, rgba(99,215,154,0.03), transparent 35%),
+        var(--surface-solid);
     }
 
     .section { padding: 16px; }
@@ -557,7 +194,7 @@
       position: absolute;
       inset: 11%;
       border-radius: 999px;
-      background: radial-gradient(circle, rgba(88,214,141,0.045), transparent 60%);
+      background: radial-gradient(circle, rgba(99,215,154,0.04), transparent 60%);
       filter: blur(18px);
       pointer-events: none;
     }
@@ -573,7 +210,7 @@
       border-right: 10px solid transparent;
       border-top: 18px solid var(--danger);
       z-index: 7;
-      filter: drop-shadow(0 4px 10px rgba(255,122,146,.20));
+      filter: drop-shadow(0 4px 10px rgba(255,127,155,.20));
     }
 
     canvas {
@@ -582,7 +219,7 @@
       display: block;
       filter:
         drop-shadow(0 16px 30px rgba(0,0,0,.20))
-        drop-shadow(0 0 12px rgba(88,214,141,.025));
+        drop-shadow(0 0 12px rgba(99,215,154,.025));
     }
 
     .center-btn {
@@ -597,15 +234,15 @@
       color: #071008;
       background:
         radial-gradient(circle at 30% 25%, rgba(255,255,255,.34), transparent 28%),
-        linear-gradient(180deg, #94e9b8, #58d68d 56%, #35bf76);
+        linear-gradient(180deg, #9ae7bb, #63d79a 56%, #3fa56f);
       font-size: 10px;
       letter-spacing: 0.14em;
       font-weight: 800;
       cursor: pointer;
       z-index: 8;
       box-shadow:
-        0 0 0 5px rgba(88,214,141,0.03),
-        0 8px 18px rgba(53,191,118,.14),
+        0 0 0 5px rgba(99,215,154,0.03),
+        0 8px 18px rgba(63,165,111,.14),
         inset 0 1px 0 rgba(255,255,255,.30);
       transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
       animation: breathe 2.6s ease-in-out infinite;
@@ -625,14 +262,14 @@
     @keyframes breathe {
       0%, 100% {
         box-shadow:
-          0 0 0 5px rgba(88,214,141,0.03),
-          0 8px 18px rgba(53,191,118,.14),
+          0 0 0 5px rgba(99,215,154,0.03),
+          0 8px 18px rgba(63,165,111,.14),
           inset 0 1px 0 rgba(255,255,255,.30);
       }
       50% {
         box-shadow:
-          0 0 0 8px rgba(88,214,141,0.05),
-          0 12px 22px rgba(53,191,118,.18),
+          0 0 0 8px rgba(99,215,154,0.05),
+          0 12px 22px rgba(63,165,111,.18),
           inset 0 1px 0 rgba(255,255,255,.34);
       }
     }
@@ -661,14 +298,14 @@
 
     .status.error {
       color: #ffd3dc;
-      background: rgba(255,122,146,0.06);
-      border-color: rgba(255,122,146,0.12);
+      background: rgba(255,127,155,0.06);
+      border-color: rgba(255,127,155,0.12);
     }
 
     .status.success {
       color: #d8f9e5;
-      background: rgba(88,214,141,0.06);
-      border-color: rgba(88,214,141,0.12);
+      background: rgba(99,215,154,0.06);
+      border-color: rgba(99,215,154,0.12);
     }
 
     .result,
@@ -686,7 +323,7 @@
 
     .kicker {
       margin-bottom: 8px;
-      color: #c1f3d4;
+      color: #c8f1da;
       font-size: 11px;
       font-weight: 800;
       text-transform: uppercase;
@@ -708,6 +345,12 @@
       margin-bottom: 14px;
     }
 
+    .result-media,
+    .sheet-media,
+    .mini-card-media {
+      margin-bottom: 12px;
+    }
+
     .result-hero {
       display: grid;
       gap: 12px;
@@ -722,8 +365,8 @@
       min-height: 34px;
       padding: 0 12px;
       border-radius: 999px;
-      background: rgba(88,214,141,0.10);
-      border: 1px solid rgba(88,214,141,0.14);
+      background: rgba(99,215,154,0.10);
+      border: 1px solid rgba(99,215,154,0.14);
       color: var(--success-text);
       font-size: 12px;
       font-weight: 800;
@@ -757,9 +400,9 @@
       padding: 16px 14px;
       text-align: center;
       background:
-        linear-gradient(180deg, rgba(88,214,141,0.10), rgba(53,191,118,0.05)),
+        linear-gradient(180deg, rgba(99,215,154,0.10), rgba(63,165,111,0.05)),
         rgba(255,255,255,0.018);
-      border: 1px solid rgba(88,214,141,0.12);
+      border: 1px solid rgba(99,215,154,0.12);
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
     }
 
@@ -819,7 +462,7 @@
     .btn-primary {
       color: #071008;
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      box-shadow: 0 10px 22px rgba(53,191,118,0.14);
+      box-shadow: 0 10px 22px rgba(63,165,111,0.14);
     }
 
     .btn-secondary {
@@ -854,9 +497,9 @@
       line-height: 1;
       letter-spacing: -0.05em;
       font-weight: 800;
-      color: #c8f4d7;
+      color: #c8f1da;
       font-variant-numeric: tabular-nums;
-      text-shadow: 0 0 10px rgba(107, 168, 114, 0.10);
+      text-shadow: 0 0 10px rgba(99,215,154,0.08);
     }
 
     .last-prize {
@@ -883,6 +526,22 @@
       font-size: 13px;
       line-height: 1.55;
       color: var(--muted);
+    }
+
+    .prize-cover {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .prize-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     .bottom-nav {
@@ -931,7 +590,7 @@
       color: #09130c;
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
       border-color: transparent;
-      box-shadow: 0 10px 22px rgba(53,191,118,0.16);
+      box-shadow: 0 10px 22px rgba(63,165,111,0.16);
     }
 
     .bottom-nav__icon {
@@ -1008,6 +667,31 @@
       line-height: 1.6;
     }
 
+    .history-filters {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .history-filter {
+      min-height: 34px;
+      padding: 0 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .history-filter.active {
+      color: #09130c;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      border-color: transparent;
+    }
+
     .history-list {
       display: grid;
       gap: 12px;
@@ -1062,11 +746,12 @@
 
     .badge-ok {
       color: #c7f1d5;
-      background: rgba(88,214,141,0.10);
-      border: 1px solid rgba(88,214,141,0.14);
+      background: rgba(99,215,154,0.10);
+      border: 1px solid rgba(99,215,154,0.14);
     }
 
-    .badge-warn {
+    .badge-warn,
+    .badge-soon {
       color: #ffe0b0;
       background: rgba(230,171,70,0.09);
       border: 1px solid rgba(230,171,70,0.14);
@@ -1074,8 +759,8 @@
 
     .badge-off {
       color: #ffbfd0;
-      background: rgba(255,122,146,0.09);
-      border: 1px solid rgba(255,122,146,0.14);
+      background: rgba(255,127,155,0.09);
+      border: 1px solid rgba(255,127,155,0.14);
     }
 
     .empty-state {
@@ -1095,9 +780,9 @@
       border-radius: 16px;
       display: grid;
       place-items: center;
-      color: #c1f3d4;
-      background: rgba(107, 168, 114, 0.10);
-      border: 1px solid rgba(88,214,141,0.12);
+      color: #c8f1da;
+      background: rgba(99,215,154,0.08);
+      border: 1px solid rgba(99,215,154,0.12);
       font-size: 22px;
     }
 
@@ -1155,14 +840,30 @@
     .field input:focus,
     .field textarea:focus,
     .field select:focus {
-      border-color: rgba(88,214,141,.28);
-      box-shadow: 0 0 0 4px rgba(88,214,141,.08);
+      border-color: rgba(99,215,154,.28);
+      box-shadow: 0 0 0 4px rgba(99,215,154,.08);
     }
 
     .admin-status {
       color: var(--muted);
       font-size: 14px;
       line-height: 1.5;
+    }
+
+    .prize-image-preview {
+      margin: 4px 0 10px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      padding: 10px;
+    }
+
+    .prize-image-preview img {
+      width: 100%;
+      max-height: 180px;
+      object-fit: cover;
+      border-radius: 14px;
+      display: block;
     }
 
     .prize-list {
@@ -1178,12 +879,17 @@
       box-shadow: var(--shadow-sm);
     }
 
+    .prize-item-layout {
+      display: grid;
+      gap: 12px;
+    }
+
+    .prize-item-topline,
     .prize-top {
       display: flex;
       justify-content: space-between;
       gap: 10px;
       align-items: flex-start;
-      margin-bottom: 8px;
     }
 
     .prize-name {
@@ -1196,7 +902,7 @@
       color: var(--muted);
       font-size: 13px;
       line-height: 1.55;
-      margin-bottom: 12px;
+      margin-bottom: 0;
     }
 
     .prize-actions {
@@ -1294,7 +1000,7 @@
       border-radius: 16px;
       padding: 12px 14px;
       background: var(--danger-soft);
-      border: 1px solid rgba(255,122,146,0.12);
+      border: 1px solid rgba(255,127,155,0.12);
       color: #ffd6de;
       font-size: 13px;
       line-height: 1.5;
@@ -1351,91 +1057,17 @@
         min-height: 50px;
       }
     }
-  
-
-    html[data-theme="day"] .hero-card,
-    html[data-theme="day"] .wheel-card {
-      background:
-        linear-gradient(180deg, rgba(255,252,247,0.96), rgba(249,242,232,0.98));
-      border: 1px solid rgba(189, 166, 132, 0.28);
-      border-radius: 30px;
-    }
-
-    html[data-theme="day"] .wheel-card {
-      padding-top: 20px;
-      box-shadow: 0 20px 44px rgba(129, 104, 72, 0.14);
-    }
-
-    html[data-theme="day"] .wheel-wrap,
-    html[data-theme="day"] .wheel-box {
-      background: radial-gradient(circle at 50% 40%, rgba(255,255,255,0.95), rgba(247,239,227,0.88));
-      border-radius: 999px;
-    }
-
-    html[data-theme="day"] .kicker {
-      color: #8cae87;
-      letter-spacing: 0.08em;
-    }
-
-    html[data-theme="day"] .timer {
-      color: #6bb07d;
-      font-weight: 800;
-    }
-
-    html[data-theme="day"] .spin-btn,
-    html[data-theme="day"] .btn-primary {
-      background: linear-gradient(180deg, #9fe0af, #79c68f);
-      color: #17321f;
-      border: 1px solid rgba(64, 145, 92, 0.18);
-      box-shadow: 0 14px 28px rgba(95, 166, 114, 0.24);
-    }
-
-    html[data-theme="day"] .spin-btn::before,
-    html[data-theme="day"] .btn-primary::before {
-      content: "";
-      position: absolute;
-      inset: 1px;
-      border-radius: inherit;
-      background: linear-gradient(180deg, rgba(255,255,255,0.28), rgba(255,255,255,0));
-      pointer-events: none;
-    }
-
-    html[data-theme="day"] .status,
-    html[data-theme="day"] .result-stage,
-    html[data-theme="day"] .code-box {
-      border-radius: 22px;
-    }
-
-    html[data-theme="day"] .bottom-nav__item {
-      border-radius: 18px;
-    }
-
-    html[data-theme="day"] .bottom-nav__label {
-      font-weight: 700;
-    }
-
-    html[data-theme="day"] .top-note,
-    html[data-theme="day"] .attempt-note,
-    html[data-theme="day"] .hero-pill {
-      background: linear-gradient(180deg, rgba(255,249,240,0.96), rgba(245,236,221,0.96));
-      border: 1px solid rgba(189, 166, 132, 0.22);
-      color: #7f7467;
-      box-shadow: 0 12px 24px rgba(129, 104, 72, 0.08);
-    }
-
   </style>
 </head>
 <body>
   <div class="app">
     <div class="shell">
-      <button class="theme-toggle" id="themeToggle" aria-label="Сменить тему">
-        <svg id="themeToggleIcon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-      </button>
       <div id="offlineBanner" class="offline-banner">
         Нет соединения с сетью. Некоторые действия могут быть временно недоступны.
       </div>
 
       <section class="hero">
+        <div class="eyebrow">Daily spin</div>
         <h1>Колесо бонусов iGadget</h1>
         <p>Один запуск в день. Получайте скидку, бонус или подарок.</p>
       </section>
@@ -1466,29 +1098,13 @@
                 </div>
               </div>
 
-              <div class="result-stage">
-                <div class="result-stage__head">
-                  <div class="result-stage__eyebrow">Покажите код сотруднику</div>
-                  <div class="result-stage__status">Активен</div>
-                </div>
-                <div class="result-stage__body">
-                  <div class="result-stage__code">
-                    <div>
-                      <div class="result-stage__code-label">Ваш код</div>
-                      <div class="result-stage__code-value" id="resultCode">—</div>
-                    </div>
-                  </div>
-                  <div class="result-stage__meta">
-                    <div class="result-stage__meta-card">
-                      <div class="result-stage__meta-label">Срок действия</div>
-                      <div class="result-stage__meta-value" id="resultExpires">—</div>
-                    </div>
-                    <div class="result-stage__meta-card">
-                      <div class="result-stage__meta-label">Использование</div>
-                      <div class="result-stage__meta-value">Покажите код сотруднику магазина или кассиру</div>
-                    </div>
-                  </div>
-                </div>
+              <div class="code-box">
+                <div class="code-label">Ваш код</div>
+                <div class="code" id="resultCode">—</div>
+              </div>
+
+              <div style="text-align:center;">
+                <div class="expires" id="resultExpires">Срок действия</div>
               </div>
 
               <div class="actions">
@@ -1524,11 +1140,13 @@
           <div class="section-desc">
             Здесь отображаются ваши выигрыши со статусами: активен, погашен или скоро истечёт.
           </div>
-          <div class="history-tabs">
+
+          <div class="history-filters">
             <button class="history-filter active" data-filter="all">Все</button>
             <button class="history-filter" data-filter="active">Активные</button>
             <button class="history-filter" data-filter="used">Погашенные</button>
           </div>
+
           <div class="history-list" id="historyList"></div>
         </div>
       </div>
@@ -1587,6 +1205,8 @@
 
           <div class="admin-grid">
             <div class="section" style="padding:0; border:none; background:transparent; box-shadow:none;">
+              <div class="section-title" id="prizeFormTitle">Добавить приз</div>
+
               <div class="field">
                 <label for="newTitle">Название</label>
                 <input id="newTitle" type="text" placeholder="Например: Скидка 15% на аксессуары" />
@@ -1594,7 +1214,7 @@
 
               <div class="field">
                 <label for="newShort">Короткий текст</label>
-                <input id="newShort" type="text" placeholder="Например: PB -15%" />
+                <input id="newShort" type="text" placeholder="Например: -15%" />
               </div>
 
               <div class="field">
@@ -1603,8 +1223,17 @@
               </div>
 
               <div class="field">
+                <label for="newImageUrl">URL картинки приза</label>
+                <input id="newImageUrl" type="url" placeholder="https://site.com/prize-image.jpg" />
+              </div>
+
+              <div class="prize-image-preview" id="newImagePreviewWrap" style="display:none;">
+                <img id="newImagePreview" alt="Превью картинки приза" />
+              </div>
+
+              <div class="field">
                 <label for="newWeight">Вес</label>
-                <input id="newWeight" type="number" min="1" placeholder="Например: 10" />
+                <input id="newWeight" type="number" min="1" step="0.1" placeholder="Например: 10" />
               </div>
 
               <div class="field">
@@ -1615,8 +1244,11 @@
                 </select>
               </div>
 
+              <input id="editingPrizeId" type="hidden" value="" />
+
               <div class="actions">
-                <button class="btn btn-primary" id="addPrizeBtn">Добавить приз</button>
+                <button class="btn btn-primary" id="savePrizeBtn">Сохранить приз</button>
+                <button class="btn btn-secondary" id="cancelEditPrizeBtn" type="button">Сбросить</button>
               </div>
             </div>
 
@@ -1713,291 +1345,250 @@
   </div>
 
   <script>
-    const tg = window.Telegram.WebApp;
-    tg.ready();
-    tg.expand();
+    const tg = window.Telegram.WebApp
+    tg.ready()
+    tg.expand()
 
-    const API_BASE = "https://telegram-wheel-bot-production-764c.up.railway.app";
-    const BUILD_VERSION = "v6-4-4-force-inline-probability";
+    const API_BASE = "https://telegram-wheel-bot-production-764c.up.railway.app"
+    const BUILD_VERSION = "v7-0-admin-image-clean-wheel"
 
     const sounds = {
       tick: new Audio("https://cdn.freesound.org/previews/240/240776_4107740-lq.mp3"),
       win: new Audio("https://cdn.freesound.org/previews/320/320655_5260872-lq.mp3"),
       error: new Audio("https://cdn.freesound.org/previews/331/331912_3248244-lq.mp3")
-    };
-
-    sounds.tick.volume = 0.12;
-    sounds.win.volume = 0.36;
-    sounds.error.volume = 0.28;
-
-    let soundUnlocked = false;
-    let tickInterval = null;
-    let prizes = [];
-    let currentRotation = 0;
-    let isSpinning = false;
-    let countdownInterval = null;
-    let historyCache = [];
-    let currentView = "wheel";
-    let currentPrizePayload = null;
-    let overlayOpen = false;
-    let historyFilter = "all";
-    let themeMode = "auto";
-    const imageCache = new Map();
-
-    function getPrizeImage(prize) {
-      if (!prize || !prize.image_url) return null;
-      if (imageCache.has(prize.image_url)) return imageCache.get(prize.image_url);
-      const img = new Image();
-      img.src = prize.image_url;
-      img.crossOrigin = "anonymous";
-      imageCache.set(prize.image_url, img);
-      return img;
-    }
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    const canvas = document.getElementById("wheel");
-    const ctx = canvas.getContext("2d");
-    const spinBtn = document.getElementById("spinBtn");
-    const statusEl = document.getElementById("status");
-
-    const resultBox = document.getElementById("resultBox");
-    const resultPrize = document.getElementById("resultPrize");
-    const resultDesc = document.getElementById("resultDesc");
-    const resultCode = document.getElementById("resultCode");
-    const resultExpires = document.getElementById("resultExpires");
-    const copyBtn = document.getElementById("copyBtn");
-    const closeBtn = document.getElementById("closeBtn");
-    const detailsBtn = document.getElementById("detailsBtn");
-
-    const cooldownBox = document.getElementById("cooldownBox");
-    const cooldownText = document.getElementById("cooldownText");
-    const timerEl = document.getElementById("timer");
-    const lastPrizeWrap = document.getElementById("lastPrizeWrap");
-
-    const tabWheel = document.getElementById("tabWheel");
-    const tabHistory = document.getElementById("tabHistory");
-    const tabFaq = document.getElementById("tabFaq");
-    const tabAdmin = document.getElementById("tabAdmin");
-
-    const panelWheel = document.getElementById("panelWheel");
-    const panelHistory = document.getElementById("panelHistory");
-    const panelFaq = document.getElementById("panelFaq");
-    const panelAdmin = document.getElementById("panelAdmin");
-
-    const historyList = document.getElementById("historyList");
-    const offlineBanner = document.getElementById("offlineBanner");
-
-    const adminBox = document.getElementById("adminBox");
-    const adminStatus = document.getElementById("adminStatus");
-    const adminPrizeList = document.getElementById("adminPrizeList");
-
-    const newTitle = document.getElementById("newTitle");
-    const newShort = document.getElementById("newShort");
-    const newDesc = document.getElementById("newDesc");
-    const newWeight = document.getElementById("newWeight");
-    const newActive = document.getElementById("newActive");
-    const addPrizeBtn = document.getElementById("addPrizeBtn");
-
-    const codeActionInput = document.getElementById("codeActionInput");
-    const checkCodeBtn = document.getElementById("checkCodeBtn");
-    const redeemCodeBtn = document.getElementById("redeemCodeBtn");
-    const codeActionStatus = document.getElementById("codeActionStatus");
-
-    const detailsOverlay = document.getElementById("detailsOverlay");
-    const sheetTitle = document.getElementById("sheetTitle");
-    const sheetSub = document.getElementById("sheetSub");
-    const sheetCode = document.getElementById("sheetCode");
-    const sheetDesc = document.getElementById("sheetDesc");
-    const sheetExpires = document.getElementById("sheetExpires");
-    const sheetCopyBtn = document.getElementById("sheetCopyBtn");
-    const sheetCloseBtn = document.getElementById("sheetCloseBtn");
-    const themeToggle = document.getElementById("themeToggle");
-    const themeToggleIcon = document.getElementById("themeToggleIcon");
-    const historyFilters = Array.from(document.querySelectorAll(".history-filter"));
-
-
-    function getAutoThemeMode() {
-      const hour = new Date(new Date().toLocaleString("en-US", { timeZone: "Europe/Moscow" })).getHours();
-      return hour >= 7 && hour < 21 ? "day" : "night";
     }
 
-    function renderThemeToggleIcon(mode) {
-      if (!themeToggleIcon) return;
-      if (mode === "day") {
-        themeToggleIcon.innerHTML = '<circle cx="12" cy="12" r="4"></circle><path d="M12 2v2.5M12 19.5V22M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M2 12h2.5M19.5 12H22M4.93 19.07l1.77-1.77M17.3 6.7l1.77-1.77"></path>';
-      } else {
-        themeToggleIcon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
-      }
-    }
+    sounds.tick.volume = 0.12
+    sounds.win.volume = 0.36
+    sounds.error.volume = 0.28
 
-    function applyThemeMode(mode) {
-      const effective = mode === "auto" ? getAutoThemeMode() : mode;
-      document.documentElement.setAttribute("data-theme", effective === "day" ? "day" : "night");
-      renderThemeToggleIcon(effective);
-      drawWheel(prizes, currentRotation);
-    }
+    let soundUnlocked = false
+    let tickInterval = null
+    let prizes = []
+    let currentRotation = 0
+    let isSpinning = false
+    let countdownInterval = null
+    let historyCache = []
+    let currentView = "wheel"
+    let currentPrizePayload = null
+    let overlayOpen = false
+    let historyFilter = "all"
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
 
-    function cycleThemeMode() {
-      themeMode = themeMode === "auto" ? "day" : themeMode === "day" ? "night" : "auto";
-      applyThemeMode(themeMode);
-      safeHapticSelection();
-    }
+    const canvas = document.getElementById("wheel")
+    const ctx = canvas.getContext("2d")
+    const spinBtn = document.getElementById("spinBtn")
+    const statusEl = document.getElementById("status")
 
-    function isExpiringSoon(textValue) {
-      if (!textValue) return false;
-      const text = String(textValue).toLowerCase();
-      return text.includes("сегодня") || text.includes("завтра") || text.includes("1 д") || text.includes("2 д");
-    }
+    const resultBox = document.getElementById("resultBox")
+    const resultPrize = document.getElementById("resultPrize")
+    const resultDesc = document.getElementById("resultDesc")
+    const resultCode = document.getElementById("resultCode")
+    const resultExpires = document.getElementById("resultExpires")
+    const copyBtn = document.getElementById("copyBtn")
+    const closeBtn = document.getElementById("closeBtn")
+    const detailsBtn = document.getElementById("detailsBtn")
 
-    function getHistoryBadge(item) {
-      if (item.redeemed) return { cls: "badge-off", text: "Погашен" };
-      const expiresText = item.expires_at_text || item.expires_at || "";
-      if (isExpiringSoon(expiresText)) return { cls: "badge-soon", text: "Скоро истечёт" };
-      return { cls: "badge-ok", text: "Активен" };
+    const cooldownBox = document.getElementById("cooldownBox")
+    const cooldownText = document.getElementById("cooldownText")
+    const timerEl = document.getElementById("timer")
+    const lastPrizeWrap = document.getElementById("lastPrizeWrap")
+
+    const tabWheel = document.getElementById("tabWheel")
+    const tabHistory = document.getElementById("tabHistory")
+    const tabFaq = document.getElementById("tabFaq")
+    const tabAdmin = document.getElementById("tabAdmin")
+
+    const panelWheel = document.getElementById("panelWheel")
+    const panelHistory = document.getElementById("panelHistory")
+    const panelFaq = document.getElementById("panelFaq")
+    const panelAdmin = document.getElementById("panelAdmin")
+
+    const historyList = document.getElementById("historyList")
+    const offlineBanner = document.getElementById("offlineBanner")
+    const historyFilters = Array.from(document.querySelectorAll(".history-filter"))
+
+    const adminBox = document.getElementById("adminBox")
+    const adminStatus = document.getElementById("adminStatus")
+    const adminPrizeList = document.getElementById("adminPrizeList")
+
+    const newTitle = document.getElementById("newTitle")
+    const newShort = document.getElementById("newShort")
+    const newDesc = document.getElementById("newDesc")
+    const newImageUrl = document.getElementById("newImageUrl")
+    const newImagePreviewWrap = document.getElementById("newImagePreviewWrap")
+    const newImagePreview = document.getElementById("newImagePreview")
+    const newWeight = document.getElementById("newWeight")
+    const newActive = document.getElementById("newActive")
+    const savePrizeBtn = document.getElementById("savePrizeBtn")
+    const cancelEditPrizeBtn = document.getElementById("cancelEditPrizeBtn")
+    const editingPrizeId = document.getElementById("editingPrizeId")
+    const prizeFormTitle = document.getElementById("prizeFormTitle")
+
+    const codeActionInput = document.getElementById("codeActionInput")
+    const checkCodeBtn = document.getElementById("checkCodeBtn")
+    const redeemCodeBtn = document.getElementById("redeemCodeBtn")
+    const codeActionStatus = document.getElementById("codeActionStatus")
+
+    const detailsOverlay = document.getElementById("detailsOverlay")
+    const sheetTitle = document.getElementById("sheetTitle")
+    const sheetSub = document.getElementById("sheetSub")
+    const sheetCode = document.getElementById("sheetCode")
+    const sheetDesc = document.getElementById("sheetDesc")
+    const sheetExpires = document.getElementById("sheetExpires")
+    const sheetCopyBtn = document.getElementById("sheetCopyBtn")
+    const sheetCloseBtn = document.getElementById("sheetCloseBtn")
+
+    function escapeHtml(value = "") {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;")
     }
 
     function safeHapticSelection() {
-      try { tg.HapticFeedback?.selectionChanged(); } catch (e) {}
+      try { tg.HapticFeedback?.selectionChanged() } catch (e) {}
     }
 
     function safeHapticImpact(style = "light") {
-      try { tg.HapticFeedback?.impactOccurred(style); } catch (e) {}
+      try { tg.HapticFeedback?.impactOccurred(style) } catch (e) {}
     }
 
     function safeHapticNotification(type = "success") {
-      try { tg.HapticFeedback?.notificationOccurred(type); } catch (e) {}
+      try { tg.HapticFeedback?.notificationOccurred(type) } catch (e) {}
     }
 
     async function unlockSounds() {
-      if (soundUnlocked) return;
-      soundUnlocked = true;
+      if (soundUnlocked) return
+      soundUnlocked = true
       try {
-        sounds.tick.muted = true;
-        await sounds.tick.play();
-        sounds.tick.pause();
-        sounds.tick.currentTime = 0;
-        sounds.tick.muted = false;
+        sounds.tick.muted = true
+        await sounds.tick.play()
+        sounds.tick.pause()
+        sounds.tick.currentTime = 0
+        sounds.tick.muted = false
       } catch (e) {}
     }
 
     function playSound(name) {
-      const s = sounds[name];
-      if (!s) return;
+      const s = sounds[name]
+      if (!s) return
       try {
-        s.pause();
-        s.currentTime = 0;
-        s.play().catch(() => {});
+        s.pause()
+        s.currentTime = 0
+        s.play().catch(() => {})
       } catch (e) {}
     }
 
     function startTickLoop() {
-      if (reduceMotion) return;
-      stopTickLoop();
-      tickInterval = setInterval(() => playSound("tick"), 280);
+      if (reduceMotion) return
+      stopTickLoop()
+      tickInterval = setInterval(() => playSound("tick"), 280)
     }
 
     function stopTickLoop() {
       if (tickInterval) {
-        clearInterval(tickInterval);
-        tickInterval = null;
+        clearInterval(tickInterval)
+        tickInterval = null
       }
     }
 
     function setStatus(text, type = "") {
-      statusEl.textContent = text;
-      statusEl.classList.remove("error", "success");
-      if (type) statusEl.classList.add(type);
+      statusEl.textContent = text
+      statusEl.classList.remove("error", "success")
+      if (type) statusEl.classList.add(type)
     }
 
     function updateOfflineState() {
-      const offline = !navigator.onLine;
-      offlineBanner.classList.toggle("show", offline);
-      if (offline) {
-        setStatus("Нет соединения с интернетом. Попробуйте позже.", "error");
-      }
+      const offline = !navigator.onLine
+      offlineBanner.classList.toggle("show", offline)
+      if (offline) setStatus("Нет соединения с интернетом. Попробуйте позже.", "error")
     }
 
-    window.addEventListener("online", updateOfflineState);
-    window.addEventListener("offline", updateOfflineState);
+    window.addEventListener("online", updateOfflineState)
+    window.addEventListener("offline", updateOfflineState)
 
     function updateSafeAreaFallback() {
-      const stableHeight = tg.viewportStableHeight || window.innerHeight;
-      const diff = Math.max(0, window.innerHeight - stableHeight);
-      document.documentElement.style.setProperty("--tg-safe-area-inset-bottom", diff + "px");
+      const stableHeight = tg.viewportStableHeight || window.innerHeight
+      const diff = Math.max(0, window.innerHeight - stableHeight)
+      document.documentElement.style.setProperty("--tg-safe-area-inset-bottom", diff + "px")
     }
 
     function applyTelegramTheme() {
-      const theme = tg.themeParams || {};
-      if (theme.bg_color) tg.setBackgroundColor?.(theme.bg_color);
-      if (theme.header_bg_color) tg.setHeaderColor?.(theme.header_bg_color);
-      updateSafeAreaFallback();
-      applyThemeMode(themeMode);
+      const theme = tg.themeParams || {}
+      if (theme.bg_color) tg.setBackgroundColor?.(theme.bg_color)
+      if (theme.header_bg_color) tg.setHeaderColor?.(theme.header_bg_color)
+      updateSafeAreaFallback()
+      drawWheel(prizes, currentRotation)
     }
 
     function updateBackButton() {
       try {
         if (overlayOpen) {
-          tg.BackButton.show();
-          return;
+          tg.BackButton.show()
+          return
         }
-        if (currentView === "wheel") {
-          tg.BackButton.hide();
-        } else {
-          tg.BackButton.show();
-        }
+        if (currentView === "wheel") tg.BackButton.hide()
+        else tg.BackButton.show()
       } catch (e) {}
     }
 
     function onTelegramBack() {
       if (overlayOpen) {
-        closeDetailsOverlay();
-        return;
+        closeDetailsOverlay()
+        return
       }
-      if (currentView !== "wheel") {
-        switchTab("wheel");
-      }
+      if (currentView !== "wheel") switchTab("wheel")
     }
 
     try {
-      tg.onEvent("themeChanged", applyTelegramTheme);
-      tg.onEvent("viewportChanged", updateSafeAreaFallback);
-      tg.BackButton.onClick(onTelegramBack);
+      tg.onEvent("themeChanged", applyTelegramTheme)
+      tg.onEvent("viewportChanged", updateSafeAreaFallback)
+      tg.BackButton.onClick(onTelegramBack)
     } catch (e) {}
 
-    window.addEventListener("resize", updateSafeAreaFallback);
+    window.addEventListener("resize", updateSafeAreaFallback)
 
     function switchTab(name) {
-      currentView = name;
-      safeHapticSelection();
+      currentView = name
+      safeHapticSelection()
 
-      tabWheel.classList.toggle("active", name === "wheel");
-      tabHistory.classList.toggle("active", name === "history");
-      tabFaq.classList.toggle("active", name === "faq");
-      tabAdmin.classList.toggle("active", name === "admin");
+      tabWheel.classList.toggle("active", name === "wheel")
+      tabHistory.classList.toggle("active", name === "history")
+      tabFaq.classList.toggle("active", name === "faq")
+      tabAdmin.classList.toggle("active", name === "admin")
 
-      panelWheel.classList.toggle("active", name === "wheel");
-      panelHistory.classList.toggle("active", name === "history");
-      panelFaq.classList.toggle("active", name === "faq");
-      panelAdmin.classList.toggle("active", name === "admin");
+      panelWheel.classList.toggle("active", name === "wheel")
+      panelHistory.classList.toggle("active", name === "history")
+      panelFaq.classList.toggle("active", name === "faq")
+      panelAdmin.classList.toggle("active", name === "admin")
 
-      updateBackButton();
+      updateBackButton()
 
-      if (name === "history") {
-        loadHistory();
-      }
+      if (name === "history") loadHistory()
     }
 
-    tabWheel.addEventListener("click", () => switchTab("wheel"));
-    tabHistory.addEventListener("click", () => switchTab("history"));
-    tabFaq.addEventListener("click", () => switchTab("faq"));
-    tabAdmin.addEventListener("click", () => switchTab("admin"));
+    tabWheel.addEventListener("click", () => switchTab("wheel"))
+    tabHistory.addEventListener("click", () => switchTab("history"))
+    tabFaq.addEventListener("click", () => switchTab("faq"))
+    tabAdmin.addEventListener("click", () => switchTab("admin"))
 
-    function getSectorPalette() {
-      return ["#31be73", "#ee718a", "#5f9ff1", "#d9a043", "#7c68de", "#a36fd0"];
+    function getSectorPalette(count = 1) {
+      const palette = [
+        ["1f6f54", "174e3d"],
+        ["245f4a", "1a4637"],
+        ["2b7d5f", "1d5743"],
+        ["355c4f", "25443b"],
+        ["2f6b56", "204b3c"],
+        ["3f7f68", "295744"]
+      ]
+      return Array.from({ length: count }, (_, i) => palette[i % palette.length])
     }
 
     function fitLabel(label) {
-      if (!label) return ["Приз"];
+      if (!label) return ["Приз"]
 
       const cleaned = String(label)
         .replace(/\s+/g, " ")
@@ -2007,162 +1598,155 @@
         .replace(/бесплатная доставка/gi, "доставка")
         .replace(/доставка бесплатно/gi, "доставка")
         .replace(/на /gi, "")
-        .trim();
+        .trim()
 
-      const words = cleaned.split(" ").filter(Boolean);
-      if (!words.length) return ["Приз"];
+      const words = cleaned.split(" ").filter(Boolean)
+      if (!words.length) return ["Приз"]
 
-      const lines = [];
-      let current = "";
+      const lines = []
+      let current = ""
 
       for (const word of words) {
-        const test = current ? `${current} ${word}` : word;
-        if (test.length <= 9) {
-          current = test;
-        } else {
-          if (current) lines.push(current);
-          current = word;
+        const test = current ? `${current} ${word}` : word
+        if (test.length <= 9) current = test
+        else {
+          if (current) lines.push(current)
+          current = word
         }
       }
 
-      if (current) lines.push(current);
-      return lines.slice(0, 3);
+      if (current) lines.push(current)
+      return lines.slice(0, 3)
     }
 
     function drawTextInSector(ctx, lines, x, y, maxWidth, baseFont = 12) {
-      let fontSize = baseFont;
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
+      let fontSize = baseFont
+      ctx.textAlign = "center"
+      ctx.textBaseline = "middle"
 
-      while (fontSize >= 10) {
-        ctx.font = `800 ${fontSize}px Inter, sans-serif`;
-        const widest = Math.max(...lines.map(line => ctx.measureText(line).width));
-        if (widest <= maxWidth) break;
-        fontSize -= 0.5;
+      while (fontSize > 10) {
+        ctx.font = `800 ${fontSize}px Inter, sans-serif`
+        const widest = Math.max(...lines.map(line => ctx.measureText(line).width))
+        if (widest <= maxWidth) break
+        fontSize -= 0.5
       }
 
-      const lineHeight = fontSize + 1.5;
-      const startY = y - ((lines.length - 1) * lineHeight) / 2;
+      const lineHeight = fontSize * 1.5
+      const startY = y - ((lines.length - 1) * lineHeight) / 2
 
       lines.forEach((line, i) => {
-        ctx.strokeStyle = "rgba(8,11,16,0.16)";
-        ctx.lineWidth = 3;
-        ctx.strokeText(line, x, startY + i * lineHeight);
-        ctx.fillStyle = "#ffffff";
-        ctx.fillText(line, x, startY + i * lineHeight);
-      });
-    }
-
-    function shadeColor(hex, percent) {
-      const num = parseInt(hex.replace("#", ""), 16);
-      const amt = Math.round(2.55 * percent);
-      const r = Math.min(255, Math.max(0, (num >> 16) + amt));
-      const g = Math.min(255, Math.max(0, ((num >> 8) & 0x00ff) + amt));
-      const b = Math.min(255, Math.max(0, (num & 0x0000ff) + amt));
-      return "#" + (0x1000000 + r * 0x10000 + g * 0x100 + b).toString(16).slice(1);
+        ctx.strokeStyle = "rgba(8,11,16,0.16)"
+        ctx.lineWidth = 3
+        ctx.strokeText(line, x, startY + i * lineHeight)
+        ctx.fillStyle = "#ffffff"
+        ctx.fillText(line, x, startY + i * lineHeight)
+      })
     }
 
     function drawWheel(items, rotationDeg = 0) {
-      const size = canvas.width;
-      const center = size / 2;
-      const radius = center - 18;
+      const size = canvas.width
+      const center = size / 2
+      const radius = center - 18
 
-      ctx.clearRect(0, 0, size, size);
+      ctx.clearRect(0, 0, size, size)
 
-      ctx.beginPath();
-      ctx.arc(center, center, radius + 10, 0, Math.PI * 2);
-      ctx.fillStyle = "#0b1017";
-      ctx.fill();
+      const bg = ctx.createRadialGradient(center, center, 24, center, center, radius + 8)
+      bg.addColorStop(0, "#111922")
+      bg.addColorStop(1, "#0a1016")
+      ctx.beginPath()
+      ctx.arc(center, center, radius + 10, 0, Math.PI * 2)
+      ctx.fillStyle = bg
+      ctx.fill()
 
-      ctx.beginPath();
-      ctx.arc(center, center, radius + 4, 0, Math.PI * 2);
-      ctx.fillStyle = "#141c28";
-      ctx.fill();
+      ctx.beginPath()
+      ctx.arc(center, center, radius + 4, 0, Math.PI * 2)
+      ctx.fillStyle = "#141d27"
+      ctx.fill()
 
       if (!items.length) {
-        ctx.beginPath();
-        ctx.arc(center, center, radius, 0, Math.PI * 2);
-        ctx.fillStyle = "#293347";
-        ctx.fill();
-        return;
+        ctx.beginPath()
+        ctx.arc(center, center, radius, 0, Math.PI * 2)
+        ctx.fillStyle = "#24313f"
+        ctx.fill()
+        return
       }
 
-      const total = items.length;
-      const arc = (Math.PI * 2) / total;
-      const rotationRad = rotationDeg * Math.PI / 180;
-      const palette = getSectorPalette();
+      const total = items.length
+      const arc = (Math.PI * 2) / total
+      const rotationRad = (rotationDeg * Math.PI) / 180
+      const palette = getSectorPalette(total)
 
       for (let i = 0; i < total; i++) {
-        const start = -Math.PI / 2 + rotationRad + i * arc;
-        const end = start + arc;
-        const mid = start + arc / 2;
-        const color = palette[i % palette.length];
+        const start = -Math.PI / 2 + rotationRad + i * arc
+        const end = start + arc
+        const mid = start + arc / 2
+        const [c1, c2] = palette[i]
 
         const grad = ctx.createLinearGradient(
-          center + Math.cos(start) * 28,
-          center + Math.sin(start) * 28,
+          center + Math.cos(start) * 18,
+          center + Math.sin(start) * 18,
           center + Math.cos(end) * radius,
           center + Math.sin(end) * radius
-        );
-        grad.addColorStop(0, shadeColor(color, -8));
-        grad.addColorStop(1, shadeColor(color, 1));
+        )
+        grad.addColorStop(0, `#${c1}`)
+        grad.addColorStop(1, `#${c2}`)
 
-        ctx.beginPath();
-        ctx.moveTo(center, center);
-        ctx.arc(center, center, radius, start, end);
-        ctx.closePath();
-        ctx.fillStyle = grad;
-        ctx.fill();
+        ctx.beginPath()
+        ctx.moveTo(center, center)
+        ctx.arc(center, center, radius, start, end)
+        ctx.closePath()
+        ctx.fillStyle = grad
+        ctx.fill()
 
-        ctx.beginPath();
-        ctx.moveTo(center, center);
-        ctx.arc(center, center, radius, start, end);
-        ctx.closePath();
-        ctx.lineWidth = 1.8;
-        ctx.strokeStyle = "rgba(7,10,16,0.32)";
-        ctx.stroke();
+        ctx.beginPath()
+        ctx.moveTo(center, center)
+        ctx.arc(center, center, radius, start, end)
+        ctx.closePath()
+        ctx.lineWidth = 1.4
+        ctx.strokeStyle = "rgba(255,255,255,0.05)"
+        ctx.stroke()
 
-        ctx.save();
-        ctx.translate(center, center);
-        ctx.rotate(mid);
+        ctx.save()
+        ctx.translate(center, center)
+        ctx.rotate(mid)
 
-        const textLines = fitLabel(items[i].short || items[i].title || "Приз");
-        const textRadius = radius - 70;
-        const sectorWidth = Math.max(60, radius * arc * 0.64);
+        const textLines = fitLabel(items[i].short || items[i].title)
+        const textRadius = radius - 72
+        const sectorWidth = Math.max(60, radius * arc * 0.62)
+        drawTextInSector(ctx, textLines, textRadius, 0, sectorWidth, 12)
 
-        drawTextInSector(ctx, textLines, textRadius, 0, sectorWidth, 12);
-        ctx.restore();
+        ctx.restore()
       }
 
-      ctx.beginPath();
-      ctx.arc(center, center, radius, 0, Math.PI * 2);
-      ctx.lineWidth = 4;
-      ctx.strokeStyle = "rgba(255,255,255,0.11)";
-      ctx.stroke();
+      ctx.beginPath()
+      ctx.arc(center, center, radius, 0, Math.PI * 2)
+      ctx.lineWidth = 4
+      ctx.strokeStyle = "rgba(255,255,255,0.09)"
+      ctx.stroke()
 
-      const ring = ctx.createRadialGradient(center, center, 24, center, center, 54);
-      ring.addColorStop(0, "#1b2940");
-      ring.addColorStop(1, "#111926");
-      ctx.beginPath();
-      ctx.arc(center, center, 50, 0, Math.PI * 2);
-      ctx.fillStyle = ring;
-      ctx.fill();
+      const ring = ctx.createRadialGradient(center, center, 24, center, center, 56)
+      ring.addColorStop(0, "#244839")
+      ring.addColorStop(1, "#101820")
+      ctx.beginPath()
+      ctx.arc(center, center, 50, 0, Math.PI * 2)
+      ctx.fillStyle = ring
+      ctx.fill()
 
-      ctx.beginPath();
-      ctx.arc(center, center, 38, 0, Math.PI * 2);
-      ctx.fillStyle = "#172334";
-      ctx.fill();
+      ctx.beginPath()
+      ctx.arc(center, center, 38, 0, Math.PI * 2)
+      ctx.fillStyle = "#16232c"
+      ctx.fill()
 
-      ctx.beginPath();
-      ctx.arc(center, center, 38, 0, Math.PI * 2);
-      ctx.lineWidth = 2;
-      ctx.strokeStyle = "rgba(255,255,255,0.07)";
-      ctx.stroke();
+      ctx.beginPath()
+      ctx.arc(center, center, 38, 0, Math.PI * 2)
+      ctx.lineWidth = 2
+      ctx.strokeStyle = "rgba(255,255,255,0.08)"
+      ctx.stroke()
 
-      ctx.fillStyle = "rgba(255,255,255,0.09)";
-      ctx.beginPath();
-      ctx.arc(center - 9, center - 11, 10, 0, Math.PI * 2);
-      ctx.fill();
+      ctx.fillStyle = "rgba(255,255,255,0.08)"
+      ctx.beginPath()
+      ctx.arc(center - 9, center - 11, 10, 0, Math.PI * 2)
+      ctx.fill()
     }
 
     async function apiPost(path, body) {
@@ -2170,671 +1754,706 @@
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body)
-      });
-      return await res.json();
+      })
+      return await res.json()
+    }
+
+    function isValidHttpUrl(value = "") {
+      try {
+        const url = new URL(String(value).trim())
+        return url.protocol === "http:" || url.protocol === "https:"
+      } catch (e) {
+        return false
+      }
+    }
+
+    function updatePrizeImagePreview() {
+      const value = (newImageUrl?.value || "").trim()
+      if (!value || !isValidHttpUrl(value)) {
+        if (newImagePreviewWrap) newImagePreviewWrap.style.display = "none"
+        if (newImagePreview) newImagePreview.removeAttribute("src")
+        return
+      }
+      if (newImagePreview) newImagePreview.src = value
+      if (newImagePreviewWrap) newImagePreviewWrap.style.display = "block"
+    }
+
+    function resetPrizeForm() {
+      editingPrizeId.value = ""
+      prizeFormTitle.textContent = "Добавить приз"
+      newTitle.value = ""
+      newShort.value = ""
+      newDesc.value = ""
+      newImageUrl.value = ""
+      newWeight.value = ""
+      newActive.value = "true"
+      updatePrizeImagePreview()
+    }
+
+    function fillPrizeForm(item) {
+      editingPrizeId.value = String(item.id || "")
+      prizeFormTitle.textContent = `Редактирование приза #${item.id}`
+      newTitle.value = item.title || ""
+      newShort.value = item.short || ""
+      newDesc.value = item.description || ""
+      newImageUrl.value = item.image_url || ""
+      newWeight.value = String(item.weight ?? "")
+      newActive.value = item.active ? "true" : "false"
+      updatePrizeImagePreview()
+      panelAdmin.scrollIntoView({ behavior: "smooth", block: "start" })
     }
 
     async function loadPrizes() {
-      const res = await fetch(`${API_BASE}/prizes?v=${BUILD_VERSION}`);
-      const data = await res.json();
+      const res = await fetch(`${API_BASE}/prizes?v=${BUILD_VERSION}`)
+      const data = await res.json()
+      if (!data.ok || !data.items?.length) throw new Error("Нет призов")
+      prizes = data.items
+      drawWheel(prizes, currentRotation)
+    }
 
-      if (!data.ok || !data.items?.length) {
-        throw new Error("Не удалось загрузить призы");
-      }
+    function isExpiringSoon(textValue) {
+      if (!textValue) return false
+      const text = String(textValue).toLowerCase()
+      return text.includes("сегодня") || text.includes("завтра") || text.includes("1") || text.includes("2")
+    }
 
-      prizes = data.items;
-      drawWheel(prizes, currentRotation);
+    function getHistoryBadge(item) {
+      if (item.redeemed) return { cls: "badge-off", text: "Погашен" }
+      const expiresText = item.expires_at_text || item.expires_at
+      if (isExpiringSoon(expiresText)) return { cls: "badge-soon", text: "Скоро истечёт" }
+      return { cls: "badge-ok", text: "Активен" }
     }
 
     async function loadHistory(force = false) {
       if (historyCache.length && !force) {
-        renderHistory(historyCache);
-        return;
+        renderHistory(historyCache)
+        return
       }
 
       historyList.innerHTML = `
         <div class="empty-state">
-          <div class="empty-icon">…</div>
+          <div class="empty-icon">⏳</div>
           <div class="empty-title">Загружаем историю</div>
-          <div class="empty-text">Подождите немного, получаем ваши последние результаты.</div>
+          <div class="empty-text">Подождите пару секунд.</div>
         </div>
-      `;
+      `
 
       try {
-        const data = await apiPost("/history", {
-          init_data: tg.initData || ""
-        });
-
+        const data = await apiPost("/history", { init_data: tg.initData })
         if (!data.ok || !Array.isArray(data.items)) {
-          renderHistory([]);
-          return;
+          renderHistory([])
+          return
         }
-
-        historyCache = data.items;
-        renderHistory(historyCache);
+        historyCache = data.items
+        renderHistory(historyCache)
       } catch (e) {
-        renderHistory([]);
+        renderHistory([])
       }
     }
 
     function renderHistory(items) {
-      historyList.innerHTML = "";
+      historyList.innerHTML = ""
 
-      const filtered = items.filter((item) => {
-        if (historyFilter === "active") return !item.redeemed;
-        if (historyFilter === "used") return !!item.redeemed;
-        return true;
-      });
+      const filtered = items.filter(item => {
+        if (historyFilter === "active") return !item.redeemed
+        if (historyFilter === "used") return !!item.redeemed
+        return true
+      })
 
       if (!filtered.length) {
         historyList.innerHTML = `
           <div class="empty-state">
             <div class="empty-icon">🎁</div>
-            <div class="empty-title">Пока нет сохранённых выигрышей</div>
-            <div class="empty-text">После первого успешного спина здесь появятся ваши коды и статусы призов.</div>
+            <div class="empty-title">Пока пусто</div>
+            <div class="empty-text">Здесь появятся ваши выигрыши после прокрутки колеса.</div>
           </div>
-        `;
-        return;
+        `
+        return
       }
 
-      filtered.forEach((item) => {
-        const badge = getHistoryBadge(item);
-        const statusClass = badge.cls;
-        const statusText = badge.text;
-        const expiresText = item.expires_at_text || item.expires_at || "Не указан";
+      filtered.forEach(item => {
+        const badge = getHistoryBadge(item)
+        const expiresText = item.expires_at_text || item.expires_at || "—"
 
         const payload = encodeURIComponent(JSON.stringify({
-          title: item.prize_title || "Приз",
-          description: item.prize_description || "Описание отсутствует.",
-          code: item.code || "—",
+          title: item.prize_title,
+          description: item.prize_description || "—",
+          image_url: item.prize_image_url || "",
+          code: item.code,
           expires: expiresText
-        }));
+        }))
 
-        const card = document.createElement("div");
-        card.className = "history-item";
+        const card = document.createElement("div")
+        card.className = "history-item"
         card.innerHTML = `
+          ${item.prize_image_url ? `
+            <div class="mini-card-media">
+              <div class="prize-cover">
+                <img src="${escapeHtml(item.prize_image_url)}" alt="${escapeHtml(item.prize_title)}" loading="lazy" />
+              </div>
+            </div>
+          ` : ""}
+
           <div class="history-top">
             <div>
-              <div class="history-name">${item.prize_title || "Приз"}</div>
-              <div class="history-meta">${item.created_at_text || item.created_at || "Дата не указана"}</div>
+              <div class="history-name">${escapeHtml(item.prize_title)}</div>
+              <div class="history-meta">${escapeHtml(item.created_at_text || item.created_at || "")}</div>
             </div>
-            <div class="badge ${statusClass}">${statusText}</div>
+            <div class="badge ${badge.cls}">${badge.text}</div>
           </div>
-          <div class="history-desc">${item.prize_description || "Описание отсутствует."}</div>
+
+          <div class="history-desc">${escapeHtml(item.prize_description || "—")}</div>
+
           <div class="history-actions">
-            <div class="badge ${isExpiringSoon(expiresText) ? "badge-soon" : "badge-warn"}">До: ${expiresText}</div>
-            <div class="badge badge-ok">Код: ${item.code || "—"}</div>
+            <div class="badge ${isExpiringSoon(expiresText) ? "badge-soon" : "badge-warn"}">${escapeHtml(expiresText)}</div>
+            <div class="badge badge-ok">${escapeHtml(item.code)}</div>
           </div>
+
           <div class="history-actions">
-            <button class="mini-btn" data-history-copy="${item.code || ""}">Скопировать код</button>
-            <button class="mini-btn" data-history-open="${payload}">Подробнее</button>
+            <button class="mini-btn" data-history-copy="${escapeHtml(item.code)}">Скопировать</button>
+            <button class="mini-btn" data-history-open="${payload}">Открыть крупно</button>
           </div>
-        `;
-        historyList.appendChild(card);
-      });
+        `
+        historyList.appendChild(card)
+      })
 
       historyList.querySelectorAll("[data-history-copy]").forEach(btn => {
         btn.addEventListener("click", async () => {
-          const code = btn.getAttribute("data-history-copy");
-          if (!code) return;
-          await copyCodeValue(code);
-        });
-      });
+          const code = btn.getAttribute("data-history-copy")
+          if (!code) return
+          await copyCodeValue(code)
+        })
+      })
 
       historyList.querySelectorAll("[data-history-open]").forEach(btn => {
         btn.addEventListener("click", () => {
-          const payload = JSON.parse(decodeURIComponent(btn.getAttribute("data-history-open")));
-          openDetailsOverlay(payload);
-        });
-      });
+          const payload = JSON.parse(decodeURIComponent(btn.getAttribute("data-history-open")))
+          openDetailsOverlay(payload)
+        })
+      })
     }
 
     function findPrizeIndexById(prizeId) {
-      return prizes.findIndex(p => Number(p.id) === Number(prizeId));
+      return prizes.findIndex(p => Number(p.id) === Number(prizeId))
     }
 
     function animateSpinToPrize(prizeId) {
-      return new Promise((resolve) => {
-        const index = findPrizeIndexById(prizeId);
+      return new Promise(resolve => {
+        const index = findPrizeIndexById(prizeId)
         if (index < 0) {
-          resolve();
-          return;
+          resolve()
+          return
         }
+
+        const count = prizes.length
+        const slice = 360 / count
+        const targetCenter = index * slice + slice / 2
 
         if (reduceMotion) {
-          const count = prizes.length;
-          const slice = 360 / count;
-          const targetCenter = index * slice + slice / 2;
-          currentRotation = (360 - targetCenter) % 360;
-          drawWheel(prizes, currentRotation);
-          resolve();
-          return;
+          currentRotation = (360 - targetCenter) % 360
+          drawWheel(prizes, currentRotation)
+          resolve()
+          return
         }
 
-        const count = prizes.length;
-        const slice = 360 / count;
-        const targetCenter = index * slice + slice / 2;
-        const finalRotation = (360 * 6) + (360 - targetCenter);
-
-        const start = performance.now();
-        const duration = 4400;
-        const from = currentRotation;
-        const to = currentRotation + finalRotation;
+        const finalRotation = 360 * 6 + 360 - targetCenter
+        const start = performance.now()
+        const duration = 4400
+        const from = currentRotation
+        const to = currentRotation + finalRotation
 
         function easeOutCubic(t) {
-          return 1 - Math.pow(1 - t, 3);
+          return 1 - Math.pow(1 - t, 3)
         }
 
         function frame(now) {
-          const elapsed = now - start;
-          const progress = Math.min(elapsed / duration, 1);
-          const eased = easeOutCubic(progress);
-          const value = from + (to - from) * eased;
+          const elapsed = now - start
+          const progress = Math.min(elapsed / duration, 1)
+          const eased = easeOutCubic(progress)
+          const value = from + (to - from) * eased
+          drawWheel(prizes, value)
 
-          drawWheel(prizes, value);
-
-          if (progress < 1) {
-            requestAnimationFrame(frame);
-          } else {
-            currentRotation = value % 360;
-            drawWheel(prizes, currentRotation);
-            resolve();
+          if (progress < 1) requestAnimationFrame(frame)
+          else {
+            currentRotation = value % 360
+            drawWheel(prizes, currentRotation)
+            resolve()
           }
         }
 
-        requestAnimationFrame(frame);
-      });
+        requestAnimationFrame(frame)
+      })
     }
 
     function openDetailsOverlay(payload) {
-      currentPrizePayload = payload;
-      overlayOpen = true;
+      currentPrizePayload = payload
+      overlayOpen = true
 
-      sheetTitle.textContent = payload.title || "Детали приза";
-      sheetSub.textContent = "Подробная информация о вашем выигрыше.";
-      sheetCode.textContent = payload.code || "—";
-      sheetDesc.textContent = payload.description || "Описание отсутствует.";
-      sheetExpires.textContent = payload.expires || "Не указан";
+      sheetTitle.textContent = payload.title
+      sheetSub.textContent = "Подробная информация о вашем выигрыше."
+      sheetCode.textContent = payload.code
+      sheetDesc.textContent = payload.description || "—"
+      sheetExpires.textContent = payload.expires || "—"
 
-      detailsOverlay.classList.add("show");
-      safeHapticImpact("light");
-      updateBackButton();
+      const oldMedia = detailsOverlay.querySelector(".sheet-media")
+      if (oldMedia) oldMedia.remove()
+
+      if (payload.image_url) {
+        const media = document.createElement("div")
+        media.className = "sheet-media"
+        media.innerHTML = `
+          <div class="prize-cover">
+            <img src="${escapeHtml(payload.image_url)}" alt="${escapeHtml(payload.title)}" loading="lazy" />
+          </div>
+        `
+        const proofList = detailsOverlay.querySelector(".proof-list")
+        if (proofList) proofList.parentNode.insertBefore(media, proofList)
+      }
+
+      detailsOverlay.classList.add("show")
+      safeHapticImpact("light")
+      updateBackButton()
     }
 
     function closeDetailsOverlay() {
-      overlayOpen = false;
-      detailsOverlay.classList.remove("show");
-      updateBackButton();
+      overlayOpen = false
+      detailsOverlay.classList.remove("show")
+      updateBackButton()
     }
 
     function renderLastPrizeCard(data) {
-      lastPrizeWrap.innerHTML = "";
+      lastPrizeWrap.innerHTML = ""
+      if (!data.last_code && !data.last_prize_title && !data.lastcode && !data.lastprizetitle) return
 
-      if (!data.last_code && !data.last_prize_title) return;
+      const title = data.last_prize_title || data.lastprizetitle || "Приз"
+      const code = data.last_code || data.lastcode || ""
+      const expires = data.last_expires_at_text || data.lastexpiresattext || ""
+      const imageUrl = data.last_prize_image_url || data.lastprizeimageurl || ""
 
-      const card = document.createElement("div");
-      card.className = "mini-card";
+      const card = document.createElement("div")
+      card.className = "mini-card"
+
       card.innerHTML = `
-        <div class="mini-card-title">${data.last_prize_title || "Последний приз"}</div>
-        <div class="mini-card-desc">
-          Код: ${data.last_code || "—"}<br>
-          ${data.last_expires_at_text ? "Действует до: " + data.last_expires_at_text : "Срок действия уточняйте у сотрудника."}
-        </div>
-      `;
-      lastPrizeWrap.appendChild(card);
+        ${imageUrl ? `
+          <div class="mini-card-media">
+            <div class="prize-cover">
+              <img src="${escapeHtml(imageUrl)}" alt="${escapeHtml(title)}" loading="lazy" />
+            </div>
+          </div>
+        ` : ""}
+        <div class="mini-card-title">${escapeHtml(title)}</div>
+        <div class="mini-card-desc">${escapeHtml(code)}${expires ? `<br>${escapeHtml(expires)}` : ""}</div>
+      `
+      lastPrizeWrap.appendChild(card)
     }
 
     function showResult(data) {
-      cooldownBox.classList.remove("show");
-      resultBox.classList.add("show");
+      cooldownBox.classList.remove("show")
+      resultBox.classList.add("show")
 
       currentPrizePayload = {
-        title: data.prize_title || "Ваш приз",
-        description: data.prize_description || "",
-        code: data.code || "—",
-        expires: data.expires_at_text ? `До ${data.expires_at_text}` : "Срок действия уточняйте у сотрудника."
-      };
+        title: data.prize_title,
+        description: data.prize_description,
+        image_url: data.prize_image_url || "",
+        code: data.code,
+        expires: data.expires_at_text || "—"
+      }
 
-      resultPrize.textContent = currentPrizePayload.title;
-      resultDesc.textContent = currentPrizePayload.description;
-      resultCode.textContent = currentPrizePayload.code;
-      resultExpires.textContent = currentPrizePayload.expires;
+      resultPrize.textContent = currentPrizePayload.title
+      resultDesc.textContent = currentPrizePayload.description
+      resultCode.textContent = currentPrizePayload.code
+      resultExpires.textContent = currentPrizePayload.expires
 
-      setStatus("Готово: ваш выигрыш сохранён.", "success");
-      historyCache = [];
+      const oldMedia = resultBox.querySelector(".result-media")
+      if (oldMedia) oldMedia.remove()
+
+      if (currentPrizePayload.image_url) {
+        const media = document.createElement("div")
+        media.className = "result-media"
+        media.innerHTML = `
+          <div class="prize-cover">
+            <img src="${escapeHtml(currentPrizePayload.image_url)}" alt="${escapeHtml(currentPrizePayload.title)}" loading="lazy" />
+          </div>
+        `
+        const resultSection = resultBox.querySelector(".section")
+        const resultHero = resultBox.querySelector(".result-hero")
+        if (resultSection && resultHero) resultSection.insertBefore(media, resultHero)
+      }
+
+      setStatus("Промокод готов. Покажите его сотруднику магазина или кассиру.", "success")
+      historyCache = []
     }
 
     function getNextMidnightMSK() {
-      const now = new Date();
-      const moscowNow = new Date(now.toLocaleString("en-US", { timeZone: "Europe/Moscow" }));
-      const next = new Date(moscowNow);
-      next.setHours(24, 0, 0, 0);
-      return next.getTime() - moscowNow.getTime();
+      const now = new Date()
+      const moscowNow = new Date(now.toLocaleString("en-US", { timeZone: "Europe/Moscow" }))
+      const next = new Date(moscowNow)
+      next.setHours(24, 0, 0, 0)
+      return next.getTime() - moscowNow.getTime()
     }
 
     function formatMs(ms) {
-      const total = Math.max(0, Math.floor(ms / 1000));
-      const h = String(Math.floor(total / 3600)).padStart(2, "0");
-      const m = String(Math.floor((total % 3600) / 60)).padStart(2, "0");
-      const s = String(total % 60).padStart(2, "0");
-      return `${h}:${m}:${s}`;
+      const total = Math.max(0, Math.floor(ms / 1000))
+      const h = String(Math.floor(total / 3600)).padStart(2, "0")
+      const m = String(Math.floor((total % 3600) / 60)).padStart(2, "0")
+      const s = String(total % 60).padStart(2, "0")
+      return `${h}:${m}:${s}`
     }
 
     function startCooldown(data) {
-      resultBox.classList.remove("show");
-      cooldownBox.classList.add("show");
+      resultBox.classList.remove("show")
+      cooldownBox.classList.add("show")
+      cooldownText.textContent = data.error || "Сегодня попытка уже была использована."
+      renderLastPrizeCard(data)
 
-      cooldownText.textContent = data.error || "Сегодня вы уже использовали попытку.";
-      renderLastPrizeCard(data);
-
-      if (countdownInterval) clearInterval(countdownInterval);
+      if (countdownInterval) clearInterval(countdownInterval)
 
       function tick() {
-        const left = getNextMidnightMSK();
-        timerEl.textContent = formatMs(left);
+        const left = getNextMidnightMSK()
+        timerEl.textContent = formatMs(left)
       }
 
-      tick();
-      countdownInterval = setInterval(tick, 1000);
+      tick()
+      countdownInterval = setInterval(tick, 1000)
     }
 
     async function spinWheel() {
-      if (isSpinning || !navigator.onLine) return;
+      if (isSpinning || !navigator.onLine) return
+      await unlockSounds()
 
-      await unlockSounds();
-      safeHapticImpact("light");
-
-      isSpinning = true;
-      spinBtn.disabled = true;
-      resultBox.classList.remove("show");
-      cooldownBox.classList.remove("show");
-      setStatus("Запрашиваем результат...");
+      safeHapticImpact("light")
+      isSpinning = true
+      spinBtn.disabled = true
+      resultBox.classList.remove("show")
+      cooldownBox.classList.remove("show")
+      setStatus("Крутим колесо...", "")
 
       try {
-        const data = await apiPost("/spin", {
-          init_data: tg.initData || ""
-        });
+        const data = await apiPost("/spin", { init_data: tg.initData })
 
         if (!data.ok && data.cooldown) {
-          stopTickLoop();
-          playSound("error");
-          safeHapticNotification("warning");
-          setStatus("На сегодня попытка уже израсходована.", "error");
-          startCooldown(data);
-          return;
+          stopTickLoop()
+          playSound("error")
+          safeHapticNotification("warning")
+          setStatus("Попытка на сегодня уже использована.", "error")
+          startCooldown(data)
+          return
         }
 
         if (!data.ok) {
-          stopTickLoop();
-          playSound("error");
-          safeHapticNotification("error");
-          setStatus(data.error || "Произошла ошибка.", "error");
-          return;
+          stopTickLoop()
+          playSound("error")
+          safeHapticNotification("error")
+          setStatus(data.error || "Не удалось выполнить вращение.", "error")
+          return
         }
 
-        startTickLoop();
-        await animateSpinToPrize(data.prize_id);
-        stopTickLoop();
-        playSound("win");
-        safeHapticNotification("success");
-        showResult(data);
+        startTickLoop()
+        await animateSpinToPrize(data.prize_id)
+        stopTickLoop()
+        playSound("win")
+        safeHapticNotification("success")
+        showResult(data)
       } catch (e) {
-        stopTickLoop();
-        playSound("error");
-        safeHapticNotification("error");
-        setStatus("Ошибка соединения с сервером.", "error");
+        stopTickLoop()
+        playSound("error")
+        safeHapticNotification("error")
+        setStatus("Ошибка соединения. Попробуйте позже.", "error")
       } finally {
-        stopTickLoop();
-        isSpinning = false;
-        spinBtn.disabled = false;
+        stopTickLoop()
+        isSpinning = false
+        spinBtn.disabled = false
       }
     }
 
     async function copyCodeValue(code) {
-      if (!code || code === "—") return;
-
+      if (!code) return
       try {
-        await navigator.clipboard.writeText(code);
-        setStatus("Код скопирован.", "success");
-        safeHapticNotification("success");
+        await navigator.clipboard.writeText(code)
+        setStatus("Код скопирован.", "success")
+        safeHapticNotification("success")
       } catch (e) {
-        setStatus("Не удалось скопировать код.", "error");
-        playSound("error");
-        safeHapticNotification("error");
+        setStatus("Не удалось скопировать код.", "error")
+        playSound("error")
+        safeHapticNotification("error")
       }
     }
 
     function renderAdminPrizeList(items) {
-      adminPrizeList.innerHTML = "";
+      adminPrizeList.innerHTML = ""
 
       if (!items.length) {
-        adminPrizeList.innerHTML = "<div class='status'>Призов пока нет.</div>";
-        return;
+        adminPrizeList.innerHTML = '<div class="status">Призы пока не добавлены.</div>'
+        return
       }
 
-      items.forEach((item) => {
-        const block = document.createElement("div");
-        block.className = "prize-item";
+      items.forEach(item => {
+        const block = document.createElement("div")
+        block.className = "prize-item"
 
         block.innerHTML = `
-          <div class="prize-top">
-            <div>
-              <div class="prize-name">${item.title}</div>
-              <div class="prize-meta">ID: ${item.id} · Коротко: ${item.short || "—"}</div>
+          <div class="prize-item-layout">
+            ${item.image_url ? `
+              <div class="prize-cover">
+                <img src="${escapeHtml(item.image_url)}" alt="${escapeHtml(item.title)}" loading="lazy" />
+              </div>
+            ` : ""}
+
+            <div class="prize-item-topline">
+              <div>
+                <div class="prize-name">${escapeHtml(item.title)}</div>
+                <div class="prize-meta">ID: ${escapeHtml(item.id)} · ${escapeHtml(item.short || "—")}</div>
+              </div>
+              <div class="badge ${item.active ? "badge-ok" : "badge-off"}">
+                ${item.active ? "Активен" : "Выключен"}
+              </div>
             </div>
-            <div class="badge ${item.active ? "badge-ok" : "badge-off"}">
-              ${item.active ? "Включен" : "Выключен"}
+
+            <div class="prize-meta">
+              ${escapeHtml(item.description || "—")}<br>
+              Вес: <strong>${escapeHtml(item.weight)}</strong> ·
+              Вероятность: <strong>${escapeHtml(item.drop_percent ?? 0)}%</strong>
+            </div>
+
+            ${item.image_url ? `
+              <div class="prize-meta">Картинка: ${escapeHtml(item.image_url)}</div>
+            ` : ""}
+
+            <div class="prize-actions">
+              <button class="mini-btn" data-action="edit" data-id="${item.id}">Редактировать</button>
+              <button class="mini-btn" data-action="toggle" data-id="${item.id}">
+                ${item.active ? "Выключить" : "Включить"}
+              </button>
+              <button class="mini-btn" data-action="delete" data-id="${item.id}">Удалить</button>
             </div>
           </div>
+        `
 
-          <div class="prize-meta">
-            ${item.description}<br>
-            Вес: <strong>${item.weight}</strong>
-          </div>
+        adminPrizeList.appendChild(block)
+      })
 
-          <div class="prize-actions">
-            <button class="mini-btn" data-action="edit" data-id="${item.id}">Редактировать</button>
-            <button class="mini-btn" data-action="weight" data-id="${item.id}">Изменить вес</button>
-            <button class="mini-btn" data-action="toggle" data-id="${item.id}">
-              ${item.active ? "Выключить" : "Включить"}
-            </button>
-            <button class="mini-btn" data-action="delete" data-id="${item.id}">Удалить</button>
-          </div>
-        `;
+      adminPrizeList.querySelectorAll('[data-action="edit"]').forEach(btn => {
+        btn.addEventListener("click", () => {
+          const id = Number(btn.dataset.id)
+          const item = items.find(x => Number(x.id) === id)
+          if (!item) return
+          fillPrizeForm(item)
+        })
+      })
 
-        adminPrizeList.appendChild(block);
-      });
-
-      adminPrizeList.querySelectorAll("[data-action='edit']").forEach(btn => {
+      adminPrizeList.querySelectorAll('[data-action="toggle"]').forEach(btn => {
         btn.addEventListener("click", async () => {
-          const id = Number(btn.dataset.id);
-          const item = items.find(x => Number(x.id) === id);
-          if (!item) return;
-
-          const title = prompt("Название", item.title);
-          if (title === null) return;
-
-          const short = prompt("Короткий текст", item.short || "");
-          if (short === null) return;
-
-          const description = prompt("Описание", item.description || "");
-          if (description === null) return;
-
-          const weightRaw = prompt("Вес", String(item.weight));
-          if (weightRaw === null) return;
-
-          const weight = Number(weightRaw);
-          if (!weight || weight <= 0) {
-            alert("Вес должен быть больше 0");
-            return;
-          }
-
-          const active = confirm("Оставить приз включенным? OK = включен, Cancel = выключен.");
-
-          adminStatus.textContent = "Сохраняем изменения приза...";
-
-          const data = await apiPost("/admin/prize/update", {
-            init_data: tg.initData || "",
-            prize_id: id,
-            title,
-            short,
-            description,
-            weight,
-            active
-          });
-
-          if (!data.ok) {
-            alert(data.error || "Ошибка редактирования");
-            adminStatus.textContent = data.error || "Ошибка";
-            return;
-          }
-
-          adminStatus.textContent = "Приз обновлён.";
-          renderAdminPrizeList(data.items);
-          await loadPrizes();
-        });
-      });
-
-      adminPrizeList.querySelectorAll("[data-action='weight']").forEach(btn => {
-        btn.addEventListener("click", async () => {
-          const id = Number(btn.dataset.id);
-          const value = prompt("Введите новый вес:");
-          if (!value) return;
-
-          const weight = Number(value);
-          if (!weight || weight <= 0) {
-            alert("Вес должен быть больше 0");
-            return;
-          }
-
-          adminStatus.textContent = "Сохраняем новый вес...";
-
-          const data = await apiPost("/admin/prize/update-weight", {
-            init_data: tg.initData || "",
-            prize_id: id,
-            weight
-          });
-
-          if (!data.ok) {
-            alert(data.error || "Ошибка обновления веса");
-            adminStatus.textContent = data.error || "Ошибка";
-            return;
-          }
-
-          adminStatus.textContent = "Вес обновлён.";
-          renderAdminPrizeList(data.items);
-          await loadPrizes();
-        });
-      });
-
-      adminPrizeList.querySelectorAll("[data-action='toggle']").forEach(btn => {
-        btn.addEventListener("click", async () => {
-          const id = Number(btn.dataset.id);
-          adminStatus.textContent = "Меняем статус приза...";
+          const id = Number(btn.dataset.id)
+          adminStatus.textContent = "Обновляем статус приза..."
 
           const data = await apiPost("/admin/prize/toggle", {
-            init_data: tg.initData || "",
+            init_data: tg.initData,
             prize_id: id
-          });
+          })
 
           if (!data.ok) {
-            alert(data.error || "Ошибка смены статуса");
-            adminStatus.textContent = data.error || "Ошибка";
-            return;
+            alert(data.error || "Не удалось обновить статус")
+            adminStatus.textContent = data.error || "Ошибка"
+            return
           }
 
-          adminStatus.textContent = "Статус обновлён.";
-          renderAdminPrizeList(data.items);
-          await loadPrizes();
-        });
-      });
+          adminStatus.textContent = "Статус приза обновлён."
+          renderAdminPrizeList(data.items)
+          await loadPrizes()
+        })
+      })
 
-      adminPrizeList.querySelectorAll("[data-action='delete']").forEach(btn => {
+      adminPrizeList.querySelectorAll('[data-action="delete"]').forEach(btn => {
         btn.addEventListener("click", async () => {
-          const id = Number(btn.dataset.id);
-          const ok = confirm("Удалить этот приз?");
-          if (!ok) return;
+          const id = Number(btn.dataset.id)
+          const ok = confirm("Удалить этот приз?")
+          if (!ok) return
 
-          adminStatus.textContent = "Удаляем приз...";
+          adminStatus.textContent = "Удаляем приз..."
 
           const data = await apiPost("/admin/prize/delete", {
-            init_data: tg.initData || "",
+            init_data: tg.initData,
             prize_id: id
-          });
+          })
 
           if (!data.ok) {
-            alert(data.error || "Ошибка удаления");
-            adminStatus.textContent = data.error || "Ошибка";
-            return;
+            alert(data.error || "Не удалось удалить приз")
+            adminStatus.textContent = data.error || "Ошибка"
+            return
           }
 
-          adminStatus.textContent = "Приз удалён.";
-          renderAdminPrizeList(data.items);
-          await loadPrizes();
-        });
-      });
+          adminStatus.textContent = "Приз удалён."
+          renderAdminPrizeList(data.items)
+          await loadPrizes()
+
+          if (String(editingPrizeId.value || "") === String(id)) resetPrizeForm()
+        })
+      })
     }
 
     async function checkAdminAccess() {
       try {
-        const data = await apiPost("/admin/me", {
-          init_data: tg.initData || ""
-        });
-
+        const data = await apiPost("/admin/me", { init_data: tg.initData })
         if (data.ok) {
-          tabAdmin.classList.remove("hidden");
-          adminBox.classList.add("show");
-          adminStatus.textContent = `Вы вошли как админ: ${data.first_name || "Без имени"}`;
-          await loadAdminPrizes();
+          tabAdmin.classList.remove("hidden")
+          adminBox.classList.add("show")
+          adminStatus.textContent = `Доступ подтверждён: ${data.first_name || "администратор"}`
+          await loadAdminPrizes()
         }
       } catch (e) {}
     }
 
     async function loadAdminPrizes() {
-      const data = await apiPost("/admin/prizes", {
-        init_data: tg.initData || ""
-      });
-
+      const data = await apiPost("/admin/prizes", { init_data: tg.initData })
       if (!data.ok) {
-        adminStatus.textContent = data.error || "Нет доступа к админке.";
-        return;
+        adminStatus.textContent = data.error || "Не удалось загрузить призы."
+        return
       }
-
-      adminStatus.textContent = "Список призов загружен.";
-      renderAdminPrizeList(data.items || []);
+      adminStatus.textContent = "Список призов загружен."
+      renderAdminPrizeList(data.items)
     }
 
-    addPrizeBtn.addEventListener("click", async () => {
-      const title = newTitle.value.trim();
-      const short = newShort.value.trim();
-      const description = newDesc.value.trim();
-      const weight = Number(newWeight.value);
-      const active = newActive.value === "true";
+    newImageUrl?.addEventListener("input", updatePrizeImagePreview)
+    cancelEditPrizeBtn?.addEventListener("click", resetPrizeForm)
+
+    savePrizeBtn.addEventListener("click", async () => {
+      const title = newTitle.value.trim()
+      const short = newShort.value.trim()
+      const description = newDesc.value.trim()
+      const imageUrl = newImageUrl.value.trim()
+      const weight = Number(newWeight.value)
+      const active = newActive.value === "true"
+      const prizeId = editingPrizeId.value.trim()
 
       if (!title || !short || !description || !weight || weight <= 0) {
-        alert("Заполните все поля корректно.");
-        return;
+        alert("Заполните название, короткий текст, описание и корректный вес.")
+        return
       }
 
-      adminStatus.textContent = "Добавляем приз...";
+      if (imageUrl && !isValidHttpUrl(imageUrl)) {
+        alert("URL картинки должен начинаться с http:// или https://")
+        return
+      }
 
-      const data = await apiPost("/admin/prize/add", {
-        init_data: tg.initData || "",
+      adminStatus.textContent = prizeId ? "Сохраняем изменения..." : "Добавляем приз..."
+
+      const payload = {
+        init_data: tg.initData,
         title,
         short,
         description,
+        image_url: imageUrl,
         weight,
         active
-      });
-
-      if (!data.ok) {
-        alert(data.error || "Ошибка добавления приза");
-        adminStatus.textContent = data.error || "Ошибка";
-        return;
       }
 
-      newTitle.value = "";
-      newShort.value = "";
-      newDesc.value = "";
-      newWeight.value = "";
-      newActive.value = "true";
+      const data = prizeId
+        ? await apiPost("/admin/prize/update", { ...payload, prize_id: Number(prizeId) })
+        : await apiPost("/admin/prize/add", payload)
 
-      adminStatus.textContent = "Приз успешно добавлен.";
-      renderAdminPrizeList(data.items);
-      await loadPrizes();
-    });
+      if (!data.ok) {
+        alert(data.error || "Не удалось сохранить приз")
+        adminStatus.textContent = data.error || "Ошибка"
+        return
+      }
+
+      adminStatus.textContent = prizeId ? "Приз обновлён." : "Приз добавлен."
+      renderAdminPrizeList(data.items)
+      await loadPrizes()
+      resetPrizeForm()
+    })
 
     checkCodeBtn.addEventListener("click", async () => {
-      const code = codeActionInput.value.trim();
+      const code = codeActionInput.value.trim()
       if (!code) {
-        codeActionStatus.textContent = "Введите код.";
-        return;
+        codeActionStatus.textContent = "Введите код для проверки."
+        return
       }
 
-      codeActionStatus.textContent = "Проверяем код...";
+      codeActionStatus.textContent = "Проверяем код..."
 
       const data = await apiPost("/admin/code/check", {
-        init_data: tg.initData || "",
+        init_data: tg.initData,
         code
-      });
+      })
 
       if (!data.ok) {
-        codeActionStatus.textContent = data.error || "Код не найден.";
-        playSound("error");
-        safeHapticNotification("error");
-        return;
+        codeActionStatus.textContent = data.error || "Код не найден."
+        playSound("error")
+        safeHapticNotification("error")
+        return
       }
 
       codeActionStatus.textContent =
-        `Код ${data.code} найден. Приз: ${data.prize_title}. Статус: ${data.redeemed ? "уже погашен" : "ещё не погашен"}.`;
-    });
+        `${data.code} · ${data.prize_title}. ${data.redeemed ? "Код уже погашен." : "Код активен."}`
+    })
 
     redeemCodeBtn.addEventListener("click", async () => {
-      const code = codeActionInput.value.trim();
+      const code = codeActionInput.value.trim()
       if (!code) {
-        codeActionStatus.textContent = "Введите код.";
-        return;
+        codeActionStatus.textContent = "Введите код для погашения."
+        return
       }
 
-      codeActionStatus.textContent = "Погашаем код...";
+      codeActionStatus.textContent = "Погашаем код..."
 
       const data = await apiPost("/admin/code/redeem", {
-        init_data: tg.initData || "",
+        init_data: tg.initData,
         code
-      });
+      })
 
       if (!data.ok) {
-        codeActionStatus.textContent = data.error || "Не удалось погасить код.";
-        playSound("error");
-        safeHapticNotification("error");
-        return;
+        codeActionStatus.textContent = data.error || "Не удалось погасить код."
+        playSound("error")
+        safeHapticNotification("error")
+        return
       }
 
-      playSound("win");
-      safeHapticNotification("success");
-      codeActionStatus.textContent = `Код ${data.code} погашен. Приз: ${data.prize_title}.`;
-    });
+      playSound("win")
+      safeHapticNotification("success")
+      codeActionStatus.textContent = `${data.code} · ${data.prize_title}. Код погашен.`
+    })
 
-    spinBtn.addEventListener("click", spinWheel);
-    copyBtn.addEventListener("click", () => copyCodeValue(resultCode.textContent.trim()));
-    sheetCopyBtn.addEventListener("click", () => copyCodeValue(sheetCode.textContent.trim()));
-    closeBtn.addEventListener("click", () => resultBox.classList.remove("show"));
+    spinBtn.addEventListener("click", spinWheel)
+    copyBtn.addEventListener("click", () => copyCodeValue(resultCode.textContent.trim()))
+    sheetCopyBtn.addEventListener("click", () => copyCodeValue(sheetCode.textContent.trim()))
+    closeBtn.addEventListener("click", () => resultBox.classList.remove("show"))
     detailsBtn.addEventListener("click", () => {
-      if (currentPrizePayload) openDetailsOverlay(currentPrizePayload);
-    });
-    sheetCloseBtn.addEventListener("click", closeDetailsOverlay);
-    themeToggle?.addEventListener("click", cycleThemeMode);
-    historyFilters.forEach((btn) => {
+      if (currentPrizePayload) openDetailsOverlay(currentPrizePayload)
+    })
+    sheetCloseBtn.addEventListener("click", closeDetailsOverlay)
+
+    historyFilters.forEach(btn => {
       btn.addEventListener("click", () => {
-        historyFilter = btn.dataset.filter || "all";
-        historyFilters.forEach((item) => item.classList.toggle("active", item === btn));
-        renderHistory(historyCache);
-        safeHapticSelection();
-      });
-    });
-    detailsOverlay.addEventListener("click", (e) => {
-      if (e.target === detailsOverlay) closeDetailsOverlay();
-    });
+        historyFilter = btn.dataset.filter || "all"
+        historyFilters.forEach(item => item.classList.toggle("active", item === btn))
+        renderHistory(historyCache)
+        safeHapticSelection()
+      })
+    })
+
+    detailsOverlay.addEventListener("click", e => {
+      if (e.target === detailsOverlay) closeDetailsOverlay()
+    })
 
     async function initApp() {
-      updateSafeAreaFallback();
-      updateOfflineState();
-      themeMode = "auto";
-      applyThemeMode(themeMode);
+      updateSafeAreaFallback()
+      updateOfflineState()
 
       try {
-        await loadPrizes();
-        setStatus("Готово к запуску.");
+        await loadPrizes()
+        setStatus("Готово к запуску.", "")
       } catch (e) {
-        setStatus("Не удалось загрузить список призов.", "error");
+        setStatus("Не удалось загрузить призы.", "error")
       }
 
-      await checkAdminAccess();
-      applyTelegramTheme();
-      updateBackButton();
+      await checkAdminAccess()
+      applyTelegramTheme()
+      updateBackButton()
+      updatePrizeImagePreview()
     }
 
-    initApp();
+    initApp()
   </script>
 </body>
 </html>
