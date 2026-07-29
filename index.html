@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -45,19 +46,19 @@
 
 
     :root {
-      --day-bg: #f4f6fb;
-      --day-bg-2: #e9eef6;
-      --day-surface: rgba(255, 255, 255, 0.88);
-      --day-surface-solid: #ffffff;
-      --day-surface-2: #f2f5fa;
-      --day-surface-3: #e7edf5;
-      --day-text: #111827;
-      --day-muted: #667085;
-      --day-line: rgba(17,24,39,0.08);
-      --day-line-strong: rgba(17,24,39,0.12);
-      --day-shadow-xl: 0 30px 70px rgba(15, 23, 42, 0.10);
-      --day-shadow-lg: 0 18px 44px rgba(15, 23, 42, 0.08);
-      --day-shadow-sm: 0 10px 24px rgba(15, 23, 42, 0.06);
+      --day-bg: #f3efe7;
+      --day-bg-2: #ece4d6;
+      --day-surface: rgba(255, 251, 245, 0.92);
+      --day-surface-solid: #fffaf2;
+      --day-surface-2: #f7f0e5;
+      --day-surface-3: #efe5d7;
+      --day-text: #2a261f;
+      --day-muted: #857a6d;
+      --day-line: rgba(86, 71, 49, 0.10);
+      --day-line-strong: rgba(86, 71, 49, 0.16);
+      --day-shadow-xl: 0 28px 64px rgba(128, 104, 71, 0.18);
+      --day-shadow-lg: 0 18px 40px rgba(128, 104, 71, 0.14);
+      --day-shadow-sm: 0 10px 24px rgba(128, 104, 71, 0.10);
     }
 
     html[data-theme="day"] {
@@ -80,18 +81,19 @@
 
     html[data-theme="day"] body {
       background:
-        radial-gradient(circle at top center, rgba(88,214,141,0.08), transparent 22%),
-        radial-gradient(circle at 18% 14%, rgba(93,173,226,0.06), transparent 18%),
-        linear-gradient(180deg, #f7f9fc, #edf2f8 56%, #e8eef6);
+        radial-gradient(circle at top center, rgba(107, 168, 114, 0.10), transparent 22%),
+        radial-gradient(circle at 18% 14%, rgba(208, 177, 114, 0.10), transparent 18%),
+        linear-gradient(180deg, #f7f1e8, #f1e9dd 55%, #ece2d5);
     }
 
     html[data-theme="day"] .shell {
+      border-radius: 34px;
       background:
         linear-gradient(180deg, rgba(255,255,255,0.86), rgba(255,255,255,0.80)),
         var(--surface);
       border-color: rgba(17,24,39,0.06);
       backdrop-filter: blur(24px);
-      box-shadow: 0 24px 60px rgba(15, 23, 42, 0.10);
+      box-shadow: 0 26px 60px rgba(129, 104, 72, 0.16);
     }
 
     html[data-theme="day"] .shell::before {
@@ -110,7 +112,7 @@
         linear-gradient(180deg, rgba(255,255,255,0.88), rgba(250,252,255,0.84)),
         var(--surface-solid);
       border-color: rgba(17,24,39,0.06);
-      box-shadow: 0 14px 36px rgba(15, 23, 42, 0.06);
+      box-shadow: 0 16px 34px rgba(129, 104, 72, 0.10);
     }
 
     html[data-theme="day"] .status {
@@ -132,6 +134,7 @@
     }
 
     html[data-theme="day"] .timer-wrap {
+      border-radius: 24px;
       background:
         linear-gradient(180deg, rgba(236,242,249,1), rgba(232,239,247,1)),
         var(--surface-2);
@@ -180,8 +183,8 @@
     }
 
     html[data-theme="day"] .history-filter.active {
-      color: #132018;
-      background: linear-gradient(135deg, #9ae6b4, #74d79a);
+      color: #1f3a25;
+      background: linear-gradient(135deg, #9fe0af, #7bc990);
       box-shadow: 0 12px 24px rgba(88,214,141,0.18);
     }
 
@@ -213,12 +216,13 @@
     }
 
     html[data-theme="day"] .bottom-nav {
+      border-radius: 26px;
       background:
         linear-gradient(180deg, rgba(255,255,255,0.94), rgba(245,248,253,0.96)),
         rgba(255,255,255,0.94);
       border-color: rgba(19,34,58,0.08);
       box-shadow:
-        0 16px 36px rgba(36, 62, 95, 0.12),
+        0 18px 34px rgba(129, 104, 72, 0.14),
         inset 0 1px 0 rgba(255,255,255,0.7);
     }
 
@@ -227,12 +231,14 @@
     }
 
     html[data-theme="day"] .bottom-nav__item.active {
-      color: #132018;
-      background: linear-gradient(135deg, #9ae6b4, #74d79a);
+      border: 1px solid rgba(64, 145, 92, 0.18);
+      color: #1f3a25;
+      background: linear-gradient(135deg, #9fe0af, #7bc990);
       box-shadow: 0 12px 24px rgba(88,214,141,0.18);
     }
 
     html[data-theme="day"] .theme-toggle {
+      box-shadow: 0 10px 24px rgba(129, 104, 72, 0.10);
       background: rgba(255,255,255,0.88);
       border-color: rgba(19,34,58,0.08);
       color: #111827;
@@ -850,7 +856,7 @@
       font-weight: 800;
       color: #c8f4d7;
       font-variant-numeric: tabular-nums;
-      text-shadow: 0 0 10px rgba(88,214,141,0.08);
+      text-shadow: 0 0 10px rgba(107, 168, 114, 0.10);
     }
 
     .last-prize {
@@ -1090,7 +1096,7 @@
       display: grid;
       place-items: center;
       color: #c1f3d4;
-      background: rgba(88,214,141,0.08);
+      background: rgba(107, 168, 114, 0.10);
       border: 1px solid rgba(88,214,141,0.12);
       font-size: 22px;
     }
@@ -1345,6 +1351,78 @@
         min-height: 50px;
       }
     }
+  
+
+    html[data-theme="day"] .hero-card,
+    html[data-theme="day"] .wheel-card {
+      background:
+        linear-gradient(180deg, rgba(255,252,247,0.96), rgba(249,242,232,0.98));
+      border: 1px solid rgba(189, 166, 132, 0.28);
+      border-radius: 30px;
+    }
+
+    html[data-theme="day"] .wheel-card {
+      padding-top: 20px;
+      box-shadow: 0 20px 44px rgba(129, 104, 72, 0.14);
+    }
+
+    html[data-theme="day"] .wheel-wrap,
+    html[data-theme="day"] .wheel-box {
+      background: radial-gradient(circle at 50% 40%, rgba(255,255,255,0.95), rgba(247,239,227,0.88));
+      border-radius: 999px;
+    }
+
+    html[data-theme="day"] .kicker {
+      color: #8cae87;
+      letter-spacing: 0.08em;
+    }
+
+    html[data-theme="day"] .timer {
+      color: #6bb07d;
+      font-weight: 800;
+    }
+
+    html[data-theme="day"] .spin-btn,
+    html[data-theme="day"] .btn-primary {
+      background: linear-gradient(180deg, #9fe0af, #79c68f);
+      color: #17321f;
+      border: 1px solid rgba(64, 145, 92, 0.18);
+      box-shadow: 0 14px 28px rgba(95, 166, 114, 0.24);
+    }
+
+    html[data-theme="day"] .spin-btn::before,
+    html[data-theme="day"] .btn-primary::before {
+      content: "";
+      position: absolute;
+      inset: 1px;
+      border-radius: inherit;
+      background: linear-gradient(180deg, rgba(255,255,255,0.28), rgba(255,255,255,0));
+      pointer-events: none;
+    }
+
+    html[data-theme="day"] .status,
+    html[data-theme="day"] .result-stage,
+    html[data-theme="day"] .code-box {
+      border-radius: 22px;
+    }
+
+    html[data-theme="day"] .bottom-nav__item {
+      border-radius: 18px;
+    }
+
+    html[data-theme="day"] .bottom-nav__label {
+      font-weight: 700;
+    }
+
+    html[data-theme="day"] .top-note,
+    html[data-theme="day"] .attempt-note,
+    html[data-theme="day"] .hero-pill {
+      background: linear-gradient(180deg, rgba(255,249,240,0.96), rgba(245,236,221,0.96));
+      border: 1px solid rgba(189, 166, 132, 0.22);
+      color: #7f7467;
+      box-shadow: 0 12px 24px rgba(129, 104, 72, 0.08);
+    }
+
   </style>
 </head>
 <body>
@@ -1664,6 +1742,17 @@
     let overlayOpen = false;
     let historyFilter = "all";
     let themeMode = "auto";
+    const imageCache = new Map();
+
+    function getPrizeImage(prize) {
+      if (!prize || !prize.image_url) return null;
+      if (imageCache.has(prize.image_url)) return imageCache.get(prize.image_url);
+      const img = new Image();
+      img.src = prize.image_url;
+      img.crossOrigin = "anonymous";
+      imageCache.set(prize.image_url, img);
+      return img;
+    }
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const canvas = document.getElementById("wheel");
