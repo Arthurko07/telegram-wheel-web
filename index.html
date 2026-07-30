@@ -8,654 +8,176 @@
   />
   <title>iGadget Wheel</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet"
-  />
   <style>
     :root {
-      --bg: #0b1220;
-      --bg-soft: #121b2e;
-      --card: rgba(20, 28, 44, 0.92);
-      --card-2: rgba(28, 38, 58, 0.96);
-      --line: rgba(255, 255, 255, 0.08);
-      --line-strong: rgba(255, 255, 255, 0.14);
-
-      --text: #ecf2ff;
-      --muted: #95a2bd;
+      --bg: #0f1720;
+      --card: #18222f;
+      --card-2: #1f2b3b;
+      --text: #eef4fb;
+      --muted: #95a3b8;
+      --line: rgba(255,255,255,0.09);
       --accent: #58d68d;
       --accent-2: #35bf76;
-      --danger: #ff7b91;
-      --warn: #f2c46f;
-
-      --shadow-xl: 0 24px 60px rgba(0, 0, 0, 0.34);
-      --shadow-lg: 0 16px 36px rgba(0, 0, 0, 0.22);
-      --shadow-sm: 0 8px 18px rgba(0, 0, 0, 0.16);
-
-      --radius-xl: 30px;
-      --radius-lg: 22px;
-      --radius-md: 16px;
-      --radius-sm: 12px;
-
-      --safe-top: env(safe-area-inset-top, 0px);
-      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --danger: #ff7a92;
+      --warn: #f3b562;
+      --ok: #58d68d;
+      --shadow: 0 18px 40px rgba(0,0,0,.25);
+      --radius: 20px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
-    html,
-    body {
+    html, body {
       margin: 0;
-      min-height: 100%;
-      font-family: Inter, system-ui, sans-serif;
+      padding: 0;
+      background: linear-gradient(180deg, #0c121a, #111a24 55%, #131d29);
       color: var(--text);
-      background:
-        radial-gradient(circle at top center, rgba(88, 214, 141, 0.08), transparent 24%),
-        radial-gradient(circle at 20% 20%, rgba(83, 165, 255, 0.06), transparent 16%),
-        linear-gradient(180deg, var(--bg), var(--bg-soft));
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+      min-height: 100%;
     }
 
     body {
       min-height: 100vh;
+      padding: 12px;
     }
 
     .app {
       max-width: 760px;
       margin: 0 auto;
-      min-height: 100vh;
-      padding:
-        calc(14px + var(--safe-top))
-        14px
-        calc(22px + var(--safe-bottom));
-    }
-
-    .shell {
-      position: relative;
-      overflow: hidden;
-      border-radius: 34px;
-      border: 1px solid var(--line);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.01)),
-        var(--card);
-      backdrop-filter: blur(18px);
-      box-shadow: var(--shadow-xl);
-      padding: 16px;
-    }
-
-    .hero {
-      text-align: center;
-      padding: 6px 8px 14px;
-    }
-
-    .hero h1 {
-      margin: 0 0 8px;
-      font-size: clamp(24px, 5vw, 34px);
-      line-height: 1.02;
-      letter-spacing: -0.05em;
-      font-weight: 800;
-    }
-
-    .hero p {
-      margin: 0 auto;
-      max-width: 34ch;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.55;
-    }
-
-    .panel {
-      display: none;
-    }
-
-    .panel.active {
-      display: block;
-    }
-
-    .card,
-    .section,
-    .history-item,
-    .admin-item,
-    .sheet {
-      border-radius: 26px;
-      border: 1px solid var(--line);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.01)),
-        var(--card);
-      box-shadow: var(--shadow-lg);
-    }
-
-    .card,
-    .section {
-      padding: 14px;
-    }
-
-    .section {
-      margin-top: 12px;
-    }
-
-    .meta-pill {
-      min-height: 34px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 14px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.03);
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .meta-row {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 10px;
-    }
-
-    .wheel-wrap {
-      position: relative;
-      width: min(100%, 300px);
-      aspect-ratio: 1 / 1;
-      margin: 0 auto 12px;
-    }
-
-    .pointer {
-      position: absolute;
-      top: 8px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 0;
-      height: 0;
-      border-left: 11px solid transparent;
-      border-right: 11px solid transparent;
-      border-top: 20px solid var(--danger);
-      z-index: 4;
-      filter: drop-shadow(0 4px 10px rgba(255,123,145,.25));
-    }
-
-    canvas {
-      width: 100%;
-      height: 100%;
-      display: block;
-      filter: drop-shadow(0 16px 30px rgba(0,0,0,.22));
-    }
-
-    .spin-btn {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      width: 82px;
-      height: 82px;
-      border-radius: 999px;
-      border: 2px solid rgba(255,255,255,.1);
-      background:
-        radial-gradient(circle at 30% 25%, rgba(255,255,255,.35), transparent 28%),
-        linear-gradient(180deg, #9becbb, var(--accent) 58%, var(--accent-2));
-      color: #09130c;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.14em;
-      box-shadow:
-        0 0 0 6px rgba(88,214,141,0.04),
-        0 12px 24px rgba(53,191,118,0.18);
-      cursor: pointer;
-      z-index: 5;
-    }
-
-    .spin-btn:disabled {
-      opacity: 0.7;
-      cursor: not-allowed;
-    }
-
-    .hint,
-    .status {
-      text-align: center;
-      border-radius: 16px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.025);
-      padding: 12px 14px;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    .hint {
-      margin-bottom: 10px;
-      background: transparent;
-      border: none;
-      padding: 0;
-      min-height: 20px;
-      font-size: 12.5px;
-    }
-
-    .status.success {
-      color: #d9f9e7;
-      border-color: rgba(88,214,141,0.14);
-      background: rgba(88,214,141,0.07);
-    }
-
-    .status.error {
-      color: #ffd7df;
-      border-color: rgba(255,123,145,0.16);
-      background: rgba(255,123,145,0.07);
-    }
-
-    .result-box,
-    .cooldown-box,
-    .admin-box {
-      display: none;
-      margin-top: 12px;
-    }
-
-    .result-box.show,
-    .cooldown-box.show,
-    .admin-box.show {
-      display: block;
-    }
-
-    .kicker {
-      margin-bottom: 8px;
-      font-size: 11px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: #c6f3d8;
-    }
-
-    .section-title {
-      margin: 0 0 8px;
-      font-size: 22px;
-      line-height: 1.06;
-      letter-spacing: -0.045em;
-      font-weight: 800;
-    }
-
-    .section-desc {
-      margin: 0 0 14px;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
-    .result-hero {
-      display: grid;
-      gap: 14px;
-    }
-
-    .result-badge {
-      width: fit-content;
-      min-height: 34px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 0 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(88,214,141,0.16);
-      background: rgba(88,214,141,0.1);
-      color: #d9f9e7;
-      font-size: 12px;
-      font-weight: 800;
-    }
-
-    .result-content,
-    .history-main,
-    .last-main {
-      display: flex;
-      gap: 14px;
-      align-items: center;
-    }
-
-    .prize-image-wrap,
-    .history-image-wrap,
-    .last-image-wrap,
-    .sheet-image-wrap {
-      overflow: hidden;
-      border-radius: 18px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.04);
-      box-shadow: var(--shadow-sm);
-      flex: 0 0 auto;
-    }
-
-    .prize-image-wrap {
-      width: 96px;
-      height: 96px;
-    }
-
-    .history-image-wrap {
-      width: 66px;
-      height: 66px;
-      border-radius: 16px;
-    }
-
-    .last-image-wrap {
-      width: 56px;
-      height: 56px;
-      border-radius: 14px;
-    }
-
-    .sheet-image-wrap {
-      width: 100%;
-      max-width: 220px;
-      aspect-ratio: 1 / 1;
-      margin: 0 auto 14px;
-      border-radius: 22px;
-    }
-
-    .prize-image,
-    .history-image,
-    .last-image,
-    .sheet-image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .prize-name {
-      font-size: 22px;
-      line-height: 1.08;
-      font-weight: 800;
-      margin-bottom: 6px;
-    }
-
-    .prize-desc {
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.55;
-    }
-
-    .result-stage {
-      margin-top: 12px;
-      border-radius: 20px;
-      border: 1px solid var(--line);
-      background: linear-gradient(180deg, rgba(88,214,141,0.12), rgba(53,191,118,0.05));
-      padding: 14px;
-    }
-
-    .code-label {
-      font-size: 11px;
-      color: var(--muted);
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 8px;
-      text-align: center;
-    }
-
-    .code-box {
-      min-height: 112px;
-      display: grid;
-      place-items: center;
-      border-radius: 18px;
-      border: 1px solid rgba(88,214,141,0.14);
-      background: rgba(0,0,0,0.12);
-      margin-bottom: 12px;
-    }
-
-    .code-value {
-      font-size: clamp(28px, 7vw, 42px);
-      line-height: 1;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-    }
-
-    .meta-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .meta-card {
-      border-radius: 16px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.025);
-      padding: 12px;
-    }
-
-    .meta-label {
-      font-size: 11px;
-      color: var(--muted);
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 6px;
-    }
-
-    .meta-value {
-      font-size: 14px;
-      line-height: 1.45;
-      font-weight: 700;
-    }
-
-    .actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 12px;
-    }
-
-    .btn,
-    .mini-btn,
-    .tab-btn,
-    .filter-btn {
-      border: none;
-      cursor: pointer;
-      font-family: inherit;
-    }
-
-    .btn {
-      min-height: 48px;
-      border-radius: 15px;
-      font-size: 14px;
-      font-weight: 700;
-      min-width: 140px;
-      flex: 1;
-    }
-
-    .btn-primary {
-      color: #09130c;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      box-shadow: 0 10px 22px rgba(53,191,118,0.14);
-    }
-
-    .btn-secondary {
-      color: var(--text);
-      border: 1px solid var(--line-strong);
-      background: rgba(255,255,255,0.04);
-    }
-
-    .btn-ghost {
-      color: var(--muted);
-      border: 1px solid var(--line);
-      background: transparent;
-    }
-
-    .timer-wrap {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 78px;
-      border-radius: 18px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.025);
-      margin: 10px 0 0;
-    }
-
-    .timer {
-      font-size: 32px;
-      line-height: 1;
-      letter-spacing: -0.05em;
-      font-weight: 800;
-      color: #d9f9e7;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .mini-card {
-      border-radius: 18px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.025);
-      padding: 14px;
-      box-shadow: var(--shadow-sm);
-      margin-top: 10px;
-    }
-
-    .mini-title {
-      font-size: 15px;
-      font-weight: 800;
-      margin-bottom: 4px;
-    }
-
-    .mini-desc {
-      font-size: 13px;
-      line-height: 1.55;
-      color: var(--muted);
-    }
-
-    .filters {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-bottom: 14px;
-    }
-
-    .filter-btn {
-      min-height: 40px;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.03);
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 800;
-    }
-
-    .filter-btn.active {
-      color: #09130c;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      border-color: transparent;
-    }
-
-    .history-list,
-    .admin-list {
       display: grid;
       gap: 12px;
     }
 
-    .history-item,
-    .admin-item {
-      padding: 14px;
-      border-radius: 18px;
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)), var(--card);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 16px;
+      box-shadow: var(--shadow);
     }
 
-    .history-top,
-    .admin-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      align-items: flex-start;
-      margin-bottom: 8px;
+    h1, h2, h3, p {
+      margin: 0;
     }
 
-    .history-name,
-    .admin-name {
-      font-size: 16px;
-      line-height: 1.25;
+    .hero {
+      text-align: center;
+      display: grid;
+      gap: 8px;
+      padding: 8px 6px 2px;
+    }
+
+    .hero h1 {
+      font-size: 28px;
+      line-height: 1.05;
       font-weight: 800;
+      letter-spacing: -0.04em;
     }
 
-    .history-meta,
-    .history-desc,
-    .admin-meta {
+    .hero p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .status {
+      min-height: 48px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      padding: 12px 14px;
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--muted);
+    }
+
+    .status.ok {
+      color: #d9f8e6;
+      border-color: rgba(88,214,141,.22);
+      background: rgba(88,214,141,.08);
+    }
+
+    .status.error {
+      color: #ffd5de;
+      border-color: rgba(255,122,146,.22);
+      background: rgba(255,122,146,.08);
+    }
+
+    .status.warn {
+      color: #ffe5bf;
+      border-color: rgba(243,181,98,.22);
+      background: rgba(243,181,98,.08);
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: 0;
+      border-radius: 14px;
+      min-height: 46px;
+      padding: 0 16px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: .18s ease;
+    }
+
+    button:active {
+      transform: scale(.985);
+    }
+
+    .btn-primary {
+      color: #08130c;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    }
+
+    .btn-secondary {
+      color: var(--text);
+      background: rgba(255,255,255,.05);
+      border: 1px solid var(--line);
+    }
+
+    .grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .meta {
+      display: grid;
+      gap: 8px;
       color: var(--muted);
       font-size: 13px;
       line-height: 1.55;
     }
 
-    .history-actions,
-    .admin-actions {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 12px;
-    }
-
-    .badge {
-      min-height: 28px;
-      padding: 0 10px;
-      border-radius: 999px;
-      display: inline-flex;
-      align-items: center;
+    .mono {
+      word-break: break-all;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
       font-size: 12px;
-      font-weight: 800;
-      white-space: nowrap;
-      border: 1px solid transparent;
+      line-height: 1.5;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--line);
+      color: #d7e2ee;
     }
 
-    .badge-ok {
-      color: #d8f9e5;
-      background: rgba(88,214,141,0.1);
-      border-color: rgba(88,214,141,0.14);
+    .admin-block {
+      display: none;
+      gap: 12px;
     }
 
-    .badge-warn {
-      color: #ffe5b8;
-      background: rgba(242,196,111,0.09);
-      border-color: rgba(242,196,111,0.14);
-    }
-
-    .badge-off {
-      color: #ffd2db;
-      background: rgba(255,123,145,0.09);
-      border-color: rgba(255,123,145,0.14);
-    }
-
-    .empty-state {
+    .admin-block.show {
       display: grid;
-      gap: 10px;
-      place-items: center;
-      text-align: center;
-      padding: 26px 16px;
-      border-radius: 22px;
-      border: 1px dashed rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.02);
-    }
-
-    .empty-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 16px;
-      display: grid;
-      place-items: center;
-      color: #c6f3d8;
-      background: rgba(88,214,141,0.08);
-      border: 1px solid rgba(88,214,141,0.12);
-      font-size: 22px;
-    }
-
-    .empty-title {
-      font-size: 16px;
-      font-weight: 800;
-    }
-
-    .empty-text {
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.55;
-      max-width: 34ch;
     }
 
     .field {
       display: grid;
       gap: 6px;
-      margin-bottom: 10px;
     }
 
     .field label {
@@ -665,1556 +187,390 @@
     }
 
     .field input,
-    .field textarea,
-    .field select {
+    .field textarea {
       width: 100%;
       border-radius: 14px;
-      border: 1px solid var(--line-strong);
-      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
       color: var(--text);
       padding: 12px 14px;
       font-size: 14px;
       outline: none;
-      font-family: inherit;
     }
 
     .field textarea {
-      min-height: 96px;
+      min-height: 92px;
       resize: vertical;
     }
 
-    .mini-btn {
-      min-height: 40px;
-      padding: 8px 12px;
-      border-radius: 12px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.04);
-      color: var(--text);
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .bottom-nav {
-      position: sticky;
-      bottom: 6px;
-      z-index: 10;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(72px, 1fr));
-      gap: 8px;
-      margin-top: 14px;
-      padding: 10px;
-      border-radius: 22px;
-      border: 1px solid var(--line);
-      background: rgba(12, 18, 28, 0.94);
-      backdrop-filter: blur(14px);
-      box-shadow: 0 12px 28px rgba(0,0,0,0.24);
-    }
-
-    .tab-btn {
-      min-height: 54px;
-      border-radius: 16px;
-      background: transparent;
-      color: var(--muted);
+    .row {
       display: flex;
-      flex-direction: column;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      font-weight: 700;
-      gap: 4px;
-    }
-
-    .tab-btn.active {
-      color: #09130c;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      box-shadow: 0 10px 22px rgba(53,191,118,0.16);
-    }
-
-    .tab-btn.hidden {
-      display: none !important;
-    }
-
-    .overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 50;
-      display: none;
-      align-items: flex-end;
-      justify-content: center;
-      padding: 16px;
-      background: rgba(5, 8, 13, 0.58);
-      backdrop-filter: blur(8px);
-    }
-
-    .overlay.show {
-      display: flex;
-    }
-
-    .sheet {
-      width: 100%;
-      max-width: 720px;
-      padding: 18px;
-      border-radius: 28px;
-    }
-
-    .sheet-handle {
-      width: 42px;
-      height: 5px;
+      min-height: 32px;
+      padding: 0 12px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.12);
-      margin: 0 auto 14px;
-    }
-
-    .sheet-title {
-      margin: 0 0 8px;
-      text-align: center;
-      font-size: 20px;
-      line-height: 1.08;
-      font-weight: 800;
-      letter-spacing: -0.04em;
-    }
-
-    .sheet-sub {
+      background: rgba(255,255,255,.05);
+      border: 1px solid var(--line);
       color: var(--muted);
-      text-align: center;
-      font-size: 14px;
-      line-height: 1.6;
-      margin-bottom: 14px;
+      font-size: 12px;
+      font-weight: 800;
     }
 
-    .proof-list {
+    .prize-list {
       display: grid;
       gap: 10px;
-      margin-bottom: 14px;
     }
 
-    .proof-item {
-      border-radius: 16px;
-      padding: 13px 14px;
-      background: rgba(255,255,255,0.025);
+    .prize-item {
+      border-radius: 18px;
+      padding: 14px;
       border: 1px solid var(--line);
+      background: var(--card-2);
+      display: grid;
+      gap: 8px;
+    }
+
+    .prize-title {
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .small {
       color: var(--muted);
-      font-size: 14px;
-      line-height: 1.55;
-    }
-
-    .proof-item strong {
-      color: var(--text);
-    }
-
-    .offline-banner {
-      display: none;
-      margin-bottom: 12px;
-      border-radius: 16px;
-      padding: 12px 14px;
-      background: rgba(255,123,145,0.08);
-      border: 1px solid rgba(255,123,145,0.14);
-      color: #ffd6de;
       font-size: 13px;
-      line-height: 1.5;
-    }
-
-    .offline-banner.show {
-      display: block;
-    }
-
-    @media (max-width: 560px) {
-      .app {
-        padding:
-          calc(10px + var(--safe-top))
-          12px
-          calc(18px + var(--safe-bottom));
-      }
-
-      .shell {
-        border-radius: 28px;
-        padding: 14px;
-      }
-
-      .wheel-wrap {
-        width: min(100%, 280px);
-      }
-
-      .actions {
-        flex-direction: column;
-      }
-
-      .meta-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .result-content,
-      .history-main,
-      .last-main {
-        align-items: flex-start;
-      }
-
-      .result-content {
-        flex-direction: column;
-      }
-
-      .prize-image-wrap {
-        width: 120px;
-        height: 120px;
-      }
-
-      .history-top,
-      .admin-top {
-        flex-direction: column;
-      }
+      line-height: 1.55;
     }
   </style>
 </head>
 <body>
   <div class="app">
-    <div class="shell">
-      <div id="offlineBanner" class="offline-banner">
-        Нет соединения с сетью. Некоторые действия могут быть временно недоступны.
+    <section class="card hero">
+      <h1>Колесо бонусов iGadget</h1>
+      <p>Диагностическая версия. Здесь видно, что именно приходит от Telegram и почему не открывается админка.</p>
+    </section>
+
+    <section class="card grid">
+      <div class="row">
+        <span class="pill" id="platformPill">platform: —</span>
+        <span class="pill" id="versionPill">tg version: —</span>
+        <span class="pill" id="initLenPill">initData: 0</span>
       </div>
 
-      <section class="hero">
-        <h1>Колесо бонусов iGadget</h1>
-        <p>Один запуск в день. Получайте скидку, бонус или подарок прямо в Mini App.</p>
-      </section>
+      <div id="statusBox" class="status">Инициализация...</div>
 
-      <div class="panel active" id="panelWheel">
-        <div class="card">
-          <div class="meta-row">
-            <div class="meta-pill">1 попытка в сутки · приз хранится 7 дней</div>
-          </div>
+      <div class="toolbar">
+        <button class="btn-primary" id="btnCheckInit">Проверить initData</button>
+        <button class="btn-secondary" id="btnCheckAdmin">Проверить админку</button>
+        <button class="btn-secondary" id="btnLoadPrizes">Загрузить призы</button>
+        <button class="btn-secondary" id="btnSeed">Создать дефолтные призы</button>
+      </div>
+    </section>
 
-          <div class="wheel-wrap">
-            <div class="pointer"></div>
-            <canvas id="wheel" width="360" height="360"></canvas>
-            <button id="spinBtn" class="spin-btn">КРУТИТЬ</button>
-          </div>
+    <section class="card grid">
+      <h2>Диагностика Telegram</h2>
+      <div class="meta">
+        <div>Эта страница использует raw <strong>Telegram.WebApp.initData</strong> и не пытается распарсить его вручную. Telegram рекомендует именно так передавать строку на сервер для проверки, а aiogram рекомендует безопасную серверную валидацию через safe_parse_webapp_init_data [web:2425][web:2563].</div>
+      </div>
 
-          <div class="hint">Нажмите кнопку, чтобы начать.</div>
-          <div class="status" id="status">Готово к запуску.</div>
+      <div>
+        <div class="small">initData</div>
+        <div class="mono" id="initDataBox">—</div>
+      </div>
 
-          <div class="result-box" id="resultBox">
-            <div class="section">
-              <div class="result-hero">
-                <div class="result-badge">Выигрыш сохранён</div>
+      <div>
+        <div class="small">Последний ответ сервера</div>
+        <div class="mono" id="serverResponseBox">—</div>
+      </div>
+    </section>
 
-                <div class="result-content">
-                  <div class="prize-image-wrap" id="resultImageWrap" style="display:none;">
-                    <img id="resultImage" class="prize-image" src="" alt="Приз" />
-                  </div>
+    <section class="card grid">
+      <h2>Админка</h2>
+      <div class="small">Если твой Telegram ID попал в ADMIN_IDS и initData валиден, блок ниже станет доступен [web:2425][web:2563].</div>
 
-                  <div>
-                    <div class="prize-name" id="resultPrize">—</div>
-                    <div class="prize-desc" id="resultDesc">—</div>
-                  </div>
-                </div>
-              </div>
+      <div id="adminStatus" class="status">Пока не проверяли доступ.</div>
 
-              <div class="result-stage">
-                <div class="code-label">Покажите код сотруднику</div>
-                <div class="code-box">
-                  <div class="code-value" id="resultCode">—</div>
-                </div>
-
-                <div class="meta-grid">
-                  <div class="meta-card">
-                    <div class="meta-label">Срок действия</div>
-                    <div class="meta-value" id="resultExpires">—</div>
-                  </div>
-                  <div class="meta-card">
-                    <div class="meta-label">Использование</div>
-                    <div class="meta-value">Покажите код сотруднику магазина или кассиру</div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="actions">
-                <button class="btn btn-primary" id="copyBtn">Скопировать код</button>
-                <button class="btn btn-secondary" id="detailsBtn">Открыть крупно</button>
-                <button class="btn btn-ghost" id="closeBtn">Закрыть</button>
-              </div>
-            </div>
-          </div>
-
-          <div class="cooldown-box" id="cooldownBox">
-            <div class="section">
-              <div class="kicker">Попытка использована</div>
-              <h3 class="section-title">Сегодня вы уже крутили колесо</h3>
-              <div class="section-desc" id="cooldownText">
-                Следующая попытка откроется после обновления дня.
-              </div>
-
-              <div class="timer-wrap">
-                <div class="timer" id="timer">--:--:--</div>
-              </div>
-
-              <div id="lastPrizeWrap"></div>
-            </div>
-          </div>
+      <div id="adminBlock" class="admin-block">
+        <div class="field">
+          <label for="title">Название приза</label>
+          <input id="title" type="text" placeholder="Например: Скидка 10%" />
         </div>
-      </div>
 
-      <div class="panel" id="panelHistory">
-        <div class="section">
-          <div class="kicker">Ваши результаты</div>
-          <h2 class="section-title">Мои призы</h2>
-          <div class="section-desc">
-            Здесь отображаются ваши выигрыши со статусами и сроком действия.
-          </div>
-
-          <div class="filters">
-            <button class="filter-btn active" data-filter="all">Все</button>
-            <button class="filter-btn" data-filter="active">Активные</button>
-            <button class="filter-btn" data-filter="used">Погашенные</button>
-          </div>
-
-          <div class="history-list" id="historyList"></div>
+        <div class="field">
+          <label for="short">Короткое имя</label>
+          <input id="short" type="text" placeholder="Например: 10%" />
         </div>
-      </div>
 
-      <div class="panel" id="panelFaq">
-        <div class="section">
-          <div class="kicker">Правила</div>
-          <h2 class="section-title">Как это работает</h2>
-          <div class="section-desc">
-            Одна попытка в сутки, результат сразу, код хранится в истории.
-          </div>
-
-          <div class="proof-list">
-            <div class="proof-item"><strong>1 попытка в день.</strong> Новая попытка открывается по московскому времени.</div>
-            <div class="proof-item"><strong>Результат сразу после спина.</strong> Никаких дополнительных шагов не нужно.</div>
-            <div class="proof-item"><strong>Код сохраняется.</strong> Его можно открыть позже в разделе «Призы».</div>
-            <div class="proof-item"><strong>Администратор может погасить код.</strong> После этого статус меняется на погашенный.</div>
-          </div>
+        <div class="field">
+          <label for="description">Описание</label>
+          <textarea id="description" placeholder="Описание приза"></textarea>
         </div>
-      </div>
 
-      <div class="panel" id="panelAdmin">
-        <div class="section admin-box" id="adminBox">
-          <div class="kicker">Управление</div>
-          <h2 class="section-title">Админка</h2>
-          <div class="section-desc" id="adminStatus">Проверяем доступ...</div>
-
-          <div class="section">
-            <div class="field">
-              <label for="newTitle">Название приза</label>
-              <input id="newTitle" type="text" placeholder="Например: Скидка 15%" />
-            </div>
-
-            <div class="field">
-              <label for="newShort">Короткое название</label>
-              <input id="newShort" type="text" placeholder="Например: 15%" />
-            </div>
-
-            <div class="field">
-              <label for="newDesc">Описание</label>
-              <textarea id="newDesc" placeholder="Описание приза"></textarea>
-            </div>
-
-            <div class="field">
-              <label for="newWeight">Вес</label>
-              <input id="newWeight" type="number" min="1" placeholder="Например: 10" />
-            </div>
-
-            <div class="field">
-              <label for="newActive">Статус</label>
-              <select id="newActive">
-                <option value="true">Включён</option>
-                <option value="false">Выключен</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="newImageFile">Картинка приза</label>
-              <input id="newImageFile" type="file" accept="image/png,image/jpeg,image/webp" />
-            </div>
-
-            <div class="actions">
-              <button class="btn btn-primary" id="addPrizeBtn">Добавить приз</button>
-            </div>
-          </div>
-
-          <div class="section">
-            <h3 class="section-title" style="font-size:18px;">Проверка и погашение кодов</h3>
-
-            <div class="field">
-              <label for="codeActionInput">Код</label>
-              <input id="codeActionInput" type="text" placeholder="Например: IG-AB12CD" />
-            </div>
-
-            <div class="actions">
-              <button class="btn btn-secondary" id="checkCodeBtn">Проверить код</button>
-              <button class="btn btn-primary" id="redeemCodeBtn">Погасить код</button>
-            </div>
-
-            <div class="status" id="codeActionStatus" style="margin-top:12px;">
-              Введите код для проверки.
-            </div>
-          </div>
-
-          <div class="section">
-            <h3 class="section-title" style="font-size:18px;">Список призов</h3>
-            <div class="admin-list" id="adminPrizeList"></div>
-          </div>
+        <div class="field">
+          <label for="weight">Вес</label>
+          <input id="weight" type="number" value="10" />
         </div>
+
+        <div class="toolbar">
+          <button class="btn-primary" id="btnAddPrize">Добавить приз</button>
+        </div>
+
+        <div class="prize-list" id="prizeList"></div>
       </div>
-
-      <nav class="bottom-nav">
-        <button class="tab-btn active" id="tabWheel">Колесо</button>
-        <button class="tab-btn" id="tabHistory">Призы</button>
-        <button class="tab-btn" id="tabFaq">FAQ</button>
-        <button class="tab-btn hidden" id="tabAdmin">Админ</button>
-      </nav>
-    </div>
-  </div>
-
-  <div class="overlay" id="detailsOverlay">
-    <div class="sheet">
-      <div class="sheet-handle"></div>
-
-      <div id="sheetImageWrap" class="sheet-image-wrap" style="display:none;">
-        <img id="sheetImage" class="sheet-image" src="" alt="Приз" />
-      </div>
-
-      <h3 class="sheet-title" id="sheetTitle">Детали приза</h3>
-      <div class="sheet-sub" id="sheetSub">Подробная информация о вашем выигрыше.</div>
-
-      <div class="proof-list">
-        <div class="proof-item"><strong>Код:</strong> <span id="sheetCode">—</span></div>
-        <div class="proof-item"><strong>Описание:</strong> <span id="sheetDesc">—</span></div>
-        <div class="proof-item"><strong>Срок действия:</strong> <span id="sheetExpires">—</span></div>
-        <div class="proof-item"><strong>Важно:</strong> Покажите код сотруднику магазина до истечения срока действия.</div>
-      </div>
-
-      <div class="actions">
-        <button class="btn btn-primary" id="sheetCopyBtn">Скопировать код</button>
-        <button class="btn btn-secondary" id="sheetCloseBtn">Закрыть</button>
-      </div>
-    </div>
+    </section>
   </div>
 
   <script>
-    const tg = window.Telegram.WebApp;
-    tg.ready();
-    tg.expand();
-
+    const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
     const API_BASE = window.location.origin;
-    const BUILD_VERSION = "index-aiogram-fastapi-v1";
 
-    const canvas = document.getElementById("wheel");
-    const ctx = canvas.getContext("2d");
-
-    const spinBtn = document.getElementById("spinBtn");
-    const statusEl = document.getElementById("status");
-    const offlineBanner = document.getElementById("offlineBanner");
-
-    const resultBox = document.getElementById("resultBox");
-    const cooldownBox = document.getElementById("cooldownBox");
-    const adminBox = document.getElementById("adminBox");
-
-    const resultPrize = document.getElementById("resultPrize");
-    const resultDesc = document.getElementById("resultDesc");
-    const resultCode = document.getElementById("resultCode");
-    const resultExpires = document.getElementById("resultExpires");
-    const resultImageWrap = document.getElementById("resultImageWrap");
-    const resultImage = document.getElementById("resultImage");
-
-    const copyBtn = document.getElementById("copyBtn");
-    const closeBtn = document.getElementById("closeBtn");
-    const detailsBtn = document.getElementById("detailsBtn");
-
-    const cooldownText = document.getElementById("cooldownText");
-    const timerEl = document.getElementById("timer");
-    const lastPrizeWrap = document.getElementById("lastPrizeWrap");
-
-    const historyList = document.getElementById("historyList");
-    const adminPrizeList = document.getElementById("adminPrizeList");
+    const statusBox = document.getElementById("statusBox");
+    const initDataBox = document.getElementById("initDataBox");
+    const serverResponseBox = document.getElementById("serverResponseBox");
     const adminStatus = document.getElementById("adminStatus");
+    const adminBlock = document.getElementById("adminBlock");
+    const prizeList = document.getElementById("prizeList");
 
-    const tabWheel = document.getElementById("tabWheel");
-    const tabHistory = document.getElementById("tabHistory");
-    const tabFaq = document.getElementById("tabFaq");
-    const tabAdmin = document.getElementById("tabAdmin");
+    const platformPill = document.getElementById("platformPill");
+    const versionPill = document.getElementById("versionPill");
+    const initLenPill = document.getElementById("initLenPill");
 
-    const panelWheel = document.getElementById("panelWheel");
-    const panelHistory = document.getElementById("panelHistory");
-    const panelFaq = document.getElementById("panelFaq");
-    const panelAdmin = document.getElementById("panelAdmin");
-
-    const detailsOverlay = document.getElementById("detailsOverlay");
-    const sheetTitle = document.getElementById("sheetTitle");
-    const sheetSub = document.getElementById("sheetSub");
-    const sheetCode = document.getElementById("sheetCode");
-    const sheetDesc = document.getElementById("sheetDesc");
-    const sheetExpires = document.getElementById("sheetExpires");
-    const sheetImageWrap = document.getElementById("sheetImageWrap");
-    const sheetImage = document.getElementById("sheetImage");
-    const sheetCopyBtn = document.getElementById("sheetCopyBtn");
-    const sheetCloseBtn = document.getElementById("sheetCloseBtn");
-
-    const newTitle = document.getElementById("newTitle");
-    const newShort = document.getElementById("newShort");
-    const newDesc = document.getElementById("newDesc");
-    const newWeight = document.getElementById("newWeight");
-    const newActive = document.getElementById("newActive");
-    const newImageFile = document.getElementById("newImageFile");
-    const addPrizeBtn = document.getElementById("addPrizeBtn");
-
-    const codeActionInput = document.getElementById("codeActionInput");
-    const checkCodeBtn = document.getElementById("checkCodeBtn");
-    const redeemCodeBtn = document.getElementById("redeemCodeBtn");
-    const codeActionStatus = document.getElementById("codeActionStatus");
-
-    const filterButtons = Array.from(document.querySelectorAll(".filter-btn"));
-
-    let prizes = [];
-    let currentRotation = 0;
-    let isSpinning = false;
-    let countdownInterval = null;
-    let historyCache = [];
-    let currentPrizePayload = null;
-    let currentView = "wheel";
-    let overlayOpen = false;
-    let historyFilter = "all";
-    let isAdmin = false;
-
-    function getInitData() {
-      return tg.initData || "";
-    }
-
-    function safeHapticSelection() {
-      try { tg.HapticFeedback?.selectionChanged(); } catch (e) {}
-    }
-
-    function safeHapticImpact(style = "light") {
-      try { tg.HapticFeedback?.impactOccurred(style); } catch (e) {}
-    }
-
-    function safeHapticNotification(type = "success") {
-      try { tg.HapticFeedback?.notificationOccurred(type); } catch (e) {}
-    }
+    const btnCheckInit = document.getElementById("btnCheckInit");
+    const btnCheckAdmin = document.getElementById("btnCheckAdmin");
+    const btnLoadPrizes = document.getElementById("btnLoadPrizes");
+    const btnSeed = document.getElementById("btnSeed");
+    const btnAddPrize = document.getElementById("btnAddPrize");
 
     function setStatus(text, type = "") {
-      statusEl.textContent = text;
-      statusEl.classList.remove("error", "success");
-      if (type) statusEl.classList.add(type);
+      statusBox.textContent = text;
+      statusBox.className = "status" + (type ? " " + type : "");
     }
 
-    function updateOfflineState() {
-      const offline = !navigator.onLine;
-      offlineBanner.classList.toggle("show", offline);
-      if (offline) {
-        setStatus("Нет соединения с интернетом. Попробуйте позже.", "error");
+    function setAdminStatus(text, type = "") {
+      adminStatus.textContent = text;
+      adminStatus.className = "status" + (type ? " " + type : "");
+    }
+
+    function safeStringify(value) {
+      try {
+        return JSON.stringify(value, null, 2);
+      } catch (e) {
+        return String(value);
       }
     }
 
-    window.addEventListener("online", updateOfflineState);
-    window.addEventListener("offline", updateOfflineState);
-
-    function setImageBlock(wrapEl, imgEl, src, altText) {
-      if (!wrapEl || !imgEl) return;
-
-      if (src) {
-        imgEl.src = src;
-        imgEl.alt = altText || "Приз";
-        wrapEl.style.display = "";
-      } else {
-        imgEl.src = "";
-        imgEl.alt = "Приз";
-        wrapEl.style.display = "none";
-      }
-    }
-
-    async function apiGet(path) {
-      const res = await fetch(`${API_BASE}${path}?v=${BUILD_VERSION}`, {
-        method: "GET",
+    async function safeFetchJson(url, options = {}) {
+      const response = await fetch(url, {
+        ...options,
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          ...(options.headers || {})
         }
       });
-      return await res.json();
-    }
 
-    async function apiPost(path, body) {
-      const res = await fetch(`${API_BASE}${path}?v=${BUILD_VERSION}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(body)
-      });
+      const rawText = await response.text();
+      let data = null;
 
-      const data = await res.json();
-      if (!res.ok && data?.detail) {
-        throw new Error(data.detail);
+      try {
+        data = rawText ? JSON.parse(rawText) : null;
+      } catch (e) {
+        throw new Error(`Сервер вернул не JSON. HTTP ${response.status}. Ответ: ${rawText.slice(0, 400)}`);
       }
+
+      if (!response.ok) {
+        throw new Error(data?.detail || data?.error || `HTTP ${response.status}`);
+      }
+
       return data;
     }
 
-    async function uploadPrizeImage(file) {
-      const formData = new FormData();
-      formData.append("init_data", getInitData());
-      formData.append("file", file);
-
-      const res = await fetch(`${API_BASE}/admin/upload-prize-image?v=${BUILD_VERSION}`, {
-        method: "POST",
-        body: formData
-      });
-
-      const data = await res.json();
-      if (!res.ok || !data.ok) {
-        throw new Error(data.detail || data.error || "Не удалось загрузить изображение");
-      }
-      return data.image_url || data.prize_image_url || "";
+    function getInitData() {
+      return tg?.initData || "";
     }
 
-    function fitLabel(label) {
-      if (!label) return ["Приз"];
-
-      const cleaned = String(label)
-        .replace(/\s+/g, " ")
-        .replace(/аксессуары/gi, "акс.")
-        .replace(/скидка/gi, "")
-        .replace(/бесплатная доставка/gi, "доставка")
-        .replace(/доставка бесплатно/gi, "доставка")
-        .replace(/на /gi, "")
-        .trim();
-
-      const words = cleaned.split(" ").filter(Boolean);
-      if (!words.length) return ["Приз"];
-
-      const lines = [];
-      let current = "";
-
-      for (const word of words) {
-        const test = current ? `${current} ${word}` : word;
-        if (test.length <= 9) {
-          current = test;
-        } else {
-          if (current) lines.push(current);
-          current = word;
-        }
-      }
-
-      if (current) lines.push(current);
-      return lines.slice(0, 3);
+    function renderTelegramInfo() {
+      const initData = getInitData();
+      platformPill.textContent = `platform: ${tg?.platform || "unknown"}`;
+      versionPill.textContent = `tg version: ${tg?.version || "unknown"}`;
+      initLenPill.textContent = `initData: ${initData.length}`;
+      initDataBox.textContent = initData || "ПУСТО";
     }
 
-    function shadeColor(hex, percent) {
-      const num = parseInt(hex.replace("#", ""), 16);
-      const amt = Math.round(2.55 * percent);
-      const r = Math.min(255, Math.max(0, (num >> 16) + amt));
-      const g = Math.min(255, Math.max(0, ((num >> 8) & 0x00ff) + amt));
-      const b = Math.min(255, Math.max(0, (num & 0x0000ff) + amt));
-      return "#" + (0x1000000 + r * 0x10000 + g * 0x100 + b).toString(16).slice(1);
-    }
+    async function checkInitData() {
+      const initData = getInitData();
 
-    function drawTextInSector(lines, x, y, maxWidth, baseFont = 12) {
-      let fontSize = baseFont;
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-
-      while (fontSize >= 10) {
-        ctx.font = `800 ${fontSize}px Inter, sans-serif`;
-        const widest = Math.max(...lines.map(line => ctx.measureText(line).width));
-        if (widest <= maxWidth) break;
-        fontSize -= 0.5;
-      }
-
-      const lineHeight = fontSize + 1.5;
-      const startY = y - ((lines.length - 1) * lineHeight) / 2;
-
-      lines.forEach((line, i) => {
-        ctx.strokeStyle = "rgba(8,11,16,0.16)";
-        ctx.lineWidth = 3;
-        ctx.strokeText(line, x, startY + i * lineHeight);
-        ctx.fillStyle = "#ffffff";
-        ctx.fillText(line, x, startY + i * lineHeight);
-      });
-    }
-
-    function drawWheel(items, rotationDeg = 0) {
-      const size = canvas.width;
-      const center = size / 2;
-      const radius = center - 18;
-
-      ctx.clearRect(0, 0, size, size);
-
-      ctx.beginPath();
-      ctx.arc(center, center, radius + 10, 0, Math.PI * 2);
-      ctx.fillStyle = "#0b1017";
-      ctx.fill();
-
-      ctx.beginPath();
-      ctx.arc(center, center, radius + 4, 0, Math.PI * 2);
-      ctx.fillStyle = "#141c28";
-      ctx.fill();
-
-      if (!items.length) {
-        ctx.beginPath();
-        ctx.arc(center, center, radius, 0, Math.PI * 2);
-        ctx.fillStyle = "#293347";
-        ctx.fill();
+      if (!initData) {
+        setStatus("initData пустой. Открой приложение именно из Telegram через кнопку Mini App.", "error");
+        serverResponseBox.textContent = "initData is empty";
         return;
       }
 
-      const colors = ["#31be73", "#ee718a", "#5f9ff1", "#d9a043", "#7c68de", "#a36fd0"];
-      const total = items.length;
-      const arc = (Math.PI * 2) / total;
-      const rotationRad = rotationDeg * Math.PI / 180;
+      setStatus("Проверяем initData на сервере...");
+      try {
+        const data = await safeFetchJson(`${API_BASE}/debug/check-init-data`, {
+          method: "POST",
+          body: JSON.stringify({ init_data: initData })
+        });
 
-      for (let i = 0; i < total; i++) {
-        const start = -Math.PI / 2 + rotationRad + i * arc;
-        const end = start + arc;
-        const mid = start + arc / 2;
-        const color = colors[i % colors.length];
+        serverResponseBox.textContent = safeStringify(data);
 
-        const grad = ctx.createLinearGradient(
-          center + Math.cos(start) * 28,
-          center + Math.sin(start) * 28,
-          center + Math.cos(end) * radius,
-          center + Math.sin(end) * radius
-        );
-        grad.addColorStop(0, shadeColor(color, -8));
-        grad.addColorStop(1, shadeColor(color, 1));
+        if (data.ok) {
+          setStatus(`initData валиден. Telegram user: ${data.user?.id || "—"}`, "ok");
+        } else {
+          setStatus(`initData невалиден: ${data.detail || "неизвестная ошибка"}`, "error");
+        }
+      } catch (e) {
+        serverResponseBox.textContent = String(e.message || e);
+        setStatus(`Ошибка проверки initData: ${e.message || e}`, "error");
+      }
+    }
 
-        ctx.beginPath();
-        ctx.moveTo(center, center);
-        ctx.arc(center, center, radius, start, end);
-        ctx.closePath();
-        ctx.fillStyle = grad;
-        ctx.fill();
+    async function checkAdmin() {
+      const initData = getInitData();
 
-        ctx.beginPath();
-        ctx.moveTo(center, center);
-        ctx.arc(center, center, radius, start, end);
-        ctx.closePath();
-        ctx.lineWidth = 1.8;
-        ctx.strokeStyle = "rgba(7,10,16,0.32)";
-        ctx.stroke();
-
-        ctx.save();
-        ctx.translate(center, center);
-        ctx.rotate(mid);
-
-        const textLines = fitLabel(items[i].short || items[i].title || "Приз");
-        const textRadius = radius - 70;
-        const sectorWidth = Math.max(60, radius * arc * 0.64);
-
-        drawTextInSector(textLines, textRadius, 0, sectorWidth, 12);
-        ctx.restore();
+      if (!initData) {
+        setAdminStatus("Нет initData. Админка не может быть проверена.", "error");
+        return;
       }
 
-      ctx.beginPath();
-      ctx.arc(center, center, radius, 0, Math.PI * 2);
-      ctx.lineWidth = 4;
-      ctx.strokeStyle = "rgba(255,255,255,0.11)";
-      ctx.stroke();
+      setAdminStatus("Проверяем доступ к админке...");
+      try {
+        const data = await safeFetchJson(`${API_BASE}/admin/me`, {
+          method: "POST",
+          body: JSON.stringify({ init_data: initData })
+        });
 
-      const ring = ctx.createRadialGradient(center, center, 24, center, center, 54);
-      ring.addColorStop(0, "#1b2940");
-      ring.addColorStop(1, "#111926");
-      ctx.beginPath();
-      ctx.arc(center, center, 50, 0, Math.PI * 2);
-      ctx.fillStyle = ring;
-      ctx.fill();
-
-      ctx.beginPath();
-      ctx.arc(center, center, 38, 0, Math.PI * 2);
-      ctx.fillStyle = "#172334";
-      ctx.fill();
-
-      ctx.beginPath();
-      ctx.arc(center, center, 38, 0, Math.PI * 2);
-      ctx.lineWidth = 2;
-      ctx.strokeStyle = "rgba(255,255,255,0.07)";
-      ctx.stroke();
+        serverResponseBox.textContent = safeStringify(data);
+        adminBlock.classList.add("show");
+        setAdminStatus(`Доступ разрешён. Telegram ID: ${data.telegram_id}`, "ok");
+      } catch (e) {
+        adminBlock.classList.remove("show");
+        serverResponseBox.textContent = String(e.message || e);
+        setAdminStatus(`Админка недоступна: ${e.message || e}`, "error");
+      }
     }
 
     async function loadPrizes() {
-      const data = await apiGet("/prizes");
-      if (!data.ok || !Array.isArray(data.items) || !data.items.length) {
-        throw new Error("Не удалось загрузить призы");
-      }
-      prizes = data.items;
-      drawWheel(prizes, currentRotation);
-    }
+      try {
+        const data = await safeFetchJson(`${API_BASE}/admin/prizes`, {
+          method: "POST",
+          body: JSON.stringify({ init_data: getInitData() })
+        });
 
-    function findPrizeIndexById(prizeId) {
-      return prizes.findIndex(p => Number(p.id) === Number(prizeId));
-    }
+        prizeList.innerHTML = "";
+        const items = data.items || [];
 
-    function animateSpinToPrize(prizeId) {
-      return new Promise((resolve) => {
-        const index = findPrizeIndexById(prizeId);
-        if (index < 0) {
-          resolve();
+        if (!items.length) {
+          prizeList.innerHTML = `<div class="prize-item"><div class="small">Призов пока нет.</div></div>`;
           return;
         }
 
-        const count = prizes.length;
-        const slice = 360 / count;
-        const targetCenter = index * slice + slice / 2;
-        const finalRotation = (360 * 6) + (360 - targetCenter);
+        items.forEach((item) => {
+          const el = document.createElement("div");
+          el.className = "prize-item";
+          el.innerHTML = `
+            <div class="prize-title">${escapeHtml(item.title)}</div>
+            <div class="small">ID: ${item.id} · short: ${escapeHtml(item.short || "")}</div>
+            <div class="small">${escapeHtml(item.description || "")}</div>
+            <div class="small">Вес: ${item.weight} · Активен: ${item.active ? "да" : "нет"}</div>
+          `;
+          prizeList.appendChild(el);
+        });
 
-        const start = performance.now();
-        const duration = 4300;
-        const from = currentRotation;
-        const to = currentRotation + finalRotation;
-
-        function easeOutCubic(t) {
-          return 1 - Math.pow(1 - t, 3);
-        }
-
-        function frame(now) {
-          const elapsed = now - start;
-          const progress = Math.min(elapsed / duration, 1);
-          const eased = easeOutCubic(progress);
-          const value = from + (to - from) * eased;
-
-          drawWheel(prizes, value);
-
-          if (progress < 1) {
-            requestAnimationFrame(frame);
-          } else {
-            currentRotation = value % 360;
-            drawWheel(prizes, currentRotation);
-            resolve();
-          }
-        }
-
-        requestAnimationFrame(frame);
-      });
-    }
-
-    function openDetailsOverlay(payload) {
-      currentPrizePayload = payload;
-      overlayOpen = true;
-
-      sheetTitle.textContent = payload.title || "Детали приза";
-      sheetSub.textContent = "Подробная информация о вашем выигрыше.";
-      sheetCode.textContent = payload.code || "—";
-      sheetDesc.textContent = payload.description || "Описание отсутствует.";
-      sheetExpires.textContent = payload.expires || "Не указан";
-      setImageBlock(sheetImageWrap, sheetImage, payload.image || "", payload.title || "Приз");
-
-      detailsOverlay.classList.add("show");
-      try { tg.BackButton.show(); } catch (e) {}
-    }
-
-    function closeDetailsOverlay() {
-      overlayOpen = false;
-      detailsOverlay.classList.remove("show");
-      updateBackButton();
-    }
-
-    function getHistoryBadge(item) {
-      if (item.redeemed) return { cls: "badge-off", text: "Погашен" };
-      const expiresText = item.expires_at_text || item.expires_at || "";
-      const lower = String(expiresText).toLowerCase();
-      if (lower.includes("сегодня") || lower.includes("завтра")) {
-        return { cls: "badge-warn", text: "Скоро истечёт" };
-      }
-      return { cls: "badge-ok", text: "Активен" };
-    }
-
-    async function copyCodeValue(code) {
-      if (!code || code === "—") return;
-
-      try {
-        await navigator.clipboard.writeText(code);
-        setStatus("Код скопирован.", "success");
-        safeHapticNotification("success");
+        setAdminStatus("Призы загружены.", "ok");
       } catch (e) {
-        setStatus("Не удалось скопировать код.", "error");
-        safeHapticNotification("error");
+        setAdminStatus(`Не удалось загрузить призы: ${e.message || e}`, "error");
       }
     }
 
-    function showResult(data) {
-      cooldownBox.classList.remove("show");
-      resultBox.classList.add("show");
+    async function seedPrizes() {
+      try {
+        const data = await safeFetchJson(`${API_BASE}/admin/seed-default-prizes`, {
+          method: "POST",
+          body: JSON.stringify({ init_data: getInitData() })
+        });
 
-      currentPrizePayload = {
-        title: data.prize_title || "Ваш приз",
-        description: data.prize_description || "",
-        code: data.code || "—",
-        expires: data.expires_at_text ? `До ${data.expires_at_text}` : "Срок действия уточняйте у сотрудника.",
-        image: data.image_url || data.prize_image_url || ""
+        serverResponseBox.textContent = safeStringify(data);
+        setAdminStatus(data.message || "Готово", "ok");
+        await loadPrizes();
+      } catch (e) {
+        setAdminStatus(`Не удалось создать дефолтные призы: ${e.message || e}`, "error");
+      }
+    }
+
+    async function addPrize() {
+      const payload = {
+        init_data: getInitData(),
+        title: document.getElementById("title").value.trim(),
+        short: document.getElementById("short").value.trim(),
+        description: document.getElementById("description").value.trim(),
+        weight: Number(document.getElementById("weight").value || 0),
+        active: true
       };
 
-      resultPrize.textContent = currentPrizePayload.title;
-      resultDesc.textContent = currentPrizePayload.description;
-      resultCode.textContent = currentPrizePayload.code;
-      resultExpires.textContent = currentPrizePayload.expires;
-      setImageBlock(resultImageWrap, resultImage, currentPrizePayload.image, currentPrizePayload.title);
-
-      setStatus("Готово: ваш выигрыш сохранён.", "success");
-      historyCache = [];
-    }
-
-    function getNextMidnightMSK() {
-      const now = new Date();
-      const moscowNow = new Date(now.toLocaleString("en-US", { timeZone: "Europe/Moscow" }));
-      const next = new Date(moscowNow);
-      next.setHours(24, 0, 0, 0);
-      return next.getTime() - moscowNow.getTime();
-    }
-
-    function formatMs(ms) {
-      const total = Math.max(0, Math.floor(ms / 1000));
-      const h = String(Math.floor(total / 3600)).padStart(2, "0");
-      const m = String(Math.floor((total % 3600) / 60)).padStart(2, "0");
-      const s = String(total % 60).padStart(2, "0");
-      return `${h}:${m}:${s}`;
-    }
-
-    function renderLastPrizeCard(data) {
-      lastPrizeWrap.innerHTML = "";
-
-      if (!data.last_code && !data.last_prize_title) return;
-
-      const image = data.last_image_url || "";
-      const imageHtml = image
-        ? `
-          <div class="last-image-wrap">
-            <img class="last-image" src="${image}" alt="${data.last_prize_title || "Последний приз"}" />
-          </div>
-        `
-        : "";
-
-      const card = document.createElement("div");
-      card.className = "mini-card";
-      card.innerHTML = `
-        <div class="last-main">
-          ${imageHtml}
-          <div>
-            <div class="mini-title">${data.last_prize_title || "Последний приз"}</div>
-            <div class="mini-desc">
-              Код: ${data.last_code || "—"}<br>
-              ${data.last_expires_at_text ? "Действует до: " + data.last_expires_at_text : "Срок действия уточняйте у сотрудника."}
-            </div>
-          </div>
-        </div>
-      `;
-      lastPrizeWrap.appendChild(card);
-    }
-
-    function startCooldown(data) {
-      resultBox.classList.remove("show");
-      cooldownBox.classList.add("show");
-
-      cooldownText.textContent = data.error || "Сегодня вы уже использовали попытку.";
-      renderLastPrizeCard(data);
-
-      if (countdownInterval) clearInterval(countdownInterval);
-
-      function tick() {
-        timerEl.textContent = formatMs(getNextMidnightMSK());
-      }
-
-      tick();
-      countdownInterval = setInterval(tick, 1000);
-    }
-
-    async function spinWheel() {
-      if (isSpinning || !navigator.onLine) return;
-      if (!getInitData()) {
-        setStatus("Mini App открыт без Telegram initData. Откройте приложение из бота.", "error");
-        return;
-      }
-
-      isSpinning = true;
-      spinBtn.disabled = true;
-      resultBox.classList.remove("show");
-      cooldownBox.classList.remove("show");
-      setStatus("Запрашиваем результат...");
-      safeHapticImpact("light");
-
-      try {
-        const data = await apiPost("/spin", {
-          init_data: getInitData()
-        });
-
-        if (!data.ok && data.cooldown) {
-          safeHapticNotification("warning");
-          setStatus("На сегодня попытка уже израсходована.", "error");
-          startCooldown(data);
-          return;
-        }
-
-        if (!data.ok) {
-          safeHapticNotification("error");
-          setStatus(data.error || "Произошла ошибка.", "error");
-          return;
-        }
-
-        await animateSpinToPrize(data.prize_id);
-        safeHapticNotification("success");
-        showResult(data);
-      } catch (e) {
-        safeHapticNotification("error");
-        setStatus(e.message || "Ошибка соединения с сервером.", "error");
-      } finally {
-        isSpinning = false;
-        spinBtn.disabled = false;
-      }
-    }
-
-    async function loadHistory(force = false) {
-      if (!getInitData()) {
-        historyList.innerHTML = `
-          <div class="empty-state">
-            <div class="empty-icon">!</div>
-            <div class="empty-title">Нет данных Telegram</div>
-            <div class="empty-text">Откройте приложение из Telegram-бота, чтобы увидеть историю.</div>
-          </div>
-        `;
-        return;
-      }
-
-      if (historyCache.length && !force) {
-        renderHistory(historyCache);
-        return;
-      }
-
-      historyList.innerHTML = `
-        <div class="empty-state">
-          <div class="empty-icon">…</div>
-          <div class="empty-title">Загружаем историю</div>
-          <div class="empty-text">Подождите немного, получаем ваши результаты.</div>
-        </div>
-      `;
-
-      try {
-        const data = await apiPost("/history", {
-          init_data: getInitData()
-        });
-
-        if (!data.ok || !Array.isArray(data.items)) {
-          renderHistory([]);
-          return;
-        }
-
-        historyCache = data.items;
-        renderHistory(historyCache);
-      } catch (e) {
-        renderHistory([]);
-      }
-    }
-
-    function renderHistory(items) {
-      historyList.innerHTML = "";
-
-      const filtered = items.filter((item) => {
-        if (historyFilter === "active") return !item.redeemed;
-        if (historyFilter === "used") return !!item.redeemed;
-        return true;
-      });
-
-      if (!filtered.length) {
-        historyList.innerHTML = `
-          <div class="empty-state">
-            <div class="empty-icon">🎁</div>
-            <div class="empty-title">Пока нет сохранённых выигрышей</div>
-            <div class="empty-text">После первого успешного спина здесь появятся ваши коды и призы.</div>
-          </div>
-        `;
-        return;
-      }
-
-      filtered.forEach((item) => {
-        const badge = getHistoryBadge(item);
-        const expiresText = item.expires_at_text || item.expires_at || "Не указан";
-        const image = item.image_url || item.prize_image_url || "";
-        const payload = encodeURIComponent(JSON.stringify({
-          title: item.prize_title || "Приз",
-          description: item.prize_description || "Описание отсутствует.",
-          code: item.code || "—",
-          expires: expiresText,
-          image
-        }));
-
-        const imageHtml = image
-          ? `
-            <div class="history-image-wrap">
-              <img class="history-image" src="${image}" alt="${item.prize_title || "Приз"}" />
-            </div>
-          `
-          : "";
-
-        const card = document.createElement("div");
-        card.className = "history-item";
-        card.innerHTML = `
-          <div class="history-top">
-            <div class="history-main">
-              ${imageHtml}
-              <div>
-                <div class="history-name">${item.prize_title || "Приз"}</div>
-                <div class="history-meta">${item.created_at_text || item.created_at || "Дата не указана"}</div>
-              </div>
-            </div>
-            <div class="badge ${badge.cls}">${badge.text}</div>
-          </div>
-
-          <div class="history-desc">${item.prize_description || "Описание отсутствует."}</div>
-
-          <div class="history-actions">
-            <div class="badge badge-warn">До: ${expiresText}</div>
-            <div class="badge badge-ok">Код: ${item.code || "—"}</div>
-          </div>
-
-          <div class="history-actions">
-            <button class="mini-btn" data-history-copy="${item.code || ""}">Скопировать код</button>
-            <button class="mini-btn" data-history-open="${payload}">Подробнее</button>
-          </div>
-        `;
-        historyList.appendChild(card);
-      });
-
-      historyList.querySelectorAll("[data-history-copy]").forEach(btn => {
-        btn.addEventListener("click", async () => {
-          const code = btn.getAttribute("data-history-copy");
-          await copyCodeValue(code);
-        });
-      });
-
-      historyList.querySelectorAll("[data-history-open]").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const payload = JSON.parse(decodeURIComponent(btn.getAttribute("data-history-open")));
-          openDetailsOverlay(payload);
-        });
-      });
-    }
-
-    function switchTab(name) {
-      currentView = name;
-      safeHapticSelection();
-
-      tabWheel.classList.toggle("active", name === "wheel");
-      tabHistory.classList.toggle("active", name === "history");
-      tabFaq.classList.toggle("active", name === "faq");
-      tabAdmin.classList.toggle("active", name === "admin");
-
-      panelWheel.classList.toggle("active", name === "wheel");
-      panelHistory.classList.toggle("active", name === "history");
-      panelFaq.classList.toggle("active", name === "faq");
-      panelAdmin.classList.toggle("active", name === "admin");
-
-      if (name === "history") {
-        loadHistory();
-      } else if (name === "admin" && isAdmin) {
-        loadAdminPrizes();
-      }
-
-      updateBackButton();
-    }
-
-    function updateBackButton() {
-      try {
-        if (overlayOpen) {
-          tg.BackButton.show();
-          return;
-        }
-        if (currentView === "wheel") {
-          tg.BackButton.hide();
-        } else {
-          tg.BackButton.show();
-        }
-      } catch (e) {}
-    }
-
-    function onTelegramBack() {
-      if (overlayOpen) {
-        closeDetailsOverlay();
-        return;
-      }
-      if (currentView !== "wheel") {
-        switchTab("wheel");
-      }
-    }
-
-    async function checkAdminAccess() {
-      if (!getInitData()) {
-        adminStatus.textContent = "Нет initData. Админка доступна только внутри Telegram.";
+      if (!payload.title || !payload.short || !payload.description || payload.weight <= 0) {
+        setAdminStatus("Заполни все поля корректно.", "warn");
         return;
       }
 
       try {
-        const data = await apiPost("/admin/me", {
-          init_data: getInitData()
+        const data = await safeFetchJson(`${API_BASE}/admin/prize/add`, {
+          method: "POST",
+          body: JSON.stringify(payload)
         });
 
-        if (data.ok) {
-          isAdmin = true;
-          tabAdmin.classList.remove("hidden");
-          adminBox.classList.add("show");
-          adminStatus.textContent = `Вы вошли как администратор: ${data.first_name || data.username || "пользователь"}`;
-          await loadAdminPrizes();
-        }
-      } catch (e) {
-        isAdmin = false;
-      }
-    }
-
-    async function loadAdminPrizes() {
-      if (!isAdmin) return;
-
-      const data = await apiPost("/admin/prizes", {
-        init_data: getInitData()
-      });
-
-      if (!data.ok) {
-        adminStatus.textContent = data.error || "Нет доступа к админке.";
-        return;
-      }
-
-      adminStatus.textContent = "Список призов загружен.";
-      renderAdminPrizeList(data.items || []);
-    }
-
-    function renderAdminPrizeList(items) {
-      adminPrizeList.innerHTML = "";
-
-      if (!items.length) {
-        adminPrizeList.innerHTML = "<div class='status'>Призов пока нет.</div>";
-        return;
-      }
-
-      items.forEach((item) => {
-        const image = item.image_url || item.prize_image_url || "";
-        const imageHtml = image
-          ? `
-            <div class="history-image-wrap">
-              <img class="history-image" src="${image}" alt="${item.title}" />
-            </div>
-          `
-          : "";
-
-        const block = document.createElement("div");
-        block.className = "admin-item";
-
-        block.innerHTML = `
-          <div class="admin-top">
-            <div class="history-main">
-              ${imageHtml}
-              <div>
-                <div class="admin-name">${item.title}</div>
-                <div class="admin-meta">ID: ${item.id} · Коротко: ${item.short || "—"}</div>
-              </div>
-            </div>
-            <div class="badge ${item.active ? "badge-ok" : "badge-off"}">
-              ${item.active ? "Включён" : "Выключен"}
-            </div>
-          </div>
-
-          <div class="admin-meta">
-            ${item.description}<br>
-            Вес: <strong>${item.weight}</strong>
-          </div>
-
-          <div class="admin-actions">
-            <button class="mini-btn" data-action="edit" data-id="${item.id}">Редактировать</button>
-            <button class="mini-btn" data-action="weight" data-id="${item.id}">Изменить вес</button>
-            <button class="mini-btn" data-action="toggle" data-id="${item.id}">
-              ${item.active ? "Выключить" : "Включить"}
-            </button>
-            <button class="mini-btn" data-action="delete" data-id="${item.id}">Удалить</button>
-          </div>
-        `;
-        adminPrizeList.appendChild(block);
-      });
-
-      adminPrizeList.querySelectorAll("[data-action='edit']").forEach(btn => {
-        btn.addEventListener("click", async () => {
-          const id = Number(btn.dataset.id);
-          const item = items.find(x => Number(x.id) === id);
-          if (!item) return;
-
-          const title = prompt("Название", item.title);
-          if (title === null) return;
-
-          const short = prompt("Короткий текст", item.short || "");
-          if (short === null) return;
-
-          const description = prompt("Описание", item.description || "");
-          if (description === null) return;
-
-          const weightRaw = prompt("Вес", String(item.weight));
-          if (weightRaw === null) return;
-
-          const weight = Number(weightRaw);
-          if (!weight || weight <= 0) {
-            alert("Вес должен быть больше 0");
-            return;
-          }
-
-          let image_url = item.image_url || item.prize_image_url || "";
-          const replaceImage = confirm("Заменить картинку приза?");
-
-          if (replaceImage) {
-            alert("Выберите файл в поле 'Картинка приза' выше, затем нажмите OK.");
-            if (newImageFile.files && newImageFile.files[0]) {
-              image_url = await uploadPrizeImage(newImageFile.files[0]);
-            }
-          }
-
-          const active = confirm("Оставить приз включённым? OK = включён, Cancel = выключен.");
-
-          adminStatus.textContent = "Сохраняем изменения приза...";
-
-          const data = await apiPost("/admin/prize/update", {
-            init_data: getInitData(),
-            prize_id: id,
-            title,
-            short,
-            description,
-            weight,
-            active,
-            image_url
-          });
-
-          if (!data.ok) {
-            alert(data.error || "Ошибка редактирования");
-            adminStatus.textContent = data.error || "Ошибка";
-            return;
-          }
-
-          adminStatus.textContent = "Приз обновлён.";
-          renderAdminPrizeList(data.items);
-          await loadPrizes();
-        });
-      });
-
-      adminPrizeList.querySelectorAll("[data-action='weight']").forEach(btn => {
-        btn.addEventListener("click", async () => {
-          const id = Number(btn.dataset.id);
-          const value = prompt("Введите новый вес:");
-          if (!value) return;
-
-          const weight = Number(value);
-          if (!weight || weight <= 0) {
-            alert("Вес должен быть больше 0");
-            return;
-          }
-
-          adminStatus.textContent = "Сохраняем новый вес...";
-
-          const data = await apiPost("/admin/prize/update-weight", {
-            init_data: getInitData(),
-            prize_id: id,
-            weight
-          });
-
-          if (!data.ok) {
-            alert(data.error || "Ошибка обновления веса");
-            adminStatus.textContent = data.error || "Ошибка";
-            return;
-          }
-
-          adminStatus.textContent = "Вес обновлён.";
-          renderAdminPrizeList(data.items);
-          await loadPrizes();
-        });
-      });
-
-      adminPrizeList.querySelectorAll("[data-action='toggle']").forEach(btn => {
-        btn.addEventListener("click", async () => {
-          const id = Number(btn.dataset.id);
-          adminStatus.textContent = "Меняем статус приза...";
-
-          const data = await apiPost("/admin/prize/toggle", {
-            init_data: getInitData(),
-            prize_id: id
-          });
-
-          if (!data.ok) {
-            alert(data.error || "Ошибка смены статуса");
-            adminStatus.textContent = data.error || "Ошибка";
-            return;
-          }
-
-          adminStatus.textContent = "Статус обновлён.";
-          renderAdminPrizeList(data.items);
-          await loadPrizes();
-        });
-      });
-
-      adminPrizeList.querySelectorAll("[data-action='delete']").forEach(btn => {
-        btn.addEventListener("click", async () => {
-          const id = Number(btn.dataset.id);
-          const ok = confirm("Удалить этот приз?");
-          if (!ok) return;
-
-          adminStatus.textContent = "Удаляем приз...";
-
-          const data = await apiPost("/admin/prize/delete", {
-            init_data: getInitData(),
-            prize_id: id
-          });
-
-          if (!data.ok) {
-            alert(data.error || "Ошибка удаления");
-            adminStatus.textContent = data.error || "Ошибка";
-            return;
-          }
-
-          adminStatus.textContent = "Приз удалён.";
-          renderAdminPrizeList(data.items);
-          await loadPrizes();
-        });
-      });
-    }
-
-    addPrizeBtn.addEventListener("click", async () => {
-      const title = newTitle.value.trim();
-      const short = newShort.value.trim();
-      const description = newDesc.value.trim();
-      const weight = Number(newWeight.value);
-      const active = newActive.value === "true";
-
-      if (!title || !short || !description || !weight || weight <= 0) {
-        alert("Заполните все поля корректно.");
-        return;
-      }
-
-      let image_url = "";
-      if (newImageFile.files && newImageFile.files[0]) {
-        try {
-          adminStatus.textContent = "Загружаем изображение...";
-          image_url = await uploadPrizeImage(newImageFile.files[0]);
-        } catch (e) {
-          alert(e.message || "Ошибка загрузки картинки");
-          return;
-        }
-      }
-
-      adminStatus.textContent = "Добавляем приз...";
-
-      const data = await apiPost("/admin/prize/add", {
-        init_data: getInitData(),
-        title,
-        short,
-        description,
-        weight,
-        active,
-        image_url
-      });
-
-      if (!data.ok) {
-        alert(data.error || "Ошибка добавления приза");
-        adminStatus.textContent = data.error || "Ошибка";
-        return;
-      }
-
-      newTitle.value = "";
-      newShort.value = "";
-      newDesc.value = "";
-      newWeight.value = "";
-      newActive.value = "true";
-      newImageFile.value = "";
-
-      adminStatus.textContent = "Приз успешно добавлен.";
-      renderAdminPrizeList(data.items);
-      await loadPrizes();
-    });
-
-    checkCodeBtn.addEventListener("click", async () => {
-      const code = codeActionInput.value.trim();
-      if (!code) {
-        codeActionStatus.textContent = "Введите код.";
-        return;
-      }
-
-      codeActionStatus.textContent = "Проверяем код...";
-
-      try {
-        const data = await apiPost("/admin/code/check", {
-          init_data: getInitData(),
-          code
-        });
-
-        codeActionStatus.textContent =
-          `Код ${data.code} найден. Приз: ${data.prize_title}. Статус: ${data.redeemed ? "уже погашен" : "ещё не погашен"}.`;
-      } catch (e) {
-        codeActionStatus.textContent = e.message || "Код не найден.";
-      }
-    });
-
-    redeemCodeBtn.addEventListener("click", async () => {
-      const code = codeActionInput.value.trim();
-      if (!code) {
-        codeActionStatus.textContent = "Введите код.";
-        return;
-      }
-
-      codeActionStatus.textContent = "Погашаем код...";
-
-      try {
-        const data = await apiPost("/admin/code/redeem", {
-          init_data: getInitData(),
-          code
-        });
-
-        safeHapticNotification("success");
-        codeActionStatus.textContent = `Код ${data.code} погашен. Приз: ${data.prize_title}.`;
-        historyCache = [];
-      } catch (e) {
-        safeHapticNotification("error");
-        codeActionStatus.textContent = e.message || "Не удалось погасить код.";
-      }
-    });
-
-    tabWheel.addEventListener("click", () => switchTab("wheel"));
-    tabHistory.addEventListener("click", () => switchTab("history"));
-    tabFaq.addEventListener("click", () => switchTab("faq"));
-    tabAdmin.addEventListener("click", () => switchTab("admin"));
-
-    spinBtn.addEventListener("click", spinWheel);
-    copyBtn.addEventListener("click", () => copyCodeValue(resultCode.textContent.trim()));
-    closeBtn.addEventListener("click", () => resultBox.classList.remove("show"));
-    detailsBtn.addEventListener("click", () => {
-      if (currentPrizePayload) openDetailsOverlay(currentPrizePayload);
-    });
-
-    sheetCopyBtn.addEventListener("click", () => copyCodeValue(sheetCode.textContent.trim()));
-    sheetCloseBtn.addEventListener("click", closeDetailsOverlay);
-
-    filterButtons.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        historyFilter = btn.dataset.filter || "all";
-        filterButtons.forEach(item => item.classList.toggle("active", item === btn));
-        renderHistory(historyCache);
-        safeHapticSelection();
-      });
-    });
-
-    detailsOverlay.addEventListener("click", (e) => {
-      if (e.target === detailsOverlay) closeDetailsOverlay();
-    });
-
-    try {
-      tg.BackButton.onClick(onTelegramBack);
-    } catch (e) {}
-
-    async function initApp() {
-      updateOfflineState();
-
-      if (!getInitData()) {
-        setStatus("Приложение лучше открывать через кнопку бота внутри Telegram.", "error");
-      }
-
-      try {
+        serverResponseBox.textContent = safeStringify(data);
+        setAdminStatus("Приз добавлен.", "ok");
         await loadPrizes();
-        setStatus("Готово к запуску.");
       } catch (e) {
-        setStatus(e.message || "Не удалось загрузить список призов.", "error");
+        setAdminStatus(`Ошибка добавления приза: ${e.message || e}`, "error");
       }
-
-      await checkAdminAccess();
-      updateBackButton();
     }
 
-    initApp();
+    function escapeHtml(str) {
+      return String(str || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function initTelegram() {
+      try {
+        if (!tg) {
+          setStatus("Telegram WebApp SDK не найден. Открой страницу внутри Telegram.", "error");
+          return;
+        }
+
+        tg.ready();
+        tg.expand();
+
+        renderTelegramInfo();
+
+        if (!tg.initData) {
+          setStatus("Telegram открыл страницу без initData. Проверь запуск через кнопку Mini App или menu button.", "warn");
+        } else {
+          setStatus("Telegram WebApp инициализирован.", "ok");
+        }
+      } catch (e) {
+        setStatus(`Ошибка инициализации Telegram WebApp: ${e.message || e}`, "error");
+        serverResponseBox.textContent = String(e.stack || e);
+      }
+    }
+
+    btnCheckInit.addEventListener("click", checkInitData);
+    btnCheckAdmin.addEventListener("click", checkAdmin);
+    btnLoadPrizes.addEventListener("click", loadPrizes);
+    btnSeed.addEventListener("click", seedPrizes);
+    btnAddPrize.addEventListener("click", addPrize);
+
+    initTelegram();
   </script>
 </body>
 </html>
