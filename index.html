@@ -1,85 +1,78 @@
 <!DOCTYPE html>
-<html lang="ru" data-theme="dark">
+<html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  />
   <title>iGadget Wheel</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
   <style>
     :root {
-      --bg: #0b1017;
-      --bg-2: #111826;
-      --surface: rgba(20, 27, 38, 0.92);
-      --surface-solid: #161e2b;
-      --surface-2: #1b2534;
-      --surface-3: #243044;
-      --text: #edf3fb;
-      --muted: #9aa6bd;
-      --line: rgba(255,255,255,0.08);
-      --line-2: rgba(255,255,255,0.12);
-      --accent: #67dda0;
-      --accent-2: #37c17a;
-      --accent-soft: rgba(103,221,160,0.12);
-      --danger: #ff7e97;
-      --warn: #e6b04f;
-      --success: #d7f7e4;
-      --shadow-lg: 0 24px 70px rgba(0,0,0,0.34);
-      --shadow-md: 0 14px 36px rgba(0,0,0,0.24);
-      --shadow-sm: 0 10px 22px rgba(0,0,0,0.18);
+      --bg: #0b1220;
+      --bg-soft: #121b2e;
+      --card: rgba(20, 28, 44, 0.92);
+      --card-2: rgba(28, 38, 58, 0.96);
+      --line: rgba(255, 255, 255, 0.08);
+      --line-strong: rgba(255, 255, 255, 0.14);
+
+      --text: #ecf2ff;
+      --muted: #95a2bd;
+      --accent: #58d68d;
+      --accent-2: #35bf76;
+      --danger: #ff7b91;
+      --warn: #f2c46f;
+
+      --shadow-xl: 0 24px 60px rgba(0, 0, 0, 0.34);
+      --shadow-lg: 0 16px 36px rgba(0, 0, 0, 0.22);
+      --shadow-sm: 0 8px 18px rgba(0, 0, 0, 0.16);
+
       --radius-xl: 30px;
       --radius-lg: 22px;
-      --radius-md: 18px;
-      --radius-sm: 14px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
+
       --safe-top: env(safe-area-inset-top, 0px);
       --safe-bottom: env(safe-area-inset-bottom, 0px);
-      --tg-safe-bottom: var(--tg-safe-area-inset-bottom, 0px);
     }
 
-    html[data-theme="light"] {
-      --bg: #f3f6fb;
-      --bg-2: #e7edf6;
-      --surface: rgba(255,255,255,0.88);
-      --surface-solid: #ffffff;
-      --surface-2: #f3f6fb;
-      --surface-3: #e8eef6;
-      --text: #121a26;
-      --muted: #667389;
-      --line: rgba(17,24,39,0.08);
-      --line-2: rgba(17,24,39,0.12);
-      --shadow-lg: 0 24px 60px rgba(15,23,42,0.12);
-      --shadow-md: 0 14px 30px rgba(15,23,42,0.10);
-      --shadow-sm: 0 8px 20px rgba(15,23,42,0.08);
-      --success: #16663e;
+    * {
+      box-sizing: border-box;
     }
 
-    * { box-sizing: border-box; }
-    html, body {
+    html,
+    body {
       margin: 0;
       min-height: 100%;
-      font-family: Inter, system-ui, -apple-system, sans-serif;
-      background:
-        radial-gradient(circle at top center, rgba(103,221,160,0.05), transparent 24%),
-        radial-gradient(circle at 18% 14%, rgba(97, 164, 255, 0.05), transparent 18%),
-        linear-gradient(180deg, var(--bg), var(--bg-2));
+      font-family: Inter, system-ui, sans-serif;
       color: var(--text);
+      background:
+        radial-gradient(circle at top center, rgba(88, 214, 141, 0.08), transparent 24%),
+        radial-gradient(circle at 20% 20%, rgba(83, 165, 255, 0.06), transparent 16%),
+        linear-gradient(180deg, var(--bg), var(--bg-soft));
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
     }
 
-    body { min-height: 100vh; }
+    body {
+      min-height: 100vh;
+    }
 
     .app {
-      width: 100%;
       max-width: 760px;
       margin: 0 auto;
       min-height: 100vh;
       padding:
-        calc(10px + var(--safe-top))
+        calc(14px + var(--safe-top))
         14px
-        calc(24px + var(--safe-bottom) + var(--tg-safe-bottom));
+        calc(22px + var(--safe-bottom));
     }
 
     .shell {
@@ -88,112 +81,76 @@
       border-radius: 34px;
       border: 1px solid var(--line);
       background:
-        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)),
-        var(--surface);
-      box-shadow: var(--shadow-lg);
+        linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.01)),
+        var(--card);
       backdrop-filter: blur(18px);
-      padding: 18px;
-    }
-
-    .shell::before {
-      content: "";
-      position: absolute;
-      inset: -1px;
-      border-radius: inherit;
-      pointer-events: none;
-      background:
-        linear-gradient(140deg, rgba(103,221,160,0.03), transparent 30%, transparent 72%, rgba(114,157,255,0.03));
+      box-shadow: var(--shadow-xl);
+      padding: 16px;
     }
 
     .hero {
       text-align: center;
-      padding: 4px 44px 10px;
+      padding: 6px 8px 14px;
     }
 
     .hero h1 {
-      margin: 0 0 6px;
-      font-size: clamp(24px, 4.4vw, 32px);
-      line-height: 1.03;
+      margin: 0 0 8px;
+      font-size: clamp(24px, 5vw, 34px);
+      line-height: 1.02;
       letter-spacing: -0.05em;
       font-weight: 800;
     }
 
     .hero p {
       margin: 0 auto;
-      max-width: 32ch;
+      max-width: 34ch;
       color: var(--muted);
       font-size: 13px;
       line-height: 1.55;
     }
 
-    .debug-pill {
-      margin: 0 auto 10px;
-      width: fit-content;
-      min-height: 28px;
-      padding: 0 10px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.03);
-      color: var(--muted);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.04em;
+    .panel {
+      display: none;
     }
 
-    .theme-toggle {
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      width: 40px;
-      height: 40px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.04);
-      color: var(--text);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: var(--shadow-sm);
-      z-index: 9;
-      -webkit-tap-highlight-color: transparent;
+    .panel.active {
+      display: block;
     }
-
-    .theme-toggle svg {
-      width: 18px;
-      height: 18px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    .panel { display: none; }
-    .panel.active { display: block; }
 
     .card,
     .section,
     .history-item,
-    .mini-card,
-    details.faq-item,
+    .admin-item,
     .sheet {
-      border-radius: 28px;
+      border-radius: 26px;
       border: 1px solid var(--line);
       background:
-        linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.012)),
-        var(--surface-solid);
-      box-shadow: var(--shadow-md);
+        linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.01)),
+        var(--card);
+      box-shadow: var(--shadow-lg);
     }
 
-    .card {
-      padding: 12px;
+    .card,
+    .section {
+      padding: 14px;
     }
 
     .section {
-      padding: 16px;
+      margin-top: 12px;
+    }
+
+    .meta-pill {
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
     }
 
     .meta-row {
@@ -202,259 +159,215 @@
       margin-bottom: 10px;
     }
 
-    .meta-pill {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 34px;
-      padding: 0 14px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--line);
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 700;
-    }
-
     .wheel-wrap {
       position: relative;
-      width: min(100%, 292px);
+      width: min(100%, 300px);
       aspect-ratio: 1 / 1;
       margin: 0 auto 12px;
     }
 
-    .wheel-halo {
-      position: absolute;
-      inset: 11%;
-      border-radius: 999px;
-      background: radial-gradient(circle, rgba(103,221,160,0.07), transparent 62%);
-      filter: blur(18px);
-      pointer-events: none;
-    }
-
     .pointer {
       position: absolute;
-      top: 6px;
+      top: 8px;
       left: 50%;
       transform: translateX(-50%);
       width: 0;
       height: 0;
-      border-left: 10px solid transparent;
-      border-right: 10px solid transparent;
-      border-top: 18px solid var(--danger);
+      border-left: 11px solid transparent;
+      border-right: 11px solid transparent;
+      border-top: 20px solid var(--danger);
       z-index: 4;
-      filter: drop-shadow(0 4px 10px rgba(255,126,151,.22));
+      filter: drop-shadow(0 4px 10px rgba(255,123,145,.25));
     }
 
     canvas {
       width: 100%;
       height: 100%;
       display: block;
-      filter: drop-shadow(0 18px 34px rgba(0,0,0,.22));
+      filter: drop-shadow(0 16px 30px rgba(0,0,0,.22));
     }
 
-    .center-btn {
+    .spin-btn {
       position: absolute;
-      inset: 50% auto auto 50%;
+      left: 50%;
+      top: 50%;
       transform: translate(-50%, -50%);
-      width: 76px;
-      height: 76px;
+      width: 82px;
+      height: 82px;
       border-radius: 999px;
-      border: 2px solid rgba(255,255,255,0.11);
-      color: #08110a;
+      border: 2px solid rgba(255,255,255,.1);
       background:
-        radial-gradient(circle at 32% 24%, rgba(255,255,255,.34), transparent 28%),
-        linear-gradient(180deg, #9df0be, #67dda0 56%, #37c17a);
-      font-size: 10px;
-      letter-spacing: 0.13em;
+        radial-gradient(circle at 30% 25%, rgba(255,255,255,.35), transparent 28%),
+        linear-gradient(180deg, #9becbb, var(--accent) 58%, var(--accent-2));
+      color: #09130c;
+      font-size: 11px;
       font-weight: 800;
-      z-index: 5;
+      letter-spacing: 0.14em;
       box-shadow:
-        0 0 0 6px rgba(103,221,160,0.04),
-        0 12px 24px rgba(55,193,122,.18),
-        inset 0 1px 0 rgba(255,255,255,.30);
-      transition: transform .18s ease, opacity .18s ease, box-shadow .18s ease;
+        0 0 0 6px rgba(88,214,141,0.04),
+        0 12px 24px rgba(53,191,118,0.18);
       cursor: pointer;
-      -webkit-tap-highlight-color: transparent;
+      z-index: 5;
     }
 
-    .center-btn:active {
-      transform: translate(-50%, -50%) scale(.98);
-    }
-
-    .center-btn:disabled {
-      opacity: .7;
+    .spin-btn:disabled {
+      opacity: 0.7;
       cursor: not-allowed;
     }
 
-    .hint {
-      text-align: center;
-      color: var(--muted);
-      font-size: 12.5px;
-      line-height: 1.5;
-      min-height: 20px;
-      margin-bottom: 10px;
-    }
-
+    .hint,
     .status {
-      min-height: 48px;
-      border-radius: 16px;
-      padding: 11px 14px;
-      background: rgba(255,255,255,0.025);
-      border: 1px solid var(--line);
-      color: var(--muted);
       text-align: center;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.025);
+      padding: 12px 14px;
+      color: var(--muted);
       font-size: 14px;
-      line-height: 1.45;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      line-height: 1.5;
     }
 
-    .status.error {
-      color: #ffd4dd;
-      background: rgba(255,126,151,0.08);
-      border-color: rgba(255,126,151,0.14);
+    .hint {
+      margin-bottom: 10px;
+      background: transparent;
+      border: none;
+      padding: 0;
+      min-height: 20px;
+      font-size: 12.5px;
     }
 
     .status.success {
-      color: #d9f8e6;
-      background: rgba(103,221,160,0.08);
-      border-color: rgba(103,221,160,0.14);
+      color: #d9f9e7;
+      border-color: rgba(88,214,141,0.14);
+      background: rgba(88,214,141,0.07);
     }
 
-    .status.warn {
-      color: #ffe4b8;
-      background: rgba(230,176,79,0.08);
-      border-color: rgba(230,176,79,0.14);
+    .status.error {
+      color: #ffd7df;
+      border-color: rgba(255,123,145,0.16);
+      background: rgba(255,123,145,0.07);
     }
 
-    .result,
-    .cooldown {
+    .result-box,
+    .cooldown-box,
+    .admin-box {
       display: none;
-      margin-top: 14px;
+      margin-top: 12px;
     }
 
-    .result.show,
-    .cooldown.show {
+    .result-box.show,
+    .cooldown-box.show,
+    .admin-box.show {
       display: block;
     }
 
     .kicker {
       margin-bottom: 8px;
-      color: #c6f4d8;
       font-size: 11px;
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: .1em;
+      letter-spacing: 0.1em;
+      color: #c6f3d8;
     }
 
     .section-title {
       margin: 0 0 8px;
-      font-size: 21px;
-      line-height: 1.08;
+      font-size: 22px;
+      line-height: 1.06;
       letter-spacing: -0.045em;
       font-weight: 800;
     }
 
     .section-desc {
+      margin: 0 0 14px;
       color: var(--muted);
       font-size: 14px;
-      line-height: 1.58;
-      margin-bottom: 14px;
+      line-height: 1.6;
     }
 
     .result-hero {
       display: grid;
-      gap: 12px;
-      margin-bottom: 14px;
+      gap: 14px;
     }
 
     .result-badge {
+      width: fit-content;
+      min-height: 34px;
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      width: fit-content;
-      min-height: 34px;
       padding: 0 12px;
       border-radius: 999px;
-      background: rgba(103,221,160,0.10);
-      border: 1px solid rgba(103,221,160,0.14);
-      color: var(--success);
+      border: 1px solid rgba(88,214,141,0.16);
+      background: rgba(88,214,141,0.1);
+      color: #d9f9e7;
       font-size: 12px;
       font-weight: 800;
     }
 
-    .result-badge::before {
-      content: "✓";
-      line-height: 1;
-    }
-
-    .result-hero__content {
-      display: grid;
-      grid-template-columns: 96px 1fr;
+    .result-content,
+    .history-main,
+    .last-main {
+      display: flex;
       gap: 14px;
       align-items: center;
     }
 
-    .result-image-wrap,
+    .prize-image-wrap,
     .history-image-wrap,
-    .sheet-image-wrap,
-    .last-prize-image-wrap {
-      position: relative;
+    .last-image-wrap,
+    .sheet-image-wrap {
       overflow: hidden;
       border-radius: 18px;
       border: 1px solid var(--line);
       background: rgba(255,255,255,0.04);
       box-shadow: var(--shadow-sm);
+      flex: 0 0 auto;
     }
 
-    .result-image-wrap {
+    .prize-image-wrap {
       width: 96px;
       height: 96px;
     }
 
     .history-image-wrap {
-      width: 64px;
-      height: 64px;
-      flex: 0 0 64px;
+      width: 66px;
+      height: 66px;
       border-radius: 16px;
+    }
+
+    .last-image-wrap {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
     }
 
     .sheet-image-wrap {
       width: 100%;
       max-width: 220px;
-      aspect-ratio: 1/1;
+      aspect-ratio: 1 / 1;
       margin: 0 auto 14px;
       border-radius: 22px;
     }
 
-    .last-prize-image-wrap {
-      width: 56px;
-      height: 56px;
-      flex: 0 0 56px;
-      border-radius: 14px;
-    }
-
-    .result-image,
+    .prize-image,
     .history-image,
-    .sheet-image,
-    .last-prize-image {
+    .last-image,
+    .sheet-image {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
     }
 
-    .result-prize {
-      color: var(--text);
-      font-size: 20px;
-      line-height: 1.14;
+    .prize-name {
+      font-size: 22px;
+      line-height: 1.08;
       font-weight: 800;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
-    .result-sub {
+    .prize-desc {
       color: var(--muted);
       font-size: 14px;
       line-height: 1.55;
@@ -462,100 +375,62 @@
 
     .result-stage {
       margin-top: 12px;
-      border-radius: 22px;
-      border: 1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015)), var(--surface-2);
-      overflow: hidden;
-    }
-
-    .result-stage__head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      padding: 14px 14px 10px;
-    }
-
-    .result-stage__eyebrow {
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: .09em;
-      text-transform: uppercase;
-      color: var(--success);
-    }
-
-    .result-stage__status {
-      min-height: 28px;
-      padding: 0 10px;
-      border-radius: 999px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      font-weight: 800;
-      background: rgba(103,221,160,0.10);
-      border: 1px solid rgba(103,221,160,0.14);
-      color: var(--success);
-    }
-
-    .result-stage__body {
-      padding: 0 14px 14px;
-      display: grid;
-      gap: 12px;
-    }
-
-    .result-stage__code {
-      display: grid;
-      place-items: center;
-      min-height: 122px;
       border-radius: 20px;
-      border: 1px solid rgba(103,221,160,0.12);
-      background: linear-gradient(180deg, rgba(103,221,160,0.13), rgba(55,193,122,0.06));
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(88,214,141,0.12), rgba(53,191,118,0.05));
+      padding: 14px;
     }
 
-    .result-stage__code-label {
+    .code-label {
       font-size: 11px;
       color: var(--muted);
       font-weight: 800;
-      letter-spacing: .08em;
       text-transform: uppercase;
+      letter-spacing: 0.08em;
       margin-bottom: 8px;
       text-align: center;
     }
 
-    .result-stage__code-value {
-      font-size: clamp(28px, 6vw, 42px);
-      line-height: 1;
-      font-weight: 800;
-      letter-spacing: .08em;
-      color: var(--text);
-      text-align: center;
+    .code-box {
+      min-height: 112px;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      border: 1px solid rgba(88,214,141,0.14);
+      background: rgba(0,0,0,0.12);
+      margin-bottom: 12px;
     }
 
-    .result-stage__meta {
+    .code-value {
+      font-size: clamp(28px, 7vw, 42px);
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+
+    .meta-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 10px;
     }
 
-    .result-stage__meta-card {
+    .meta-card {
       border-radius: 16px;
       border: 1px solid var(--line);
       background: rgba(255,255,255,0.025);
       padding: 12px;
     }
 
-    .result-stage__meta-label {
-      color: var(--muted);
+    .meta-label {
       font-size: 11px;
+      color: var(--muted);
       font-weight: 800;
-      letter-spacing: .08em;
       text-transform: uppercase;
+      letter-spacing: 0.08em;
       margin-bottom: 6px;
     }
 
-    .result-stage__meta-value {
-      color: var(--text);
+    .meta-value {
       font-size: 14px;
       line-height: 1.45;
       font-weight: 700;
@@ -568,35 +443,40 @@
       margin-top: 12px;
     }
 
+    .btn,
+    .mini-btn,
+    .tab-btn,
+    .filter-btn {
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
     .btn {
-      flex: 1;
-      min-width: 140px;
       min-height: 48px;
       border-radius: 15px;
-      border: 1px solid transparent;
       font-size: 14px;
       font-weight: 700;
-      cursor: pointer;
-      transition: .18s ease;
-      -webkit-tap-highlight-color: transparent;
+      min-width: 140px;
+      flex: 1;
     }
 
     .btn-primary {
-      color: #08110a;
+      color: #09130c;
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      box-shadow: 0 12px 24px rgba(55,193,122,0.16);
+      box-shadow: 0 10px 22px rgba(53,191,118,0.14);
     }
 
     .btn-secondary {
       color: var(--text);
-      background: rgba(255,255,255,0.03);
-      border-color: var(--line-2);
+      border: 1px solid var(--line-strong);
+      background: rgba(255,255,255,0.04);
     }
 
     .btn-ghost {
       color: var(--muted);
+      border: 1px solid var(--line);
       background: transparent;
-      border-color: var(--line);
     }
 
     .timer-wrap {
@@ -604,58 +484,50 @@
       align-items: center;
       justify-content: center;
       min-height: 78px;
-      margin-bottom: 10px;
       border-radius: 18px;
       border: 1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.008)), var(--surface-2);
+      background: rgba(255,255,255,0.025);
+      margin: 10px 0 0;
     }
 
     .timer {
-      font-size: 30px;
+      font-size: 32px;
       line-height: 1;
       letter-spacing: -0.05em;
       font-weight: 800;
-      color: #ccf5db;
+      color: #d9f9e7;
       font-variant-numeric: tabular-nums;
     }
 
-    .last-prize {
-      display: grid;
-      gap: 8px;
+    .mini-card {
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.025);
+      padding: 14px;
+      box-shadow: var(--shadow-sm);
       margin-top: 10px;
     }
 
-    .mini-card {
-      padding: 14px;
-      border-radius: 18px;
-    }
-
-    .mini-card-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .mini-card-title {
+    .mini-title {
       font-size: 15px;
       font-weight: 800;
       margin-bottom: 4px;
     }
 
-    .mini-card-desc {
+    .mini-desc {
       font-size: 13px;
       line-height: 1.55;
       color: var(--muted);
     }
 
-    .history-tabs {
+    .filters {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 8px;
       margin-bottom: 14px;
     }
 
-    .history-filter {
+    .filter-btn {
       min-height: 40px;
       border-radius: 14px;
       border: 1px solid var(--line);
@@ -665,23 +537,26 @@
       font-weight: 800;
     }
 
-    .history-filter.active {
-      color: #0a120c;
+    .filter-btn.active {
+      color: #09130c;
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
       border-color: transparent;
     }
 
-    .history-list {
+    .history-list,
+    .admin-list {
       display: grid;
       gap: 12px;
     }
 
-    .history-item {
+    .history-item,
+    .admin-item {
       padding: 14px;
       border-radius: 18px;
     }
 
-    .history-top {
+    .history-top,
+    .admin-top {
       display: flex;
       justify-content: space-between;
       gap: 10px;
@@ -689,27 +564,23 @@
       margin-bottom: 8px;
     }
 
-    .history-main {
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-      min-width: 0;
-    }
-
-    .history-name {
+    .history-name,
+    .admin-name {
       font-size: 16px;
       line-height: 1.25;
       font-weight: 800;
     }
 
     .history-meta,
-    .history-desc {
+    .history-desc,
+    .admin-meta {
       color: var(--muted);
       font-size: 13px;
       line-height: 1.55;
     }
 
-    .history-actions {
+    .history-actions,
+    .admin-actions {
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
@@ -717,33 +588,33 @@
     }
 
     .badge {
-      display: inline-flex;
-      align-items: center;
       min-height: 28px;
       padding: 0 10px;
       border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
       font-size: 12px;
       font-weight: 800;
       white-space: nowrap;
+      border: 1px solid transparent;
     }
 
     .badge-ok {
-      color: #c8f2d6;
-      background: rgba(103,221,160,0.10);
-      border: 1px solid rgba(103,221,160,0.14);
+      color: #d8f9e5;
+      background: rgba(88,214,141,0.1);
+      border-color: rgba(88,214,141,0.14);
     }
 
-    .badge-warn,
-    .badge-soon {
-      color: #ffe2b1;
-      background: rgba(230,176,79,0.09);
-      border: 1px solid rgba(230,176,79,0.14);
+    .badge-warn {
+      color: #ffe5b8;
+      background: rgba(242,196,111,0.09);
+      border-color: rgba(242,196,111,0.14);
     }
 
     .badge-off {
-      color: #ffc2d0;
-      background: rgba(255,126,151,0.09);
-      border: 1px solid rgba(255,126,151,0.14);
+      color: #ffd2db;
+      background: rgba(255,123,145,0.09);
+      border-color: rgba(255,123,145,0.14);
     }
 
     .empty-state {
@@ -753,7 +624,7 @@
       text-align: center;
       padding: 26px 16px;
       border-radius: 22px;
-      border: 1px dashed rgba(255,255,255,0.10);
+      border: 1px dashed rgba(255,255,255,0.12);
       background: rgba(255,255,255,0.02);
     }
 
@@ -763,9 +634,9 @@
       border-radius: 16px;
       display: grid;
       place-items: center;
-      color: #c8f2d6;
-      background: rgba(103,221,160,0.08);
-      border: 1px solid rgba(103,221,160,0.12);
+      color: #c6f3d8;
+      background: rgba(88,214,141,0.08);
+      border: 1px solid rgba(88,214,141,0.12);
       font-size: 22px;
     }
 
@@ -781,121 +652,86 @@
       max-width: 34ch;
     }
 
-    details.faq-item {
-      padding: 14px;
-      border-radius: 18px;
+    .field {
+      display: grid;
+      gap: 6px;
       margin-bottom: 10px;
     }
 
-    details.faq-item summary {
-      list-style: none;
-      cursor: pointer;
-      font-size: 15px;
-      font-weight: 800;
+    .field label {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .field input,
+    .field textarea,
+    .field select {
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid var(--line-strong);
+      background: rgba(255,255,255,0.04);
       color: var(--text);
-      position: relative;
-      padding-right: 24px;
-    }
-
-    details.faq-item summary::-webkit-details-marker { display: none; }
-
-    details.faq-item summary::after {
-      content: "+";
-      position: absolute;
-      right: 0;
-      top: 0;
-      color: var(--muted);
-      font-size: 18px;
-      line-height: 1;
-    }
-
-    details.faq-item[open] summary::after {
-      content: "–";
-    }
-
-    .faq-content {
-      margin-top: 10px;
-      color: var(--muted);
+      padding: 12px 14px;
       font-size: 14px;
-      line-height: 1.6;
+      outline: none;
+      font-family: inherit;
+    }
+
+    .field textarea {
+      min-height: 96px;
+      resize: vertical;
+    }
+
+    .mini-btn {
+      min-height: 40px;
+      padding: 8px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 700;
     }
 
     .bottom-nav {
       position: sticky;
-      bottom: calc(4px + var(--tg-safe-bottom) * 0.15);
-      z-index: 20;
+      bottom: 6px;
+      z-index: 10;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(72px, 1fr));
       gap: 8px;
       margin-top: 14px;
       padding: 10px;
       border-radius: 22px;
       border: 1px solid var(--line);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02)),
-        rgba(16, 22, 31, 0.96);
+      background: rgba(12, 18, 28, 0.94);
       backdrop-filter: blur(14px);
-      box-shadow:
-        0 10px 28px rgba(0,0,0,0.20),
-        inset 0 1px 0 rgba(255,255,255,0.03);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.24);
     }
 
-    .bottom-nav__item {
+    .tab-btn {
       min-height: 54px;
       border-radius: 16px;
-      border: 1px solid transparent;
       background: transparent;
       color: var(--muted);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 4px;
       font-size: 12px;
       font-weight: 700;
-      cursor: pointer;
-      -webkit-tap-highlight-color: transparent;
+      gap: 4px;
     }
 
-    .bottom-nav__item.active {
-      color: #0a120c;
+    .tab-btn.active {
+      color: #09130c;
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      box-shadow: 0 10px 22px rgba(55,193,122,0.16);
+      box-shadow: 0 10px 22px rgba(53,191,118,0.16);
     }
 
-    .bottom-nav__icon {
-      width: 20px;
-      height: 20px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .bottom-nav__icon svg {
-      width: 20px;
-      height: 20px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    .bottom-nav__label {
-      font-size: 11px;
-      line-height: 1;
-    }
-
-    .mini-btn {
-      min-height: 40px;
-      border-radius: 12px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.03);
-      color: var(--text);
-      padding: 8px 12px;
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
+    .tab-btn.hidden {
+      display: none !important;
     }
 
     .overlay {
@@ -917,8 +753,8 @@
     .sheet {
       width: 100%;
       max-width: 720px;
-      border-radius: 28px;
       padding: 18px;
+      border-radius: 28px;
     }
 
     .sheet-handle {
@@ -930,20 +766,20 @@
     }
 
     .sheet-title {
-      font-size: 20px;
-      line-height: 1.08;
-      letter-spacing: -0.04em;
-      font-weight: 800;
       margin: 0 0 8px;
       text-align: center;
+      font-size: 20px;
+      line-height: 1.08;
+      font-weight: 800;
+      letter-spacing: -0.04em;
     }
 
     .sheet-sub {
       color: var(--muted);
+      text-align: center;
       font-size: 14px;
       line-height: 1.6;
       margin-bottom: 14px;
-      text-align: center;
     }
 
     .proof-list {
@@ -971,8 +807,8 @@
       margin-bottom: 12px;
       border-radius: 16px;
       padding: 12px 14px;
-      background: rgba(255,126,151,0.08);
-      border: 1px solid rgba(255,126,151,0.12);
+      background: rgba(255,123,145,0.08);
+      border: 1px solid rgba(255,123,145,0.14);
       color: #ffd6de;
       font-size: 13px;
       line-height: 1.5;
@@ -985,48 +821,46 @@
     @media (max-width: 560px) {
       .app {
         padding:
-          calc(8px + var(--safe-top))
+          calc(10px + var(--safe-top))
           12px
-          calc(22px + var(--safe-bottom) + var(--tg-safe-bottom));
+          calc(18px + var(--safe-bottom));
       }
 
       .shell {
         border-radius: 28px;
-        padding: 16px;
+        padding: 14px;
       }
 
       .wheel-wrap {
-        width: min(100%, 270px);
+        width: min(100%, 280px);
       }
 
       .actions {
         flex-direction: column;
       }
 
-      .section-title {
-        font-size: 20px;
-      }
-
-      .result-hero__content {
+      .meta-grid {
         grid-template-columns: 1fr;
       }
 
-      .result-image-wrap {
-        width: 100%;
-        max-width: 120px;
+      .result-content,
+      .history-main,
+      .last-main {
+        align-items: flex-start;
+      }
+
+      .result-content {
+        flex-direction: column;
+      }
+
+      .prize-image-wrap {
+        width: 120px;
         height: 120px;
       }
 
-      .history-top {
+      .history-top,
+      .admin-top {
         flex-direction: column;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation: none !important;
-        transition: none !important;
-        scroll-behavior: auto !important;
       }
     }
   </style>
@@ -1034,78 +868,61 @@
 <body>
   <div class="app">
     <div class="shell">
-      <button class="theme-toggle" id="themeToggle" aria-label="Сменить тему">
-        <svg id="themeToggleIcon" viewBox="0 0 24 24">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3A7 7 0 0 0 21 12.79z"></path>
-        </svg>
-      </button>
-
       <div id="offlineBanner" class="offline-banner">
         Нет соединения с сетью. Некоторые действия могут быть временно недоступны.
       </div>
 
       <section class="hero">
-        <div class="debug-pill" id="versionPill">WHEEL UI v8.0.0</div>
         <h1>Колесо бонусов iGadget</h1>
-        <p>Одна попытка в сутки. Выигрывайте скидку, бонус или подарок сразу внутри Mini App.</p>
+        <p>Один запуск в день. Получайте скидку, бонус или подарок прямо в Mini App.</p>
       </section>
 
       <div class="panel active" id="panelWheel">
         <div class="card">
           <div class="meta-row">
-            <div class="meta-pill">Новый интерфейс · версия UI видна сверху</div>
+            <div class="meta-pill">1 попытка в сутки · приз хранится 7 дней</div>
           </div>
 
           <div class="wheel-wrap">
-            <div class="wheel-halo"></div>
             <div class="pointer"></div>
             <canvas id="wheel" width="360" height="360"></canvas>
-            <button id="spinBtn" class="center-btn">СТАРТ</button>
+            <button id="spinBtn" class="spin-btn">КРУТИТЬ</button>
           </div>
 
-          <div class="hint" id="hintText">Нажмите кнопку, чтобы начать.</div>
+          <div class="hint">Нажмите кнопку, чтобы начать.</div>
           <div class="status" id="status">Готово к запуску.</div>
 
-          <div class="result" id="resultBox">
+          <div class="result-box" id="resultBox">
             <div class="section">
               <div class="result-hero">
                 <div class="result-badge">Выигрыш сохранён</div>
 
-                <div class="result-hero__content">
-                  <div class="result-image-wrap" id="resultImageWrap" style="display:none;">
-                    <img id="resultImage" class="result-image" src="" alt="Приз" />
+                <div class="result-content">
+                  <div class="prize-image-wrap" id="resultImageWrap" style="display:none;">
+                    <img id="resultImage" class="prize-image" src="" alt="Приз" />
                   </div>
 
                   <div>
-                    <div class="result-prize" id="resultPrize">—</div>
-                    <div class="result-sub" id="resultDesc">—</div>
+                    <div class="prize-name" id="resultPrize">—</div>
+                    <div class="prize-desc" id="resultDesc">—</div>
                   </div>
                 </div>
               </div>
 
               <div class="result-stage">
-                <div class="result-stage__head">
-                  <div class="result-stage__eyebrow">Покажите код сотруднику</div>
-                  <div class="result-stage__status">Активен</div>
+                <div class="code-label">Покажите код сотруднику</div>
+                <div class="code-box">
+                  <div class="code-value" id="resultCode">—</div>
                 </div>
 
-                <div class="result-stage__body">
-                  <div class="result-stage__code">
-                    <div>
-                      <div class="result-stage__code-label">Ваш код</div>
-                      <div class="result-stage__code-value" id="resultCode">—</div>
-                    </div>
+                <div class="meta-grid">
+                  <div class="meta-card">
+                    <div class="meta-label">Срок действия</div>
+                    <div class="meta-value" id="resultExpires">—</div>
                   </div>
-
-                  <div class="result-stage__meta">
-                    <div class="result-stage__meta-card">
-                      <div class="result-stage__meta-label">Срок действия</div>
-                      <div class="result-stage__meta-value" id="resultExpires">—</div>
-                    </div>
-                    <div class="result-stage__meta-card">
-                      <div class="result-stage__meta-label">Использование</div>
-                      <div class="result-stage__meta-value">Покажите код сотруднику магазина или кассиру</div>
-                    </div>
+                  <div class="meta-card">
+                    <div class="meta-label">Использование</div>
+                    <div class="meta-value">Покажите код сотруднику магазина или кассиру</div>
                   </div>
                 </div>
               </div>
@@ -1118,17 +935,19 @@
             </div>
           </div>
 
-          <div class="cooldown" id="cooldownBox">
+          <div class="cooldown-box" id="cooldownBox">
             <div class="section">
               <div class="kicker">Попытка использована</div>
               <h3 class="section-title">Сегодня вы уже крутили колесо</h3>
-              <div class="section-desc" id="cooldownText">Следующая попытка откроется после обновления дня.</div>
+              <div class="section-desc" id="cooldownText">
+                Следующая попытка откроется после обновления дня.
+              </div>
 
               <div class="timer-wrap">
                 <div class="timer" id="timer">--:--:--</div>
               </div>
 
-              <div class="last-prize" id="lastPrizeWrap"></div>
+              <div id="lastPrizeWrap"></div>
             </div>
           </div>
         </div>
@@ -1138,12 +957,14 @@
         <div class="section">
           <div class="kicker">Ваши результаты</div>
           <h2 class="section-title">Мои призы</h2>
-          <div class="section-desc">Здесь отображаются ваши выигрыши со статусами: активен, погашен или скоро истечёт.</div>
+          <div class="section-desc">
+            Здесь отображаются ваши выигрыши со статусами и сроком действия.
+          </div>
 
-          <div class="history-tabs">
-            <button class="history-filter active" data-filter="all">Все</button>
-            <button class="history-filter" data-filter="active">Активные</button>
-            <button class="history-filter" data-filter="used">Погашенные</button>
+          <div class="filters">
+            <button class="filter-btn active" data-filter="all">Все</button>
+            <button class="filter-btn" data-filter="active">Активные</button>
+            <button class="filter-btn" data-filter="used">Погашенные</button>
           </div>
 
           <div class="history-list" id="historyList"></div>
@@ -1154,62 +975,94 @@
         <div class="section">
           <div class="kicker">Правила</div>
           <h2 class="section-title">Как это работает</h2>
-          <div class="section-desc">Коротко и понятно: как крутить, как получить приз и что делать с кодом.</div>
+          <div class="section-desc">
+            Одна попытка в сутки, результат сразу, код хранится в истории.
+          </div>
 
-          <details class="faq-item" open>
-            <summary>Почему кнопка может не работать?</summary>
-            <div class="faq-content">Если Mini App открыт вне Telegram или backend недоступен, приложение покажет диагностический статус. Внутри Telegram кнопка должна работать с initData.</div>
-          </details>
-
-          <details class="faq-item">
-            <summary>Сколько попыток даётся?</summary>
-            <div class="faq-content">Одна попытка в сутки на пользователя. Новая попытка открывается на следующий день.</div>
-          </details>
-
-          <details class="faq-item">
-            <summary>Когда я узнаю результат?</summary>
-            <div class="faq-content">Сразу после прокрутки вы увидите свой приз и получите код для использования.</div>
-          </details>
-
-          <details class="faq-item">
-            <summary>Как использовать выигрыш?</summary>
-            <div class="faq-content">После спина вы получаете код. Покажите его сотруднику магазина или используйте по правилам акции.</div>
-          </details>
+          <div class="proof-list">
+            <div class="proof-item"><strong>1 попытка в день.</strong> Новая попытка открывается по московскому времени.</div>
+            <div class="proof-item"><strong>Результат сразу после спина.</strong> Никаких дополнительных шагов не нужно.</div>
+            <div class="proof-item"><strong>Код сохраняется.</strong> Его можно открыть позже в разделе «Призы».</div>
+            <div class="proof-item"><strong>Администратор может погасить код.</strong> После этого статус меняется на погашенный.</div>
+          </div>
         </div>
       </div>
 
-      <nav class="bottom-nav" aria-label="Навигация">
-        <button class="bottom-nav__item active" id="tabWheel">
-          <span class="bottom-nav__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <circle cx="12" cy="12" r="8"></circle>
-              <circle cx="12" cy="12" r="2.2"></circle>
-              <path d="M12 4v4M20 12h-4M12 20v-4M4 12h4"></path>
-            </svg>
-          </span>
-          <span class="bottom-nav__label">Колесо</span>
-        </button>
+      <div class="panel" id="panelAdmin">
+        <div class="section admin-box" id="adminBox">
+          <div class="kicker">Управление</div>
+          <h2 class="section-title">Админка</h2>
+          <div class="section-desc" id="adminStatus">Проверяем доступ...</div>
 
-        <button class="bottom-nav__item" id="tabHistory">
-          <span class="bottom-nav__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <path d="M7 8h10v11H7z"></path>
-              <path d="M9 5h6M9 12h6M9 16h4"></path>
-            </svg>
-          </span>
-          <span class="bottom-nav__label">Призы</span>
-        </button>
+          <div class="section">
+            <div class="field">
+              <label for="newTitle">Название приза</label>
+              <input id="newTitle" type="text" placeholder="Например: Скидка 15%" />
+            </div>
 
-        <button class="bottom-nav__item" id="tabFaq">
-          <span class="bottom-nav__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <circle cx="12" cy="12" r="8"></circle>
-              <path d="M9.6 9.4a2.4 2.4 0 1 1 4.3 1.4c-.7.8-1.6 1.2-1.9 2.2"></path>
-              <path d="M12 16.9h.01"></path>
-            </svg>
-          </span>
-          <span class="bottom-nav__label">FAQ</span>
-        </button>
+            <div class="field">
+              <label for="newShort">Короткое название</label>
+              <input id="newShort" type="text" placeholder="Например: 15%" />
+            </div>
+
+            <div class="field">
+              <label for="newDesc">Описание</label>
+              <textarea id="newDesc" placeholder="Описание приза"></textarea>
+            </div>
+
+            <div class="field">
+              <label for="newWeight">Вес</label>
+              <input id="newWeight" type="number" min="1" placeholder="Например: 10" />
+            </div>
+
+            <div class="field">
+              <label for="newActive">Статус</label>
+              <select id="newActive">
+                <option value="true">Включён</option>
+                <option value="false">Выключен</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="newImageFile">Картинка приза</label>
+              <input id="newImageFile" type="file" accept="image/png,image/jpeg,image/webp" />
+            </div>
+
+            <div class="actions">
+              <button class="btn btn-primary" id="addPrizeBtn">Добавить приз</button>
+            </div>
+          </div>
+
+          <div class="section">
+            <h3 class="section-title" style="font-size:18px;">Проверка и погашение кодов</h3>
+
+            <div class="field">
+              <label for="codeActionInput">Код</label>
+              <input id="codeActionInput" type="text" placeholder="Например: IG-AB12CD" />
+            </div>
+
+            <div class="actions">
+              <button class="btn btn-secondary" id="checkCodeBtn">Проверить код</button>
+              <button class="btn btn-primary" id="redeemCodeBtn">Погасить код</button>
+            </div>
+
+            <div class="status" id="codeActionStatus" style="margin-top:12px;">
+              Введите код для проверки.
+            </div>
+          </div>
+
+          <div class="section">
+            <h3 class="section-title" style="font-size:18px;">Список призов</h3>
+            <div class="admin-list" id="adminPrizeList"></div>
+          </div>
+        </div>
+      </div>
+
+      <nav class="bottom-nav">
+        <button class="tab-btn active" id="tabWheel">Колесо</button>
+        <button class="tab-btn" id="tabHistory">Призы</button>
+        <button class="tab-btn" id="tabFaq">FAQ</button>
+        <button class="tab-btn hidden" id="tabAdmin">Админ</button>
       </nav>
     </div>
   </div>
@@ -1240,29 +1093,24 @@
   </div>
 
   <script>
-    const APP_VERSION = "WHEEL-NEW-UI-8.0.0";
-    const API_BASE = "https://telegram-wheel-bot-production-764c.up.railway.app";
-    const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+    tg.expand();
 
-    const sounds = {
-      tick: new Audio("https://cdn.freesound.org/previews/240/240776_4107740-lq.mp3"),
-      win: new Audio("https://cdn.freesound.org/previews/320/320655_5260872-lq.mp3"),
-      error: new Audio("https://cdn.freesound.org/previews/331/331912_3248244-lq.mp3")
-    };
-    sounds.tick.volume = 0.10;
-    sounds.win.volume = 0.34;
-    sounds.error.volume = 0.28;
+    const API_BASE = window.location.origin;
+    const BUILD_VERSION = "index-aiogram-fastapi-v1";
 
     const canvas = document.getElementById("wheel");
     const ctx = canvas.getContext("2d");
 
     const spinBtn = document.getElementById("spinBtn");
     const statusEl = document.getElementById("status");
-    const hintText = document.getElementById("hintText");
-    const versionPill = document.getElementById("versionPill");
     const offlineBanner = document.getElementById("offlineBanner");
 
     const resultBox = document.getElementById("resultBox");
+    const cooldownBox = document.getElementById("cooldownBox");
+    const adminBox = document.getElementById("adminBox");
+
     const resultPrize = document.getElementById("resultPrize");
     const resultDesc = document.getElementById("resultDesc");
     const resultCode = document.getElementById("resultCode");
@@ -1270,25 +1118,27 @@
     const resultImageWrap = document.getElementById("resultImageWrap");
     const resultImage = document.getElementById("resultImage");
 
-    const cooldownBox = document.getElementById("cooldownBox");
+    const copyBtn = document.getElementById("copyBtn");
+    const closeBtn = document.getElementById("closeBtn");
+    const detailsBtn = document.getElementById("detailsBtn");
+
     const cooldownText = document.getElementById("cooldownText");
     const timerEl = document.getElementById("timer");
     const lastPrizeWrap = document.getElementById("lastPrizeWrap");
 
-    const copyBtn = document.getElementById("copyBtn");
-    const detailsBtn = document.getElementById("detailsBtn");
-    const closeBtn = document.getElementById("closeBtn");
+    const historyList = document.getElementById("historyList");
+    const adminPrizeList = document.getElementById("adminPrizeList");
+    const adminStatus = document.getElementById("adminStatus");
 
     const tabWheel = document.getElementById("tabWheel");
     const tabHistory = document.getElementById("tabHistory");
     const tabFaq = document.getElementById("tabFaq");
+    const tabAdmin = document.getElementById("tabAdmin");
 
     const panelWheel = document.getElementById("panelWheel");
     const panelHistory = document.getElementById("panelHistory");
     const panelFaq = document.getElementById("panelFaq");
-
-    const historyList = document.getElementById("historyList");
-    const historyFilters = Array.from(document.querySelectorAll(".history-filter"));
+    const panelAdmin = document.getElementById("panelAdmin");
 
     const detailsOverlay = document.getElementById("detailsOverlay");
     const sheetTitle = document.getElementById("sheetTitle");
@@ -1301,35 +1151,51 @@
     const sheetCopyBtn = document.getElementById("sheetCopyBtn");
     const sheetCloseBtn = document.getElementById("sheetCloseBtn");
 
-    const themeToggle = document.getElementById("themeToggle");
-    const themeToggleIcon = document.getElementById("themeToggleIcon");
+    const newTitle = document.getElementById("newTitle");
+    const newShort = document.getElementById("newShort");
+    const newDesc = document.getElementById("newDesc");
+    const newWeight = document.getElementById("newWeight");
+    const newActive = document.getElementById("newActive");
+    const newImageFile = document.getElementById("newImageFile");
+    const addPrizeBtn = document.getElementById("addPrizeBtn");
+
+    const codeActionInput = document.getElementById("codeActionInput");
+    const checkCodeBtn = document.getElementById("checkCodeBtn");
+    const redeemCodeBtn = document.getElementById("redeemCodeBtn");
+    const codeActionStatus = document.getElementById("codeActionStatus");
+
+    const filterButtons = Array.from(document.querySelectorAll(".filter-btn"));
 
     let prizes = [];
     let currentRotation = 0;
     let isSpinning = false;
-    let soundUnlocked = false;
-    let tickInterval = null;
     let countdownInterval = null;
-    let currentView = "wheel";
     let historyCache = [];
-    let historyFilter = "all";
-    let overlayOpen = false;
     let currentPrizePayload = null;
+    let currentView = "wheel";
+    let overlayOpen = false;
+    let historyFilter = "all";
+    let isAdmin = false;
 
-    versionPill.textContent = APP_VERSION;
+    function getInitData() {
+      return tg.initData || "";
+    }
 
-    const fallbackPrizes = [
-      { id: 1, title: "Скидка 5%", short: "5%", description: "Скидка 5% на покупку", image_url: "" },
-      { id: 2, title: "Скидка 10%", short: "10%", description: "Скидка 10% на покупку", image_url: "" },
-      { id: 3, title: "Скидка 15%", short: "15%", description: "Скидка 15% на аксессуары", image_url: "" },
-      { id: 4, title: "Бесплатная доставка", short: "Доставка", description: "Бесплатная доставка заказа", image_url: "" },
-      { id: 5, title: "Подарок", short: "Подарок", description: "Подарок к покупке", image_url: "" },
-      { id: 6, title: "Бонус", short: "Бонус", description: "Бонус на следующий заказ", image_url: "" }
-    ];
+    function safeHapticSelection() {
+      try { tg.HapticFeedback?.selectionChanged(); } catch (e) {}
+    }
+
+    function safeHapticImpact(style = "light") {
+      try { tg.HapticFeedback?.impactOccurred(style); } catch (e) {}
+    }
+
+    function safeHapticNotification(type = "success") {
+      try { tg.HapticFeedback?.notificationOccurred(type); } catch (e) {}
+    }
 
     function setStatus(text, type = "") {
       statusEl.textContent = text;
-      statusEl.classList.remove("error", "success", "warn");
+      statusEl.classList.remove("error", "success");
       if (type) statusEl.classList.add(type);
     }
 
@@ -1337,76 +1203,16 @@
       const offline = !navigator.onLine;
       offlineBanner.classList.toggle("show", offline);
       if (offline) {
-        setStatus("Нет сети. Можно смотреть интерфейс, но запросы на сервер недоступны.", "warn");
+        setStatus("Нет соединения с интернетом. Попробуйте позже.", "error");
       }
     }
 
-    function getInitData() {
-      return tg?.initData || "";
-    }
-
-    function insideTelegram() {
-      return !!tg;
-    }
-
-    function safeHapticSelection() {
-      try { tg?.HapticFeedback?.selectionChanged(); } catch (e) {}
-    }
-
-    function safeHapticImpact(style = "light") {
-      try { tg?.HapticFeedback?.impactOccurred(style); } catch (e) {}
-    }
-
-    function safeHapticNotification(type = "success") {
-      try { tg?.HapticFeedback?.notificationOccurred(type); } catch (e) {}
-    }
-
-    async function unlockSounds() {
-      if (soundUnlocked) return;
-      soundUnlocked = true;
-      try {
-        sounds.tick.muted = true;
-        await sounds.tick.play();
-        sounds.tick.pause();
-        sounds.tick.currentTime = 0;
-        sounds.tick.muted = false;
-      } catch (e) {}
-    }
-
-    function playSound(name) {
-      const s = sounds[name];
-      if (!s) return;
-      try {
-        s.pause();
-        s.currentTime = 0;
-        s.play().catch(() => {});
-      } catch (e) {}
-    }
-
-    function startTickLoop() {
-      stopTickLoop();
-      tickInterval = setInterval(() => playSound("tick"), 280);
-    }
-
-    function stopTickLoop() {
-      if (tickInterval) {
-        clearInterval(tickInterval);
-        tickInterval = null;
-      }
-    }
-
-    function applyTelegramTheme() {
-      if (!tg) return;
-      try {
-        tg.ready();
-        tg.expand();
-        if (tg.themeParams?.bg_color) tg.setBackgroundColor?.(tg.themeParams.bg_color);
-        if (tg.themeParams?.header_bg_color) tg.setHeaderColor?.(tg.themeParams.header_bg_color);
-      } catch (e) {}
-    }
+    window.addEventListener("online", updateOfflineState);
+    window.addEventListener("offline", updateOfflineState);
 
     function setImageBlock(wrapEl, imgEl, src, altText) {
       if (!wrapEl || !imgEl) return;
+
       if (src) {
         imgEl.src = src;
         imgEl.alt = altText || "Приз";
@@ -1418,71 +1224,64 @@
       }
     }
 
-    function getAutoThemeMode() {
-      const h = new Date().getHours();
-      return h >= 7 && h < 21 ? "light" : "dark";
+    async function apiGet(path) {
+      const res = await fetch(`${API_BASE}${path}?v=${BUILD_VERSION}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+      return await res.json();
     }
 
-    function renderThemeIcon(mode) {
-      if (mode === "light") {
-        themeToggleIcon.innerHTML = '<circle cx="12" cy="12" r="4"></circle><path d="M12 2v2.5M12 19.5V22M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M2 12h2.5M19.5 12H22M4.93 19.07l1.77-1.77M17.3 6.7l1.77-1.77"></path>';
-      } else {
-        themeToggleIcon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3A7 7 0 0 0 21 12.79z"></path>';
+    async function apiPost(path, body) {
+      const res = await fetch(`${API_BASE}${path}?v=${BUILD_VERSION}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(body)
+      });
+
+      const data = await res.json();
+      if (!res.ok && data?.detail) {
+        throw new Error(data.detail);
       }
+      return data;
     }
 
-    function applyTheme(mode) {
-      const effective = mode === "auto" ? getAutoThemeMode() : mode;
-      document.documentElement.setAttribute("data-theme", effective);
-      renderThemeIcon(effective);
-      drawWheel(prizes.length ? prizes : fallbackPrizes, currentRotation);
-    }
+    async function uploadPrizeImage(file) {
+      const formData = new FormData();
+      formData.append("init_data", getInitData());
+      formData.append("file", file);
 
-    let themeMode = "auto";
+      const res = await fetch(`${API_BASE}/admin/upload-prize-image?v=${BUILD_VERSION}`, {
+        method: "POST",
+        body: formData
+      });
 
-    function cycleTheme() {
-      themeMode = themeMode === "auto" ? "light" : themeMode === "light" ? "dark" : "auto";
-      applyTheme(themeMode);
-      safeHapticSelection();
-    }
-
-    function switchTab(name) {
-      currentView = name;
-
-      tabWheel.classList.toggle("active", name === "wheel");
-      tabHistory.classList.toggle("active", name === "history");
-      tabFaq.classList.toggle("active", name === "faq");
-
-      panelWheel.classList.toggle("active", name === "wheel");
-      panelHistory.classList.toggle("active", name === "history");
-      panelFaq.classList.toggle("active", name === "faq");
-
-      safeHapticSelection();
-
-      if (name === "history") {
-        loadHistory();
+      const data = await res.json();
+      if (!res.ok || !data.ok) {
+        throw new Error(data.detail || data.error || "Не удалось загрузить изображение");
       }
-    }
-
-    tabWheel.addEventListener("click", () => switchTab("wheel"));
-    tabHistory.addEventListener("click", () => switchTab("history"));
-    tabFaq.addEventListener("click", () => switchTab("faq"));
-    themeToggle.addEventListener("click", cycleTheme);
-
-    function getSectorPalette() {
-      return ["#35c276", "#f0718d", "#5a9cf2", "#d8a042", "#7c63e0", "#9b6ed2"];
+      return data.image_url || data.prize_image_url || "";
     }
 
     function fitLabel(label) {
       if (!label) return ["Приз"];
+
       const cleaned = String(label)
         .replace(/\s+/g, " ")
         .replace(/аксессуары/gi, "акс.")
         .replace(/скидка/gi, "")
+        .replace(/бесплатная доставка/gi, "доставка")
+        .replace(/доставка бесплатно/gi, "доставка")
         .replace(/на /gi, "")
         .trim();
 
       const words = cleaned.split(" ").filter(Boolean);
+      if (!words.length) return ["Приз"];
+
       const lines = [];
       let current = "";
 
@@ -1495,11 +1294,21 @@
           current = word;
         }
       }
+
       if (current) lines.push(current);
       return lines.slice(0, 3);
     }
 
-    function drawTextInSector(ctx, lines, x, y, maxWidth, baseFont = 12) {
+    function shadeColor(hex, percent) {
+      const num = parseInt(hex.replace("#", ""), 16);
+      const amt = Math.round(2.55 * percent);
+      const r = Math.min(255, Math.max(0, (num >> 16) + amt));
+      const g = Math.min(255, Math.max(0, ((num >> 8) & 0x00ff) + amt));
+      const b = Math.min(255, Math.max(0, (num & 0x0000ff) + amt));
+      return "#" + (0x1000000 + r * 0x10000 + g * 0x100 + b).toString(16).slice(1);
+    }
+
+    function drawTextInSector(lines, x, y, maxWidth, baseFont = 12) {
       let fontSize = baseFont;
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
@@ -1515,7 +1324,7 @@
       const startY = y - ((lines.length - 1) * lineHeight) / 2;
 
       lines.forEach((line, i) => {
-        ctx.strokeStyle = "rgba(8,11,16,0.18)";
+        ctx.strokeStyle = "rgba(8,11,16,0.16)";
         ctx.lineWidth = 3;
         ctx.strokeText(line, x, startY + i * lineHeight);
         ctx.fillStyle = "#ffffff";
@@ -1523,20 +1332,10 @@
       });
     }
 
-    function shadeColor(hex, percent) {
-      const num = parseInt(hex.replace("#", ""), 16);
-      const amt = Math.round(2.55 * percent);
-      const r = Math.min(255, Math.max(0, (num >> 16) + amt));
-      const g = Math.min(255, Math.max(0, ((num >> 8) & 0x00ff) + amt));
-      const b = Math.min(255, Math.max(0, (num & 0x0000ff) + amt));
-      return "#" + (0x1000000 + r * 0x10000 + g * 0x100 + b).toString(16).slice(1);
-    }
-
     function drawWheel(items, rotationDeg = 0) {
       const size = canvas.width;
       const center = size / 2;
       const radius = center - 18;
-      const data = items.length ? items : fallbackPrizes;
 
       ctx.clearRect(0, 0, size, size);
 
@@ -1550,16 +1349,24 @@
       ctx.fillStyle = "#141c28";
       ctx.fill();
 
-      const total = data.length;
+      if (!items.length) {
+        ctx.beginPath();
+        ctx.arc(center, center, radius, 0, Math.PI * 2);
+        ctx.fillStyle = "#293347";
+        ctx.fill();
+        return;
+      }
+
+      const colors = ["#31be73", "#ee718a", "#5f9ff1", "#d9a043", "#7c68de", "#a36fd0"];
+      const total = items.length;
       const arc = (Math.PI * 2) / total;
       const rotationRad = rotationDeg * Math.PI / 180;
-      const palette = getSectorPalette();
 
       for (let i = 0; i < total; i++) {
         const start = -Math.PI / 2 + rotationRad + i * arc;
         const end = start + arc;
         const mid = start + arc / 2;
-        const color = palette[i % palette.length];
+        const color = colors[i % colors.length];
 
         const grad = ctx.createLinearGradient(
           center + Math.cos(start) * 28,
@@ -1589,11 +1396,11 @@
         ctx.translate(center, center);
         ctx.rotate(mid);
 
-        const textLines = fitLabel(data[i].short || data[i].title || "Приз");
+        const textLines = fitLabel(items[i].short || items[i].title || "Приз");
         const textRadius = radius - 70;
         const sectorWidth = Math.max(60, radius * arc * 0.64);
 
-        drawTextInSector(ctx, textLines, textRadius, 0, sectorWidth, 12);
+        drawTextInSector(textLines, textRadius, 0, sectorWidth, 12);
         ctx.restore();
       }
 
@@ -1623,66 +1430,34 @@
       ctx.stroke();
     }
 
-    async function apiPost(path, body) {
-      const res = await fetch(`${API_BASE}${path}?ui=${encodeURIComponent(APP_VERSION)}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body)
-      });
-
-      let data;
-      try {
-        data = await res.json();
-      } catch (e) {
-        throw new Error("Сервер вернул не JSON");
-      }
-
-      if (!res.ok && !data.ok) {
-        throw new Error(data.detail || data.error || `HTTP ${res.status}`);
-      }
-      return data;
-    }
-
     async function loadPrizes() {
-      try {
-        const res = await fetch(`${API_BASE}/prizes?ui=${encodeURIComponent(APP_VERSION)}`);
-        const data = await res.json();
-
-        if (data.ok && Array.isArray(data.items) && data.items.length) {
-          prizes = data.items;
-          drawWheel(prizes, currentRotation);
-          setStatus(insideTelegram() ? "Готово к запуску внутри Telegram." : "Открыто вне Telegram. Для реального спина зайдите через Mini App.", insideTelegram() ? "success" : "warn");
-          return;
-        }
-
-        prizes = fallbackPrizes;
-        drawWheel(prizes, currentRotation);
-        setStatus("Сервер не отдал призы, включён резервный режим интерфейса.", "warn");
-      } catch (e) {
-        prizes = fallbackPrizes;
-        drawWheel(prizes, currentRotation);
-        setStatus("Backend недоступен. Интерфейс загружен в резервном режиме.", "warn");
+      const data = await apiGet("/prizes");
+      if (!data.ok || !Array.isArray(data.items) || !data.items.length) {
+        throw new Error("Не удалось загрузить призы");
       }
+      prizes = data.items;
+      drawWheel(prizes, currentRotation);
     }
 
     function findPrizeIndexById(prizeId) {
-      const source = prizes.length ? prizes : fallbackPrizes;
-      return source.findIndex(p => Number(p.id) === Number(prizeId));
+      return prizes.findIndex(p => Number(p.id) === Number(prizeId));
     }
 
     function animateSpinToPrize(prizeId) {
       return new Promise((resolve) => {
-        const source = prizes.length ? prizes : fallbackPrizes;
-        const index = findPrizeIndexById(prizeId >= 1 ? prizeId : 1);
-        const safeIndex = index >= 0 ? index : 0;
+        const index = findPrizeIndexById(prizeId);
+        if (index < 0) {
+          resolve();
+          return;
+        }
 
-        const count = source.length;
+        const count = prizes.length;
         const slice = 360 / count;
-        const targetCenter = safeIndex * slice + slice / 2;
+        const targetCenter = index * slice + slice / 2;
         const finalRotation = (360 * 6) + (360 - targetCenter);
 
         const start = performance.now();
-        const duration = 4200;
+        const duration = 4300;
         const from = currentRotation;
         const to = currentRotation + finalRotation;
 
@@ -1696,13 +1471,13 @@
           const eased = easeOutCubic(progress);
           const value = from + (to - from) * eased;
 
-          drawWheel(source, value);
+          drawWheel(prizes, value);
 
           if (progress < 1) {
             requestAnimationFrame(frame);
           } else {
             currentRotation = value % 360;
-            drawWheel(source, currentRotation);
+            drawWheel(prizes, currentRotation);
             resolve();
           }
         }
@@ -1723,32 +1498,55 @@
       setImageBlock(sheetImageWrap, sheetImage, payload.image || "", payload.title || "Приз");
 
       detailsOverlay.classList.add("show");
+      try { tg.BackButton.show(); } catch (e) {}
     }
 
     function closeDetailsOverlay() {
       overlayOpen = false;
       detailsOverlay.classList.remove("show");
+      updateBackButton();
+    }
+
+    function getHistoryBadge(item) {
+      if (item.redeemed) return { cls: "badge-off", text: "Погашен" };
+      const expiresText = item.expires_at_text || item.expires_at || "";
+      const lower = String(expiresText).toLowerCase();
+      if (lower.includes("сегодня") || lower.includes("завтра")) {
+        return { cls: "badge-warn", text: "Скоро истечёт" };
+      }
+      return { cls: "badge-ok", text: "Активен" };
+    }
+
+    async function copyCodeValue(code) {
+      if (!code || code === "—") return;
+
+      try {
+        await navigator.clipboard.writeText(code);
+        setStatus("Код скопирован.", "success");
+        safeHapticNotification("success");
+      } catch (e) {
+        setStatus("Не удалось скопировать код.", "error");
+        safeHapticNotification("error");
+      }
     }
 
     function showResult(data) {
       cooldownBox.classList.remove("show");
       resultBox.classList.add("show");
 
-      const image = data.prize_image_url || data.image_url || "";
-
       currentPrizePayload = {
         title: data.prize_title || "Ваш приз",
         description: data.prize_description || "",
         code: data.code || "—",
         expires: data.expires_at_text ? `До ${data.expires_at_text}` : "Срок действия уточняйте у сотрудника.",
-        image
+        image: data.image_url || data.prize_image_url || ""
       };
 
       resultPrize.textContent = currentPrizePayload.title;
       resultDesc.textContent = currentPrizePayload.description;
       resultCode.textContent = currentPrizePayload.code;
       resultExpires.textContent = currentPrizePayload.expires;
-      setImageBlock(resultImageWrap, resultImage, image, currentPrizePayload.title);
+      setImageBlock(resultImageWrap, resultImage, currentPrizePayload.image, currentPrizePayload.title);
 
       setStatus("Готово: ваш выигрыш сохранён.", "success");
       historyCache = [];
@@ -1772,21 +1570,26 @@
 
     function renderLastPrizeCard(data) {
       lastPrizeWrap.innerHTML = "";
+
       if (!data.last_code && !data.last_prize_title) return;
 
       const image = data.last_image_url || "";
       const imageHtml = image
-        ? `<div class="last-prize-image-wrap"><img class="last-prize-image" src="${image}" alt="${data.last_prize_title || "Последний приз"}"></div>`
+        ? `
+          <div class="last-image-wrap">
+            <img class="last-image" src="${image}" alt="${data.last_prize_title || "Последний приз"}" />
+          </div>
+        `
         : "";
 
       const card = document.createElement("div");
       card.className = "mini-card";
       card.innerHTML = `
-        <div class="mini-card-row">
+        <div class="last-main">
           ${imageHtml}
           <div>
-            <div class="mini-card-title">${data.last_prize_title || "Последний приз"}</div>
-            <div class="mini-card-desc">
+            <div class="mini-title">${data.last_prize_title || "Последний приз"}</div>
+            <div class="mini-desc">
               Код: ${data.last_code || "—"}<br>
               ${data.last_expires_at_text ? "Действует до: " + data.last_expires_at_text : "Срок действия уточняйте у сотрудника."}
             </div>
@@ -1799,35 +1602,104 @@
     function startCooldown(data) {
       resultBox.classList.remove("show");
       cooldownBox.classList.add("show");
+
       cooldownText.textContent = data.error || "Сегодня вы уже использовали попытку.";
       renderLastPrizeCard(data);
 
       if (countdownInterval) clearInterval(countdownInterval);
 
       function tick() {
-        const left = getNextMidnightMSK();
-        timerEl.textContent = formatMs(left);
+        timerEl.textContent = formatMs(getNextMidnightMSK());
       }
 
       tick();
       countdownInterval = setInterval(tick, 1000);
     }
 
-    async function copyCodeValue(code) {
-      if (!code || code === "—") return;
+    async function spinWheel() {
+      if (isSpinning || !navigator.onLine) return;
+      if (!getInitData()) {
+        setStatus("Mini App открыт без Telegram initData. Откройте приложение из бота.", "error");
+        return;
+      }
+
+      isSpinning = true;
+      spinBtn.disabled = true;
+      resultBox.classList.remove("show");
+      cooldownBox.classList.remove("show");
+      setStatus("Запрашиваем результат...");
+      safeHapticImpact("light");
+
       try {
-        await navigator.clipboard.writeText(code);
-        setStatus("Код скопирован.", "success");
+        const data = await apiPost("/spin", {
+          init_data: getInitData()
+        });
+
+        if (!data.ok && data.cooldown) {
+          safeHapticNotification("warning");
+          setStatus("На сегодня попытка уже израсходована.", "error");
+          startCooldown(data);
+          return;
+        }
+
+        if (!data.ok) {
+          safeHapticNotification("error");
+          setStatus(data.error || "Произошла ошибка.", "error");
+          return;
+        }
+
+        await animateSpinToPrize(data.prize_id);
         safeHapticNotification("success");
+        showResult(data);
       } catch (e) {
-        setStatus("Не удалось скопировать код.", "error");
-        playSound("error");
+        safeHapticNotification("error");
+        setStatus(e.message || "Ошибка соединения с сервером.", "error");
+      } finally {
+        isSpinning = false;
+        spinBtn.disabled = false;
       }
     }
 
-    function getHistoryBadge(item) {
-      if (item.redeemed) return { cls: "badge-off", text: "Погашен" };
-      return { cls: "badge-ok", text: "Активен" };
+    async function loadHistory(force = false) {
+      if (!getInitData()) {
+        historyList.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">!</div>
+            <div class="empty-title">Нет данных Telegram</div>
+            <div class="empty-text">Откройте приложение из Telegram-бота, чтобы увидеть историю.</div>
+          </div>
+        `;
+        return;
+      }
+
+      if (historyCache.length && !force) {
+        renderHistory(historyCache);
+        return;
+      }
+
+      historyList.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-icon">…</div>
+          <div class="empty-title">Загружаем историю</div>
+          <div class="empty-text">Подождите немного, получаем ваши результаты.</div>
+        </div>
+      `;
+
+      try {
+        const data = await apiPost("/history", {
+          init_data: getInitData()
+        });
+
+        if (!data.ok || !Array.isArray(data.items)) {
+          renderHistory([]);
+          return;
+        }
+
+        historyCache = data.items;
+        renderHistory(historyCache);
+      } catch (e) {
+        renderHistory([]);
+      }
     }
 
     function renderHistory(items) {
@@ -1844,7 +1716,7 @@
           <div class="empty-state">
             <div class="empty-icon">🎁</div>
             <div class="empty-title">Пока нет сохранённых выигрышей</div>
-            <div class="empty-text">После первого успешного спина здесь появятся ваши коды и статусы призов.</div>
+            <div class="empty-text">После первого успешного спина здесь появятся ваши коды и призы.</div>
           </div>
         `;
         return;
@@ -1852,17 +1724,22 @@
 
       filtered.forEach((item) => {
         const badge = getHistoryBadge(item);
-        const image = item.prize_image_url || item.image_url || "";
+        const expiresText = item.expires_at_text || item.expires_at || "Не указан";
+        const image = item.image_url || item.prize_image_url || "";
         const payload = encodeURIComponent(JSON.stringify({
           title: item.prize_title || "Приз",
           description: item.prize_description || "Описание отсутствует.",
           code: item.code || "—",
-          expires: item.expires_at_text || item.expires_at || "Не указан",
+          expires: expiresText,
           image
         }));
 
         const imageHtml = image
-          ? `<div class="history-image-wrap"><img class="history-image" src="${image}" alt="${item.prize_title || "Приз"}" /></div>`
+          ? `
+            <div class="history-image-wrap">
+              <img class="history-image" src="${image}" alt="${item.prize_title || "Приз"}" />
+            </div>
+          `
           : "";
 
         const card = document.createElement("div");
@@ -1878,11 +1755,14 @@
             </div>
             <div class="badge ${badge.cls}">${badge.text}</div>
           </div>
+
           <div class="history-desc">${item.prize_description || "Описание отсутствует."}</div>
+
           <div class="history-actions">
-            <div class="badge badge-warn">До: ${item.expires_at_text || item.expires_at || "Не указан"}</div>
+            <div class="badge badge-warn">До: ${expiresText}</div>
             <div class="badge badge-ok">Код: ${item.code || "—"}</div>
           </div>
+
           <div class="history-actions">
             <button class="mini-btn" data-history-copy="${item.code || ""}">Скопировать код</button>
             <button class="mini-btn" data-history-open="${payload}">Подробнее</button>
@@ -1894,7 +1774,6 @@
       historyList.querySelectorAll("[data-history-copy]").forEach(btn => {
         btn.addEventListener("click", async () => {
           const code = btn.getAttribute("data-history-copy");
-          if (!code) return;
           await copyCodeValue(code);
         });
       });
@@ -1907,146 +1786,433 @@
       });
     }
 
-    async function loadHistory(force = false) {
-      if (historyCache.length && !force) {
-        renderHistory(historyCache);
-        return;
+    function switchTab(name) {
+      currentView = name;
+      safeHapticSelection();
+
+      tabWheel.classList.toggle("active", name === "wheel");
+      tabHistory.classList.toggle("active", name === "history");
+      tabFaq.classList.toggle("active", name === "faq");
+      tabAdmin.classList.toggle("active", name === "admin");
+
+      panelWheel.classList.toggle("active", name === "wheel");
+      panelHistory.classList.toggle("active", name === "history");
+      panelFaq.classList.toggle("active", name === "faq");
+      panelAdmin.classList.toggle("active", name === "admin");
+
+      if (name === "history") {
+        loadHistory();
+      } else if (name === "admin" && isAdmin) {
+        loadAdminPrizes();
       }
 
-      historyList.innerHTML = `
-        <div class="empty-state">
-          <div class="empty-icon">…</div>
-          <div class="empty-title">Загружаем историю</div>
-          <div class="empty-text">Подождите немного, получаем ваши последние результаты.</div>
-        </div>
-      `;
+      updateBackButton();
+    }
 
-      if (!insideTelegram()) {
-        historyCache = [];
-        renderHistory(historyCache);
-        setStatus("История доступна внутри Telegram Mini App.", "warn");
-        return;
-      }
-
+    function updateBackButton() {
       try {
-        const data = await apiPost("/history", { init_data: getInitData() });
-        if (!data.ok || !Array.isArray(data.items)) {
-          historyCache = [];
-          renderHistory(historyCache);
+        if (overlayOpen) {
+          tg.BackButton.show();
           return;
         }
-        historyCache = data.items;
-        renderHistory(historyCache);
-      } catch (e) {
-        historyCache = [];
-        renderHistory(historyCache);
-        setStatus(`История не загрузилась: ${e.message}`, "error");
+        if (currentView === "wheel") {
+          tg.BackButton.hide();
+        } else {
+          tg.BackButton.show();
+        }
+      } catch (e) {}
+    }
+
+    function onTelegramBack() {
+      if (overlayOpen) {
+        closeDetailsOverlay();
+        return;
+      }
+      if (currentView !== "wheel") {
+        switchTab("wheel");
       }
     }
 
-    async function spinWheel() {
-      if (isSpinning || !navigator.onLine) return;
-
-      await unlockSounds();
-      safeHapticImpact("light");
-
-      if (!insideTelegram()) {
-        setStatus("Кнопка нажалась, но реальный спин доступен только внутри Telegram Mini App.", "warn");
-        hintText.textContent = "Откройте приложение из Telegram, а не в обычном браузере.";
+    async function checkAdminAccess() {
+      if (!getInitData()) {
+        adminStatus.textContent = "Нет initData. Админка доступна только внутри Telegram.";
         return;
       }
-
-      const initData = getInitData();
-      if (!initData) {
-        setStatus("initData пустой. Mini App открыт некорректно или Telegram не передал данные.", "error");
-        return;
-      }
-
-      isSpinning = true;
-      spinBtn.disabled = true;
-      resultBox.classList.remove("show");
-      cooldownBox.classList.remove("show");
-      setStatus("Запрашиваем результат...");
-      hintText.textContent = "Ожидаем ответ сервера и запускаем анимацию.";
 
       try {
-        const data = await apiPost("/spin", { init_data: initData });
+        const data = await apiPost("/admin/me", {
+          init_data: getInitData()
+        });
 
-        if (!data.ok && data.cooldown) {
-          stopTickLoop();
-          playSound("error");
-          safeHapticNotification("warning");
-          setStatus("На сегодня попытка уже израсходована.", "warn");
-          startCooldown(data);
+        if (data.ok) {
+          isAdmin = true;
+          tabAdmin.classList.remove("hidden");
+          adminBox.classList.add("show");
+          adminStatus.textContent = `Вы вошли как администратор: ${data.first_name || data.username || "пользователь"}`;
+          await loadAdminPrizes();
+        }
+      } catch (e) {
+        isAdmin = false;
+      }
+    }
+
+    async function loadAdminPrizes() {
+      if (!isAdmin) return;
+
+      const data = await apiPost("/admin/prizes", {
+        init_data: getInitData()
+      });
+
+      if (!data.ok) {
+        adminStatus.textContent = data.error || "Нет доступа к админке.";
+        return;
+      }
+
+      adminStatus.textContent = "Список призов загружен.";
+      renderAdminPrizeList(data.items || []);
+    }
+
+    function renderAdminPrizeList(items) {
+      adminPrizeList.innerHTML = "";
+
+      if (!items.length) {
+        adminPrizeList.innerHTML = "<div class='status'>Призов пока нет.</div>";
+        return;
+      }
+
+      items.forEach((item) => {
+        const image = item.image_url || item.prize_image_url || "";
+        const imageHtml = image
+          ? `
+            <div class="history-image-wrap">
+              <img class="history-image" src="${image}" alt="${item.title}" />
+            </div>
+          `
+          : "";
+
+        const block = document.createElement("div");
+        block.className = "admin-item";
+
+        block.innerHTML = `
+          <div class="admin-top">
+            <div class="history-main">
+              ${imageHtml}
+              <div>
+                <div class="admin-name">${item.title}</div>
+                <div class="admin-meta">ID: ${item.id} · Коротко: ${item.short || "—"}</div>
+              </div>
+            </div>
+            <div class="badge ${item.active ? "badge-ok" : "badge-off"}">
+              ${item.active ? "Включён" : "Выключен"}
+            </div>
+          </div>
+
+          <div class="admin-meta">
+            ${item.description}<br>
+            Вес: <strong>${item.weight}</strong>
+          </div>
+
+          <div class="admin-actions">
+            <button class="mini-btn" data-action="edit" data-id="${item.id}">Редактировать</button>
+            <button class="mini-btn" data-action="weight" data-id="${item.id}">Изменить вес</button>
+            <button class="mini-btn" data-action="toggle" data-id="${item.id}">
+              ${item.active ? "Выключить" : "Включить"}
+            </button>
+            <button class="mini-btn" data-action="delete" data-id="${item.id}">Удалить</button>
+          </div>
+        `;
+        adminPrizeList.appendChild(block);
+      });
+
+      adminPrizeList.querySelectorAll("[data-action='edit']").forEach(btn => {
+        btn.addEventListener("click", async () => {
+          const id = Number(btn.dataset.id);
+          const item = items.find(x => Number(x.id) === id);
+          if (!item) return;
+
+          const title = prompt("Название", item.title);
+          if (title === null) return;
+
+          const short = prompt("Короткий текст", item.short || "");
+          if (short === null) return;
+
+          const description = prompt("Описание", item.description || "");
+          if (description === null) return;
+
+          const weightRaw = prompt("Вес", String(item.weight));
+          if (weightRaw === null) return;
+
+          const weight = Number(weightRaw);
+          if (!weight || weight <= 0) {
+            alert("Вес должен быть больше 0");
+            return;
+          }
+
+          let image_url = item.image_url || item.prize_image_url || "";
+          const replaceImage = confirm("Заменить картинку приза?");
+
+          if (replaceImage) {
+            alert("Выберите файл в поле 'Картинка приза' выше, затем нажмите OK.");
+            if (newImageFile.files && newImageFile.files[0]) {
+              image_url = await uploadPrizeImage(newImageFile.files[0]);
+            }
+          }
+
+          const active = confirm("Оставить приз включённым? OK = включён, Cancel = выключен.");
+
+          adminStatus.textContent = "Сохраняем изменения приза...";
+
+          const data = await apiPost("/admin/prize/update", {
+            init_data: getInitData(),
+            prize_id: id,
+            title,
+            short,
+            description,
+            weight,
+            active,
+            image_url
+          });
+
+          if (!data.ok) {
+            alert(data.error || "Ошибка редактирования");
+            adminStatus.textContent = data.error || "Ошибка";
+            return;
+          }
+
+          adminStatus.textContent = "Приз обновлён.";
+          renderAdminPrizeList(data.items);
+          await loadPrizes();
+        });
+      });
+
+      adminPrizeList.querySelectorAll("[data-action='weight']").forEach(btn => {
+        btn.addEventListener("click", async () => {
+          const id = Number(btn.dataset.id);
+          const value = prompt("Введите новый вес:");
+          if (!value) return;
+
+          const weight = Number(value);
+          if (!weight || weight <= 0) {
+            alert("Вес должен быть больше 0");
+            return;
+          }
+
+          adminStatus.textContent = "Сохраняем новый вес...";
+
+          const data = await apiPost("/admin/prize/update-weight", {
+            init_data: getInitData(),
+            prize_id: id,
+            weight
+          });
+
+          if (!data.ok) {
+            alert(data.error || "Ошибка обновления веса");
+            adminStatus.textContent = data.error || "Ошибка";
+            return;
+          }
+
+          adminStatus.textContent = "Вес обновлён.";
+          renderAdminPrizeList(data.items);
+          await loadPrizes();
+        });
+      });
+
+      adminPrizeList.querySelectorAll("[data-action='toggle']").forEach(btn => {
+        btn.addEventListener("click", async () => {
+          const id = Number(btn.dataset.id);
+          adminStatus.textContent = "Меняем статус приза...";
+
+          const data = await apiPost("/admin/prize/toggle", {
+            init_data: getInitData(),
+            prize_id: id
+          });
+
+          if (!data.ok) {
+            alert(data.error || "Ошибка смены статуса");
+            adminStatus.textContent = data.error || "Ошибка";
+            return;
+          }
+
+          adminStatus.textContent = "Статус обновлён.";
+          renderAdminPrizeList(data.items);
+          await loadPrizes();
+        });
+      });
+
+      adminPrizeList.querySelectorAll("[data-action='delete']").forEach(btn => {
+        btn.addEventListener("click", async () => {
+          const id = Number(btn.dataset.id);
+          const ok = confirm("Удалить этот приз?");
+          if (!ok) return;
+
+          adminStatus.textContent = "Удаляем приз...";
+
+          const data = await apiPost("/admin/prize/delete", {
+            init_data: getInitData(),
+            prize_id: id
+          });
+
+          if (!data.ok) {
+            alert(data.error || "Ошибка удаления");
+            adminStatus.textContent = data.error || "Ошибка";
+            return;
+          }
+
+          adminStatus.textContent = "Приз удалён.";
+          renderAdminPrizeList(data.items);
+          await loadPrizes();
+        });
+      });
+    }
+
+    addPrizeBtn.addEventListener("click", async () => {
+      const title = newTitle.value.trim();
+      const short = newShort.value.trim();
+      const description = newDesc.value.trim();
+      const weight = Number(newWeight.value);
+      const active = newActive.value === "true";
+
+      if (!title || !short || !description || !weight || weight <= 0) {
+        alert("Заполните все поля корректно.");
+        return;
+      }
+
+      let image_url = "";
+      if (newImageFile.files && newImageFile.files[0]) {
+        try {
+          adminStatus.textContent = "Загружаем изображение...";
+          image_url = await uploadPrizeImage(newImageFile.files[0]);
+        } catch (e) {
+          alert(e.message || "Ошибка загрузки картинки");
           return;
         }
+      }
 
-        startTickLoop();
-        await animateSpinToPrize(data.prize_id || 1);
-        stopTickLoop();
-        playSound("win");
+      adminStatus.textContent = "Добавляем приз...";
+
+      const data = await apiPost("/admin/prize/add", {
+        init_data: getInitData(),
+        title,
+        short,
+        description,
+        weight,
+        active,
+        image_url
+      });
+
+      if (!data.ok) {
+        alert(data.error || "Ошибка добавления приза");
+        adminStatus.textContent = data.error || "Ошибка";
+        return;
+      }
+
+      newTitle.value = "";
+      newShort.value = "";
+      newDesc.value = "";
+      newWeight.value = "";
+      newActive.value = "true";
+      newImageFile.value = "";
+
+      adminStatus.textContent = "Приз успешно добавлен.";
+      renderAdminPrizeList(data.items);
+      await loadPrizes();
+    });
+
+    checkCodeBtn.addEventListener("click", async () => {
+      const code = codeActionInput.value.trim();
+      if (!code) {
+        codeActionStatus.textContent = "Введите код.";
+        return;
+      }
+
+      codeActionStatus.textContent = "Проверяем код...";
+
+      try {
+        const data = await apiPost("/admin/code/check", {
+          init_data: getInitData(),
+          code
+        });
+
+        codeActionStatus.textContent =
+          `Код ${data.code} найден. Приз: ${data.prize_title}. Статус: ${data.redeemed ? "уже погашен" : "ещё не погашен"}.`;
+      } catch (e) {
+        codeActionStatus.textContent = e.message || "Код не найден.";
+      }
+    });
+
+    redeemCodeBtn.addEventListener("click", async () => {
+      const code = codeActionInput.value.trim();
+      if (!code) {
+        codeActionStatus.textContent = "Введите код.";
+        return;
+      }
+
+      codeActionStatus.textContent = "Погашаем код...";
+
+      try {
+        const data = await apiPost("/admin/code/redeem", {
+          init_data: getInitData(),
+          code
+        });
+
         safeHapticNotification("success");
-        showResult(data);
+        codeActionStatus.textContent = `Код ${data.code} погашен. Приз: ${data.prize_title}.`;
+        historyCache = [];
       } catch (e) {
-        stopTickLoop();
-        playSound("error");
         safeHapticNotification("error");
-        setStatus(`Ошибка запуска: ${e.message}`, "error");
-      } finally {
-        stopTickLoop();
-        isSpinning = false;
-        spinBtn.disabled = false;
+        codeActionStatus.textContent = e.message || "Не удалось погасить код.";
       }
-    }
+    });
+
+    tabWheel.addEventListener("click", () => switchTab("wheel"));
+    tabHistory.addEventListener("click", () => switchTab("history"));
+    tabFaq.addEventListener("click", () => switchTab("faq"));
+    tabAdmin.addEventListener("click", () => switchTab("admin"));
 
     spinBtn.addEventListener("click", spinWheel);
     copyBtn.addEventListener("click", () => copyCodeValue(resultCode.textContent.trim()));
-    sheetCopyBtn.addEventListener("click", () => copyCodeValue(sheetCode.textContent.trim()));
     closeBtn.addEventListener("click", () => resultBox.classList.remove("show"));
     detailsBtn.addEventListener("click", () => {
       if (currentPrizePayload) openDetailsOverlay(currentPrizePayload);
     });
-    sheetCloseBtn.addEventListener("click", closeDetailsOverlay);
-    detailsOverlay.addEventListener("click", (e) => {
-      if (e.target === detailsOverlay) closeDetailsOverlay();
-    });
 
-    historyFilters.forEach((btn) => {
+    sheetCopyBtn.addEventListener("click", () => copyCodeValue(sheetCode.textContent.trim()));
+    sheetCloseBtn.addEventListener("click", closeDetailsOverlay);
+
+    filterButtons.forEach((btn) => {
       btn.addEventListener("click", () => {
         historyFilter = btn.dataset.filter || "all";
-        historyFilters.forEach((item) => item.classList.toggle("active", item === btn));
+        filterButtons.forEach(item => item.classList.toggle("active", item === btn));
         renderHistory(historyCache);
         safeHapticSelection();
       });
     });
 
-    function initTelegram() {
-      if (!tg) {
-        setStatus("Режим браузера: UI работает, но Telegram API недоступен.", "warn");
-        hintText.textContent = "Для реальной работы откройте Mini App внутри Telegram.";
-        return;
-      }
+    detailsOverlay.addEventListener("click", (e) => {
+      if (e.target === detailsOverlay) closeDetailsOverlay();
+    });
 
-      applyTelegramTheme();
-      const initData = getInitData();
+    try {
+      tg.BackButton.onClick(onTelegramBack);
+    } catch (e) {}
 
-      if (!initData) {
-        setStatus("Telegram найден, но initData пустой.", "error");
-      } else {
-        setStatus("Telegram Mini App подключён. Можно запускать колесо.", "success");
-      }
-    }
-
-    function initApp() {
+    async function initApp() {
       updateOfflineState();
-      applyTheme(themeMode);
-      drawWheel(fallbackPrizes, 0);
-      initTelegram();
-      loadPrizes();
-    }
 
-    window.addEventListener("online", updateOfflineState);
-    window.addEventListener("offline", updateOfflineState);
+      if (!getInitData()) {
+        setStatus("Приложение лучше открывать через кнопку бота внутри Telegram.", "error");
+      }
+
+      try {
+        await loadPrizes();
+        setStatus("Готово к запуску.");
+      } catch (e) {
+        setStatus(e.message || "Не удалось загрузить список призов.", "error");
+      }
+
+      await checkAdminAccess();
+      updateBackButton();
+    }
 
     initApp();
   </script>
