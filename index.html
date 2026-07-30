@@ -1,51 +1,70 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>iGadget Wheel v6.7.0</title>
+  <title>iGadget Wheel</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet" />
-
   <style>
     :root {
-      --bg: #0d131d;
-      --bg-2: #151c29;
-      --surface: rgba(22, 28, 40, 0.94);
-      --surface-solid: #1b2332;
-      --surface-2: #212b3e;
-      --surface-3: #29344a;
-      --text: #eef3fb;
-      --muted: #9ca7bb;
-      --success-text: #d6f8e3;
-      --warning-text: #ffe4b2;
-      --line: rgba(255,255,255,0.07);
-      --line-strong: rgba(255,255,255,0.12);
-      --accent: #58d68d;
-      --accent-2: #35bf76;
-      --danger: #ff7a92;
-      --danger-soft: rgba(255,122,146,0.11);
-      --shadow-xl: 0 28px 70px rgba(0,0,0,0.34);
-      --shadow-lg: 0 18px 40px rgba(0,0,0,0.24);
-      --shadow-sm: 0 8px 20px rgba(0,0,0,0.14);
+      --bg: #0b1017;
+      --bg-2: #111826;
+      --surface: rgba(20, 27, 38, 0.92);
+      --surface-solid: #161e2b;
+      --surface-2: #1b2534;
+      --surface-3: #243044;
+      --text: #edf3fb;
+      --muted: #9aa6bd;
+      --line: rgba(255,255,255,0.08);
+      --line-2: rgba(255,255,255,0.12);
+      --accent: #67dda0;
+      --accent-2: #37c17a;
+      --accent-soft: rgba(103,221,160,0.12);
+      --danger: #ff7e97;
+      --warn: #e6b04f;
+      --success: #d7f7e4;
+      --shadow-lg: 0 24px 70px rgba(0,0,0,0.34);
+      --shadow-md: 0 14px 36px rgba(0,0,0,0.24);
+      --shadow-sm: 0 10px 22px rgba(0,0,0,0.18);
+      --radius-xl: 30px;
+      --radius-lg: 22px;
+      --radius-md: 18px;
+      --radius-sm: 14px;
       --safe-top: env(safe-area-inset-top, 0px);
       --safe-bottom: env(safe-area-inset-bottom, 0px);
       --tg-safe-bottom: var(--tg-safe-area-inset-bottom, 0px);
     }
 
-    * { box-sizing: border-box; }
+    html[data-theme="light"] {
+      --bg: #f3f6fb;
+      --bg-2: #e7edf6;
+      --surface: rgba(255,255,255,0.88);
+      --surface-solid: #ffffff;
+      --surface-2: #f3f6fb;
+      --surface-3: #e8eef6;
+      --text: #121a26;
+      --muted: #667389;
+      --line: rgba(17,24,39,0.08);
+      --line-2: rgba(17,24,39,0.12);
+      --shadow-lg: 0 24px 60px rgba(15,23,42,0.12);
+      --shadow-md: 0 14px 30px rgba(15,23,42,0.10);
+      --shadow-sm: 0 8px 20px rgba(15,23,42,0.08);
+      --success: #16663e;
+    }
 
+    * { box-sizing: border-box; }
     html, body {
       margin: 0;
       min-height: 100%;
       font-family: Inter, system-ui, -apple-system, sans-serif;
-      color: var(--text);
       background:
-        radial-gradient(circle at top center, rgba(88,214,141,0.04), transparent 20%),
-        radial-gradient(circle at 16% 16%, rgba(93,173,226,0.03), transparent 16%),
+        radial-gradient(circle at top center, rgba(103,221,160,0.05), transparent 24%),
+        radial-gradient(circle at 18% 14%, rgba(97, 164, 255, 0.05), transparent 18%),
         linear-gradient(180deg, var(--bg), var(--bg-2));
+      color: var(--text);
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
     }
@@ -69,58 +88,118 @@
       border-radius: 34px;
       border: 1px solid var(--line);
       background:
-        linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.01)),
+        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)),
         var(--surface);
+      box-shadow: var(--shadow-lg);
       backdrop-filter: blur(18px);
-      box-shadow: var(--shadow-xl);
       padding: 18px;
+    }
+
+    .shell::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      pointer-events: none;
+      background:
+        linear-gradient(140deg, rgba(103,221,160,0.03), transparent 30%, transparent 72%, rgba(114,157,255,0.03));
     }
 
     .hero {
       text-align: center;
-      padding: 2px 8px 8px;
+      padding: 4px 44px 10px;
     }
 
     .hero h1 {
-      margin: 0 0 4px;
-      font-size: clamp(22px, 4vw, 30px);
-      line-height: 1.04;
+      margin: 0 0 6px;
+      font-size: clamp(24px, 4.4vw, 32px);
+      line-height: 1.03;
       letter-spacing: -0.05em;
       font-weight: 800;
     }
 
     .hero p {
       margin: 0 auto;
-      max-width: 30ch;
+      max-width: 32ch;
       color: var(--muted);
-      font-size: 12px;
-      line-height: 1.58;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .debug-pill {
+      margin: 0 auto 10px;
+      width: fit-content;
+      min-height: 28px;
+      padding: 0 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+    }
+
+    .theme-toggle {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-sm);
+      z-index: 9;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .theme-toggle svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
 
     .panel { display: none; }
     .panel.active { display: block; }
 
-    .wheel-card,
-    .section {
+    .card,
+    .section,
+    .history-item,
+    .mini-card,
+    details.faq-item,
+    .sheet {
       border-radius: 28px;
       border: 1px solid var(--line);
       background:
-        linear-gradient(180deg, rgba(255,255,255,0.024), rgba(255,255,255,0.012)),
+        linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.012)),
         var(--surface-solid);
-      box-shadow: var(--shadow-lg);
+      box-shadow: var(--shadow-md);
     }
 
-    .wheel-card {
+    .card {
       padding: 12px;
-      margin-bottom: 2px;
     }
 
-    .section { padding: 16px; }
+    .section {
+      padding: 16px;
+    }
 
     .meta-row {
       display: flex;
       justify-content: center;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     .meta-pill {
@@ -139,16 +218,16 @@
 
     .wheel-wrap {
       position: relative;
-      width: min(100%, 286px);
+      width: min(100%, 292px);
       aspect-ratio: 1 / 1;
-      margin: 0 auto 10px;
+      margin: 0 auto 12px;
     }
 
     .wheel-halo {
       position: absolute;
       inset: 11%;
       border-radius: 999px;
-      background: radial-gradient(circle, rgba(88,214,141,0.045), transparent 60%);
+      background: radial-gradient(circle, rgba(103,221,160,0.07), transparent 62%);
       filter: blur(18px);
       pointer-events: none;
     }
@@ -163,43 +242,49 @@
       border-left: 10px solid transparent;
       border-right: 10px solid transparent;
       border-top: 18px solid var(--danger);
-      z-index: 7;
-      filter: drop-shadow(0 4px 10px rgba(255,122,146,.20));
+      z-index: 4;
+      filter: drop-shadow(0 4px 10px rgba(255,126,151,.22));
     }
 
     canvas {
       width: 100%;
       height: 100%;
       display: block;
-      filter:
-        drop-shadow(0 16px 30px rgba(0,0,0,.20))
-        drop-shadow(0 0 12px rgba(88,214,141,.025));
+      filter: drop-shadow(0 18px 34px rgba(0,0,0,.22));
     }
 
     .center-btn {
       position: absolute;
-      left: 50%;
-      top: 50%;
+      inset: 50% auto auto 50%;
       transform: translate(-50%, -50%);
-      width: 72px;
-      height: 72px;
+      width: 76px;
+      height: 76px;
       border-radius: 999px;
-      border: 2px solid rgba(255,255,255,.10);
-      color: #071008;
+      border: 2px solid rgba(255,255,255,0.11);
+      color: #08110a;
       background:
-        radial-gradient(circle at 30% 25%, rgba(255,255,255,.34), transparent 28%),
-        linear-gradient(180deg, #94e9b8, #58d68d 56%, #35bf76);
+        radial-gradient(circle at 32% 24%, rgba(255,255,255,.34), transparent 28%),
+        linear-gradient(180deg, #9df0be, #67dda0 56%, #37c17a);
       font-size: 10px;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.13em;
       font-weight: 800;
-      cursor: pointer;
-      z-index: 8;
+      z-index: 5;
       box-shadow:
-        0 0 0 5px rgba(88,214,141,0.03),
-        0 8px 18px rgba(53,191,118,.14),
+        0 0 0 6px rgba(103,221,160,0.04),
+        0 12px 24px rgba(55,193,122,.18),
         inset 0 1px 0 rgba(255,255,255,.30);
-      transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
+      transition: transform .18s ease, opacity .18s ease, box-shadow .18s ease;
+      cursor: pointer;
       -webkit-tap-highlight-color: transparent;
+    }
+
+    .center-btn:active {
+      transform: translate(-50%, -50%) scale(.98);
+    }
+
+    .center-btn:disabled {
+      opacity: .7;
+      cursor: not-allowed;
     }
 
     .hint {
@@ -207,12 +292,12 @@
       color: var(--muted);
       font-size: 12.5px;
       line-height: 1.5;
-      margin-bottom: 10px;
       min-height: 20px;
+      margin-bottom: 10px;
     }
 
     .status {
-      min-height: 46px;
+      min-height: 48px;
       border-radius: 16px;
       padding: 11px 14px;
       background: rgba(255,255,255,0.025);
@@ -221,41 +306,47 @@
       text-align: center;
       font-size: 14px;
       line-height: 1.45;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .status.error {
-      color: #ffd3dc;
-      background: rgba(255,122,146,0.06);
-      border-color: rgba(255,122,146,0.12);
+      color: #ffd4dd;
+      background: rgba(255,126,151,0.08);
+      border-color: rgba(255,126,151,0.14);
     }
 
     .status.success {
-      color: #d8f9e5;
-      background: rgba(88,214,141,0.06);
-      border-color: rgba(88,214,141,0.12);
+      color: #d9f8e6;
+      background: rgba(103,221,160,0.08);
+      border-color: rgba(103,221,160,0.14);
+    }
+
+    .status.warn {
+      color: #ffe4b8;
+      background: rgba(230,176,79,0.08);
+      border-color: rgba(230,176,79,0.14);
     }
 
     .result,
-    .cooldown,
-    .admin-only {
+    .cooldown {
       display: none;
       margin-top: 14px;
     }
 
     .result.show,
-    .cooldown.show,
-    .admin-only.show {
+    .cooldown.show {
       display: block;
     }
 
     .kicker {
       margin-bottom: 8px;
-      color: #c1f3d4;
+      color: #c6f4d8;
       font-size: 11px;
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
+      letter-spacing: .1em;
     }
 
     .section-title {
@@ -269,7 +360,7 @@
     .section-desc {
       color: var(--muted);
       font-size: 14px;
-      line-height: 1.6;
+      line-height: 1.58;
       margin-bottom: 14px;
     }
 
@@ -287,16 +378,21 @@
       min-height: 34px;
       padding: 0 12px;
       border-radius: 999px;
-      background: rgba(88,214,141,0.10);
-      border: 1px solid rgba(88,214,141,0.14);
-      color: var(--success-text);
+      background: rgba(103,221,160,0.10);
+      border: 1px solid rgba(103,221,160,0.14);
+      color: var(--success);
       font-size: 12px;
       font-weight: 800;
     }
 
+    .result-badge::before {
+      content: "✓";
+      line-height: 1;
+    }
+
     .result-hero__content {
       display: grid;
-      grid-template-columns: 92px 1fr;
+      grid-template-columns: 96px 1fr;
       gap: 14px;
       align-items: center;
     }
@@ -304,9 +400,7 @@
     .result-image-wrap,
     .history-image-wrap,
     .sheet-image-wrap,
-    .last-prize-image-wrap,
-    .admin-prize-image-wrap,
-    .upload-preview-wrap {
+    .last-prize-image-wrap {
       position: relative;
       overflow: hidden;
       border-radius: 18px;
@@ -316,8 +410,8 @@
     }
 
     .result-image-wrap {
-      width: 92px;
-      height: 92px;
+      width: 96px;
+      height: 96px;
     }
 
     .history-image-wrap {
@@ -330,7 +424,7 @@
     .sheet-image-wrap {
       width: 100%;
       max-width: 220px;
-      aspect-ratio: 1 / 1;
+      aspect-ratio: 1/1;
       margin: 0 auto 14px;
       border-radius: 22px;
     }
@@ -342,25 +436,10 @@
       border-radius: 14px;
     }
 
-    .admin-prize-image-wrap {
-      width: 72px;
-      height: 72px;
-      border-radius: 16px;
-      flex: 0 0 72px;
-    }
-
-    .upload-preview-wrap {
-      width: 96px;
-      height: 96px;
-      margin-top: 8px;
-    }
-
     .result-image,
     .history-image,
     .sheet-image,
-    .last-prize-image,
-    .admin-prize-image,
-    .upload-preview-image {
+    .last-prize-image {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -370,9 +449,9 @@
     .result-prize {
       color: var(--text);
       font-size: 20px;
+      line-height: 1.14;
       font-weight: 800;
       margin-bottom: 4px;
-      line-height: 1.15;
     }
 
     .result-sub {
@@ -385,14 +464,14 @@
       margin-top: 12px;
       border-radius: 22px;
       border: 1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,0.028), rgba(255,255,255,0.012)), var(--surface-2);
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015)), var(--surface-2);
       overflow: hidden;
     }
 
     .result-stage__head {
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       gap: 12px;
       padding: 14px 14px 10px;
     }
@@ -400,9 +479,9 @@
     .result-stage__eyebrow {
       font-size: 11px;
       font-weight: 800;
-      letter-spacing: 0.1em;
+      letter-spacing: .09em;
       text-transform: uppercase;
-      color: var(--success-text);
+      color: var(--success);
     }
 
     .result-stage__status {
@@ -414,9 +493,9 @@
       justify-content: center;
       font-size: 11px;
       font-weight: 800;
-      background: rgba(88,214,141,0.10);
-      border: 1px solid rgba(88,214,141,0.12);
-      color: var(--success-text);
+      background: rgba(103,221,160,0.10);
+      border: 1px solid rgba(103,221,160,0.14);
+      color: var(--success);
     }
 
     .result-stage__body {
@@ -428,18 +507,17 @@
     .result-stage__code {
       display: grid;
       place-items: center;
-      min-height: 120px;
+      min-height: 122px;
       border-radius: 20px;
-      border: 1px solid rgba(88,214,141,0.12);
-      background: linear-gradient(180deg, rgba(88,214,141,0.12), rgba(53,191,118,0.06));
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+      border: 1px solid rgba(103,221,160,0.12);
+      background: linear-gradient(180deg, rgba(103,221,160,0.13), rgba(55,193,122,0.06));
     }
 
     .result-stage__code-label {
       font-size: 11px;
       color: var(--muted);
       font-weight: 800;
-      letter-spacing: 0.08em;
+      letter-spacing: .08em;
       text-transform: uppercase;
       margin-bottom: 8px;
       text-align: center;
@@ -449,7 +527,7 @@
       font-size: clamp(28px, 6vw, 42px);
       line-height: 1;
       font-weight: 800;
-      letter-spacing: 0.08em;
+      letter-spacing: .08em;
       color: var(--text);
       text-align: center;
     }
@@ -471,7 +549,7 @@
       color: var(--muted);
       font-size: 11px;
       font-weight: 800;
-      letter-spacing: 0.08em;
+      letter-spacing: .08em;
       text-transform: uppercase;
       margin-bottom: 6px;
     }
@@ -486,33 +564,33 @@
     .actions {
       display: flex;
       gap: 10px;
-      margin-top: 12px;
       flex-wrap: wrap;
+      margin-top: 12px;
     }
 
     .btn {
       flex: 1;
+      min-width: 140px;
       min-height: 48px;
       border-radius: 15px;
       border: 1px solid transparent;
       font-size: 14px;
       font-weight: 700;
       cursor: pointer;
-      transition: 180ms ease;
-      min-width: 140px;
+      transition: .18s ease;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .btn-primary {
-      color: #071008;
+      color: #08110a;
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      box-shadow: 0 10px 22px rgba(53,191,118,0.14);
+      box-shadow: 0 12px 24px rgba(55,193,122,0.16);
     }
 
     .btn-secondary {
       color: var(--text);
       background: rgba(255,255,255,0.03);
-      border-color: var(--line-strong);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+      border-color: var(--line-2);
     }
 
     .btn-ghost {
@@ -529,10 +607,7 @@
       margin-bottom: 10px;
       border-radius: 18px;
       border: 1px solid var(--line);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.008)),
-        var(--surface-2);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.008)), var(--surface-2);
     }
 
     .timer {
@@ -540,7 +615,7 @@
       line-height: 1;
       letter-spacing: -0.05em;
       font-weight: 800;
-      color: #c8f4d7;
+      color: #ccf5db;
       font-variant-numeric: tabular-nums;
     }
 
@@ -551,11 +626,8 @@
     }
 
     .mini-card {
-      border-radius: 18px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.025);
       padding: 14px;
-      box-shadow: var(--shadow-sm);
+      border-radius: 18px;
     }
 
     .mini-card-row {
@@ -591,11 +663,10 @@
       color: var(--muted);
       font-size: 13px;
       font-weight: 800;
-      cursor: pointer;
     }
 
     .history-filter.active {
-      color: #09130c;
+      color: #0a120c;
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
       border-color: transparent;
     }
@@ -606,11 +677,8 @@
     }
 
     .history-item {
-      border-radius: 18px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.025);
       padding: 14px;
-      box-shadow: var(--shadow-sm);
+      border-radius: 18px;
     }
 
     .history-top {
@@ -660,35 +728,63 @@
     }
 
     .badge-ok {
-      color: #c7f1d5;
-      background: rgba(88,214,141,0.10);
-      border: 1px solid rgba(88,214,141,0.14);
+      color: #c8f2d6;
+      background: rgba(103,221,160,0.10);
+      border: 1px solid rgba(103,221,160,0.14);
     }
 
     .badge-warn,
     .badge-soon {
-      color: #ffe0b0;
-      background: rgba(230,171,70,0.09);
-      border: 1px solid rgba(230,171,70,0.14);
+      color: #ffe2b1;
+      background: rgba(230,176,79,0.09);
+      border: 1px solid rgba(230,176,79,0.14);
     }
 
     .badge-off {
-      color: #ffbfd0;
-      background: rgba(255,122,146,0.09);
-      border: 1px solid rgba(255,122,146,0.14);
+      color: #ffc2d0;
+      background: rgba(255,126,151,0.09);
+      border: 1px solid rgba(255,126,151,0.14);
     }
 
-    .faq-list {
+    .empty-state {
       display: grid;
       gap: 10px;
+      place-items: center;
+      text-align: center;
+      padding: 26px 16px;
+      border-radius: 22px;
+      border: 1px dashed rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .empty-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      color: #c8f2d6;
+      background: rgba(103,221,160,0.08);
+      border: 1px solid rgba(103,221,160,0.12);
+      font-size: 22px;
+    }
+
+    .empty-title {
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .empty-text {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+      max-width: 34ch;
     }
 
     details.faq-item {
-      border-radius: 18px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.025);
       padding: 14px;
-      box-shadow: var(--shadow-sm);
+      border-radius: 18px;
+      margin-bottom: 10px;
     }
 
     details.faq-item summary {
@@ -703,6 +799,20 @@
 
     details.faq-item summary::-webkit-details-marker { display: none; }
 
+    details.faq-item summary::after {
+      content: "+";
+      position: absolute;
+      right: 0;
+      top: 0;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    details.faq-item[open] summary::after {
+      content: "–";
+    }
+
     .faq-content {
       margin-top: 10px;
       color: var(--muted);
@@ -710,111 +820,12 @@
       line-height: 1.6;
     }
 
-    .admin-grid {
-      display: grid;
-      gap: 14px;
-    }
-
-    .field {
-      display: grid;
-      gap: 6px;
-      margin-bottom: 10px;
-    }
-
-    .field label {
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .field input,
-    .field textarea,
-    .field select {
-      width: 100%;
-      border: 1px solid var(--line-strong);
-      background: rgba(255,255,255,0.035);
-      color: var(--text);
-      border-radius: 14px;
-      padding: 12px 14px;
-      font-size: 14px;
-      outline: none;
-    }
-
-    .field textarea {
-      min-height: 96px;
-      resize: vertical;
-    }
-
-    .admin-status {
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    .prize-list {
-      display: grid;
-      gap: 12px;
-    }
-
-    .prize-item {
-      border-radius: 18px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.025);
-      padding: 14px;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .prize-row {
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-    }
-
-    .prize-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      align-items: flex-start;
-      margin-bottom: 8px;
-    }
-
-    .prize-name {
-      font-size: 16px;
-      line-height: 1.25;
-      font-weight: 800;
-    }
-
-    .prize-meta {
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.55;
-      margin-bottom: 12px;
-    }
-
-    .prize-actions {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .mini-btn {
-      min-height: 40px;
-      border-radius: 12px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.03);
-      color: var(--text);
-      padding: 8px 12px;
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
     .bottom-nav {
       position: sticky;
       bottom: calc(4px + var(--tg-safe-bottom) * 0.15);
       z-index: 20;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(72px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 8px;
       margin-top: 14px;
       padding: 10px;
@@ -822,7 +833,7 @@
       border: 1px solid var(--line);
       background:
         linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02)),
-        rgba(19, 25, 36, 0.96);
+        rgba(16, 22, 31, 0.96);
       backdrop-filter: blur(14px);
       box-shadow:
         0 10px 28px rgba(0,0,0,0.20),
@@ -843,13 +854,13 @@
       font-size: 12px;
       font-weight: 700;
       cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .bottom-nav__item.active {
-      color: #09130c;
+      color: #0a120c;
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      border-color: transparent;
-      box-shadow: 0 10px 22px rgba(53,191,118,0.16);
+      box-shadow: 0 10px 22px rgba(55,193,122,0.16);
     }
 
     .bottom-nav__icon {
@@ -873,11 +884,18 @@
     .bottom-nav__label {
       font-size: 11px;
       line-height: 1;
-      letter-spacing: 0.01em;
     }
 
-    .bottom-nav__item.hidden {
-      display: none !important;
+    .mini-btn {
+      min-height: 40px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      color: var(--text);
+      padding: 8px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
     }
 
     .overlay {
@@ -900,11 +918,6 @@
       width: 100%;
       max-width: 720px;
       border-radius: 28px;
-      border: 1px solid var(--line);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.012)),
-        var(--surface-solid);
-      box-shadow: var(--shadow-xl);
       padding: 18px;
     }
 
@@ -953,22 +966,67 @@
       color: var(--text);
     }
 
+    .offline-banner {
+      display: none;
+      margin-bottom: 12px;
+      border-radius: 16px;
+      padding: 12px 14px;
+      background: rgba(255,126,151,0.08);
+      border: 1px solid rgba(255,126,151,0.12);
+      color: #ffd6de;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .offline-banner.show {
+      display: block;
+    }
+
     @media (max-width: 560px) {
+      .app {
+        padding:
+          calc(8px + var(--safe-top))
+          12px
+          calc(22px + var(--safe-bottom) + var(--tg-safe-bottom));
+      }
+
+      .shell {
+        border-radius: 28px;
+        padding: 16px;
+      }
+
+      .wheel-wrap {
+        width: min(100%, 270px);
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .section-title {
+        font-size: 20px;
+      }
+
       .result-hero__content {
         grid-template-columns: 1fr;
       }
+
       .result-image-wrap {
         width: 100%;
         max-width: 120px;
         height: 120px;
       }
-      .history-top,
-      .prize-row,
-      .mini-card-row {
+
+      .history-top {
         flex-direction: column;
       }
-      .actions {
-        flex-direction: column;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
       }
     }
   </style>
@@ -976,25 +1034,36 @@
 <body>
   <div class="app">
     <div class="shell">
+      <button class="theme-toggle" id="themeToggle" aria-label="Сменить тему">
+        <svg id="themeToggleIcon" viewBox="0 0 24 24">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3A7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
+
+      <div id="offlineBanner" class="offline-banner">
+        Нет соединения с сетью. Некоторые действия могут быть временно недоступны.
+      </div>
+
       <section class="hero">
+        <div class="debug-pill" id="versionPill">WHEEL UI v8.0.0</div>
         <h1>Колесо бонусов iGadget</h1>
-        <p>Один запуск в день. Получайте скидку, бонус или подарок.</p>
+        <p>Одна попытка в сутки. Выигрывайте скидку, бонус или подарок сразу внутри Mini App.</p>
       </section>
 
       <div class="panel active" id="panelWheel">
-        <div class="wheel-card">
+        <div class="card">
           <div class="meta-row">
-            <div class="meta-pill">1 попытка в сутки · бонус активен 7 дней</div>
+            <div class="meta-pill">Новый интерфейс · версия UI видна сверху</div>
           </div>
 
           <div class="wheel-wrap">
             <div class="wheel-halo"></div>
             <div class="pointer"></div>
             <canvas id="wheel" width="360" height="360"></canvas>
-            <button id="spinBtn" class="center-btn">КРУТИТЬ</button>
+            <button id="spinBtn" class="center-btn">СТАРТ</button>
           </div>
 
-          <div class="hint">Нажмите кнопку, чтобы начать.</div>
+          <div class="hint" id="hintText">Нажмите кнопку, чтобы начать.</div>
           <div class="status" id="status">Готово к запуску.</div>
 
           <div class="result" id="resultBox">
@@ -1033,7 +1102,6 @@
                       <div class="result-stage__meta-label">Срок действия</div>
                       <div class="result-stage__meta-value" id="resultExpires">—</div>
                     </div>
-
                     <div class="result-stage__meta-card">
                       <div class="result-stage__meta-label">Использование</div>
                       <div class="result-stage__meta-value">Покажите код сотруднику магазина или кассиру</div>
@@ -1054,9 +1122,7 @@
             <div class="section">
               <div class="kicker">Попытка использована</div>
               <h3 class="section-title">Сегодня вы уже крутили колесо</h3>
-              <div class="section-desc" id="cooldownText">
-                Следующая попытка откроется после обновления дня.
-              </div>
+              <div class="section-desc" id="cooldownText">Следующая попытка откроется после обновления дня.</div>
 
               <div class="timer-wrap">
                 <div class="timer" id="timer">--:--:--</div>
@@ -1072,9 +1138,7 @@
         <div class="section">
           <div class="kicker">Ваши результаты</div>
           <h2 class="section-title">Мои призы</h2>
-          <div class="section-desc">
-            Здесь отображаются ваши выигрыши со статусами: активен, погашен или скоро истечёт.
-          </div>
+          <div class="section-desc">Здесь отображаются ваши выигрыши со статусами: активен, погашен или скоро истечёт.</div>
 
           <div class="history-tabs">
             <button class="history-filter active" data-filter="all">Все</button>
@@ -1090,104 +1154,33 @@
         <div class="section">
           <div class="kicker">Правила</div>
           <h2 class="section-title">Как это работает</h2>
-          <div class="section-desc">
-            Коротко и понятно: как крутить, как получить приз и что делать с кодом.
-          </div>
+          <div class="section-desc">Коротко и понятно: как крутить, как получить приз и что делать с кодом.</div>
 
-          <div class="faq-list">
-            <details class="faq-item" open>
-              <summary>Сколько попыток даётся?</summary>
-              <div class="faq-content">Одна попытка в сутки на пользователя. Новая попытка открывается на следующий день.</div>
-            </details>
+          <details class="faq-item" open>
+            <summary>Почему кнопка может не работать?</summary>
+            <div class="faq-content">Если Mini App открыт вне Telegram или backend недоступен, приложение покажет диагностический статус. Внутри Telegram кнопка должна работать с initData.</div>
+          </details>
 
-            <details class="faq-item">
-              <summary>Когда я узнаю результат?</summary>
-              <div class="faq-content">Сразу после прокрутки вы увидите свой приз и получите код для использования.</div>
-            </details>
+          <details class="faq-item">
+            <summary>Сколько попыток даётся?</summary>
+            <div class="faq-content">Одна попытка в сутки на пользователя. Новая попытка открывается на следующий день.</div>
+          </details>
 
-            <details class="faq-item">
-              <summary>Как использовать выигрыш?</summary>
-              <div class="faq-content">После спина вы получаете код. Покажите его сотруднику магазина или используйте по правилам акции.</div>
-            </details>
-          </div>
+          <details class="faq-item">
+            <summary>Когда я узнаю результат?</summary>
+            <div class="faq-content">Сразу после прокрутки вы увидите свой приз и получите код для использования.</div>
+          </details>
+
+          <details class="faq-item">
+            <summary>Как использовать выигрыш?</summary>
+            <div class="faq-content">После спина вы получаете код. Покажите его сотруднику магазина или используйте по правилам акции.</div>
+          </details>
         </div>
       </div>
 
-      <div class="panel" id="panelAdmin">
-        <div class="section admin-only show" id="adminBox">
-          <div class="section-title">Управление призами</div>
-          <div class="admin-status" id="adminStatus">Готово к работе.</div>
-
-          <div class="admin-grid">
-            <div class="section" style="padding:0; border:none; background:transparent; box-shadow:none;">
-              <div class="field">
-                <label for="newTitle">Название</label>
-                <input id="newTitle" type="text" placeholder="Например: Скидка 15% на аксессуары" />
-              </div>
-
-              <div class="field">
-                <label for="newShort">Короткий текст</label>
-                <input id="newShort" type="text" placeholder="Например: PB -15%" />
-              </div>
-
-              <div class="field">
-                <label for="newDesc">Описание</label>
-                <textarea id="newDesc" placeholder="Подробное описание приза"></textarea>
-              </div>
-
-              <div class="field">
-                <label for="newWeight">Вес</label>
-                <input id="newWeight" type="number" min="1" placeholder="Например: 10" />
-              </div>
-
-              <div class="field">
-                <label for="newImageFile">Картинка приза</label>
-                <input id="newImageFile" type="file" accept="image/*" />
-                <div id="uploadPreviewWrap" class="upload-preview-wrap" style="display:none;">
-                  <img id="uploadPreviewImage" class="upload-preview-image" src="" alt="Предпросмотр" />
-                </div>
-              </div>
-
-              <div class="field">
-                <label for="newActive">Статус</label>
-                <select id="newActive">
-                  <option value="true">Включен</option>
-                  <option value="false">Выключен</option>
-                </select>
-              </div>
-
-              <div class="actions">
-                <button class="btn btn-primary" id="addPrizeBtn">Добавить приз</button>
-              </div>
-            </div>
-
-            <div class="section" style="padding:0; border:none; background:transparent; box-shadow:none;">
-              <div class="section-title">Проверка и погашение кодов</div>
-
-              <div class="field">
-                <label for="codeActionInput">Код</label>
-                <input id="codeActionInput" type="text" placeholder="Например: IG-AB12CD" />
-              </div>
-
-              <div class="actions">
-                <button class="btn btn-secondary" id="checkCodeBtn">Проверить код</button>
-                <button class="btn btn-primary" id="redeemCodeBtn">Погасить код</button>
-              </div>
-
-              <div class="status" id="codeActionStatus" style="margin-top:12px;">Введите код для проверки.</div>
-            </div>
-
-            <div class="section" style="padding:0; border:none; background:transparent; box-shadow:none;">
-              <div class="section-title">Список призов</div>
-              <div class="prize-list" id="adminPrizeList"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <nav class="bottom-nav" aria-label="Основная навигация">
+      <nav class="bottom-nav" aria-label="Навигация">
         <button class="bottom-nav__item active" id="tabWheel">
-          <span class="bottom-nav__icon">
+          <span class="bottom-nav__icon" aria-hidden="true">
             <svg viewBox="0 0 24 24">
               <circle cx="12" cy="12" r="8"></circle>
               <circle cx="12" cy="12" r="2.2"></circle>
@@ -1198,7 +1191,7 @@
         </button>
 
         <button class="bottom-nav__item" id="tabHistory">
-          <span class="bottom-nav__icon">
+          <span class="bottom-nav__icon" aria-hidden="true">
             <svg viewBox="0 0 24 24">
               <path d="M7 8h10v11H7z"></path>
               <path d="M9 5h6M9 12h6M9 16h4"></path>
@@ -1208,7 +1201,7 @@
         </button>
 
         <button class="bottom-nav__item" id="tabFaq">
-          <span class="bottom-nav__icon">
+          <span class="bottom-nav__icon" aria-hidden="true">
             <svg viewBox="0 0 24 24">
               <circle cx="12" cy="12" r="8"></circle>
               <path d="M9.6 9.4a2.4 2.4 0 1 1 4.3 1.4c-.7.8-1.6 1.2-1.9 2.2"></path>
@@ -1216,16 +1209,6 @@
             </svg>
           </span>
           <span class="bottom-nav__label">FAQ</span>
-        </button>
-
-        <button class="bottom-nav__item" id="tabAdmin">
-          <span class="bottom-nav__icon">
-            <svg viewBox="0 0 24 24">
-              <path d="M12 3l2.1 2.1 2.9-.3.9 2.8 2.6 1.3-1 2.8 1 2.8-2.6 1.3-.9 2.8-2.9-.3L12 21l-2.1-2.1-2.9.3-.9-2.8-2.6-1.3 1-2.8-1-2.8 2.6-1.3.9-2.8 2.9.3L12 3z"></path>
-              <circle cx="12" cy="12" r="2.6"></circle>
-            </svg>
-          </span>
-          <span class="bottom-nav__label">Админ</span>
         </button>
       </nav>
     </div>
@@ -1257,28 +1240,28 @@
   </div>
 
   <script>
-    const tg = window.Telegram.WebApp;
-    tg.ready();
-    tg.expand();
-
+    const APP_VERSION = "WHEEL-NEW-UI-8.0.0";
     const API_BASE = "https://telegram-wheel-bot-production-764c.up.railway.app";
-    const BUILD_VERSION = "v6-7-0-file-upload";
+    const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
 
-    let prizes = [];
-    let currentRotation = 0;
-    let isSpinning = false;
-    let countdownInterval = null;
-    let historyCache = [];
-    let currentView = "wheel";
-    let overlayOpen = false;
-    let historyFilter = "all";
-    let currentPrizePayload = null;
+    const sounds = {
+      tick: new Audio("https://cdn.freesound.org/previews/240/240776_4107740-lq.mp3"),
+      win: new Audio("https://cdn.freesound.org/previews/320/320655_5260872-lq.mp3"),
+      error: new Audio("https://cdn.freesound.org/previews/331/331912_3248244-lq.mp3")
+    };
+    sounds.tick.volume = 0.10;
+    sounds.win.volume = 0.34;
+    sounds.error.volume = 0.28;
 
     const canvas = document.getElementById("wheel");
     const ctx = canvas.getContext("2d");
 
     const spinBtn = document.getElementById("spinBtn");
     const statusEl = document.getElementById("status");
+    const hintText = document.getElementById("hintText");
+    const versionPill = document.getElementById("versionPill");
+    const offlineBanner = document.getElementById("offlineBanner");
+
     const resultBox = document.getElementById("resultBox");
     const resultPrize = document.getElementById("resultPrize");
     const resultDesc = document.getElementById("resultDesc");
@@ -1286,37 +1269,25 @@
     const resultExpires = document.getElementById("resultExpires");
     const resultImageWrap = document.getElementById("resultImageWrap");
     const resultImage = document.getElementById("resultImage");
+
     const cooldownBox = document.getElementById("cooldownBox");
     const cooldownText = document.getElementById("cooldownText");
     const timerEl = document.getElementById("timer");
     const lastPrizeWrap = document.getElementById("lastPrizeWrap");
-    const historyList = document.getElementById("historyList");
-    const adminPrizeList = document.getElementById("adminPrizeList");
-    const adminStatus = document.getElementById("adminStatus");
 
-    const newTitle = document.getElementById("newTitle");
-    const newShort = document.getElementById("newShort");
-    const newDesc = document.getElementById("newDesc");
-    const newWeight = document.getElementById("newWeight");
-    const newImageFile = document.getElementById("newImageFile");
-    const newActive = document.getElementById("newActive");
-    const addPrizeBtn = document.getElementById("addPrizeBtn");
-    const uploadPreviewWrap = document.getElementById("uploadPreviewWrap");
-    const uploadPreviewImage = document.getElementById("uploadPreviewImage");
-
-    const codeActionInput = document.getElementById("codeActionInput");
-    const checkCodeBtn = document.getElementById("checkCodeBtn");
-    const redeemCodeBtn = document.getElementById("redeemCodeBtn");
-    const codeActionStatus = document.getElementById("codeActionStatus");
+    const copyBtn = document.getElementById("copyBtn");
+    const detailsBtn = document.getElementById("detailsBtn");
+    const closeBtn = document.getElementById("closeBtn");
 
     const tabWheel = document.getElementById("tabWheel");
     const tabHistory = document.getElementById("tabHistory");
     const tabFaq = document.getElementById("tabFaq");
-    const tabAdmin = document.getElementById("tabAdmin");
+
     const panelWheel = document.getElementById("panelWheel");
     const panelHistory = document.getElementById("panelHistory");
     const panelFaq = document.getElementById("panelFaq");
-    const panelAdmin = document.getElementById("panelAdmin");
+
+    const historyList = document.getElementById("historyList");
     const historyFilters = Array.from(document.querySelectorAll(".history-filter"));
 
     const detailsOverlay = document.getElementById("detailsOverlay");
@@ -1329,18 +1300,115 @@
     const sheetImage = document.getElementById("sheetImage");
     const sheetCopyBtn = document.getElementById("sheetCopyBtn");
     const sheetCloseBtn = document.getElementById("sheetCloseBtn");
-    const copyBtn = document.getElementById("copyBtn");
-    const closeBtn = document.getElementById("closeBtn");
-    const detailsBtn = document.getElementById("detailsBtn");
 
-    function safeImage(url) {
-      return String(url || "").trim();
+    const themeToggle = document.getElementById("themeToggle");
+    const themeToggleIcon = document.getElementById("themeToggleIcon");
+
+    let prizes = [];
+    let currentRotation = 0;
+    let isSpinning = false;
+    let soundUnlocked = false;
+    let tickInterval = null;
+    let countdownInterval = null;
+    let currentView = "wheel";
+    let historyCache = [];
+    let historyFilter = "all";
+    let overlayOpen = false;
+    let currentPrizePayload = null;
+
+    versionPill.textContent = APP_VERSION;
+
+    const fallbackPrizes = [
+      { id: 1, title: "Скидка 5%", short: "5%", description: "Скидка 5% на покупку", image_url: "" },
+      { id: 2, title: "Скидка 10%", short: "10%", description: "Скидка 10% на покупку", image_url: "" },
+      { id: 3, title: "Скидка 15%", short: "15%", description: "Скидка 15% на аксессуары", image_url: "" },
+      { id: 4, title: "Бесплатная доставка", short: "Доставка", description: "Бесплатная доставка заказа", image_url: "" },
+      { id: 5, title: "Подарок", short: "Подарок", description: "Подарок к покупке", image_url: "" },
+      { id: 6, title: "Бонус", short: "Бонус", description: "Бонус на следующий заказ", image_url: "" }
+    ];
+
+    function setStatus(text, type = "") {
+      statusEl.textContent = text;
+      statusEl.classList.remove("error", "success", "warn");
+      if (type) statusEl.classList.add(type);
+    }
+
+    function updateOfflineState() {
+      const offline = !navigator.onLine;
+      offlineBanner.classList.toggle("show", offline);
+      if (offline) {
+        setStatus("Нет сети. Можно смотреть интерфейс, но запросы на сервер недоступны.", "warn");
+      }
+    }
+
+    function getInitData() {
+      return tg?.initData || "";
+    }
+
+    function insideTelegram() {
+      return !!tg;
+    }
+
+    function safeHapticSelection() {
+      try { tg?.HapticFeedback?.selectionChanged(); } catch (e) {}
+    }
+
+    function safeHapticImpact(style = "light") {
+      try { tg?.HapticFeedback?.impactOccurred(style); } catch (e) {}
+    }
+
+    function safeHapticNotification(type = "success") {
+      try { tg?.HapticFeedback?.notificationOccurred(type); } catch (e) {}
+    }
+
+    async function unlockSounds() {
+      if (soundUnlocked) return;
+      soundUnlocked = true;
+      try {
+        sounds.tick.muted = true;
+        await sounds.tick.play();
+        sounds.tick.pause();
+        sounds.tick.currentTime = 0;
+        sounds.tick.muted = false;
+      } catch (e) {}
+    }
+
+    function playSound(name) {
+      const s = sounds[name];
+      if (!s) return;
+      try {
+        s.pause();
+        s.currentTime = 0;
+        s.play().catch(() => {});
+      } catch (e) {}
+    }
+
+    function startTickLoop() {
+      stopTickLoop();
+      tickInterval = setInterval(() => playSound("tick"), 280);
+    }
+
+    function stopTickLoop() {
+      if (tickInterval) {
+        clearInterval(tickInterval);
+        tickInterval = null;
+      }
+    }
+
+    function applyTelegramTheme() {
+      if (!tg) return;
+      try {
+        tg.ready();
+        tg.expand();
+        if (tg.themeParams?.bg_color) tg.setBackgroundColor?.(tg.themeParams.bg_color);
+        if (tg.themeParams?.header_bg_color) tg.setHeaderColor?.(tg.themeParams.header_bg_color);
+      } catch (e) {}
     }
 
     function setImageBlock(wrapEl, imgEl, src, altText) {
-      const image = safeImage(src);
-      if (image) {
-        imgEl.src = image;
+      if (!wrapEl || !imgEl) return;
+      if (src) {
+        imgEl.src = src;
         imgEl.alt = altText || "Приз";
         wrapEl.style.display = "";
       } else {
@@ -1350,23 +1418,79 @@
       }
     }
 
-    function setStatus(text, type = "") {
-      statusEl.textContent = text;
-      statusEl.classList.remove("error", "success");
-      if (type) statusEl.classList.add(type);
+    function getAutoThemeMode() {
+      const h = new Date().getHours();
+      return h >= 7 && h < 21 ? "light" : "dark";
+    }
+
+    function renderThemeIcon(mode) {
+      if (mode === "light") {
+        themeToggleIcon.innerHTML = '<circle cx="12" cy="12" r="4"></circle><path d="M12 2v2.5M12 19.5V22M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M2 12h2.5M19.5 12H22M4.93 19.07l1.77-1.77M17.3 6.7l1.77-1.77"></path>';
+      } else {
+        themeToggleIcon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3A7 7 0 0 0 21 12.79z"></path>';
+      }
+    }
+
+    function applyTheme(mode) {
+      const effective = mode === "auto" ? getAutoThemeMode() : mode;
+      document.documentElement.setAttribute("data-theme", effective);
+      renderThemeIcon(effective);
+      drawWheel(prizes.length ? prizes : fallbackPrizes, currentRotation);
+    }
+
+    let themeMode = "auto";
+
+    function cycleTheme() {
+      themeMode = themeMode === "auto" ? "light" : themeMode === "light" ? "dark" : "auto";
+      applyTheme(themeMode);
+      safeHapticSelection();
+    }
+
+    function switchTab(name) {
+      currentView = name;
+
+      tabWheel.classList.toggle("active", name === "wheel");
+      tabHistory.classList.toggle("active", name === "history");
+      tabFaq.classList.toggle("active", name === "faq");
+
+      panelWheel.classList.toggle("active", name === "wheel");
+      panelHistory.classList.toggle("active", name === "history");
+      panelFaq.classList.toggle("active", name === "faq");
+
+      safeHapticSelection();
+
+      if (name === "history") {
+        loadHistory();
+      }
+    }
+
+    tabWheel.addEventListener("click", () => switchTab("wheel"));
+    tabHistory.addEventListener("click", () => switchTab("history"));
+    tabFaq.addEventListener("click", () => switchTab("faq"));
+    themeToggle.addEventListener("click", cycleTheme);
+
+    function getSectorPalette() {
+      return ["#35c276", "#f0718d", "#5a9cf2", "#d8a042", "#7c63e0", "#9b6ed2"];
     }
 
     function fitLabel(label) {
       if (!label) return ["Приз"];
-      const cleaned = String(label).replace(/\s+/g, " ").replace(/скидка/gi, "").trim();
+      const cleaned = String(label)
+        .replace(/\s+/g, " ")
+        .replace(/аксессуары/gi, "акс.")
+        .replace(/скидка/gi, "")
+        .replace(/на /gi, "")
+        .trim();
+
       const words = cleaned.split(" ").filter(Boolean);
       const lines = [];
       let current = "";
 
       for (const word of words) {
         const test = current ? `${current} ${word}` : word;
-        if (test.length <= 9) current = test;
-        else {
+        if (test.length <= 9) {
+          current = test;
+        } else {
           if (current) lines.push(current);
           current = word;
         }
@@ -1391,7 +1515,7 @@
       const startY = y - ((lines.length - 1) * lineHeight) / 2;
 
       lines.forEach((line, i) => {
-        ctx.strokeStyle = "rgba(8,11,16,0.16)";
+        ctx.strokeStyle = "rgba(8,11,16,0.18)";
         ctx.lineWidth = 3;
         ctx.strokeText(line, x, startY + i * lineHeight);
         ctx.fillStyle = "#ffffff";
@@ -1408,14 +1532,11 @@
       return "#" + (0x1000000 + r * 0x10000 + g * 0x100 + b).toString(16).slice(1);
     }
 
-    function getSectorPalette() {
-      return ["#31be73", "#ee718a", "#5f9ff1", "#d9a043", "#7c68de", "#a36fd0"];
-    }
-
     function drawWheel(items, rotationDeg = 0) {
       const size = canvas.width;
       const center = size / 2;
       const radius = center - 18;
+      const data = items.length ? items : fallbackPrizes;
 
       ctx.clearRect(0, 0, size, size);
 
@@ -1429,15 +1550,7 @@
       ctx.fillStyle = "#141c28";
       ctx.fill();
 
-      if (!items.length) {
-        ctx.beginPath();
-        ctx.arc(center, center, radius, 0, Math.PI * 2);
-        ctx.fillStyle = "#293347";
-        ctx.fill();
-        return;
-      }
-
-      const total = items.length;
+      const total = data.length;
       const arc = (Math.PI * 2) / total;
       const rotationRad = rotationDeg * Math.PI / 180;
       const palette = getSectorPalette();
@@ -1475,9 +1588,11 @@
         ctx.save();
         ctx.translate(center, center);
         ctx.rotate(mid);
-        const textLines = fitLabel(items[i].short || items[i].title || "Приз");
+
+        const textLines = fitLabel(data[i].short || data[i].title || "Приз");
         const textRadius = radius - 70;
         const sectorWidth = Math.max(60, radius * arc * 0.64);
+
         drawTextInSector(ctx, textLines, textRadius, 0, sectorWidth, 12);
         ctx.restore();
       }
@@ -1487,235 +1602,83 @@
       ctx.lineWidth = 4;
       ctx.strokeStyle = "rgba(255,255,255,0.11)";
       ctx.stroke();
+
+      const ring = ctx.createRadialGradient(center, center, 24, center, center, 54);
+      ring.addColorStop(0, "#1b2940");
+      ring.addColorStop(1, "#111926");
+      ctx.beginPath();
+      ctx.arc(center, center, 50, 0, Math.PI * 2);
+      ctx.fillStyle = ring;
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(center, center, 38, 0, Math.PI * 2);
+      ctx.fillStyle = "#172334";
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(center, center, 38, 0, Math.PI * 2);
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = "rgba(255,255,255,0.07)";
+      ctx.stroke();
     }
 
     async function apiPost(path, body) {
-      const res = await fetch(`${API_BASE}${path}?v=${BUILD_VERSION}`, {
+      const res = await fetch(`${API_BASE}${path}?ui=${encodeURIComponent(APP_VERSION)}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body)
       });
-      return await res.json();
-    }
 
-    async function uploadPrizeImage(file) {
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("init_data", tg.initData || "");
+      let data;
+      try {
+        data = await res.json();
+      } catch (e) {
+        throw new Error("Сервер вернул не JSON");
+      }
 
-      const res = await fetch(`${API_BASE}/admin/upload-prize-image?v=${BUILD_VERSION}`, {
-        method: "POST",
-        body: formData
-      });
-
-      return await res.json();
+      if (!res.ok && !data.ok) {
+        throw new Error(data.detail || data.error || `HTTP ${res.status}`);
+      }
+      return data;
     }
 
     async function loadPrizes() {
-      const res = await fetch(`${API_BASE}/prizes?v=${BUILD_VERSION}`);
-      const data = await res.json();
-
-      if (!data.ok || !data.items?.length) {
-        throw new Error("Не удалось загрузить призы");
-      }
-
-      prizes = (data.items || []).map(item => ({
-        ...item,
-        image_url: safeImage(item.image_url)
-      }));
-
-      drawWheel(prizes, currentRotation);
-    }
-
-    async function loadHistory(force = false) {
-      if (historyCache.length && !force) {
-        renderHistory(historyCache);
-        return;
-      }
-
       try {
-        const data = await apiPost("/history", { init_data: tg.initData || "" });
-        historyCache = (data.items || []).map(item => ({
-          ...item,
-          prize_image_url: safeImage(item.prize_image_url || item.image_url)
-        }));
-        renderHistory(historyCache);
+        const res = await fetch(`${API_BASE}/prizes?ui=${encodeURIComponent(APP_VERSION)}`);
+        const data = await res.json();
+
+        if (data.ok && Array.isArray(data.items) && data.items.length) {
+          prizes = data.items;
+          drawWheel(prizes, currentRotation);
+          setStatus(insideTelegram() ? "Готово к запуску внутри Telegram." : "Открыто вне Telegram. Для реального спина зайдите через Mini App.", insideTelegram() ? "success" : "warn");
+          return;
+        }
+
+        prizes = fallbackPrizes;
+        drawWheel(prizes, currentRotation);
+        setStatus("Сервер не отдал призы, включён резервный режим интерфейса.", "warn");
       } catch (e) {
-        historyList.innerHTML = "";
+        prizes = fallbackPrizes;
+        drawWheel(prizes, currentRotation);
+        setStatus("Backend недоступен. Интерфейс загружен в резервном режиме.", "warn");
       }
-    }
-
-    function isExpiringSoon(textValue) {
-      if (!textValue) return false;
-      const text = String(textValue).toLowerCase();
-      return text.includes("сегодня") || text.includes("завтра") || text.includes("1 д") || text.includes("2 д");
-    }
-
-    function getHistoryBadge(item) {
-      if (item.redeemed) return { cls: "badge-off", text: "Погашен" };
-      const expiresText = item.expires_at_text || item.expires_at || "";
-      if (isExpiringSoon(expiresText)) return { cls: "badge-soon", text: "Скоро истечёт" };
-      return { cls: "badge-ok", text: "Активен" };
-    }
-
-    function renderHistory(items) {
-      historyList.innerHTML = "";
-
-      const filtered = items.filter((item) => {
-        if (historyFilter === "active") return !item.redeemed;
-        if (historyFilter === "used") return !!item.redeemed;
-        return true;
-      });
-
-      filtered.forEach((item) => {
-        const badge = getHistoryBadge(item);
-        const title = item.prize_title || "Приз";
-        const expiresText = item.expires_at_text || item.expires_at || "Не указан";
-        const image = safeImage(item.prize_image_url);
-
-        const payload = encodeURIComponent(JSON.stringify({
-          title,
-          description: item.prize_description || "Описание отсутствует.",
-          code: item.code || "—",
-          expires: expiresText,
-          image
-        }));
-
-        const imageHtml = image ? `
-          <div class="history-image-wrap">
-            <img class="history-image" src="${image}" alt="${title}" loading="lazy" />
-          </div>
-        ` : "";
-
-        const card = document.createElement("div");
-        card.className = "history-item";
-        card.innerHTML = `
-          <div class="history-top">
-            <div class="history-main">
-              ${imageHtml}
-              <div>
-                <div class="history-name">${title}</div>
-                <div class="history-meta">${item.created_at_text || item.created_at || "Дата не указана"}</div>
-              </div>
-            </div>
-            <div class="badge ${badge.cls}">${badge.text}</div>
-          </div>
-
-          <div class="history-desc">${item.prize_description || "Описание отсутствует."}</div>
-
-          <div class="history-actions">
-            <div class="badge ${isExpiringSoon(expiresText) ? "badge-soon" : "badge-warn"}">До: ${expiresText}</div>
-            <div class="badge badge-ok">Код: ${item.code || "—"}</div>
-          </div>
-
-          <div class="history-actions">
-            <button class="mini-btn" data-history-copy="${item.code || ""}">Скопировать код</button>
-            <button class="mini-btn" data-history-open="${payload}">Подробнее</button>
-          </div>
-        `;
-        historyList.appendChild(card);
-      });
-
-      historyList.querySelectorAll("[data-history-copy]").forEach(btn => {
-        btn.addEventListener("click", async () => {
-          const code = btn.getAttribute("data-history-copy");
-          if (!code) return;
-          await navigator.clipboard.writeText(code);
-          setStatus("Код скопирован.", "success");
-        });
-      });
-
-      historyList.querySelectorAll("[data-history-open]").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const payload = JSON.parse(decodeURIComponent(btn.getAttribute("data-history-open")));
-          openDetailsOverlay(payload);
-        });
-      });
-    }
-
-    function renderLastPrizeCard(data) {
-      lastPrizeWrap.innerHTML = "";
-      if (!data.last_code && !data.last_prize_title) return;
-
-      const image = safeImage(data.last_image_url || data.prize_image_url || data.image_url);
-      const imageHtml = image ? `
-        <div class="last-prize-image-wrap">
-          <img class="last-prize-image" src="${image}" alt="${data.last_prize_title || "Последний приз"}" loading="lazy" />
-        </div>
-      ` : "";
-
-      const card = document.createElement("div");
-      card.className = "mini-card";
-      card.innerHTML = `
-        <div class="mini-card-row">
-          ${imageHtml}
-          <div>
-            <div class="mini-card-title">${data.last_prize_title || "Последний приз"}</div>
-            <div class="mini-card-desc">
-              Код: ${data.last_code || "—"}<br>
-              ${data.last_expires_at_text ? "Действует до: " + data.last_expires_at_text : "Срок действия уточняйте у сотрудника."}
-            </div>
-          </div>
-        </div>
-      `;
-      lastPrizeWrap.appendChild(card);
-    }
-
-    function showResult(data) {
-      cooldownBox.classList.remove("show");
-      resultBox.classList.add("show");
-
-      const image = safeImage(data.prize_image_url || data.image_url);
-
-      currentPrizePayload = {
-        title: data.prize_title || "Ваш приз",
-        description: data.prize_description || "",
-        code: data.code || "—",
-        expires: data.expires_at_text ? `До ${data.expires_at_text}` : "Срок действия уточняйте у сотрудника.",
-        image
-      };
-
-      resultPrize.textContent = currentPrizePayload.title;
-      resultDesc.textContent = currentPrizePayload.description;
-      resultCode.textContent = currentPrizePayload.code;
-      resultExpires.textContent = currentPrizePayload.expires;
-      setImageBlock(resultImageWrap, resultImage, image, currentPrizePayload.title);
-
-      historyCache = [];
-      setStatus("Готово: ваш выигрыш сохранён.", "success");
-    }
-
-    function openDetailsOverlay(payload) {
-      overlayOpen = true;
-      sheetTitle.textContent = payload.title || "Детали приза";
-      sheetSub.textContent = "Подробная информация о вашем выигрыше.";
-      sheetCode.textContent = payload.code || "—";
-      sheetDesc.textContent = payload.description || "Описание отсутствует.";
-      sheetExpires.textContent = payload.expires || "Не указан";
-      setImageBlock(sheetImageWrap, sheetImage, payload.image || "", payload.title || "Приз");
-      detailsOverlay.classList.add("show");
-    }
-
-    function closeDetailsOverlay() {
-      overlayOpen = false;
-      detailsOverlay.classList.remove("show");
     }
 
     function findPrizeIndexById(prizeId) {
-      return prizes.findIndex(p => Number(p.id) === Number(prizeId));
+      const source = prizes.length ? prizes : fallbackPrizes;
+      return source.findIndex(p => Number(p.id) === Number(prizeId));
     }
 
     function animateSpinToPrize(prizeId) {
       return new Promise((resolve) => {
-        const index = findPrizeIndexById(prizeId);
-        if (index < 0) {
-          resolve();
-          return;
-        }
+        const source = prizes.length ? prizes : fallbackPrizes;
+        const index = findPrizeIndexById(prizeId >= 1 ? prizeId : 1);
+        const safeIndex = index >= 0 ? index : 0;
 
-        const count = prizes.length;
+        const count = source.length;
         const slice = 360 / count;
-        const targetCenter = index * slice + slice / 2;
+        const targetCenter = safeIndex * slice + slice / 2;
         const finalRotation = (360 * 6) + (360 - targetCenter);
 
         const start = performance.now();
@@ -1732,18 +1695,63 @@
           const progress = Math.min(elapsed / duration, 1);
           const eased = easeOutCubic(progress);
           const value = from + (to - from) * eased;
-          drawWheel(prizes, value);
 
-          if (progress < 1) requestAnimationFrame(frame);
-          else {
+          drawWheel(source, value);
+
+          if (progress < 1) {
+            requestAnimationFrame(frame);
+          } else {
             currentRotation = value % 360;
-            drawWheel(prizes, currentRotation);
+            drawWheel(source, currentRotation);
             resolve();
           }
         }
 
         requestAnimationFrame(frame);
       });
+    }
+
+    function openDetailsOverlay(payload) {
+      currentPrizePayload = payload;
+      overlayOpen = true;
+
+      sheetTitle.textContent = payload.title || "Детали приза";
+      sheetSub.textContent = "Подробная информация о вашем выигрыше.";
+      sheetCode.textContent = payload.code || "—";
+      sheetDesc.textContent = payload.description || "Описание отсутствует.";
+      sheetExpires.textContent = payload.expires || "Не указан";
+      setImageBlock(sheetImageWrap, sheetImage, payload.image || "", payload.title || "Приз");
+
+      detailsOverlay.classList.add("show");
+    }
+
+    function closeDetailsOverlay() {
+      overlayOpen = false;
+      detailsOverlay.classList.remove("show");
+    }
+
+    function showResult(data) {
+      cooldownBox.classList.remove("show");
+      resultBox.classList.add("show");
+
+      const image = data.prize_image_url || data.image_url || "";
+
+      currentPrizePayload = {
+        title: data.prize_title || "Ваш приз",
+        description: data.prize_description || "",
+        code: data.code || "—",
+        expires: data.expires_at_text ? `До ${data.expires_at_text}` : "Срок действия уточняйте у сотрудника.",
+        image
+      };
+
+      resultPrize.textContent = currentPrizePayload.title;
+      resultDesc.textContent = currentPrizePayload.description;
+      resultCode.textContent = currentPrizePayload.code;
+      resultExpires.textContent = currentPrizePayload.expires;
+      setImageBlock(resultImageWrap, resultImage, image, currentPrizePayload.title);
+
+      setStatus("Готово: ваш выигрыш сохранён.", "success");
+      historyCache = [];
     }
 
     function getNextMidnightMSK() {
@@ -1762,6 +1770,32 @@
       return `${h}:${m}:${s}`;
     }
 
+    function renderLastPrizeCard(data) {
+      lastPrizeWrap.innerHTML = "";
+      if (!data.last_code && !data.last_prize_title) return;
+
+      const image = data.last_image_url || "";
+      const imageHtml = image
+        ? `<div class="last-prize-image-wrap"><img class="last-prize-image" src="${image}" alt="${data.last_prize_title || "Последний приз"}"></div>`
+        : "";
+
+      const card = document.createElement("div");
+      card.className = "mini-card";
+      card.innerHTML = `
+        <div class="mini-card-row">
+          ${imageHtml}
+          <div>
+            <div class="mini-card-title">${data.last_prize_title || "Последний приз"}</div>
+            <div class="mini-card-desc">
+              Код: ${data.last_code || "—"}<br>
+              ${data.last_expires_at_text ? "Действует до: " + data.last_expires_at_text : "Срок действия уточняйте у сотрудника."}
+            </div>
+          </div>
+        </div>
+      `;
+      lastPrizeWrap.appendChild(card);
+    }
+
     function startCooldown(data) {
       resultBox.classList.remove("show");
       cooldownBox.classList.add("show");
@@ -1769,407 +1803,252 @@
       renderLastPrizeCard(data);
 
       if (countdownInterval) clearInterval(countdownInterval);
+
       function tick() {
-        timerEl.textContent = formatMs(getNextMidnightMSK());
+        const left = getNextMidnightMSK();
+        timerEl.textContent = formatMs(left);
       }
+
       tick();
       countdownInterval = setInterval(tick, 1000);
     }
 
+    async function copyCodeValue(code) {
+      if (!code || code === "—") return;
+      try {
+        await navigator.clipboard.writeText(code);
+        setStatus("Код скопирован.", "success");
+        safeHapticNotification("success");
+      } catch (e) {
+        setStatus("Не удалось скопировать код.", "error");
+        playSound("error");
+      }
+    }
+
+    function getHistoryBadge(item) {
+      if (item.redeemed) return { cls: "badge-off", text: "Погашен" };
+      return { cls: "badge-ok", text: "Активен" };
+    }
+
+    function renderHistory(items) {
+      historyList.innerHTML = "";
+
+      const filtered = items.filter((item) => {
+        if (historyFilter === "active") return !item.redeemed;
+        if (historyFilter === "used") return !!item.redeemed;
+        return true;
+      });
+
+      if (!filtered.length) {
+        historyList.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">🎁</div>
+            <div class="empty-title">Пока нет сохранённых выигрышей</div>
+            <div class="empty-text">После первого успешного спина здесь появятся ваши коды и статусы призов.</div>
+          </div>
+        `;
+        return;
+      }
+
+      filtered.forEach((item) => {
+        const badge = getHistoryBadge(item);
+        const image = item.prize_image_url || item.image_url || "";
+        const payload = encodeURIComponent(JSON.stringify({
+          title: item.prize_title || "Приз",
+          description: item.prize_description || "Описание отсутствует.",
+          code: item.code || "—",
+          expires: item.expires_at_text || item.expires_at || "Не указан",
+          image
+        }));
+
+        const imageHtml = image
+          ? `<div class="history-image-wrap"><img class="history-image" src="${image}" alt="${item.prize_title || "Приз"}" /></div>`
+          : "";
+
+        const card = document.createElement("div");
+        card.className = "history-item";
+        card.innerHTML = `
+          <div class="history-top">
+            <div class="history-main">
+              ${imageHtml}
+              <div>
+                <div class="history-name">${item.prize_title || "Приз"}</div>
+                <div class="history-meta">${item.created_at_text || item.created_at || "Дата не указана"}</div>
+              </div>
+            </div>
+            <div class="badge ${badge.cls}">${badge.text}</div>
+          </div>
+          <div class="history-desc">${item.prize_description || "Описание отсутствует."}</div>
+          <div class="history-actions">
+            <div class="badge badge-warn">До: ${item.expires_at_text || item.expires_at || "Не указан"}</div>
+            <div class="badge badge-ok">Код: ${item.code || "—"}</div>
+          </div>
+          <div class="history-actions">
+            <button class="mini-btn" data-history-copy="${item.code || ""}">Скопировать код</button>
+            <button class="mini-btn" data-history-open="${payload}">Подробнее</button>
+          </div>
+        `;
+        historyList.appendChild(card);
+      });
+
+      historyList.querySelectorAll("[data-history-copy]").forEach(btn => {
+        btn.addEventListener("click", async () => {
+          const code = btn.getAttribute("data-history-copy");
+          if (!code) return;
+          await copyCodeValue(code);
+        });
+      });
+
+      historyList.querySelectorAll("[data-history-open]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const payload = JSON.parse(decodeURIComponent(btn.getAttribute("data-history-open")));
+          openDetailsOverlay(payload);
+        });
+      });
+    }
+
+    async function loadHistory(force = false) {
+      if (historyCache.length && !force) {
+        renderHistory(historyCache);
+        return;
+      }
+
+      historyList.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-icon">…</div>
+          <div class="empty-title">Загружаем историю</div>
+          <div class="empty-text">Подождите немного, получаем ваши последние результаты.</div>
+        </div>
+      `;
+
+      if (!insideTelegram()) {
+        historyCache = [];
+        renderHistory(historyCache);
+        setStatus("История доступна внутри Telegram Mini App.", "warn");
+        return;
+      }
+
+      try {
+        const data = await apiPost("/history", { init_data: getInitData() });
+        if (!data.ok || !Array.isArray(data.items)) {
+          historyCache = [];
+          renderHistory(historyCache);
+          return;
+        }
+        historyCache = data.items;
+        renderHistory(historyCache);
+      } catch (e) {
+        historyCache = [];
+        renderHistory(historyCache);
+        setStatus(`История не загрузилась: ${e.message}`, "error");
+      }
+    }
+
     async function spinWheel() {
-      if (isSpinning) return;
+      if (isSpinning || !navigator.onLine) return;
+
+      await unlockSounds();
+      safeHapticImpact("light");
+
+      if (!insideTelegram()) {
+        setStatus("Кнопка нажалась, но реальный спин доступен только внутри Telegram Mini App.", "warn");
+        hintText.textContent = "Откройте приложение из Telegram, а не в обычном браузере.";
+        return;
+      }
+
+      const initData = getInitData();
+      if (!initData) {
+        setStatus("initData пустой. Mini App открыт некорректно или Telegram не передал данные.", "error");
+        return;
+      }
+
       isSpinning = true;
       spinBtn.disabled = true;
       resultBox.classList.remove("show");
       cooldownBox.classList.remove("show");
       setStatus("Запрашиваем результат...");
+      hintText.textContent = "Ожидаем ответ сервера и запускаем анимацию.";
 
       try {
-        const data = await apiPost("/spin", { init_data: tg.initData || "" });
+        const data = await apiPost("/spin", { init_data: initData });
 
         if (!data.ok && data.cooldown) {
-          setStatus("На сегодня попытка уже израсходована.", "error");
+          stopTickLoop();
+          playSound("error");
+          safeHapticNotification("warning");
+          setStatus("На сегодня попытка уже израсходована.", "warn");
           startCooldown(data);
           return;
         }
 
-        if (!data.ok) {
-          setStatus(data.error || "Произошла ошибка.", "error");
-          return;
-        }
-
-        await animateSpinToPrize(data.prize_id);
+        startTickLoop();
+        await animateSpinToPrize(data.prize_id || 1);
+        stopTickLoop();
+        playSound("win");
+        safeHapticNotification("success");
         showResult(data);
       } catch (e) {
-        setStatus("Ошибка соединения с сервером.", "error");
+        stopTickLoop();
+        playSound("error");
+        safeHapticNotification("error");
+        setStatus(`Ошибка запуска: ${e.message}`, "error");
       } finally {
+        stopTickLoop();
         isSpinning = false;
         spinBtn.disabled = false;
       }
     }
 
-    function renderAdminPrizeList(items) {
-      adminPrizeList.innerHTML = "";
-
-      items.forEach((item) => {
-        const image = safeImage(item.image_url);
-        const imageHtml = image ? `
-          <div class="admin-prize-image-wrap">
-            <img class="admin-prize-image" src="${image}" alt="${item.title}" loading="lazy" />
-          </div>
-        ` : "";
-
-        const block = document.createElement("div");
-        block.className = "prize-item";
-        block.innerHTML = `
-          <div class="prize-row">
-            ${imageHtml}
-            <div style="flex:1;">
-              <div class="prize-top">
-                <div>
-                  <div class="prize-name">${item.title}</div>
-                  <div class="prize-meta">
-                    ID: ${item.id} · Коротко: ${item.short || "—"}<br>
-                    Картинка: ${image ? "есть" : "нет"}
-                  </div>
-                </div>
-                <div class="badge ${item.active ? "badge-ok" : "badge-off"}">
-                  ${item.active ? "Включен" : "Выключен"}
-                </div>
-              </div>
-
-              <div class="prize-meta">
-                ${item.description}<br>
-                Вес: <strong>${item.weight}</strong>
-              </div>
-
-              <div class="prize-actions">
-                <button class="mini-btn" data-action="edit" data-id="${item.id}">Редактировать</button>
-                <button class="mini-btn" data-action="weight" data-id="${item.id}">Изменить вес</button>
-                <button class="mini-btn" data-action="toggle" data-id="${item.id}">
-                  ${item.active ? "Выключить" : "Включить"}
-                </button>
-                <button class="mini-btn" data-action="delete" data-id="${item.id}">Удалить</button>
-              </div>
-            </div>
-          </div>
-        `;
-        adminPrizeList.appendChild(block);
-      });
-
-      adminPrizeList.querySelectorAll("[data-action='edit']").forEach(btn => {
-        btn.addEventListener("click", async () => {
-          const id = Number(btn.dataset.id);
-          const item = items.find(x => Number(x.id) === id);
-          if (!item) return;
-
-          const title = prompt("Название", item.title);
-          if (title === null) return;
-
-          const short = prompt("Короткий текст", item.short || "");
-          if (short === null) return;
-
-          const description = prompt("Описание", item.description || "");
-          if (description === null) return;
-
-          const weightRaw = prompt("Вес", String(item.weight));
-          if (weightRaw === null) return;
-          const weight = Number(weightRaw);
-
-          const active = confirm("Оставить приз включенным? OK = включен, Cancel = выключен.");
-
-          const changeImage = confirm("Заменить картинку?");
-          let image_url = item.image_url || "";
-
-          if (changeImage) {
-            alert("Для замены картинки используй добавление нового приза или сделай отдельную кнопку загрузки.");
-          }
-
-          adminStatus.textContent = "Сохраняем изменения приза...";
-
-          const data = await apiPost("/admin/prize/update", {
-            init_data: tg.initData || "",
-            prize_id: id,
-            title,
-            short,
-            description,
-            weight,
-            active,
-            image_url
-          });
-
-          if (!data.ok) {
-            alert(data.error || "Ошибка редактирования");
-            adminStatus.textContent = data.error || "Ошибка";
-            return;
-          }
-
-          adminStatus.textContent = "Приз обновлён.";
-          renderAdminPrizeList(data.items || []);
-          await loadPrizes();
-        });
-      });
-
-      adminPrizeList.querySelectorAll("[data-action='weight']").forEach(btn => {
-        btn.addEventListener("click", async () => {
-          const id = Number(btn.dataset.id);
-          const value = prompt("Введите новый вес:");
-          if (!value) return;
-          const weight = Number(value);
-          if (!weight || weight <= 0) {
-            alert("Вес должен быть больше 0");
-            return;
-          }
-
-          const data = await apiPost("/admin/prize/update-weight", {
-            init_data: tg.initData || "",
-            prize_id: id,
-            weight
-          });
-
-          if (!data.ok) {
-            alert(data.error || "Ошибка обновления веса");
-            return;
-          }
-
-          adminStatus.textContent = "Вес обновлён.";
-          renderAdminPrizeList(data.items || []);
-          await loadPrizes();
-        });
-      });
-
-      adminPrizeList.querySelectorAll("[data-action='toggle']").forEach(btn => {
-        btn.addEventListener("click", async () => {
-          const id = Number(btn.dataset.id);
-
-          const data = await apiPost("/admin/prize/toggle", {
-            init_data: tg.initData || "",
-            prize_id: id
-          });
-
-          if (!data.ok) {
-            alert(data.error || "Ошибка смены статуса");
-            return;
-          }
-
-          adminStatus.textContent = "Статус обновлён.";
-          renderAdminPrizeList(data.items || []);
-          await loadPrizes();
-        });
-      });
-
-      adminPrizeList.querySelectorAll("[data-action='delete']").forEach(btn => {
-        btn.addEventListener("click", async () => {
-          const id = Number(btn.dataset.id);
-          if (!confirm("Удалить этот приз?")) return;
-
-          const data = await apiPost("/admin/prize/delete", {
-            init_data: tg.initData || "",
-            prize_id: id
-          });
-
-          if (!data.ok) {
-            alert(data.error || "Ошибка удаления");
-            return;
-          }
-
-          adminStatus.textContent = "Приз удалён.";
-          renderAdminPrizeList(data.items || []);
-          await loadPrizes();
-        });
-      });
-    }
-
-    async function loadAdminPrizes() {
-      const data = await apiPost("/admin/prizes", { init_data: tg.initData || "" });
-      if (!data.ok) {
-        adminStatus.textContent = data.error || "Нет доступа к админке.";
-        return;
-      }
-      renderAdminPrizeList(data.items || []);
-    }
-
-    newImageFile.addEventListener("change", () => {
-      const file = newImageFile.files?.[0];
-      if (!file) {
-        uploadPreviewWrap.style.display = "none";
-        uploadPreviewImage.src = "";
-        return;
-      }
-
-      const url = URL.createObjectURL(file);
-      uploadPreviewImage.src = url;
-      uploadPreviewWrap.style.display = "";
+    spinBtn.addEventListener("click", spinWheel);
+    copyBtn.addEventListener("click", () => copyCodeValue(resultCode.textContent.trim()));
+    sheetCopyBtn.addEventListener("click", () => copyCodeValue(sheetCode.textContent.trim()));
+    closeBtn.addEventListener("click", () => resultBox.classList.remove("show"));
+    detailsBtn.addEventListener("click", () => {
+      if (currentPrizePayload) openDetailsOverlay(currentPrizePayload);
     });
-
-    addPrizeBtn.addEventListener("click", async () => {
-      const title = newTitle.value.trim();
-      const short = newShort.value.trim();
-      const description = newDesc.value.trim();
-      const weight = Number(newWeight.value);
-      const active = newActive.value === "true";
-      const file = newImageFile.files?.[0];
-
-      if (!title || !short || !description || !weight || weight <= 0) {
-        alert("Заполните все поля корректно.");
-        return;
-      }
-
-      adminStatus.textContent = "Загружаем картинку...";
-
-      let image_url = "";
-
-      if (file) {
-        const uploadData = await uploadPrizeImage(file);
-        if (!uploadData.ok) {
-          alert(uploadData.error || "Не удалось загрузить картинку");
-          adminStatus.textContent = uploadData.error || "Ошибка загрузки картинки";
-          return;
-        }
-        image_url = uploadData.image_url || "";
-      }
-
-      adminStatus.textContent = "Добавляем приз...";
-
-      const data = await apiPost("/admin/prize/add", {
-        init_data: tg.initData || "",
-        title,
-        short,
-        description,
-        weight,
-        active,
-        image_url
-      });
-
-      if (!data.ok) {
-        alert(data.error || "Ошибка добавления приза");
-        adminStatus.textContent = data.error || "Ошибка";
-        return;
-      }
-
-      newTitle.value = "";
-      newShort.value = "";
-      newDesc.value = "";
-      newWeight.value = "";
-      newImageFile.value = "";
-      newActive.value = "true";
-      uploadPreviewWrap.style.display = "none";
-      uploadPreviewImage.src = "";
-
-      adminStatus.textContent = "Приз успешно добавлен.";
-      renderAdminPrizeList(data.items || []);
-      await loadPrizes();
+    sheetCloseBtn.addEventListener("click", closeDetailsOverlay);
+    detailsOverlay.addEventListener("click", (e) => {
+      if (e.target === detailsOverlay) closeDetailsOverlay();
     });
-
-    checkCodeBtn.addEventListener("click", async () => {
-      const code = codeActionInput.value.trim();
-      if (!code) {
-        codeActionStatus.textContent = "Введите код.";
-        return;
-      }
-
-      const data = await apiPost("/admin/code/check", {
-        init_data: tg.initData || "",
-        code
-      });
-
-      if (!data.ok) {
-        codeActionStatus.textContent = data.error || "Код не найден.";
-        return;
-      }
-
-      codeActionStatus.textContent =
-        `Код ${data.code} найден. Приз: ${data.prize_title}. Статус: ${data.redeemed ? "уже погашен" : "ещё не погашен"}.`;
-    });
-
-    redeemCodeBtn.addEventListener("click", async () => {
-      const code = codeActionInput.value.trim();
-      if (!code) {
-        codeActionStatus.textContent = "Введите код.";
-        return;
-      }
-
-      const data = await apiPost("/admin/code/redeem", {
-        init_data: tg.initData || "",
-        code
-      });
-
-      if (!data.ok) {
-        codeActionStatus.textContent = data.error || "Не удалось погасить код.";
-        return;
-      }
-
-      codeActionStatus.textContent = `Код ${data.code} погашен. Приз: ${data.prize_title}.`;
-    });
-
-    function switchTab(name) {
-      currentView = name;
-      tabWheel.classList.toggle("active", name === "wheel");
-      tabHistory.classList.toggle("active", name === "history");
-      tabFaq.classList.toggle("active", name === "faq");
-      tabAdmin.classList.toggle("active", name === "admin");
-
-      panelWheel.classList.toggle("active", name === "wheel");
-      panelHistory.classList.toggle("active", name === "history");
-      panelFaq.classList.toggle("active", name === "faq");
-      panelAdmin.classList.toggle("active", name === "admin");
-
-      if (name === "history") loadHistory();
-      if (name === "admin") loadAdminPrizes();
-    }
-
-    tabWheel.addEventListener("click", () => switchTab("wheel"));
-    tabHistory.addEventListener("click", () => switchTab("history"));
-    tabFaq.addEventListener("click", () => switchTab("faq"));
-    tabAdmin.addEventListener("click", () => switchTab("admin"));
 
     historyFilters.forEach((btn) => {
       btn.addEventListener("click", () => {
         historyFilter = btn.dataset.filter || "all";
         historyFilters.forEach((item) => item.classList.toggle("active", item === btn));
         renderHistory(historyCache);
+        safeHapticSelection();
       });
     });
 
-    detailsOverlay.addEventListener("click", (e) => {
-      if (e.target === detailsOverlay) closeDetailsOverlay();
-    });
+    function initTelegram() {
+      if (!tg) {
+        setStatus("Режим браузера: UI работает, но Telegram API недоступен.", "warn");
+        hintText.textContent = "Для реальной работы откройте Mini App внутри Telegram.";
+        return;
+      }
 
-    sheetCloseBtn.addEventListener("click", closeDetailsOverlay);
-    detailsBtn.addEventListener("click", () => {
-      if (currentPrizePayload) openDetailsOverlay(currentPrizePayload);
-    });
+      applyTelegramTheme();
+      const initData = getInitData();
 
-    closeBtn.addEventListener("click", () => resultBox.classList.remove("show"));
-
-    copyBtn.addEventListener("click", async () => {
-      const code = resultCode.textContent.trim();
-      if (!code || code === "—") return;
-      await navigator.clipboard.writeText(code);
-      setStatus("Код скопирован.", "success");
-    });
-
-    sheetCopyBtn.addEventListener("click", async () => {
-      const code = sheetCode.textContent.trim();
-      if (!code || code === "—") return;
-      await navigator.clipboard.writeText(code);
-      setStatus("Код скопирован.", "success");
-    });
-
-    spinBtn.addEventListener("click", spinWheel);
-
-    async function init() {
-      try {
-        await loadPrizes();
-        await loadAdminPrizes();
-        drawWheel(prizes, currentRotation);
-        setStatus("Готово к запуску.");
-      } catch (e) {
-        setStatus("Не удалось загрузить данные.", "error");
+      if (!initData) {
+        setStatus("Telegram найден, но initData пустой.", "error");
+      } else {
+        setStatus("Telegram Mini App подключён. Можно запускать колесо.", "success");
       }
     }
 
-    init();
+    function initApp() {
+      updateOfflineState();
+      applyTheme(themeMode);
+      drawWheel(fallbackPrizes, 0);
+      initTelegram();
+      loadPrizes();
+    }
+
+    window.addEventListener("online", updateOfflineState);
+    window.addEventListener("offline", updateOfflineState);
+
+    initApp();
   </script>
 </body>
 </html>
